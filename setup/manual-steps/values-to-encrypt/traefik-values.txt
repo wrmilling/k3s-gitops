@@ -1,5 +1,5 @@
 dashboard:
-  externalIP: $EXTERNAL_IP 
+  loadBalancerIP: $EXTERNAL_IP 
   domain: t.k.$DOMAIN
   auth:
     basic:

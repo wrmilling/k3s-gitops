@@ -18,8 +18,6 @@ spec:
     image: traefik
     imageTag: 1.7.12
     serviceType: LoadBalancer
-    externalTrafficPolicy: Local
-    loadBalancerIP: 10.2.0.150
     replicas: 2
     debug:
       enabled: false
