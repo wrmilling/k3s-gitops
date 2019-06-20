@@ -1,6 +1,7 @@
 dashboard:
+  externalIP: $EXTERNAL_IP 
   domain: t.k.$DOMAIN
-  auth :
+  auth:
     basic:
        $TRAEFIK_AUTH
   ingress:
