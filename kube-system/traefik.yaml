@@ -37,4 +37,4 @@ spec:
         dashboardEnabled: true
   valueFileSecrets:
   - name: "traefik-values"
-
+ 
