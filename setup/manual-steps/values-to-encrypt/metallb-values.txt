@@ -1,0 +1,7 @@
+values:
+    configInline:
+        address-pools:
+        - name: default
+          protocol: layer2
+          addresses:
+          - $EXTERNAL_IP_ADDRESS-$EXTERNAL_IP_ADDRESS
