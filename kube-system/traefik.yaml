@@ -18,6 +18,7 @@ spec:
     image: traefik
     imageTag: 1.7.12
     serviceType: LoadBalancer
+    externalTrafficPolicy: Local
     replicas: 2
     debug:
       enabled: false
@@ -37,4 +38,3 @@ spec:
         dashboardEnabled: true
   valueFileSecrets:
   - name: "traefik-values"
- 
