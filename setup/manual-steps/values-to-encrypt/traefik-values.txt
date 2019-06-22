@@ -3,7 +3,8 @@ dashboard:
   domain: t.k.$DOMAIN
   auth:
     basic:
-       $TRAEFIK_AUTH
+      users:
+        - $TRAEFIK_AUTH
   ingress:
     tls:
       - secretName: acme-crt-secret
