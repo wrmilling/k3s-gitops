@@ -16,7 +16,7 @@ spec:
     version: 1.69.1
   values:
     # Trying to force a retry, this is probably a bad way to do it. 
-    image: traefik
+    image: traefik:v1.7.12
     imageTag: 1.7.12
     serviceType: LoadBalancer
     externalTrafficPolicy: Local
