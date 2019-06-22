@@ -15,6 +15,7 @@ spec:
     name: traefik
     version: 1.69.1
   values:
+    # Trying to force a retry, this is probably a bad way to do it. 
     image: traefik
     imageTag: 1.7.12
     serviceType: LoadBalancer
