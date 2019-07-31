@@ -13,9 +13,9 @@ spec:
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: traefik
-    version: 1.69.1
+    version: 1.70.2
   values:
-    image: traefik:v1.7.12
+    image: traefik
     imageTag: 1.7.12
     serviceType: LoadBalancer
     externalTrafficPolicy: Local
