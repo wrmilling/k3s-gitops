@@ -1,10 +1,6 @@
 loadBalancerIP: $EXTERNAL_IP 
 dashboard:
   domain: t.k.$DOMAIN
-  auth:
-    basic:
-      users:
-        - $TRAEFIK_AUTH
   ingress:
     tls:
       - secretName: acme-crt-secret

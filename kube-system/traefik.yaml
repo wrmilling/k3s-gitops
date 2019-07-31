@@ -30,7 +30,7 @@ spec:
       insecureSkipVerify: true
       upstream: false
     dashboard:
-      enabled: true
+      enabled: false
       statistics:
         recentErrors: 25
     deployment:
