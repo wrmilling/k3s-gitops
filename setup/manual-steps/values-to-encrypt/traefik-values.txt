@@ -10,3 +10,4 @@ dashboard:
       - secretName: acme-crt-secret
         hosts:
           - t.k.$DOMAIN
+          - d.k.$DOMAIN
