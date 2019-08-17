@@ -17,5 +17,3 @@ kseal() {
 # helm chart values
 ###################
 
-NS=kube-system kseal values-to-encrypt/traefik-values.txt > ../../secrets/traefik-values.yaml
-NS=kube-system kseal values-to-encrypt/metallb-values.txt > ../../secrets/metallb-values.yaml

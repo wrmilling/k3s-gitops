@@ -1,9 +1,0 @@
-loadBalancerIP: $EXTERNAL_IP 
-dashboard:
-  domain: t.k.$DOMAIN
-  ingress:
-    tls:
-      - secretName: acme-crt-secret
-        hosts:
-          - t.k.$DOMAIN
-          - d.k.$DOMAIN
