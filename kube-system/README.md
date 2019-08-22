@@ -2,10 +2,15 @@
 
 ## sealed-secrets
 
-TODO
+Once installed with flux for the first time, grab the public cert: 
 
-## cert-manager
+```
+kubeseal --fetch-cert \
+--controller-name=sealed-secrets \
+--controller-namespace=kube-system \
+> pub-cert.pem
+```
 
-TODO
+TODO: Backup private cert for migrations.
 
 
