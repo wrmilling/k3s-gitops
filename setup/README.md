@@ -76,6 +76,8 @@ helm upgrade -i flux \
   --set helmOperator.create=true \
   --set helmOperator.createCRD=false \
   --set git.url=git@github.com:WRMilling/k3s-gitops \
+  --set registry.rps=1 \
+  --set registry.burst=1 \
   --namespace flux \
   fluxcd/flux
 ```
