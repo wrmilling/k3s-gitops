@@ -22,7 +22,7 @@ We will be pretty much following the book for installing k3s, so I will keep it 
 
 ```
 # Install k3s to the server, don't deploy traefik and use my internal network for flannel
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik --flannel-iface eth1" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--no-deploy traefik --flannel-iface ens19" sh -
 
 # Grab the node keys for setting up the two agents. Save somewhere.
 sudo cat /var/lib/rancher/k3s/server/node-token
@@ -34,7 +34,7 @@ Now repeat the following steps for the two agents:
 # Install k3s agent setting the K3S_URL for master, and using the K3S_TOKEN gathered above
 export K3S_URL="https://<MASTER_INTERNAL_IP>:6443"
 export K3S_TOKEN="<NODE_TOKEN>"
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--flannel-iface eth1" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--flannel-iface ens19" sh -
 ```
 
 ## Helm Install (tiller)
