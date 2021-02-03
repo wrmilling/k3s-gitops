@@ -1,10 +1,15 @@
 # k3s-gitops
-GitOps principles to define kubernetes cluster state via code
+
+Currently re-setting the whole repository to start again with a new rPi based cluster. Will be updated in the coming weeks/months. (02-02-2021)
+
+## Overview
+
+This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps principals and define the state of my cluster using code. 
 
 ## Cluster Setup
 
-Check out the [setup instruction](setup) for the cluster and use of this repo. I make the assumption (though its not a requirement) you are using k3s and are not setting up HA. 
+New setup instructions forthcoming, pending new hardware being racked in my homelab.  
 
-## Influence/Source 
+## Credits / Influences
 
-This repo is greatly influenced by [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops) and much of the setup scripts/yamls were borrowed or inspired by his repo. 
+ * [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops)
