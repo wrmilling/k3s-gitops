@@ -13,7 +13,10 @@ message() {
 }
 
 installFlux() {
+  . "$REPO_ROOT"/setup/.env
+
   message "installing fluxv2"
+  
   flux check --pre > /dev/null
   FLUX_PRE=$?
   if [ $FLUX_PRE != 0 ]; then 
@@ -21,10 +24,12 @@ installFlux() {
     flux check --pre
     exit 1
   fi
+  
   if [ -z "$GITHUB_TOKEN" ]; then
     echo "GITHUB_TOKEN is not set! Check $REPO_ROOT/setup/.env"
     exit 1
   fi
+  
   flux bootstrap github \
     --owner=wrmilling \
     --repository=k3s-gitops \
