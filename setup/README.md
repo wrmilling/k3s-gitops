@@ -1,5 +1,9 @@
 # Cluster setup with k3s
 
+## .env File
+
+I use a .env file which is encrypted using git-crypt and is referenced in any script below. I have provided a .env.sample file which should show all the environment variables potentially needed for any of the following to function. If copying this repo, you may want to re-initialize git-crypt and copy the `.env.sample` file to .env and over-write default values with your specific ones. 
+
 ## amd64 + arm64 Cluster Installation (One-Time Actions)
 
 ### k3s Node Setup
@@ -13,3 +17,9 @@ Simply run `./bootstrap-cluster.sh` located in this directory to setup the clust
 1. Installs flux2
 
 This script was originally pulled from [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops/blob/master/setup/bootstrap-cluster.sh) but may have some modifications based on my needs. 
+
+## Cluster Maintenance
+
+### Setting up Sealed Secrets 
+
+TBD
