@@ -8,7 +8,9 @@ This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps princip
 
 ## Cluster Setup
 
-New setup instructions forthcoming, pending new hardware being racked in my homelab.  
+Setup for the individual nodes OS and base k3s istall can be found in [WRMilling/homelab-infrastructure]() repository.
+
+Setup for [Flux2](https://fluxcd.io), secrets, and the rest of the GitOps setup can be found here under the [setup](setup) directory.  
 
 ## Credits / Influences
 
