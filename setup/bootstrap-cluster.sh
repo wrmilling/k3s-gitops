@@ -46,6 +46,10 @@ installFlux() {
 need "kubectl"
 need "helm"
 need "flux"
+need "openssl"
+
+"${REPO_ROOT}"/setup/bootstrap-secrets.sh
+
 installFlux
 
 message "all done!"
