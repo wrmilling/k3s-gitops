@@ -14,7 +14,9 @@ Check out [homelab-infrastructure/k3s](https://github.com/WRMilling/homelab-infr
 
 Simply run `./bootstrap-cluster.sh` located in this directory to setup the cluster. This does the following things: 
 
-1. Installs flux2
+1. Sets up sealed-secrets key
+   * If key does not exist, it will generate one (encrypted with git-crypt)
+2. Installs flux2
 
 This script was originally pulled from [billimek/k8s-gitops](https://github.com/billimek/k8s-gitops/blob/master/setup/bootstrap-cluster.sh) but may have some modifications based on my needs. 
 
@@ -22,4 +24,4 @@ This script was originally pulled from [billimek/k8s-gitops](https://github.com/
 
 ### Setting up Sealed Secrets 
 
-TBD
+The `bootstrap-secrets.sh` script has been added to take care of pushing a common key to teh cluster so that secrets can survive a cluster rebuild. It gets run as part of the `bootstrap-cluster.sh` script but can be run again individually if a new secrets key needs to be generated. If a new key is generated and uploaded, delete the sealed secrets controller and let flux rebuild it to pull in the new key. `kubeseal` needs to be told to use the new public key, I use an alias to ensure its always used: `alias TBD`. 
