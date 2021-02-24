@@ -37,8 +37,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -47,8 +45,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - update
@@ -62,8 +58,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - update
@@ -77,8 +71,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -87,8 +79,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -97,8 +87,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -107,8 +95,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -117,8 +103,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -127,8 +111,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -137,8 +119,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - delete
             - error
@@ -146,8 +126,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -177,8 +155,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -187,8 +163,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -197,8 +171,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
@@ -207,8 +179,6 @@ spec:
           namespaces:
             include:
               - all
-            ignore:
-              -
           events:
             - create
             - delete
