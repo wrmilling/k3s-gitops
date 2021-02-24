@@ -12,12 +12,15 @@ seal() {
   fi
 }
 
-# Cert Manager
-seal "cert-manager/route53-api-key"
-
-# Flux-System
+# flux-system
 seal "flux-system-extra/github-alerts/github-api-token"
 seal "flux-system-extra/discord-alerts/discord-webhook-url"
 
-# Monitoring
+# kube-system
+seal 'kube-system/nginx/nginx-basic-auth-winston'
+
+# cert-manager
+seal "cert-manager/route53-api-key"
+
+# monitoring
 seal "monitoring/botkube/botkube-helm-values"

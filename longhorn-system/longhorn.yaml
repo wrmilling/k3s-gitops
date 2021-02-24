@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.longhorn.io
+      chart: longhorn
+      version: 1.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+  values:
+    persistence:
+      defaultClassReplicaCount: 3
+      reclaimPolicy: Retain
+      # recurringJobs:
+      #   enable: true
+      #   jobList: '[{"name":"daily", "task":"backup", "cron":"0 6 * * ?", "retain":2,"labels": {"interval":"daily"}}]'
+    csi:
+      attacherReplicaCount: 3
+      provisionerReplicaCount: 3
+      resizerReplicaCount: 3
+      snapshotterReplicaCount: 3
+    defaultSettings:
+      backupTarget: nfs://10.10.10.31:/mnt/tardisk/k3s
+      defaultDataPath: /longhorn
+      createDefaultDiskLabeledNodes: true
+      defaultDataLocality: best-effort
+      defaultReplicaCount: 3
+      taintTolerations: "arm=true:NoExecute"
+    ingress:
+      enabled: true
+      host: longhorn.k.homelab.tokyo
+       tls: true
+    #    tlsSecret: ""
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/auth-type: "basic"
+        nginx.ingress.kubernetes.io/auth-secret: "nginx-basic-auth-winston"
+    # service:
+    #   type: LoadBalancer
+    #   loadBalancerIP: 192.168.1.215
+    #   port:
+    #     port: 80
+    #     targetPort: 80
