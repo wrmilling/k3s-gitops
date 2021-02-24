@@ -5,9 +5,7 @@ metadata:
   name: botkube
   namespace: monitoring
 spec:
-  releaseName: botkube
-  rollback:
-    enable: true
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://infracloudio.github.io/charts
@@ -187,5 +185,6 @@ spec:
             - create
             - delete
             - error
-  valueFileSecrets:
-  - name: "botkube-helm-values"
+  valuesFrom:
+  - kind: Secret
+    name: botkube-helm-values
