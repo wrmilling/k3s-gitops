@@ -20,8 +20,8 @@ spec:
     image:
       repository: infracloudio/botkube
       tag: latest
-    serviceMonitor:
-      enabled: true
+    # serviceMonitor:
+    #   enabled: true
     config:
       settings:
         clustername: k3s
