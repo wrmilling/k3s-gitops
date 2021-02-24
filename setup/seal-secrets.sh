@@ -4,9 +4,12 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 . "$REPO_ROOT"/setup/.env
 
 seal() {
-  kubeseal --cert ${REPO_ROOT}/setup/sealed-secrets.crt -o yaml $@
+  if [ -f "${REPO_ROOT}/${1}.yaml" ]; then
+    echo "${1}.yaml: Already exists"
+  else 
+    echo "${1}.yaml: Sealing secret"
+    envsubst < ${REPO_ROOT}/${1}.template | kubeseal --cert ${REPO_ROOT}/setup/sealed-secrets.crt -o yaml > ${REPO_ROOT}/${1}.yaml
+  fi
 }
 
-if [ ! -f "${REPO_ROOT}/cert-manager/route53-api-key.yaml" ]; then
-  kubectl create secret --namespace=cert-manager generic route53-api-key --from-literal=key="${ROUTE53_KEY}" --dry-run=client -o yaml | seal > "${REPO_ROOT}"/cert-manager/route53-api-key.yaml
-fi
+seal "cert-manager/route53-api-key"
