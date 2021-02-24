@@ -12,6 +12,12 @@ seal() {
   fi
 }
 
+# Cert Manager
 seal "cert-manager/route53-api-key"
+
+# Flux-System
 seal "flux-system-extra/github-alerts/github-api-token"
+seal "flux-system-extra/discord-alerts/discord-webhook-url"
+
+# Monitoring
 seal "monitoring/botkube/botkube-helm-values"
