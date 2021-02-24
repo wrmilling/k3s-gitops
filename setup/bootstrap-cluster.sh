@@ -49,6 +49,7 @@ need "flux"
 need "openssl"
 
 "${REPO_ROOT}"/setup/bootstrap-secrets.sh
+"${REPO_ROOT}"/setup/bootstrap-crds.sh
 
 installFlux
 
