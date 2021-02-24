@@ -14,3 +14,4 @@ seal() {
 
 seal "cert-manager/route53-api-key"
 seal "flux-system-extra/github-alerts/github-api-token"
+seal "monitoring/botkube/botkube-helm-values"
