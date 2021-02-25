@@ -27,8 +27,8 @@ spec:
       resizerReplicaCount: 3
       snapshotterReplicaCount: 3
     defaultSettings:
-      backupTarget: nfs://10.10.10.31:/mnt/tardisk/k3s
-      defaultDataPath: /longhorn
+      backupTarget: nfs://10.10.10.30:/mnt/tardisk/k3s
+      defaultDataPath: /longhorn/
       createDefaultDiskLabeledNodes: true
       defaultDataLocality: best-effort
       defaultReplicaCount: 3
