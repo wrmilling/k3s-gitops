@@ -36,3 +36,4 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/auth-type: basic
         nginx.ingress.kubernetes.io/auth-secret: nginx-basic-auth-winston
+        nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - mmkay'
