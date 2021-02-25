@@ -21,6 +21,7 @@ spec:
     persistence:
       defaultClassReplicaCount: 3
     defaultSettings:
+      defaultDataPath: /longhorn
       defaultReplicaCount: 3
       createDefaultDiskLabeledNodes: true
       storageMinimalAvailablePercentage: "10"
