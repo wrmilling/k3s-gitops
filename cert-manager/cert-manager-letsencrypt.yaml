@@ -53,3 +53,4 @@ spec:
   dnsNames:
   - homelab.tokyo
   - '*.homelab.tokyo'
+  - '*.k.homelab.tokyo'
