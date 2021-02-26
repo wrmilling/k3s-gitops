@@ -1,1 +1,1 @@
-# default namespace
+# `default` Namespace
