@@ -20,7 +20,7 @@ seal "flux-system-extra/discord-alerts/discord-webhook-url"
 seal 'kube-system/nginx/nginx-basic-auth-winston'
 
 # cert-manager
-seal "cert-manager/route53-api-key"
+seal "cert-manager/cert-manager/route53-api-key"
 
 # monitoring
 seal "monitoring/botkube/botkube-helm-values"
