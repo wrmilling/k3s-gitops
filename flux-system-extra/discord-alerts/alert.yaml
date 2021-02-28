@@ -35,6 +35,9 @@ spec:
       namespace: 'kube-system'
       name: '*'
     - kind: HelmRelease
+      namespace: 'longhorn-system'
+      name: '*'
+    - kind: HelmRelease
       namespace: 'monitoring'
       name: '*'
   suspend: false
