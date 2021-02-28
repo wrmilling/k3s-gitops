@@ -6,7 +6,7 @@ I am using [flux2](https://github.com/fluxcd/flux2) to automate management of th
 
 _Image Pending_
 
-Uses [BotKube](https://www.botkube.io/) to provide discord messages on the state of deployments and other such information about the cluster.
+Basic discord alerts from flux to my private discord channel.
 
   * [discord-alerts/alert.yaml](discord-alerts/alert.yaml) - Defines the alerts that are valid for discord
   * [discord-alerts/provider.yaml](discord-alerts/provider.yaml) - Defines where the alerts go and via what path
