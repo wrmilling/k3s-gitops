@@ -28,4 +28,4 @@ Direct credit to the following repositories for great examples:
  * [carpenike/k8s-gitops](https://github.com/carpenike/k8s-gitops)
  * [Marx2/homelab](https://github.com/Marx2/homelab/)
 
-As well as a large thanks to the larger community at k8s-at-home via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/7PbmHRK).
+As well as a huge thanks to the larger community at k8s-at-home via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/7PbmHRK).
