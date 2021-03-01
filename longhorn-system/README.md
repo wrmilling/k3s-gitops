@@ -8,7 +8,7 @@ This namespace stores the configuration for [longhorn](https://rancher.com/produ
 
 Persistent storage provider for Kuberenetes which utilizes and syncs local storage on given nodes to provide persistent volumes.
 
-  * [longhorn/longhorn.yaml](longhorn/longhorn.yaml) - HelmRelease for longhorn with storage configuration and ingress configuration.
+* [longhorn/longhorn.yaml](longhorn/longhorn.yaml) - HelmRelease for longhorn with storage configuration and ingress configuration.
 
 ### Prepare Nodes
 
@@ -18,7 +18,7 @@ Preparing a node takes two main steps, labeling the node for disk create and pre
 
 This is normally done via the bootstrap of the cluster in [setup](/setup), but otherwise the following label needs to be applied to the nodes for storage:
 
-```
+```bash
 kubectl label nodes k3s-amd64-a node.longhorn.io/create-default-disk=true
 ```
 
@@ -26,7 +26,7 @@ kubectl label nodes k3s-amd64-a node.longhorn.io/create-default-disk=true
 
 The bootstrap scripts should also be doing this, otherwise assuming root or sudo in the case that you are not:
 
-```
+```bash
 # Create a new partition table, gpt in this case
 sudo parted -s /dev/sdb mklabel gpt
 # Create a new partition, marked ext4, which takes the whole drive
