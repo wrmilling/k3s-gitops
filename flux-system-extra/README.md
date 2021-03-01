@@ -4,7 +4,7 @@ I am using [flux2](https://github.com/fluxcd/flux2) to automate management of th
 
 ## discord-alerts
 
-_Image Pending_
+![FluxBot Alert](https://i.imgur.com/XRnEra4.png)
 
 Basic discord alerts from flux to my private discord channel.
 
@@ -15,7 +15,7 @@ Basic discord alerts from flux to my private discord channel.
 
 ## github-alerts
 
-_Image Pending_
+![GitHub Commit Alert](https://i.imgur.com/06rhLWP.png)
 
   * [github-alerts/alert.yaml](github-alerts/alert.yaml) - Defines the alerts that are valid for github
   * [github-alerts/provider.yaml](github-alerts/provider.yaml) - Defines where the alerts go and via what path
