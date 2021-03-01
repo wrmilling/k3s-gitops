@@ -1,7 +1,7 @@
 # <center> k3s-gitops </center>
 
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/61287648" />
+  <a href="https://github.com/k8s-at-home" alt="Image used with permission from k8s-at-home"><img alt="Image used with permission from k8s-at-home" src="https://avatars.githubusercontent.com/u/61287648" /></a>
 </p>
 
 <p align="center">
