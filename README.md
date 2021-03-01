@@ -21,7 +21,7 @@ This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps princip
 
 ## Infrastructure
 
-Setup for the individual nodes OS and base k3s istall can be found in [WRMilling/homelab-infrastructure](https://github.com/WRMilling/homelab-infrastructure/) repository.
+Setup for the individual nodes OS and base k3s install can be found in [WRMilling/homelab-infrastructure](https://github.com/WRMilling/homelab-infrastructure/) repository.
 
 ## Setup
 
