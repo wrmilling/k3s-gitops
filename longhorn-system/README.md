@@ -4,7 +4,7 @@ This namespace stores the configuration for [longhorn](https://rancher.com/produ
 
 ## longhorn
 
-_Image Pending_
+![Longhorn Dashboard](https://i.imgur.com/1bCOYok.png)
 
 Persistent storage provider for Kuberenetes which utilizes and syncs local storage on given nodes to provide persistent volumes.
 
