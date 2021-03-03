@@ -26,7 +26,8 @@ Trying out creating an LDAP provider for the cluster to do authentication at the
 
 Provide authentication using [alexellis' registry-creds](https://github.com/alexellis/registry-creds) across the cluster for Docker Hub and raise the pull limit a bit so that we are less likely to hit it.
 
-* [registry-creds/registry-creds.yaml](registry-creds/registry-creds.yaml) - CRD, Roles, ClusterRoles, RoleBinding, ClusterRoleBinding, and Deployment for registry-creds.
+* [registry-creds/registry-creds.yaml](registry-creds/registry-creds.yaml) - Deployment for registry-creds.
+* [registry-creds/registry-creds-crd.yaml](registry-creds/registry-creds-crd.yaml) - CRD, Roles, ClusterRoles, RoleBinding, and ClusterRoleBinding for registry-creds.
 * [registry-creds/dockerhub.yaml](registry-creds/dockerhub.yaml) - The ClusterPullSecret which binds the docker-registry secrets to teh registry-creds deployment to be used by kubernetes
 * [registry-creds/registry-creds-secret.template](registry-creds/registry-creds-secret.template) - Template used to create the docker-registry type secret via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [registry-creds/registry-creds-secret.yaml](registry-creds/registry-creds-secret.yaml) - My encrypted open dockerhub secret
