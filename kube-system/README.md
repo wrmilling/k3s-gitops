@@ -14,6 +14,24 @@
 * [nginx/nginx-basic-auth-winston.template](nginx/nginx-basic-auth-winston.template) - Template used to create a basic-auth secret via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [nginx/nginx-basic-auth-winston.yaml](nginx/nginx-basic-auth-winston.yaml) - My encrypted basic-auth secret.
 
+## openldap
+
+Trying out creating an LDAP provider for the cluster to do authentication at the nginx-ingress level.
+
+* [openldap/openldap.yaml](openldap/openldap.yaml) - Deployment and Service to expose an OpenLDAP instance based on bitnami containers
+* [openldap/openldap-secrets.template](openldap/openldap-secrets.template) - Template used to create the openldap username and password secrets via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [openldap/openldap-secrets.yaml](openldap/openldap-secrets.yaml) - My encrypted open ldap secrets
+
+## registrycreds
+
+Provide authentication using [alexellis' registry-creds](https://github.com/alexellis/registry-creds) across the cluster for Docker Hub and raise the pull limit a bit so that we are less likely to hit it.
+
+* [registry-creds/registry-creds.yaml](registry-creds/registry-creds.yaml) - CRD, Roles, ClusterRoles, RoleBinding, ClusterRoleBinding, and Deployment for registry-creds.
+* [registry-creds/dockerhub.yaml](registry-creds/dockerhub.yaml) - The ClusterPullSecret which binds the docker-registry secrets to teh registry-creds deployment to be used by kubernetes
+* [registry-creds/registry-creds-secret.template](registry-creds/registry-creds-secret.template) - Template used to create the docker-registry type secret via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [registry-creds/registry-creds-secret.yaml](registry-creds/registry-creds-secret.yaml) - My encrypted open dockerhub secret
+
+
 ## sealed-secrets
 
 [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) provides a Kubernetes controller and tool for creating one-way encrypted secrets so that they can be stored and managed in the git repository. First time setup of sealed-secrets is managed as part of the [bootstrap process](/setup/README.md) for the cluster. Sealing new secrets to add to the repo is through the [seal-secrets.sh](/setup/seal-secrets.sh) script.
