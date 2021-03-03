@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: openldap
-          image: docker.io/bitnami/openldap:latest
+          image: docker.io/bitnami/openldap:2.4.57
           imagePullPolicy: "Always"
           env:
             - name: LDAP_ADMIN_USERNAME
