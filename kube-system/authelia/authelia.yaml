@@ -33,7 +33,7 @@ spec:
       - key: "arm"
         operator: "Exists"
     configMap:
-      enabled: false
+      enabled: true
       authentication_backend:
         disable_reset_password: true
         ldap:
