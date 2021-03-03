@@ -6,7 +6,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 seal() {
   if [ -f "${REPO_ROOT}/${1}.yaml" ]; then
     echo "${1}.yaml: Already exists"
-  else 
+  else
     echo "${1}.yaml: Sealing secret"
     envsubst < ${REPO_ROOT}/${1}.template | kubeseal --cert ${REPO_ROOT}/setup/sealed-secrets.crt -o yaml > ${REPO_ROOT}/${1}.yaml
   fi
@@ -18,6 +18,7 @@ seal "flux-system-extra/discord-alerts/discord-webhook-url"
 
 # kube-system
 seal 'kube-system/nginx/nginx-basic-auth-winston'
+seal 'kube-system/openldap/openldap-secrets'
 
 # cert-manager
 seal "cert-manager/cert-manager/route53-api-key"
