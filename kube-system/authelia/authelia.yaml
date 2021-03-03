@@ -44,13 +44,13 @@ spec:
         default_policy: two_factor
       storage:
         local:
-          path: /config/persistent/db.sqlite3
-    persistence:
-      enabled: true
-      subPath: persistent
-      accessModes:
-      - ReadWriteMany
-      storageClass: longhorn
+          path: /config/db.sqlite3
+    # persistence:
+    #   enabled: true
+    #   subPath: persistent
+    #   accessModes:
+    #   - ReadWriteMany
+    #   storageClass: longhorn
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
