@@ -33,6 +33,7 @@ spec:
       - key: "arm"
         operator: "Exists"
     configMap:
+      enabled: false
       authentication_backend:
         disable_reset_password: true
         ldap:
@@ -44,11 +45,11 @@ spec:
       storage:
         local:
           path: /config/db.sqlite3
-    persistence:
-      enabled: true
-      accessModes:
-      - ReadWriteMany
-      storageClass: longhorn
+    # persistence:
+    #   enabled: true
+    #   accessModes:
+    #   - ReadWriteMany
+    #   storageClass: longhorn
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
