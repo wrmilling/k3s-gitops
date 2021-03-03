@@ -34,12 +34,6 @@ spec:
         operator: "Exists"
     configMap:
       enabled: true
-      authentication_backend:
-        disable_reset_password: true
-        ldap:
-          implementation: custom
-          url: "ldap://openldap:1389"
-          username_attribute: uid
       access_control:
         default_policy: two_factor
       storage:
