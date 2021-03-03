@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.authelia.com
+      chart: authelia
+      version: 0.2.10
+      sourceRef:
+        kind: HelmRepository
+        name: authelia-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    domain: .homelab.tokyo
+    ingress:
+      enabled: true
+      tls:
+        enabled: true
+        secret: authelia-cert
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      subdomain: auth
+    pod:
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
+    configMap:
+      authentication_backend:
+        disable_reset_password: true
+        ldap:
+          implementation: custom
+          url: "ldap://openldap:1389"
+          username_attribute: uid
+      access_control:
+        default_policy: two_factor
+      storage:
+        local:
+          path: /config/db.sqlite3
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteMany
+      storageClass: longhorn
+  valuesFrom:
+  - kind: Secret
+    name: authelia-helm-values

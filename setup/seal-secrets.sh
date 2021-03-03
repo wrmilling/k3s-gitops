@@ -20,6 +20,7 @@ seal "flux-system-extra/discord-alerts/discord-webhook-url"
 seal 'kube-system/nginx/nginx-basic-auth-winston'
 seal 'kube-system/openldap/openldap-secrets'
 seal 'kube-system/registry-creds/registry-creds-secret'
+seal 'kube-system/authelia/authelia-helm-values'
 
 # cert-manager
 seal "cert-manager/cert-manager/route53-api-key"
