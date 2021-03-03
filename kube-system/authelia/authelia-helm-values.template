@@ -6,15 +6,11 @@ metadata:
 type: Opaque
 stringData:
   values.yaml: |
-    authentication_backend:
-      disable_reset_password: true
-      ldap:
-        implementation: custom
-        url: "ldap://openldap:1389"
-        username_attribute: uid
-        base_dn: ${LDAP_ROOT}
-        user: CN=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}
     configMap:
+      authentication_backend:
+        ldap:
+          base_dn: ${LDAP_ROOT}
+          user: CN=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}
       notifier:
         smtp:
           username: ${AUTHELIA_SMTP_USERNAME}
