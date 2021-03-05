@@ -39,12 +39,12 @@ spec:
       storage:
         local:
           path: /persistence/db.sqlite3
-    persistence:
-      enabled: true
-      mountPath: /persistence
-      accessModes:
-      - ReadWriteMany
-      storageClass: longhorn
+#     persistence:
+#       enabled: true
+#       mountPath: /persistence
+#       accessModes:
+#       - ReadWriteMany
+#       storageClass: longhorn
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
