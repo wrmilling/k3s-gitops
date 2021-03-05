@@ -1,16 +1,10 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: GitRepository
+kind: HelmRepository
 metadata:
   name: authelia-charts
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://github.com/WRMilling/authelia-chartrepo
-  ref:
-    branch: master
-  ignore: |
-    # exclude all
-    /*
-    # include charts directory
-    !/charts/
+  url: https://charts.authelia.com
+  timeout: 3m
