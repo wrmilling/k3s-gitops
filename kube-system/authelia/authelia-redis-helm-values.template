@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: authelia-postgres-helm-values
+  name: authelia-redis-helm-values
   namespace: kube-system
 type: Opaque
 stringData:

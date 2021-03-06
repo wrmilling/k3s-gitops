@@ -2,15 +2,15 @@ apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
   creationTimestamp: null
-  name: authelia-postgres-helm-values
+  name: authelia-redis-helm-values
   namespace: kube-system
 spec:
   encryptedData:
-    values.yaml: AgCVBtRM2hJ5YeWbhzh7yTmYDVRO7oowP4pzDw6Tuy1zjGe7KD+VSnJHKZIz+roevwUdAJcjQrG28YvM+uWO+FqwsFmcrs+l/uXqUVuoTZoMLrZkRmItJw7InsxylN+mTt6yMoVasuRLatVwk/2jA9nK9VzDcDCMv5CQJc4SNl5ZY/8AtTsY5GvqizmpqWrKB5EK9xNdQQZgm/Wwe96zcZuLZy/SU6V/mDBgfanYEy5qMb6Pqn4xhq32Mwhzf2zEHvOB79qi6bWSsl01AgC9YONadiBmZFRjFYlVRLDcWWx1iMOU74FekjzSRXDfEp+QBRtbxjQve9FmmFCAopbYY3B3aNIMnNEPw7QCXL+CGZFROVkB4/3IJb008w6gIk2XF5IVCaZmK2kSx8i1LyUPx9FD7eaAhoB3h4dXZlyLSmh0pTlNETQoRnrlCWNLkOeMvoNqOfPwoxBtZ+L978EG2zR4vIHHfETQB2jXCM8ktwMUuRmluD6G1TOveQA/OeFWg+8sK8Vs28pbwhKU+KF2aYci/s+M65veQJPEkzOxHwtFvBPkvun2WIh5ONkQL7VzRGr7mkgxI5/WkGC7Sc9wXPR7Psc0pPkkIhh5RGjkVv8zsR866aQ8mrDKMMQ8NKe4E5R8F706wra/tJcQtv8O1Ai7ItgxyJ0XlS0/gt9eUWQWkJb3iwHzrrOFIeAkG4fZI9dW+cao1b+73xNXhiCuCXtcHNPeC74Je7p6FgD4jgCGmJW8
+    values.yaml: AgBXco1MgVLiCidsGcpKiQ8djuoOPrn4CiQTRLLOMSMJQk6QtHUS47+wOLh2fXVgIbN7lbuZu3rvb4dxxAsq3+Qi2zjfJYbjNfowg6BKIzJVSkiWtzbFpUf/6EJuW7l+Pd55XCFnDFunPmHxlWswD4sGkJK+7T86S4Iczmguo63lv1cAXCV/b8ph4z4DLWxFeq8gl9t3/fjAvO/jZ/AeC9Qrfw6MHnKoJEv9dLBM1nytnQeutFMRmP2jaaDi5uNQtAT+EeL9lRP5tWqk+NEd/dUe1A2XPQyCp8KTATbzXLq89jFVrQtPQad8TxFa6nhlXpCnvfjo6VZc4RFcAiawLJHHF+Ka1e4muiAuDt1L+OLpjEx1LGXNR3Gryd7wirWahhJTy1374GzqRxPMouhBbp3LScOKUlEFAss6bRpv4Sn3CbcnEqxyonAPRPRORUNC9zjznULEzNvsy1nSnZnPh8nwLFI8zVb0g76cpe1ot/vKMoD8771adV+3WPUvkkxnv+d//zW7wGcxTVsDc81MiSdnK7nLJsoXWc/f3W2ZyjMl34GqsspLk8CoWYTrvc9v0aAyRqfIgb8KA/RGV4xKxgILRa1VJRLQ2PMuxRbfJ24oBlF8XDhLn2bN+fA7R4/ryMPD8lNtClZtyNpDwZDEcLNPSqM9u5N/WTUHC69kAe8+MYKKEhguOmDW9QcrthsBJuEUj25CQrpbbCp7b0HNQDamMIG3vqDMPxQqqzZfckzrGTq4
   template:
     metadata:
       creationTimestamp: null
-      name: authelia-postgres-helm-values
+      name: authelia-redis-helm-values
       namespace: kube-system
     type: Opaque
 
