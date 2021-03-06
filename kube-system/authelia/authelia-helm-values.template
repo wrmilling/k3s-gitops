@@ -36,3 +36,6 @@ stringData:
       storage:
         key: STORAGE_PASSWORD
         value: ${AUTHELIA_POSTGRES_AUTHELIA_PASSWORD}
+      redis:
+        key: REDIS_PASSWORD
+        value: ${AUTHELIA_REDIS_PASSWORD}

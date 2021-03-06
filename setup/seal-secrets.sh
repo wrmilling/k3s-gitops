@@ -22,6 +22,7 @@ seal 'kube-system/openldap/openldap-secrets'
 seal 'kube-system/registry-creds/registry-creds-secret'
 seal 'kube-system/authelia/authelia-helm-values'
 seal 'kube-system/authelia/authelia-postgres-helm-values'
+seal 'kube-system/authelia/authelia-redis-helm-values'
 
 # cert-manager
 seal "cert-manager/cert-manager/route53-api-key"

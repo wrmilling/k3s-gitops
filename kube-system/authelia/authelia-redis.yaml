@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia-redis
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnamis
+      chart: redis
+      version: 12.8.3
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    master:
+      persistence:
+        storageClass: "longhorn"
+        size: 1Gi
+    slave:
+      persistence:
+        storageClass: "longhorn"
+        size: 1Gi
+  valuesFrom:
+  - kind: Secret
+    name: authelia-redis-helm-values

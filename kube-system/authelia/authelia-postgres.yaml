@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://bitnami-labs.github.io/sealed-secrets
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: postgresql
       version: 10.3.11
       sourceRef:
