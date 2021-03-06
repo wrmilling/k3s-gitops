@@ -35,4 +35,4 @@ stringData:
         value: ${AUTHELIA_SMTP_PASSWORD}
       storage:
         key: STORAGE_PASSWORD
-        value: ${AUTHELIA_POSTGRES_PASSWORD}
+        value: ${AUTHELIA_POSTGRES_AUTHELIA_PASSWORD}
