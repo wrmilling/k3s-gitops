@@ -38,7 +38,7 @@ spec:
         default_policy: two_factor
       storage:
         postgres:
-          host: authelia-postgres
+          host: authelia-postgres-postgresql
           port: 5432
           database: authelia
           username: authelia
