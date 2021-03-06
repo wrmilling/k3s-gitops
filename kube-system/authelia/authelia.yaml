@@ -37,8 +37,14 @@ spec:
       access_control:
         default_policy: two_factor
       storage:
-        local:
-          path: /persistence/db.sqlite3
+        postgres:
+          host: authelia-postgres
+          port: 5432
+          database: authelia
+          username: authelia
+          sslmode: disable
+        # local:
+        #   path: /persistence/db.sqlite3
 #     persistence:
 #       enabled: true
 #       mountPath: /persistence
