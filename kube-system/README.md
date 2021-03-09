@@ -1,5 +1,19 @@
 # `kube-system` Namespace
 
+## authelia
+
+This is probably overly-complicated for what I actually need and I will probably simplify it in the future. Authelia provides SSO capabilities for the cluster and is integrated with nginx-ingress.
+
+* [authelia/authelia-helm-values.template](authelia/authelia-helm-values.template) - Template used to create helm value secrets for authelia via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-helm-values.yaml](authelia/authelia-helm-values.yaml) - Encrypted secrets for Authelia
+* [authelia/authelia-postgres-helm-values.template](authelia/authelia-postgres-helm-values.template) - Template used to create helm value secrets for postgres via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-postgres-helm-values.yaml](authelia/authelia-postgres-helm-values.yaml) - Encrypted secrets for Postgres
+* [authelia/authelia-postgres.yaml](authelia/authelia-postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
+* [authelia/authelia-redis-helm-values.template](authelia/authelia-redis-helm-values.template) - Template used to create helm value secrets for redis via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-redis-helm-values.yaml](authelia/authelia-redis-helm-values.yaml) - Encrypted secrets for Redis
+* [authelia/authelia-redis.yaml](authelia/authelia-redis.yaml) - Redis deployment for use by Authelia for sessions
+* [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
+
 ## metallb
 
 [MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below.
