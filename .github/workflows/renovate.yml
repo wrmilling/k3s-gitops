@@ -1,0 +1,37 @@
+name: renovate
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 */6 * * *'
+
+jobs:
+  helm-releases:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.PAT }}
+        fetch-depth: 1
+
+    - name: Install yq
+      run: |
+        sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64
+        sudo chmod +x /usr/local/bin/yq
+
+    - name: Create HelmRelease annotations
+      run: ./.github/create-helmrelease-annotations.sh
+
+    - name: Create pull request for HelmRelease annotations
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: helm-release-annotations
+        title: "[renovate] create helmrelease annotations [ci-skip]"
+        signoff: true
+        committer: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+        author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+        commit-message: Create renovatebot helmrelease annotations
+        body: |
+          Signed-off-by: Winston R. Milling <WRMilling@users.noreply.github.com>
+        labels: renovate/helm-release-annotations

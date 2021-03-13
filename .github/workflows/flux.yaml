@@ -1,0 +1,39 @@
+name: update-flux
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  components:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Setup Flux CLI
+        uses: billimek/flux2/action@isolate_flux_binary
+      - name: Update Flux components
+        id: update
+        run: |
+          UGLY_VERSION="$(bin/flux -v)"
+          VERSION="v${UGLY_VERSION#*flux version }"
+          bin/flux install --version="${VERSION}" \
+            --arch=amd64 \
+            --export > ./flux-system/gotk-components.yaml
+          echo "::set-output name=flux_version::$VERSION"
+      - name: Create pull request for Flux update
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: "flux/update-${{ steps.update.outputs.flux_version }}"
+          delete-branch: true
+          title: "chore(deps): update flux components to ${{ steps.update.outputs.flux_version }} [ci-skip]"
+          signoff: true
+          committer: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          assignees: "wrmilling"
+          commit-message: "chore(deps): update flux components to ${{ steps.update.outputs.flux_version }} [ci-skip]"
+          body: |
+            Release notes: https://github.com/fluxcd/flux2/releases/tag/${{ steps.update.outputs.flux_version }}
+          labels: flux/update
