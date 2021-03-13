@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: authelia-postgres-helm-values
+  namespace: kube-system
+spec:
+  encryptedData:
+    values.yaml: AgAkRYvisuY1zjl0+bXy7+4tRV1k4V1CPdEQjqfJ8AZQxOuCVCMNYI2BKw4LP8w3UmwJqNYH8HT3PJGOZdH0+17lujvRGhQLif13hlu/PP5XsKoPXu8c1t+M9crZjlIjzlKQW2LvlW2nDTE3QKzAtNN/ZvM2Vev0SMbrR2plq7//mTTFgeDDRmdBuXemNTXE8HeKOWIyQ1wJUfa1iW0+SyMsB8Bxld/EoTw4BVhYsv5OvJu5IOB5rJ3O+dWS1OEJFMRaOcCR0+5/QaCSlyg18NQhiDuOxnB3tMGX1RuX4/z8fwoxJVvYBTNAC8xkfpCph5s5s3G+/2L78QSyrMaHN11annsGgLbQEG7YPVXB5eYYTklj/n1Un0Yccs38b6FMPJqrMf1mWHxnfx3l/JmYpUErg7aWM7ah88KLP4ViU7OR/c9tz3LZhF/qM0yt2pCFLLtlyyvfxAFFnxJyUFEd9abkfJZpsVf+csa/fdOELYT5sLpPEno3EkO9Zd6+hTjUnqNObPrXYj7WmCL+en+QBXsmfrkgg+1zOs9tW80vWgbpuu0XWyYTFO8SX5yLgYgj4Mo0N8hnFfrU1Is9W84KRmQLmiRmN0X6FwTNnGqcedaaioQdo4vm23tBuOnEkQIgmmDYyL09GQFsLcyYByvu8YjcLCK8ePs/QRfasYxl7XAQWb5vyOtMGQChXUSAoNYq+AF/mzER/v7B7zo/hIQPLe5q5IE6sDzxI+SKPJwNBe5PkD/hQgPXXk0kZlbAvsaZ8myPcbzq7UPW9wSBGaT5B98yQr0XO/sQSXrO+ZhrtILCPYRODy6pCQbdJGWIJPQdB/k=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: authelia-postgres-helm-values
+      namespace: kube-system
+    type: Opaque
+

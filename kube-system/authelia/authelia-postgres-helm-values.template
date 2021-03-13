@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authelia-postgres-helm-values
+  namespace: kube-system
+type: Opaque
+stringData:
+  values.yaml: |
+    postgresqlPostgresPassword: ${AUTHELIA_POSTGRES_POSTGRES_PASSWORD}
+    postgresqlPassword: ${AUTHELIA_POSTGRES_AUTHELIA_PASSWORD}

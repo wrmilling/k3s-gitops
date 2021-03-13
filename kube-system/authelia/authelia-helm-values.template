@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authelia-helm-values
+  namespace: kube-system
+type: Opaque
+stringData:
+  values.yaml: |
+    configMap:
+      authentication_backend:
+        disable_reset_password: true
+        ldap:
+          implementation: custom
+          url: "ldap://openldap:1389"
+          username_attribute: uid
+          base_dn: ${LDAP_ROOT}
+          user: CN=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}
+          users_filter: "(&({username_attribute}={input})(objectClass=person))"
+          groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
+      notifier:
+        smtp:
+          username: ${AUTHELIA_SMTP_USERNAME}
+          host: smtp.gmail.com
+          port: 465
+          sender: ${AUTHELIA_SMTP_USERNAME}
+          identifier: ${AUTHELIA_SMTP_IDENT}
+          subject: "[Authelia] {title}"
+          startup_check_address: ${AUTHELIA_SMTP_USERNAME}
+    secret:
+      ldap:
+        key: LDAP_PASSWORD
+        value: ${LDAP_ADMIN_PASSWORD}
+      smtp:
+        key: SMTP_PASSWORD
+        value: ${AUTHELIA_SMTP_PASSWORD}
+      storage:
+        key: STORAGE_PASSWORD
+        value: ${AUTHELIA_POSTGRES_AUTHELIA_PASSWORD}
+      redis:
+        key: REDIS_PASSWORD
+        value: ${AUTHELIA_REDIS_PASSWORD}
