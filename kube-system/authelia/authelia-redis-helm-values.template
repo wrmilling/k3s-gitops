@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: authelia-redis-helm-values
-  namespace: kube-system
-type: Opaque
-stringData:
-  values.yaml: |
-    password: ${AUTHELIA_REDIS_PASSWORD}
