@@ -25,6 +25,7 @@ spec:
       defaultReplicaCount: 3
       createDefaultDiskLabeledNodes: true
       storageMinimalAvailablePercentage: "10"
+      taintToleration: arm=true:NoExecute
       backupTarget: nfs://10.10.10.31:/mnt/tardisk/k3s
     ingress:
       enabled: true
