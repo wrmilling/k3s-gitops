@@ -60,8 +60,8 @@ spec:
     # image: rancher/k3s-upgrade:v1.17.4-k3s1
     image: rancher/k3s-upgrade
     args: ["prepare", "k3s-server"]
-  drain:
-    force: true
-    skipWaitForDeleteTimeout: 60 # set this to prevent upgrades from hanging on small clusters since k8s v1.18
+  # drain:
+  #   force: true
+  #   skipWaitForDeleteTimeout: 60 # set this to prevent upgrades from hanging on small clusters since k8s v1.18
   upgrade:
     image: rancher/k3s-upgrade
