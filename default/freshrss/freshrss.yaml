@@ -60,4 +60,4 @@ spec:
         skipuninstall: true
     resources:
       limits:
-        memory: 512Mi
+        memory: 513Mi
