@@ -46,8 +46,8 @@ spec:
         paths:
         - path: /
           pathType: Prefix
-      # tls:
-      # - secretName: freshrss-cert
+      tls:
+      - secretName: freshrss-cert
     persistence:
       config:
         enabled: true
