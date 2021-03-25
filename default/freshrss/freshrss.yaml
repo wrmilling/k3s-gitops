@@ -47,7 +47,9 @@ spec:
         - path: /
           pathType: Prefix
       tls:
-      - secretName: freshrss-cert
+      - hosts:
+        - rss.k.homelab.tokyo
+        secretName: freshrss-cert
     persistence:
       config:
         enabled: true
