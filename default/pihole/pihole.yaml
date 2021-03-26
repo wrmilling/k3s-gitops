@@ -1,61 +1,61 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: pihole
-#   namespace: default
-# spec:
-#   interval: 5m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
-#       chart: pihole
-#       version: 1.8.30
-#       sourceRef:
-#         kind: HelmRepository
-#         name: mojo2600-charts
-#         namespace: flux-system
-#       interval: 5m
-#   values:
-#     dnsmasq:
-#       customDnsEntries:
-#         - address=/pihole.k.homelab.tokyo/10.10.40.61
-#     # doh:
-#     #   enabled: true
-#     #   name: "cloudflared"
-#     #   repository: "crazymax/cloudflared"
-#     #   tag: latest
-#     serviceDns:
-#       type: LoadBalancer
-#       externalTrafficPolicy: Local
-#       loadBalancerIP: 10.10.40.61
-#       annotations:
-#         metallb.universe.tf/allow-shared-ip: pihole-svc
-#     serviceWeb:
-#       type: LoadBalancer
-#       externalTrafficPolicy: Local
-#       loadBalancerIP: 10.10.40.61
-#       annotations:
-#         metallb.universe.tf/allow-shared-ip: pihole-svc
-#     virtualHost: pihole.k.homelab.tokyo
-#     persistentVolumeClaim:
-#       enabled: true
-#       storageClass: longhorn
-#       size: "500Mi"
-#       accessModes:
-#         - ReadWriteOnce
-#     tolerations:
-#       - key: "arm"
-#         operator: "Exists"
-#     affinity:
-#       nodeAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#           nodeSelectorTerms:
-#           - matchExpressions:
-#             - key: kubernetes.io/arch
-#               operator: In
-#               values:
-#               - "arm64"
-#     admin:
-#       existingSecret: "pihole-secret"
-#       passwordKey: "password"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pihole
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
+      chart: pihole
+      version: 1.8.30
+      sourceRef:
+        kind: HelmRepository
+        name: mojo2600-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    dnsmasq:
+      customDnsEntries:
+        - address=/pihole.k.homelab.tokyo/10.10.40.61
+    # doh:
+    #   enabled: true
+    #   name: "cloudflared"
+    #   repository: "crazymax/cloudflared"
+    #   tag: latest
+    serviceDns:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: 10.10.40.61
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
+    serviceWeb:
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: 10.10.40.61
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
+    virtualHost: pihole.k.homelab.tokyo
+    persistentVolumeClaim:
+      enabled: true
+      storageClass: longhorn
+      size: "500Mi"
+      accessModes:
+        - ReadWriteOnce
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - "arm64"
+    admin:
+      existingSecret: "pihole-secret"
+      passwordKey: "password"
