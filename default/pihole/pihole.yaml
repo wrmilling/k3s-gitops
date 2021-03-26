@@ -32,7 +32,9 @@ spec:
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
-      type: Ingress
+      type: ClusterIP
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
     virtualHost: pihole.k.homelab.tokyo
     ingress:
       enabled: true
