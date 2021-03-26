@@ -23,11 +23,11 @@ spec:
         - 10.10.40.60 pihole.k.homelab.tokyo
         - 10.10.40.60 longhorn.k.homelab.tokyo
         - 10.10.40.61 pihole-direct.k.homelab.tokyo
-    # doh:
-    #   enabled: true
-    #   name: "cloudflared"
-    #   repository: "crazymax/cloudflared"
-    #   tag: latest
+    doh:
+      enabled: true
+      name: "cloudflared"
+      repository: "crazymax/cloudflared"
+      tag: latest
     serviceDns:
       type: LoadBalancer
       externalTrafficPolicy: Local
