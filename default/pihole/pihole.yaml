@@ -57,5 +57,5 @@ spec:
               values:
               - "arm64"
     admin:
-      existingSecret: "pihole"
+      existingSecret: "pihole-secret"
       passwordKey: "password"
