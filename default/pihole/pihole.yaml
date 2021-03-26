@@ -20,6 +20,7 @@ spec:
     dnsmasq:
       customDnsEntries:
         - address=/pihole.k.homelab.tokyo/10.10.40.61
+        - address=/longhorn.k.homelab.tokyo/10.10.40.60
     # doh:
     #   enabled: true
     #   name: "cloudflared"
