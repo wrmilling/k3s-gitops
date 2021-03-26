@@ -29,6 +29,8 @@ spec:
       type: LoadBalancer
       externalTrafficPolicy: Local
       loadBalancerIP: 10.10.40.61
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
       type: Ingress
     virtualHost: pihole.k.homelab.tokyo
