@@ -19,7 +19,7 @@ spec:
   values:
     dnsmasq:
       customDnsEntries:
-        - address=/pihole.homelab.tokyo/10.10.40.60
+        - address=/pihole.k.homelab.tokyo/10.10.40.61
     # doh:
     #   enabled: true
     #   name: "cloudflared"
@@ -32,25 +32,12 @@ spec:
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
-      type: ClusterIP
+      type: LoadBalancer
+      externalTrafficPolicy: Local
+      loadBalancerIP: 10.10.40.61
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     virtualHost: pihole.k.homelab.tokyo
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-        nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
-      path: /
-      hosts:
-        - pihole.k.homelab.tokyo
-      tls:
-        - secretName: pihole-cert
-          hosts:
-            - pihole.k.homelab.tokyo
     persistentVolumeClaim:
       enabled: true
       storageClass: longhorn
