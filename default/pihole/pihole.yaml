@@ -50,8 +50,7 @@ spec:
       tls:
         - secretName: pihole-cert
           hosts:
-            - pihole.k.homelab.toyko
-
+            - pihole.k.homelab.tokyo
     persistentVolumeClaim:
       enabled: true
       storageClass: longhorn
