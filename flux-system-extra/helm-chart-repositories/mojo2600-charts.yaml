@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: mojo2600-charts
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://mojo2600.github.io/pihole-kubernetes
+  timeout: 3m
+
