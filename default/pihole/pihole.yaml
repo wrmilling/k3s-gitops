@@ -17,12 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    dnsmasq:
-      additionalHostsEntries:
-        - 10.10.40.60 k.homelab.tokyo
-        - 10.10.40.60 pihole.k.homelab.tokyo
-        - 10.10.40.60 longhorn.k.homelab.tokyo
-        - 10.10.40.61 pihole-direct.k.homelab.tokyo
     doh:
       enabled: true
       name: "cloudflared"
@@ -77,3 +71,6 @@ spec:
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
+  valuesFrom:
+  - kind: Secret
+    name: pihole-helm-values
