@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: kured-helm-values
+  namespace: kube-system
+spec:
+  encryptedData:
+    values.yaml: AgB4wPuBZdIl3FtYL+zYbk9DHQfN8utweFKMYdvKWi3E+ph0U2rGWPbCu5hXpeVPSiZ2oRREy+BQu0CU4/6bS1Pb3tJjNjTsDFSIVm/odaWS/dAZgtwNHQ6phoDiHhEWaGtAIFmEHzuOiyGncBfpAoTvcTrs6jhW0ft8Hs8HX2oEOplgHQ3eQUIobIHi9buyEtyr2uf4qmhjF2RfO6ELM4fB25whHCPqBPjsZcvlMOMZzWNZtapowdBJNE2jLZ/CpMlnRIX5GXwi6cQULEhjvN05skJtzAVnndRFEhodWyHHJVOPaDmDHbMEP7/FSmdVg0qVuE7QOy5WAPn6skUkgdvNE2aJ61feqqB+PiZdqHoyKAIXXKzoZwPOiw3jky1OF6FdxyFRxRZMHxHZxK759zFMVrU52fjRogu/FNFUjVNF5zexjvexTHtARa4m5VYw1+I77IlIncewDadFZvw5U26OBbgCZV6wCikhDC2xY193tPWlYHRl5QYCSHPM0I8QqHCzSgZ1jYzKS9MRh3tC929RPZNqtlsKoM5K3xsblhqHGdSv/swBNSnwRImKeT9iBlxgiLa64bntm40+RCOLLIEd80iXXLIbi1c/QTTSQhSv3VwqF7gYIvI2drjxt5H1wthq29gdiuUbbrph5f4s/j7dX/pwxbjkhYRGVrWxXV9TOQ00tT9CErGokyuIIAZ3yF6erVNf4PZLIJZDJo1xwWTOPbvbZWL+zkYd4Tf24A2iA2UoqScwr8CB455Q5e6kAFFdXcvMlqRpCdK30VImUws8chx0BvBYV3CstM7X0X714qvGCj9e0SBggmTkeskorbH7/JfyKEzfoqHkZp2aSTfq6s4X4TsxrMSdZr5MLkcMB6mLzAGg8Wpo60m4qhiDeoqz6v6e8rqL
+  template:
+    metadata:
+      creationTimestamp: null
+      name: kured-helm-values
+      namespace: kube-system
+    type: Opaque
+
