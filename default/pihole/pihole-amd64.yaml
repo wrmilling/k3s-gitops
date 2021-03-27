@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pihole
+  name: pihole-amd64
   namespace: default
 spec:
   interval: 5m
@@ -25,16 +25,16 @@ spec:
     serviceDns:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
+      loadBalancerIP: 10.10.40.62
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
+      loadBalancerIP: 10.10.40.62
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
-    virtualHost: pihole.k.homelab.tokyo
+    virtualHost: pihole2.k.homelab.tokyo
     ingress:
       enabled: true
       annotations:
@@ -45,29 +45,17 @@ spec:
         nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
       path: /
       hosts:
-        - pihole.k.homelab.tokyo
+        - pihole2.k.homelab.tokyo
       tls:
-        - secretName: pihole-cert
+        - secretName: pihole2-cert
           hosts:
-            - pihole.k.homelab.tokyo
+            - pihole2.k.homelab.tokyo
     persistentVolumeClaim:
       enabled: true
       storageClass: longhorn
       size: "500Mi"
       accessModes:
         - ReadWriteOnce
-    tolerations:
-      - key: "arm"
-        operator: "Exists"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - "arm64"
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
