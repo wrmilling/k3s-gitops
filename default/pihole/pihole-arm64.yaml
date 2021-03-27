@@ -27,13 +27,13 @@ spec:
       externalTrafficPolicy: Local
       loadBalancerIP: 10.10.40.61
       annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc
+        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
     serviceWeb:
       type: LoadBalancer
       externalTrafficPolicy: Local
       loadBalancerIP: 10.10.40.61
       annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc
+        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
     virtualHost: pihole.k.homelab.tokyo
     ingress:
       enabled: true
