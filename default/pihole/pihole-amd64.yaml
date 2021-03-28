@@ -1,64 +1,64 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: pihole-amd64
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
-      chart: pihole
-      version: 1.8.30
-      sourceRef:
-        kind: HelmRepository
-        name: mojo2600-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    doh:
-      enabled: true
-      name: "cloudflared"
-      repository: "crazymax/cloudflared"
-      tag: latest
-    serviceDns:
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.62
-      annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-amd64
-    serviceWeb:
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.62
-      annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-amd64
-    virtualHost: pihole2.k.homelab.tokyo
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-        nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
-      path: /
-      hosts:
-        - pihole2.k.homelab.tokyo
-      tls:
-        - secretName: pihole2-cert
-          hosts:
-            - pihole2.k.homelab.tokyo
-    persistentVolumeClaim:
-      enabled: true
-      storageClass: longhorn
-      size: "500Mi"
-      accessModes:
-        - ReadWriteOnce
-    admin:
-      existingSecret: "pihole-secret"
-      passwordKey: "password"
-  valuesFrom:
-  - kind: Secret
-    name: pihole-helm-values
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: pihole-amd64
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
+#       chart: pihole
+#       version: 1.8.30
+#       sourceRef:
+#         kind: HelmRepository
+#         name: mojo2600-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     doh:
+#       enabled: true
+#       name: "cloudflared"
+#       repository: "crazymax/cloudflared"
+#       tag: latest
+#     serviceDns:
+#       type: LoadBalancer
+#       externalTrafficPolicy: Local
+#       loadBalancerIP: 10.10.40.62
+#       annotations:
+#         metallb.universe.tf/allow-shared-ip: pihole-svc-amd64
+#     serviceWeb:
+#       type: LoadBalancer
+#       externalTrafficPolicy: Local
+#       loadBalancerIP: 10.10.40.62
+#       annotations:
+#         metallb.universe.tf/allow-shared-ip: pihole-svc-amd64
+#     virtualHost: pihole2.k.homelab.tokyo
+#     ingress:
+#       enabled: true
+#       annotations:
+#         kubernetes.io/ingress.class: nginx
+#         kubernetes.io/tls-acme: "true"
+#         cert-manager.io/cluster-issuer: letsencrypt-prod
+#         nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
+#         nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+#       path: /
+#       hosts:
+#         - pihole2.k.homelab.tokyo
+#       tls:
+#         - secretName: pihole2-cert
+#           hosts:
+#             - pihole2.k.homelab.tokyo
+#     persistentVolumeClaim:
+#       enabled: true
+#       storageClass: longhorn
+#       size: "500Mi"
+#       accessModes:
+#         - ReadWriteOnce
+#     admin:
+#       existingSecret: "pihole-secret"
+#       passwordKey: "password"
+#   valuesFrom:
+#   - kind: Secret
+#     name: pihole-helm-values
