@@ -17,6 +17,7 @@ seal "cert-manager/cert-manager/route53-api-key"
 
 # default
 seal 'default/pihole/pihole-secret'
+seal 'default/minio/minio-helm-values'
 seal 'default/pihole/pihole-helm-values'
 
 # flux-system
