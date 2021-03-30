@@ -38,6 +38,7 @@ spec:
       tls:
       - hosts:
         - minio.k.homelab.tokyo
+        secretName: minio-cert
     tolerations:
     - key: "arm"
       operator: "Exists"
