@@ -8,4 +8,3 @@ spec:
   interval: 1h
   url: https://helm.min.io/
   timeout: 3m
-
