@@ -50,9 +50,9 @@ spec:
         memory: 1000Mi
     securityContext:
       enabled: false
-    # metrics:
-    #   serviceMonitor:
-    #     enabled: true
+    metrics:
+      serviceMonitor:
+        enabled: true
     nasgateway:
       enabled: true
       # Number of parallel instances
