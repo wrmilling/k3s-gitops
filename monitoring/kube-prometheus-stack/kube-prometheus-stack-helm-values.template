@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: thanos-helm-values
+  namespace: monitoring
+type: Opaque
+stringData:
+  values.yaml: |
+    alertmanager:
+      config:
+        global:
+          slack_api_url: ${DISCORD_ALERTMANAGER_WEBHOOK_URL}
+        receivers:
+        - name: 'null'
+        - name: 'slack-notifications'
+          slack_configs:
+            - channel: '#notifications'
+              icon_url: https://avatars3.githubusercontent.com/u/3380462
+              username: 'Alertmanager'
+              send_resolved: true
+              title: |-
+                [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+              text: >-
+                {{ range .Alerts -}}
+                  *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+
+                {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
+
+                *Details:*
+                  {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                  {{ end }}
+                {{ end }}
+        - name: 'pagerduty'
+          pagerduty_configs:
+            - routing_key: ${PD_TOKEN}
+              description: |-
+                {{ template "pagerduty.custom.description" . }}
+

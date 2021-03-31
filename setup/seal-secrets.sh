@@ -35,5 +35,5 @@ seal 'kube-system/kured/kured-helm-values'
 
 # monitoring
 seal "monitoring/botkube/botkube-helm-values"
-# seal "monitoring/kube-prometheus-stack/kube-prometheus-stack-helm-values"
+seal "monitoring/kube-prometheus-stack/kube-prometheus-stack-helm-values"
 seal "monitoring/thanos/thanos-helm-values"
