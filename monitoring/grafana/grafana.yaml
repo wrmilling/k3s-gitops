@@ -35,7 +35,7 @@ spec:
       GF_LOG_FILTERS: rendering:debug
     ldap:
       enabled: true
-      existingSecret: ldap-toml-values
+      existingSecret: grafana-ldap-toml
     ingress:
       enabled: true
       annotations:
