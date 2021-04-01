@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-ldap-toml
+  namespace: monitoring
+type: Opaque
+stringData:
+  ldap-toml: |-
+    [[servers]]
+    host = "openldap.kube-system.svc"
+    port = 1389
+    use_ssl = false
+    start_tls = false
+    ssl_skip_verify = true
+
+    bind_dn = "cn=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}"
+    bind_password = "${LDAP_ADMIN_PASSWORD}"
+    search_filter = "(cn=%s)"
+    search_base_dns = ["ou=Users,${LDAP_ROOT}"]
+    [servers.attributes]
+    name = "givenName"
+    surname = "sn"
+    username = "cn"
+    member_of = "memberOf"
+    email =  "email"
