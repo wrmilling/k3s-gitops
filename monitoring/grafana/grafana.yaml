@@ -148,8 +148,8 @@ spec:
     grafana.ini:
       server:
         root_url: "https://grafana.k.homelab.tokyo"
-      security:
-      admin_user: "winston@milli.ng"
+      # security:
+      #   admin_user: "winston@milli.ng"
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
