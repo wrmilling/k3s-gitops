@@ -30,13 +30,13 @@ spec:
         exernalIPs:
         - 10.10.40.60
         externalTrafficPolicy: Local
-      # metrics:
-      #   enabled: true
-      #   serviceMonitor:
-      #     enabled: true
-      #     namespace: kube-system
-      #   prometheusRule:
-      #     enabled: false
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          namespace: kube-system
+        prometheusRule:
+          enabled: false
       tolerations:
       - key: "arm"
         operator: "Exists"
