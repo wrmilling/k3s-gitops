@@ -12,6 +12,16 @@ Provides configuration for all the monitoring applications used on the cluster.
 * [botkube/botkube-helm-values.template](botkube/botkube-helm-values.template) - Template used to create a secret set of HelmRelease values via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [botkube/botkube-helm-values.yaml](botkube/botkube-helm-values.yaml) - Encrypted secret configuration values for botkube
 
+## grafana
+
+[Grafana](https://grafana.com/) is the dashboarding software backed by Prometheus, InfluxDB, and others for visualizing metrics and data.
+
+* [grafana/dashboards/](grafana/dashboards/) - Dashboard definitions for Grafana
+* [grafana/grafana-helm-values.template](grafana/grafana-helm-values.template) - Template used to create a secret set of HelmRelease values via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [grafana/grafana-helm-values.yaml](grafana/grafana-helm-values.yaml) - Encrypted HelmRelease values for Grafana
+* [grafana/grafana-ldap-toml.template](grafana/grafana-ldap-toml.template) - Template used to create a secret for the ldap.toml values used by grafana via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [grafana/grafana-ldap-toml.yaml](grafana/grafana-ldap-toml.yaml) - Encrypted ldap.toml secret used by Grafana
+* [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
 
 ## kube-prometheus-stack
 
