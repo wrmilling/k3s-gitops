@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    monitoring:
+      podMonitor:
+        enabled: true
     doh:
       enabled: true
       name: "cloudflared"
