@@ -17,6 +17,19 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    monitoring:
+      podMonitor:
+        enabled: true
+      sidecar:
+        enabled: true
+        image:
+          pullPolicy: "IfNotPresent"
+          repository: "ekofr/pihole-exporter"
+          tag: "v0.0.11"
+          port: 9617
+        resources:
+          limits:
+            memory: "128Mi"
     doh:
       enabled: true
       name: "cloudflared"
