@@ -35,4 +35,10 @@ stringData:
             - routing_key: ${PD_TOKEN}
               description: |-
                 {{ template "pagerduty.custom.description" . }}
-
+    prometheus:
+      prometheusSpec:
+        additionalScrapeConfigs:
+        - job_name: 'node'
+          static_configs:
+          - targets:
+            - destiny:9100
