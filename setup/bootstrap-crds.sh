@@ -14,3 +14,4 @@ kubectl apply -f "${REPO_ROOT}"/kube-system/registry-creds/registry-creds-crd.ya
 
 echo "Applying Prometheus CRD"
 kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
+kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.46.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml

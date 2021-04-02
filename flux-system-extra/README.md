@@ -25,3 +25,7 @@ Basic discord alerts from flux to my private discord channel.
 ## helm-chart-repositories
 
 A yaml for each of the chart repositories used by HelmReleases in this repo.
+
+## monitoring
+
+* [monitoring/flux-podmonitors.yaml](monitoring/flux-podmonitors.yaml) - PodMonitors to export metrics from Flux to Prometheus for use in Grafana
