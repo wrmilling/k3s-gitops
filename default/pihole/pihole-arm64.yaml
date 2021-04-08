@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
       chart: pihole
-      version: 1.8.33
+      version: 1.8.34
       sourceRef:
         kind: HelmRepository
         name: mojo2600-charts
