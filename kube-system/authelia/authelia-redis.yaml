@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    configmap: |-
+      # Add an ACL File configuration to allow for ACL based auth (required by Authelia helm chart now)
+      aclfile /etc/redis/users.acl
     master:
       persistence:
         storageClass: "longhorn"
@@ -25,6 +28,14 @@ spec:
       persistence:
         storageClass: "longhorn"
         size: 1Gi
+    extraVolumes:
+      - name: aclfile
+        secret:
+          secretName: authelia-redis-aclfile
+    extraVolumeMounts:
+      - name: secret-volume
+        readOnly: true
+        mountPath: "/etc/redis"
   valuesFrom:
   - kind: Secret
     name: authelia-redis-helm-values

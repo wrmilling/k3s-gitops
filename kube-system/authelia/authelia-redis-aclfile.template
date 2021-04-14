@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authelia-redis-aclfile
+  namespace: kube-system
+type: Opaque
+stringData:
+  users.acl: |
+    user ${AUTHELIA_REDIS_USERNAME} allkeys allcommands allchannels on >${AUTHELIA_REDIS_PASSWORD}

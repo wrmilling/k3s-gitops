@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: authelia-redis-aclfile
+  namespace: kube-system
+spec:
+  encryptedData:
+    users.acl: AgBzcgWFQ3rJ+rR4vYnFDCXngQV2MFoCno6rfRm6FlQ5InDezJZou6dpGDZ2Dad1VHOHBU2RoJ5JqZkjIk7L+1+QGW6X7AM945TM9JoTJRSMg/JHICapS1hY5PiSwQC9LExIrcl8sJJDzmUK6nPEUEegv60bPIMzJdUfKly+c7QMtmmSszyRvaYIk1jXzc4/5q4gXkmgkcA2yHDZej4e4cWGrrAa7tQ4dCPcfFdFlua7bBQUej3GZpNm2N1BtnxcNiduPaYO/2JwVAy+5r+PtrMpT4lXUfRuzEhuWPkJ4iRhyJTERYyJ6LWyAHvx9DdcI23eopFVsG4YItdm7LjEDxhi5jubRSypRhRFNGBTx8ehNsaU8Y9ZsF/aUrc54FRYZNif9cHlTOUCDOAggVzoc1/sGlDB9mwSY/5rktB6SScHLID+aD7TxDnISKjQXrLCEisuPp7ZGn7jvoF7WRtgyF0XXpAN4j+mehVleGho2wSJP5ivjmONb9U0lmPdbeHtRoZwsqMpzwZP2wkUMFwEPI8MQFhgJ2W4ykud4iU5HSZDztZBohVFF9gDLtEj7JOUJOQouTnnwozJhnN83uVorWPgW/NgAHH8tt29cbS1+AP+RRjZtSqRk+dNT+7mplntpOXG6AMHR1OtcjJ7rnOvcU20BEmyjGTl+5H+6YYSHGYsJHeM2fgM0zIzAGWcq+WMVG0Z/Huq6LDV6m0K76jw6Quk1x2dThllQUbx0v4sZMUnSXRb1h/o2FFQskzrhblRWa7jyaTUhOQmlV4SyzUVbFibQHCCz7Oc3VXRXg==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: authelia-redis-aclfile
+      namespace: kube-system
+    type: Opaque
+
