@@ -48,6 +48,7 @@ spec:
         redis:
           enabled: true
           enabledSecret: true
+          username: ""
           host: authelia-redis-master
           port: 6379
           database_index: 0
