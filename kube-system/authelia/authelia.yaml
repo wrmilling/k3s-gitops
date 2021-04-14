@@ -48,6 +48,8 @@ spec:
           host: authelia-redis-master
           port: 6379
           database_index: 0
+      duo_api:
+        enabled: false
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
