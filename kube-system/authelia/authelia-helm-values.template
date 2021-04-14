@@ -27,15 +27,4 @@ stringData:
           subject: "[Authelia] {title}"
           startup_check_address: ${AUTHELIA_SMTP_USERNAME}
     secret:
-      ldap:
-        key: LDAP_PASSWORD
-        value: ${LDAP_ADMIN_PASSWORD}
-      smtp:
-        key: SMTP_PASSWORD
-        value: ${AUTHELIA_SMTP_PASSWORD}
-      storage:
-        key: STORAGE_PASSWORD
-        value: ${AUTHELIA_POSTGRES_AUTHELIA_PASSWORD}
-      redis:
-        key: REDIS_PASSWORD
-        value: ${AUTHELIA_REDIS_PASSWORD}
+      existingSecret: "authelia-secret"
