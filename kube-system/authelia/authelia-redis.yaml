@@ -33,7 +33,7 @@ spec:
         secret:
           secretName: authelia-redis-aclfile
     extraVolumeMounts:
-      - name: secret-volume
+      - name: aclfile
         readOnly: true
         mountPath: "/etc/redis"
   valuesFrom:
