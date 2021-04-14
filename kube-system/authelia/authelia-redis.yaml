@@ -19,7 +19,7 @@ spec:
   values:
     configmap: |-
       # Add an ACL File configuration to allow for ACL based auth (required by Authelia helm chart now)
-      aclfile /etc/redis/users.acl
+      aclfile /etc/acl/users.acl
     master:
       persistence:
         storageClass: "longhorn"
@@ -31,7 +31,7 @@ spec:
       extraVolumeMounts:
         - name: aclfile
           readOnly: true
-          mountPath: "/etc/redis"
+          mountPath: "/etc/acl"
     slave:
       persistence:
         storageClass: "longhorn"
@@ -43,7 +43,7 @@ spec:
       extraVolumeMounts:
         - name: aclfile
           readOnly: true
-          mountPath: "/etc/redis"
+          mountPath: "/etc/acl"
   valuesFrom:
   - kind: Secret
     name: authelia-redis-helm-values
