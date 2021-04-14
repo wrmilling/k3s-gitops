@@ -20,7 +20,7 @@ stringData:
       notifier:
         smtp:
           enabled: true
-          enabledSecret: true
+          # enabledSecret: true
           username: ${AUTHELIA_SMTP_USERNAME}
           host: smtp.gmail.com
           port: 465

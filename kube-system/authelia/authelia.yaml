@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
-      version: 0.3.9
+      version: 0.2.15
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -47,7 +47,7 @@ spec:
       session:
         redis:
           enabled: true
-          enabledSecret: true
+          # enabledSecret: true
           username: ""
           host: authelia-redis-master
           port: 6379
