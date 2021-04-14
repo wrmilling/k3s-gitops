@@ -19,6 +19,8 @@ stringData:
           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
       notifier:
         smtp:
+          enabled: true
+          enabledSecret: true
           username: ${AUTHELIA_SMTP_USERNAME}
           host: smtp.gmail.com
           port: 465
