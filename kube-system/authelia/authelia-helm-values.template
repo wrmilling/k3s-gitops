@@ -27,4 +27,4 @@ stringData:
           subject: "[Authelia] {title}"
           startup_check_address: ${AUTHELIA_SMTP_USERNAME}
     secret:
-      existingSecret: "authelia-secret"
+      existingSecret: "authelia"
