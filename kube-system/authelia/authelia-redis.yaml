@@ -24,18 +24,26 @@ spec:
       persistence:
         storageClass: "longhorn"
         size: 1Gi
+      extraVolumes:
+        - name: aclfile
+          secret:
+            secretName: authelia-redis-aclfile
+      extraVolumeMounts:
+        - name: aclfile
+          readOnly: true
+          mountPath: "/etc/redis"
     slave:
       persistence:
         storageClass: "longhorn"
         size: 1Gi
-    extraVolumes:
-      - name: aclfile
-        secret:
-          secretName: authelia-redis-aclfile
-    extraVolumeMounts:
-      - name: aclfile
-        readOnly: true
-        mountPath: "/etc/redis"
+      extraVolumes:
+        - name: aclfile
+          secret:
+            secretName: authelia-redis-aclfile
+      extraVolumeMounts:
+        - name: aclfile
+          readOnly: true
+          mountPath: "/etc/redis"
   valuesFrom:
   - kind: Secret
     name: authelia-redis-helm-values
