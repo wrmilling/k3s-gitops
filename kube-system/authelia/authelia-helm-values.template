@@ -41,4 +41,4 @@ stringData:
         value: ${AUTHELIA_REDIS_PASSWORD}
       duo:
         key: DUO_API_KEY
-        value: ""
+        value: "FAKE_DUO_KEY"
