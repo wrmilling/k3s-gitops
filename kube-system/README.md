@@ -4,8 +4,10 @@
 
 This is probably overly-complicated for what I actually need and I will probably simplify it in the future. Authelia provides SSO capabilities for the cluster and is integrated with nginx-ingress.
 
-* [authelia/authelia-helm-values.template](authelia/authelia-helm-values.template) - Template used to create helm value secrets for authelia via [seal-secrets.sh](/setup/seal-secrets.sh)
-* [authelia/authelia-helm-values.yaml](authelia/authelia-helm-values.yaml) - Encrypted secrets for Authelia
+* [authelia/authelia-helm-values.template](authelia/authelia-helm-values.template) - Template used to create helm value secrets (Mostly SMTP and LDAP) for authelia via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-helm-values.yaml](authelia/authelia-helm-values.yaml) - Encrypted less-secret secrets for Authelia
+* [authelia/authelia-secret.template](authelia/authelia-secret.template) - Template used to manage secrets (Mostly passwords) for authelia via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-secret.yaml](authelia/authelia-secret.yaml) - Encrypted secrets for Authelia
 * [authelia/authelia-postgres-helm-values.template](authelia/authelia-postgres-helm-values.template) - Template used to create helm value secrets for postgres via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [authelia/authelia-postgres-helm-values.yaml](authelia/authelia-postgres-helm-values.yaml) - Encrypted secrets for Postgres
 * [authelia/authelia-postgres.yaml](authelia/authelia-postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
