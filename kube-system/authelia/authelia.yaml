@@ -38,7 +38,7 @@ spec:
         default_policy: one_factor
       storage:
         postgres:
-          enabled: true
+          # enabled: true
           host: authelia-postgres-postgresql
           port: 5432
           database: authelia
@@ -46,14 +46,14 @@ spec:
           sslmode: disable
       session:
         redis:
-          enabled: true
+          # enabled: true
           # enabledSecret: true
           username: ""
           host: authelia-redis-master
           port: 6379
           database_index: 0
-      duo_api:
-        enabled: false
+      # duo_api:
+      #   enabled: false
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
