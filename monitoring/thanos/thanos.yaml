@@ -36,6 +36,7 @@ spec:
           hosts: ["thanos.k.homelab.tokyo"]
           tls:
           - hosts: ["thanos.k.homelab.tokyo"]
+            secretName: thanos-cert
     compact:
       retentionResolution1h: 5y
     objstore:
