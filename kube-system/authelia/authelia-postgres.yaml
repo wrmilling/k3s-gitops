@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: postgresql
-      version: 10.3.17
+      version: 10.3.18
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
