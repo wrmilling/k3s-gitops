@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ubuntu-reboot
+  namespace: system-upgrade
+type: Opaque
+stringData:
+  upgrade.sh: |
+    #!/bin/sh
+    set -e
+
+    if [ -f /run/reboot-required ]; then
+      cat /run/reboot-required
+      reboot
+    fi
+---
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: ubuntu-reboot
+  namespace: system-upgrade
+spec:
+  # The maximum number of concurrent nodes to apply this update on.
+  concurrency: 1
+
+  # Select which nodes this plan can be applied to.
+  nodeSelector:
+    matchExpressions:
+      # - {key: kernel-upgrade, operator: Exists}
+      - {key: kernel-upgrade, operator: NotIn, values: ["disabled", "false"]}
+      - {key: k3s.io/hostname, operator: Exists}
+      - {key: k3os.io/mode, operator: DoesNotExist}
+      - {key: node-role.kubernetes.io/master, operator: NotIn, values: ["true"]}
+
+  # The service account for the pod to use. As with normal pods, if not specified the `default` service account from the namespace will be assigned.
+  # See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  serviceAccountName: system-upgrade
+
+  # Specify which node taints should be tolerated by pods applying the upgrade.
+  # Anything specified here is appended to the default of:
+  # - {key: node.kubernetes.io/unschedulable, effect: NoSchedule, operator: Exists}
+  tolerations:
+    - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: amd64}
+    - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: arm64}
+    - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: arm}
+    - {key: arm, operator: Exists}
+
+  # Link to secrets that will be mounted into all containers in job pods.
+  # Secrets are calculated as part of the `.status.latestHash`. This means that changing
+  # the secrets profile for a plan or changing the secrets that a plan refers to will
+  # trigger application.
+  secrets:
+    - name: ubuntu-reboot
+      path: /host/run/system-upgrade/secrets/kernel
+
+  # The value for `channel` is assumed to be a URL that returns HTTP 302 with the last path element of the value
+  # returned in the Location header assumed to be an image tag.
+  # channel: https://canonical.example.com/ubuntu/lts
+  version: focal
+
+  # See https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/#use-kubectl-drain-to-remove-a-node-from-service
+  # drain:
+    # deleteLocalData: true
+    # ignoreDaemonSets: true
+    # force: true
+
+  # A very limited container spec
+  upgrade:
+    # The tag portion of the image will be overridden with the value from `.status.latestVersion` a.k.a. the resolved version.
+    image: ubuntu
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/kernel/upgrade.sh"]
