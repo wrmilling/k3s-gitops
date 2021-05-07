@@ -1,0 +1,35 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Redis
+metadata:
+  name: redis-authentik
+spec:
+  version: 6.0.6
+  mode: Standalone
+  storageType: Durable
+  storage:
+    storageClassName: longhorn
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  podTemplate:
+    spec:
+      args:
+        - "--requirepass stupid"
+        - '--masterauth stupid'
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          app: authentik
+        interval: 10s
+  terminationPolicy: DoNotTerminate
