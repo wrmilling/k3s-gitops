@@ -25,7 +25,7 @@ spec:
         use_ssl: true
         timeout: 30
       outposts:
-        docker_image_base: docker.beryju.org/authentik/server
+        docker_image_base: beryju/authentik
       error_reporting:
         enabled: false
       postgresql:
