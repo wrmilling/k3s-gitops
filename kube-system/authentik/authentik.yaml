@@ -1,0 +1,90 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: authentik
+      version: 1.0.0-RC5
+      sourceRef:
+        kind: HelmRepository
+        name: authentik-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    authentik:
+      log_level: debug
+      email:
+        host: smtp.gmail.com
+        port: 587
+        use_ssl: true
+        timeout: 30
+      outposts:
+        docker_image_base: docker.beryju.org/authentik/server
+      error_reporting:
+        enabled: false
+      postgresql:
+        host: postgres-authentik
+        name: authentik
+      redis:
+        host: redis-authentik
+    envValueFrom:
+      AUTHENTIK_POSTGRESQL__USER:
+        secretKeyRef:
+          key: username
+          name: postgres-authentik-auth
+      AUTHENTIK_POSTGRESQL__PASSWORD:
+        secretKeyRef:
+          key: password
+          name: postgres-authentik-auth
+      AUTHENTIK_REDIS__PASSWORD:
+        secretKeyRef:
+          key: redis-password
+          name: authentik-secrets
+      AUTHENTIK_EMAIL__FROM:
+        secretKeyRef:
+          key: email-username
+          name: authentik-secrets
+      AUTHENTIK_EMAIL__PASSWORD:
+        secretKeyRef:
+          key: email-password
+          name: authentik-secrets
+      AUTHENTIK_EMAIL__USERNAME:
+        secretKeyRef:
+          key: email-username
+          name: authentik-secrets
+      AUTHENTIK_SECRET_KEY:
+        secretKeyRef:
+          key: secret-key
+          name: authentik-secrets
+      AUTHENTIK_POSTGRESQL__S3_BACKUP__ACCESS_KEY:
+        secretKeyRef:
+          key: s3-access-key
+          name: authentik-secrets
+      AUTHENTIK_POSTGRESQL__S3_BACKUP__BUCKET:
+        secretKeyRef:
+          key: s3-bucket
+          name: authentik-secrets
+      AUTHENTIK_POSTGRESQL__S3_BACKUP__HOST:
+        secretKeyRef:
+          key: s3-host
+          name: authentik-secrets
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: auth2.homelab.tokyo
+          paths:
+          - path: "/"
+            pathType: Prefix
+      tls:
+        - hosts: [auth2.homelab.tokyo]
+          secretName: auth2-homelab-tokyo
