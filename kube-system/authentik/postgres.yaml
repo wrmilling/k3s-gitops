@@ -2,6 +2,7 @@ apiVersion: kubedb.com/v1alpha2
 kind: Postgres
 metadata:
   name: postgres-authentik
+  namespace: kube-system
 spec:
   version: "13.2"
   storageType: Durable
