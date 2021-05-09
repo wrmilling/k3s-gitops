@@ -33,7 +33,6 @@ spec:
         name: authentik
       redis:
         host: redis-authentik
-        password: stupid
     envValueFrom:
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
@@ -43,10 +42,6 @@ spec:
         secretKeyRef:
           key: password
           name: postgres-authentik-auth
-      # AUTHENTIK_REDIS__PASSWORD:
-      #   secretKeyRef:
-      #     key: redis-password
-      #     name: authentik-secrets
       AUTHENTIK_EMAIL__FROM:
         secretKeyRef:
           key: email-username
