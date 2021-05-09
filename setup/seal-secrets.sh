@@ -19,6 +19,7 @@ seal "cert-manager/cert-manager/route53-api-key"
 seal 'default/pihole/pihole-secret'
 seal 'default/minio/minio-helm-values'
 seal 'default/pihole/pihole-helm-values'
+seal 'default/plex/plex-secrets'
 
 # flux-system
 seal "flux-system-extra/github-alerts/github-api-token"
