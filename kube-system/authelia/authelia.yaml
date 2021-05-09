@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
-      version: 0.2.15
+      version: 0.4.2
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
@@ -38,7 +38,7 @@ spec:
         default_policy: one_factor
       storage:
         postgres:
-          # enabled: true
+          enabled: true
           host: authelia-postgres-postgresql
           port: 5432
           database: authelia
@@ -46,14 +46,12 @@ spec:
           sslmode: disable
       session:
         redis:
-          # enabled: true
-          # enabledSecret: true
+          enabled: true
+          enabledSecret: false
           username: ""
-          host: authelia-redis-master
+          host: redis-authelia-0
           port: 6379
           database_index: 0
-      # duo_api:
-      #   enabled: false
   valuesFrom:
   - kind: Secret
     name: authelia-helm-values
