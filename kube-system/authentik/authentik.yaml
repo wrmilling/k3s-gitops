@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://goauthentik.github.io/helm
       chart: authentik
-      version: 1.0.0-RC5
+      version: 1.0.0-RC6
       sourceRef:
         kind: HelmRepository
         name: authentik-charts
