@@ -23,15 +23,8 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - arm64
+      nodeSelector:
+        kubernetes.io/arch: arm64
     global:
       license: |
         -----BEGIN CERTIFICATE-----
