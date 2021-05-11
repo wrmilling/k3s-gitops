@@ -9,16 +9,31 @@ This is probably overly-complicated for what I actually need and I will probably
 * [authelia/authelia-postgres-helm-values.template](authelia/authelia-postgres-helm-values.template) - Template used to create helm value secrets for postgres via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [authelia/authelia-postgres-helm-values.yaml](authelia/authelia-postgres-helm-values.yaml) - Encrypted secrets for Postgres
 * [authelia/authelia-postgres.yaml](authelia/authelia-postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
-* [authelia/authelia-redis-helm-values.template](authelia/authelia-redis-helm-values.template) - Template used to create helm value secrets for redis via [seal-secrets.sh](/setup/seal-secrets.sh)
-* [authelia/authelia-redis-helm-values.yaml](authelia/authelia-redis-helm-values.yaml) - Encrypted secrets for Redis
-* [authelia/authelia-redis.yaml](authelia/authelia-redis.yaml) - Redis deployment for use by Authelia for sessions
+* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions via KubeDB
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
+
+## Authentik
+
+Currently evaluating [Authentik](https://goauthentik.io) and will update with more details if it sticks around in the cluster.
+
+## KubeDB
+
+[KubeDB](https://kubedb.com/) Community edition deployment which handles the spin-up and running of databases for a k8s cluster. Currently using it to spin up postgres and redis for Authelia and Authentik and is available for future database needs for the cluster.
+
+* [kubedb/kubedb.yaml](kubedb/kubedb.yaml) - Helm Release which deploys KubeDB to the cluster
 
 ## metallb
 
 [MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below.
 
 * [metallb/metallb.yaml](metallb/metallb.yaml) - HelmRelease for metallb, including values configuration.
+
+## nfs-pv
+
+Persistent Volume configuration for shared NFS storage.
+
+* [nfs-pv/media-pv.yaml](nfs-pv/media-pv.yaml) - Bulk media storage backed by a TrueNAS NFS share
+* [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share
 
 ## nginx
 
