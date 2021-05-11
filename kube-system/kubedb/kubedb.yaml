@@ -19,6 +19,9 @@ spec:
     monitoring:
       enabled: true
       agent: prometheus.io/operator
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
