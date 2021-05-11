@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.appscode.com/stable/
       chart: kubedb-community
-      version: v2021.04.16
+      version: v0.18.0
       sourceRef:
         kind: HelmRepository
         name: appscode-charts
