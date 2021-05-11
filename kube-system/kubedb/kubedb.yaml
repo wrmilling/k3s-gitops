@@ -24,7 +24,7 @@ spec:
       - key: "arm"
         operator: "Exists"
       nodeSelector:
-        kubernetes.io/arch: arm64
+        beta.kubernetes.io/arch: arm64
     global:
       license: |
         -----BEGIN CERTIFICATE-----
