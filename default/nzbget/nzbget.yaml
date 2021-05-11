@@ -30,13 +30,13 @@ spec:
       annotations:
         kubernetes.io/ingress.class: "nginx"
       hosts:
-      - host: nzbget.homelab.tokyo
+      - host: nzbget.k.homelab.tokyo
         paths:
         - path: /
           pathType: Prefix
       tls:
       - hosts:
-        - "nzbget.homelab.tokyo"
+        - "nzbget.k.homelab.tokyo"
     persistence:
       config:
         enabled: true
