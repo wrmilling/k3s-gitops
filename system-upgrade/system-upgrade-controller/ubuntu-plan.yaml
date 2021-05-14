@@ -27,11 +27,9 @@ spec:
   # Select which nodes this plan can be applied to.
   nodeSelector:
     matchExpressions:
-      # - {key: kernel-upgrade, operator: Exists}
+      - {key: kernel-upgrade, operator: Exists}
       - {key: kernel-upgrade, operator: NotIn, values: ["disabled", "false"]}
       - {key: k3s.io/hostname, operator: Exists}
-      - {key: k3os.io/mode, operator: DoesNotExist}
-      - {key: node-role.kubernetes.io/master, operator: NotIn, values: ["true"]}
 
   # The service account for the pod to use. As with normal pods, if not specified the `default` service account from the namespace will be assigned.
   # See https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
