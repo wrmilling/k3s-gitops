@@ -25,6 +25,9 @@ spec:
         operator: "Exists"
       nodeSelector:
         beta.kubernetes.io/arch: arm64
+      resources:
+        limits:
+          memory: 256Mi
     global:
       license: |
         -----BEGIN CERTIFICATE-----
