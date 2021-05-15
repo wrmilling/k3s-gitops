@@ -1,0 +1,71 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: qbittorrent
+      version: 10.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/qbittorrent
+      tag: v4.3.4.1
+    env:
+      TZ: "America/Chicago"
+    service:
+      additionalServices:
+      - enabled: true
+        nameSuffix: bittorrent
+        type: LoadBalancer
+        loadBalancerIP: 10.10.40.65
+        port:
+          port: 50413
+          name: bittorrent
+          protocol: TCP
+          targetPort: 6881
+        externalTrafficPolicy: Local
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        # nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
+        # nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+      hosts:
+      - host: "qbit.k.homelab.tokyo"
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - "qbit.k.homelab.tokyo"
+    persistence:
+      config:
+        enabled: true
+        storageClass: "longhorn"
+        size: 3Gi
+    additionalVolumes:
+    - name: nfs-media-pvc
+      persistentVolumeClaim:
+        claimName: nfs-media-pvc
+    additionalVolumeMounts:
+    - name: nfs-media-pvc
+      mountPath: "/nfs-media"
+      readOnly: false
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 500m
+      limits:
+        memory: 2000Mi
