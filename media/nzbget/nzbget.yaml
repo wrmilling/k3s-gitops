@@ -45,6 +45,11 @@ spec:
       media:
         enabled: true
         existingClaim: nfs-media-pvc
+      downloads:
+        enabled: true
+        emptyDir: 
+          enabled: true
+        mountPath: /downloads
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001
