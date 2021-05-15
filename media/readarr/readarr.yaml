@@ -36,8 +36,8 @@ spec:
       tls:
       - hosts:
         - "readarr.k.homelab.tokyo"
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
+    # podAnnotations:
+    #   backup.velero.io/backup-volumes: config
     persistence:
       config:
         enabled: true
