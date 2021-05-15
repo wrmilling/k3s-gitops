@@ -42,6 +42,7 @@ spec:
     - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: amd64}
     - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: arm64}
     - {key: kubernetes.io/arch, effect: NoSchedule, operator: Equal, value: arm}
+    - {key: node-role.kubernetes.io/master, effect: NoSchedule, operator: Equal, value: true}
     - {key: arm, operator: Exists}
 
   # Link to secrets that will be mounted into all containers in job pods.
