@@ -30,7 +30,6 @@ seal 'kube-system/openldap/openldap-secrets'
 seal 'kube-system/registry-creds/registry-creds-secret'
 seal 'kube-system/authelia/authelia-helm-values'
 seal 'kube-system/authelia/authelia-postgres-helm-values'
-seal 'kube-system/authentik/authentik-secrets'
 
 # media
 seal 'media/plex/plex-secrets'
