@@ -55,6 +55,10 @@ spec:
         enabled: true
         storageClass: "longhorn"
         size: 3Gi
+    podSecurityContext:
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
     additionalVolumes:
     - name: nfs-media-pvc
       persistentVolumeClaim:
