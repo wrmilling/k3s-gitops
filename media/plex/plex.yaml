@@ -59,6 +59,7 @@ spec:
         storageClass: "longhorn"
         accessMode: ReadWriteOnce
         size: 20Gi
+        existingClaim: pvc-plex
       transcode:
         enabled: true
         emptyDir:
