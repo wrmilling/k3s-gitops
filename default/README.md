@@ -16,12 +16,6 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 * [minio/minio-helm-values.yaml](minio/minio-helm-values.yaml) - Encrypted minio helm values
 * [minio/minio.yaml](minio/minio.yaml) - HelmRelease for minio from the helm.min.io repo
 
-## NZBGet
-
-[NZBGet](https://nzbget.net/) is an efficient UseNet downloader.
-
-* [nzbget/nzbget.yaml](nzbget/nzbget.yaml) - HelmRelease for NZBGet
-
 ## PiHole
 
 [Pi-hole](https://pi-hole.net/) is a DNS resolver that likes to help you block ads as well. This implementation uses MetalLB to expose the DNS server on its own dedicated IP, allows authenticated and secure ingress through nginx-ingress and authelia, and has implemented DNS-over-HTTPS (DoH) for secure querying. I also use it to do DNS resolution on internal domains.
@@ -33,21 +27,3 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 * [pihole/pihole-secret.yaml](pihole/pihole-secret.yaml) - Encrypted admin secret for Pi-hole
 * [pihole/pihole-arm64.yaml](pihole/pihole-arm64.yaml) - HelmRelease for Pi-hole from mojo2600 on GitHub, instance running on the ARM64 half of my nodes
 * [pihole/pihole-amd64.yaml](pihole/pihole-amd64.yaml) - HelmRelease for Pi-hole from mojo2600 on GitHub, instance running on the AMD64 half of my nodes
-
-## Plex
-
-[Plex](https://www.plex.tv/) Serving up all the beautiful content direct from my personal library and Plex's own sources.
-
-* [plex/plex.yaml](plex/plex.yaml) - HelmRelease for Plex
-
-## Radarr
-
-[Radarr](https://radarr.video/) is a movie sorting, organizing, and management application.
-
-* [radarr/radarr.yaml](radarr/radarr.yaml) - HelmRelease for Radarr
-
-## Sonarr
-
-[Sonarr](https://sonarr.tv/) is a movie sorting, organizing, and management application.
-
-* [sonarr/sonarr.yaml](sonarr/sonarr.yaml) - HelmRelease for Sonarr

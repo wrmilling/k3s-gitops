@@ -2,15 +2,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: sonarr
-  namespace: default
+  name: nzbget
+  namespace: media
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: sonarr
-      version: 11.1.0
+      chart: nzbget
+      version: 10.1.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -18,8 +18,11 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/sonarr
-      tag: v3.0.6.1196
+      repository: ghcr.io/k8s-at-home/nzbget
+      tag: v21.0
+    service:
+      type: LoadBalancer
+      loadBalancerIP: 10.10.40.64
     env:
       TZ: "America/Chicago"
     ingress:
@@ -27,20 +30,18 @@ spec:
       annotations:
         kubernetes.io/ingress.class: "nginx"
       hosts:
-      - host: sonarr.k.homelab.tokyo
+      - host: nzbget.k.homelab.tokyo
         paths:
         - path: /
           pathType: Prefix
       tls:
       - hosts:
-        - "sonarr.k.homelab.tokyo"
-    # podAnnotations:
-    #   backup.velero.io/backup-volumes: config
+        - "nzbget.k.homelab.tokyo"
     persistence:
       config:
         enabled: true
         storageClass: "longhorn"
-        size: 2Gi
+        size: 20Gi
       media:
         enabled: true
         existingClaim: nfs-media-pvc
@@ -48,12 +49,14 @@ spec:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
+    # podAnnotations:
+    #   backup.velero.io/backup-volumes: config
+    # tolerations:
+    # - key: "arm"
+    #   operator: "Exists"
     resources:
       requests:
-        memory: 350Mi
+        memory: 300Mi
         cpu: 25m
       limits:
-        memory: 500Mi
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
+        memory: 400Mi
