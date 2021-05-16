@@ -39,7 +39,7 @@
       "datasources": ["docker"],
       "commitMessageTopic": "Docker image {{depName}}",
       "commitMessageExtra": "to {{#if isSingleVersion}}{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "updateTypes": ["major", "minor", "patch"],
+      "updateTypes": ["major", "minor", "patch", "pin"],
       "enabled": true
     },
     // Add labels according to package and update types
