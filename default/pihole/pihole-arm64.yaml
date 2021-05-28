@@ -1,89 +1,89 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: pihole-arm64
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
-      chart: pihole
-      version: 1.9.0
-      sourceRef:
-        kind: HelmRepository
-        name: mojo2600-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    monitoring:
-      podMonitor:
-        enabled: true
-      sidecar:
-        enabled: true
-        image:
-          pullPolicy: "IfNotPresent"
-          repository: "ekofr/pihole-exporter"
-          tag: "v0.0.11"
-          port: 9617
-        resources:
-          limits:
-            memory: "128Mi"
-    doh:
-      enabled: true
-      name: "cloudflared"
-      repository: "crazymax/cloudflared"
-      tag: latest
-    serviceDns:
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
-      annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
-    serviceWeb:
-      type: LoadBalancer
-      externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
-      annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
-    virtualHost: pihole.k.homelab.tokyo
-    ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-        nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
-      path: /
-      hosts:
-        - pihole.k.homelab.tokyo
-      tls:
-        - secretName: pihole-cert
-          hosts:
-            - pihole.k.homelab.tokyo
-    persistentVolumeClaim:
-      enabled: true
-      storageClass: longhorn
-      size: "500Mi"
-      accessModes:
-        - ReadWriteOnce
-    tolerations:
-      - key: "arm"
-        operator: "Exists"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - "arm64"
-    admin:
-      existingSecret: "pihole-secret"
-      passwordKey: "password"
-  valuesFrom:
-  - kind: Secret
-    name: pihole-helm-values
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: pihole-arm64
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://mojo2600.github.io/pihole-kubernetes
+#       chart: pihole
+#       version: 1.9.0
+#       sourceRef:
+#         kind: HelmRepository
+#         name: mojo2600-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     monitoring:
+#       podMonitor:
+#         enabled: true
+#       sidecar:
+#         enabled: true
+#         image:
+#           pullPolicy: "IfNotPresent"
+#           repository: "ekofr/pihole-exporter"
+#           tag: "v0.0.11"
+#           port: 9617
+#         resources:
+#           limits:
+#             memory: "128Mi"
+#     doh:
+#       enabled: true
+#       name: "cloudflared"
+#       repository: "crazymax/cloudflared"
+#       tag: latest
+#     serviceDns:
+#       type: LoadBalancer
+#       externalTrafficPolicy: Local
+#       loadBalancerIP: 10.10.40.61
+#       annotations:
+#         metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
+#     serviceWeb:
+#       type: LoadBalancer
+#       externalTrafficPolicy: Local
+#       loadBalancerIP: 10.10.40.61
+#       annotations:
+#         metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
+#     virtualHost: pihole.k.homelab.tokyo
+#     ingress:
+#       enabled: true
+#       annotations:
+#         kubernetes.io/ingress.class: nginx
+#         kubernetes.io/tls-acme: "true"
+#         cert-manager.io/cluster-issuer: letsencrypt-prod
+#         nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
+#         nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+#       path: /
+#       hosts:
+#         - pihole.k.homelab.tokyo
+#       tls:
+#         - secretName: pihole-cert
+#           hosts:
+#             - pihole.k.homelab.tokyo
+#     persistentVolumeClaim:
+#       enabled: true
+#       storageClass: longhorn
+#       size: "500Mi"
+#       accessModes:
+#         - ReadWriteOnce
+#     tolerations:
+#       - key: "arm"
+#         operator: "Exists"
+#     affinity:
+#       nodeAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#           nodeSelectorTerms:
+#           - matchExpressions:
+#             - key: kubernetes.io/arch
+#               operator: In
+#               values:
+#               - "arm64"
+#     admin:
+#       existingSecret: "pihole-secret"
+#       passwordKey: "password"
+#   valuesFrom:
+#   - kind: Secret
+#     name: pihole-helm-values
