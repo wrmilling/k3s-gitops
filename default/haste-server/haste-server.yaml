@@ -20,9 +20,9 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: dirtycajunrice/haste-server
+      repository: ghcr.io/k8s-at-home/haste-server
       pullPolicy: IfNotPresent
-      tag: v2021.4.14
+      tag: latest
     env:
       TZ: America/Chicago
       HOST: 0.0.0.0
