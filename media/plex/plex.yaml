@@ -44,7 +44,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: "nginx"
+        kubernetes.io/ingress.class: "nginx-internal"
       hosts:
       - host: "plex.k.homelab.tokyo"
         paths:

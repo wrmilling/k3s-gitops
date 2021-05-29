@@ -33,7 +33,7 @@ spec:
       tlsSecret: longhorn-cert
       tls: true
       annotations:
-        kubernetes.io/ingress.class: nginx
+        kubernetes.io/ingress.class: nginx-internal
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo

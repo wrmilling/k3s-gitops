@@ -44,7 +44,7 @@ spec:
         enabled: true
         pathType: ImplementationSpecific
         annotations:
-          kubernetes.io/ingress.class: "nginx"
+          kubernetes.io/ingress.class: "nginx-internal"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
@@ -106,7 +106,7 @@ spec:
         enabled: true
         pathType: ImplementationSpecific
         annotations:
-          kubernetes.io/ingress.class: "nginx"
+          kubernetes.io/ingress.class: "nginx-internal"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
