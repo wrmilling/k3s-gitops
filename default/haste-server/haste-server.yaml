@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: haste-server
+  namespace: default
+spec:
+  maxHistory: 3
+  interval: 10m0s
+  suspend: false
+  releaseName: haste-server
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: haste-server
+      version: 2.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: dirtycajunrice/haste-server
+      pullPolicy: IfNotPresent
+      tag: v2021.4.14
+    env:
+      TZ: America/Chicago
+      HOST: 0.0.0.0
+      PORT: "7777"
+      KEY_LENGTH: "10"
+      MAX_LENGTH: "4000000"
+      STATIC_MAX_AGE: "86400"
+      RECOMPRESS_STATIC_ASSETS: "true"
+      KEYGENERATOR_TYPE: phonetic
+      DOCUMENTS: about=./about.md
+      LOGGING_LEVEL: verbose
+      LOGGING_TYPE: Console
+      LOGGING_COLORIZE: "true"
+      RATELIMITS_NORMAL_TOTAL_REQUESTS: "500"
+      RATELIMITS_NORMAL_EVERY_MILLISECONDS: "60000"
+      RATELIMITS_WHITELIST: ""
+      RATELIMITS_BLACKLIST: ""
+      STORAGE_TYPE: "redis"
+      STORAGE_EXPIRE_SECONDS: "604800"
+      STORAGE_HOST: redis-haste-server.default.svc
+      STORAGE_PORT: "6379"
+      STORAGE_DB: "2"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx-external
+      hosts:
+      - host: bin.k.homelab.tokyo
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - bin.k.homelab.tokyo
+        secretName: haste-server-cert
