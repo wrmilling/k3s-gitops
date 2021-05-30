@@ -64,11 +64,7 @@ spec:
           hosts:
             - pihole.k.homelab.tokyo
     persistentVolumeClaim:
-      enabled: true
-      storageClass: longhorn
-      size: "500Mi"
-      accessModes:
-        - ReadWriteOnce
+      enabled: false
     tolerations:
       - key: "arm"
         operator: "Exists"

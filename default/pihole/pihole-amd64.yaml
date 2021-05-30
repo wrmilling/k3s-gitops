@@ -64,11 +64,7 @@ spec:
           hosts:
             - pihole2.k.homelab.tokyo
     persistentVolumeClaim:
-      enabled: true
-      storageClass: longhorn
-      size: "500Mi"
-      accessModes:
-        - ReadWriteOnce
+      enabled: false
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
