@@ -2,7 +2,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  namespace: default
+  namespace: kube-system
   name: dyndns-updater
 spec:
   schedule: "0 * * * *"
