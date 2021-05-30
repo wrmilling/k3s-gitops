@@ -22,4 +22,5 @@ spec:
             - secretRef:
                 name: route53-env
             command:
-            - "update-route53 --ttl 600"
+            - "/bin/bash -c"
+            - "/usr/local/bin/update-route53 --ttl 600"
