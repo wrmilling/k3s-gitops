@@ -16,7 +16,7 @@ spec:
           restartPolicy: Never
           containers:
           - name: dyndns-updater
-            image: ghcr.io/wrmilling/route53-ddns:latest
+            image: ghcr.io/wrmilling/route53-ddns:v1.0.0
             imagePullPolicy: IfNotPresent
             envFrom:
             - secretRef:
