@@ -24,3 +24,6 @@ spec:
             command:
             - "/bin/bash"
             - "/usr/local/bin/update-route53"
+            tolerations:
+            - key: "arm"
+              operator: "Exists"
