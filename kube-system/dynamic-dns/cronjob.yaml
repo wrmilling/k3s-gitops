@@ -14,6 +14,9 @@ spec:
       template:
         spec:
           restartPolicy: Never
+          tolerations:
+          - key: "arm"
+            operator: "Exists"
           containers:
           - name: dyndns-updater
             image: ghcr.io/wrmilling/route53-ddns:v1.0.0
@@ -24,6 +27,3 @@ spec:
             command:
             - "/bin/bash"
             - "/usr/local/bin/update-route53"
-            tolerations:
-            - key: "arm"
-              operator: "Exists"
