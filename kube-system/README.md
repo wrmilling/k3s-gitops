@@ -12,9 +12,13 @@ This is probably overly-complicated for what I actually need and I will probably
 * [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions via KubeDB
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
 
-## Authentik
+## dynamic-dns
 
-Currently evaluating [Authentik](https://goauthentik.io) and will update with more details if it sticks around in the cluster.
+A custom docker image and cron job that uses the AWS cli to udpate a dns reocord pointing to the cluster's external IP address. 
+
+* [dynamic-dns/cronjob.yaml](dynamic-dns/cronjob.yaml) - Cron Job which schedules the DNS update
+* [dynamic-dns/route53-env.template](dynamic-dns/route53-env.template) - Template used to create environment variable secrets for the update script via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [dynamic-dns/route53-env.yaml](dynamic-dns/route53-env.yaml) - Environment secrets for update script inside docker image
 
 ## KubeDB
 

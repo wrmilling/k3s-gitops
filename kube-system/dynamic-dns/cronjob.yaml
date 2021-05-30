@@ -1,0 +1,25 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: default
+  name: dyndns-updater
+spec:
+  schedule: "0 * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: dyndns-updater
+            image: ghcr.io/wrmilling/route53-ddns:latest
+            imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: route53-env
+            command:
+            - "update-route53 --ttl 600"
