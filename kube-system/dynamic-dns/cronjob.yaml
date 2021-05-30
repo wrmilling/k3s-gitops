@@ -23,4 +23,4 @@ spec:
                 name: route53-env
             command:
             - "/bin/bash"
-            - "/usr/local/bin/update-route53 --ttl 600"
+            - "/usr/local/bin/update-route53"
