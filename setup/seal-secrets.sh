@@ -25,6 +25,7 @@ seal "flux-system-extra/github-alerts/github-api-token"
 seal "flux-system-extra/discord-alerts/discord-webhook-url"
 
 # kube-system
+seal 'kube-system/dynamic-dns/route53-env'
 seal 'kube-system/openldap/openldap-secrets'
 seal 'kube-system/registry-creds/registry-creds-secret'
 seal 'kube-system/authelia/authelia-helm-values'
