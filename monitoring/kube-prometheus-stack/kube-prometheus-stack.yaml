@@ -28,6 +28,8 @@ spec:
     prometheusOperator:
       createCustomResource: true
       configReloaderCpu: 200m
+      admissionWebhooks:
+        enabled: false
     alertmanager:
       alertmanagerSpec:
         storage:
