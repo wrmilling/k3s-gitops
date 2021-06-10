@@ -61,14 +61,8 @@ spec:
         size: 20Gi
       transcode:
         enabled: true
-        emptyDir:
-          enabled: true
-          medium: "Memory"
-      tmp:
-        enabled: true
-        emptyDir:
-          enabled: true
-          medium: "Memory"
+        type: emptyDir
+        medium: Memory
       media:
         enabled: true
         readOnly: true
