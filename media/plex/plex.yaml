@@ -33,14 +33,15 @@ spec:
       - 109
       - 100
     service:
-      enabled: true
-      type: LoadBalancer
-      loadBalancerIP: 10.10.40.63
-      externalTrafficPolicy: Local
-      annotations:
-        metallb.universe.tf/allow-shared-ip: plex
-      port:
-        port: 32400
+      main: 
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: 10.10.40.63
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+        port:
+          port: 32400
     ingress:
       main: 
         enabled: true
