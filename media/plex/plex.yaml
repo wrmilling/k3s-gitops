@@ -40,8 +40,6 @@ spec:
         externalTrafficPolicy: Local
         annotations:
           metallb.universe.tf/allow-shared-ip: plex
-        port:
-          port: 32400
     ingress:
       main: 
         enabled: true
@@ -73,11 +71,9 @@ spec:
           medium: "Memory"
       media:
         enabled: true
-        readOnly: false
+        readOnly: true
         mountPath: /data
-        volumeSpec: 
-          persistentVolumeClaim:
-            claimName: nfs-media-pvc
+        existingClaim: nfs-media-pvc
     # resources:
     #   requests:
     #     gpu.intel.com/i915: 1
