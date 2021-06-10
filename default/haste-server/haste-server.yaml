@@ -13,7 +13,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: haste-server
-      version: 1.1.0
+      version: 2.0.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -46,20 +46,20 @@ spec:
       STORAGE_PORT: "6379"
       STORAGE_DB: "2"
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx-internal
-      hosts:
-      - host: bin.k.homelab.tokyo
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - hosts:
-        - bin.k.homelab.tokyo
-        secretName: haste-server-cert-internal
-      additionalIngresses:
-      - nameSuffix: external
+      main: 
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx-internal
+        hosts:
+        - host: bin.k.homelab.tokyo
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - bin.k.homelab.tokyo
+          secretName: haste-server-cert-internal
+      external:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx-external
