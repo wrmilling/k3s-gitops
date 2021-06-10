@@ -23,19 +23,18 @@ spec:
     env:
       TZ: "America/Chicago"
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx-internal"
-      hosts:
-      - host: sonarr.k.homelab.tokyo
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - hosts:
-        - "sonarr.k.homelab.tokyo"
-    # podAnnotations:
-    #   backup.velero.io/backup-volumes: config
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx-internal"
+        hosts:
+        - host: sonarr.k.homelab.tokyo
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "sonarr.k.homelab.tokyo"
     persistence:
       config:
         enabled: true
@@ -43,6 +42,7 @@ spec:
         size: 2Gi
       media:
         enabled: true
+        readOnly: false
         existingClaim: nfs-media-pvc
     podSecurityContext:
       runAsUser: 1001
