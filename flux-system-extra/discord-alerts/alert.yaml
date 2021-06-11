@@ -38,6 +38,9 @@ spec:
       namespace: 'longhorn-system'
       name: '*'
     - kind: HelmRelease
+      namespace: 'media'
+      name: '*'
+    - kind: HelmRelease
       namespace: 'monitoring'
       name: '*'
   suspend: false
