@@ -23,46 +23,44 @@ spec:
     env:
       TZ: "America/Chicago"
     service:
-      additionalServices:
-      - enabled: true
-        nameSuffix: bittorrent
+      bittorrent:
+        enabled: true
         type: LoadBalancer
         loadBalancerIP: 10.10.40.65
-        port:
-          port: 50413
-          name: bittorrent
-          protocol: TCP
-          targetPort: 50413
         externalTrafficPolicy: Local
+        ports:
+          bittorrent:
+            enabled: true
+            port: 50413
+            protocol: TCP
+            targetPort: 50413
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx-internal
-      hosts:
-      - host: "qbit.k.homelab.tokyo"
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - hosts:
-        - "qbit.k.homelab.tokyo"
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx-internal
+        hosts:
+        - host: "qbit.k.homelab.tokyo"
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "qbit.k.homelab.tokyo"
     persistence:
       config:
         enabled: true
         storageClass: "longhorn"
         size: 3Gi
+      media:
+        enabled: true
+        readOnly: false
+        mountPath: /nfs-media
+        existingClaim: nfs-media-pvc
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-    additionalVolumes:
-    - name: nfs-media-pvc
-      persistentVolumeClaim:
-        claimName: nfs-media-pvc
-    additionalVolumeMounts:
-    - name: nfs-media-pvc
-      mountPath: "/nfs-media"
-      readOnly: false
     resources:
       requests:
         memory: 250Mi
