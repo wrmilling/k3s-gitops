@@ -20,23 +20,21 @@ spec:
     image:
       repository: ghcr.io/k8s-at-home/nzbget
       tag: v21.1
-    service:
-      type: LoadBalancer
-      loadBalancerIP: 10.10.40.64
     env:
       TZ: "America/Chicago"
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx-internal"
-      hosts:
-      - host: nzbget.k.homelab.tokyo
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - hosts:
-        - "nzbget.k.homelab.tokyo"
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx-internal"
+        hosts:
+        - host: nzbget.k.homelab.tokyo
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "nzbget.k.homelab.tokyo"
     persistence:
       config:
         enabled: true
@@ -44,21 +42,16 @@ spec:
         size: 20Gi
       media:
         enabled: true
+        readOnly: false
         existingClaim: nfs-media-pvc
       downloads:
         enabled: true
-        emptyDir: 
-          enabled: true
+        type: emptyDir
         mountPath: /downloads
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
-    # podAnnotations:
-    #   backup.velero.io/backup-volumes: config
-    # tolerations:
-    # - key: "arm"
-    #   operator: "Exists"
     resources:
       requests:
         memory: 300Mi
