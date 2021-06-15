@@ -54,6 +54,21 @@ spec:
         tls:
         - hosts:
           - "plex.k.homelab.tokyo"
+          secretName: plex-cert-internal
+      external:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "nginx-external"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        hosts:
+        - host: "plex.homelab.tokyo"
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - "plex.homelab.tokyo"
+          secretName: plex-cert-external
     persistence:
       config:
         enabled: true
