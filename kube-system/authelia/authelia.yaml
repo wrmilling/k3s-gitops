@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
-      version: 0.4.12
+      version: 0.4.13
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
