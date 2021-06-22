@@ -78,6 +78,12 @@ spec:
         labelSelector:
           matchLabels:
             release: pihole-amd64
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            release: pihole-amd64
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
