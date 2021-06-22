@@ -67,6 +67,17 @@ spec:
             - pihole2.k.homelab.tokyo
     persistentVolumeClaim:
       enabled: false
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
+    replicaCount: 3
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/arch
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            release: pihole-amd64
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
