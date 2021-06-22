@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: pihole-arm64
+  name: pihole
   namespace: default
 spec:
   interval: 5m
@@ -42,13 +42,13 @@ spec:
       externalTrafficPolicy: Local
       loadBalancerIP: 10.10.40.61
       annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
+        metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
       type: LoadBalancer
       externalTrafficPolicy: Local
       loadBalancerIP: 10.10.40.61
       annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc-arm64
+        metallb.universe.tf/allow-shared-ip: pihole-svc
     virtualHost: pihole.k.homelab.tokyo
     ingress:
       enabled: true
@@ -62,7 +62,7 @@ spec:
       hosts:
         - pihole.k.homelab.tokyo
       tls:
-        - secretName: pihole-cert
+        - secretName: pihole2-cert
           hosts:
             - pihole.k.homelab.tokyo
     persistentVolumeClaim:
@@ -70,15 +70,20 @@ spec:
     tolerations:
       - key: "arm"
         operator: "Exists"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/arch
-              operator: In
-              values:
-              - "arm64"
+    replicaCount: 3
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/arch
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            release: pihole
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            release: pihole
     admin:
       existingSecret: "pihole-secret"
       passwordKey: "password"
