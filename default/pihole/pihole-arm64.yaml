@@ -35,6 +35,8 @@ spec:
       name: "cloudflared"
       repository: "crazymax/cloudflared"
       tag: "2021.5.7"
+    serviceDhcp: 
+      enabled: false
     serviceDns:
       type: LoadBalancer
       externalTrafficPolicy: Local
