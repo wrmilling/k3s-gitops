@@ -25,3 +25,5 @@ spec:
       replicaCount: 0
     metrics:
       enabled: true
+    auth:
+      enabled: false
