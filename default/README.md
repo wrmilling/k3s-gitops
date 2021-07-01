@@ -13,7 +13,7 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 [Haste](https://github.com/seejohnrun/haste-server) is an open-source pastebin software written in node.js.
 
 * [haste-server/haste-server.yaml](haste-server/haste-server.yaml) - HelmRelease for haste-server froom the k8s-at-home repo
-* [haste-server/redis.yaml](haste-server/redis.yaml) - Key/Value store which acts as storage for Haste, managed by [KubeDB](/kube-system/kubedb/kubedb.yaml)
+* [haste-server/redis.yaml](haste-server/redis.yaml) - Key/Value store which acts as storage for Haste
 
 ## Minio
 

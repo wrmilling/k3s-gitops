@@ -9,7 +9,7 @@ This is probably overly-complicated for what I actually need and I will probably
 * [authelia/authelia-postgres-helm-values.template](authelia/authelia-postgres-helm-values.template) - Template used to create helm value secrets for postgres via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [authelia/authelia-postgres-helm-values.yaml](authelia/authelia-postgres-helm-values.yaml) - Encrypted secrets for Postgres
 * [authelia/authelia-postgres.yaml](authelia/authelia-postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
-* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions via KubeDB
+* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
 
 ## dynamic-dns
@@ -19,12 +19,6 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [dynamic-dns/cronjob.yaml](dynamic-dns/cronjob.yaml) - Cron Job which schedules the DNS update
 * [dynamic-dns/route53-env.template](dynamic-dns/route53-env.template) - Template used to create environment variable secrets for the update script via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [dynamic-dns/route53-env.yaml](dynamic-dns/route53-env.yaml) - Environment secrets for update script inside docker image
-
-## KubeDB
-
-[KubeDB](https://kubedb.com/) Community edition deployment which handles the spin-up and running of databases for a k8s cluster. Currently using it to spin up postgres and redis for Authelia and Authentik and is available for future database needs for the cluster.
-
-* [kubedb/kubedb.yaml](kubedb/kubedb.yaml) - Helm Release which deploys KubeDB to the cluster
 
 ## metallb
 
