@@ -25,3 +25,6 @@ spec:
       replicaCount: 0
     metrics:
       enabled: true
+    auth:
+      existingSecret: authelia-redis-password
+      existingSecretPasswordKey: password
