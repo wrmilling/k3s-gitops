@@ -42,7 +42,7 @@ spec:
       RATELIMITS_BLACKLIST: ""
       STORAGE_TYPE: "redis"
       STORAGE_EXPIRE_SECONDS: "604800"
-      STORAGE_HOST: haste-server-redis.default.svc
+      STORAGE_HOST: haste-server-redis-master.default.svc
       STORAGE_PORT: "6379"
       STORAGE_DB: "2"
     ingress:

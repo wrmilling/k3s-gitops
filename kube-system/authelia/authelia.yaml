@@ -49,7 +49,7 @@ spec:
           enabled: true
           enabledSecret: false
           username: ""
-          host: authelia-redis
+          host: authelia-redis-master
           port: 6379
           database_index: 0
   valuesFrom:
