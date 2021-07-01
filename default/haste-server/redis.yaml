@@ -1,24 +1,27 @@
-apiVersion: kubedb.com/v1alpha2
-kind: Redis
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
-  name: redis-haste-server
+  name: haste-server-redis
   namespace: default
 spec:
-  version: 6.0.6
-  mode: Standalone
-  storageType: Durable
-  storage:
-    storageClassName: longhorn
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 1Gi
-  monitor:
-    agent: prometheus.io/operator
-    prometheus:
-      serviceMonitor:
-        labels:
-          app: haste-server
-        interval: 10s
-  terminationPolicy: DoNotTerminate
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: redis
+      version: 14.6.3
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    master:
+      persistence:
+        storageClass: "longhorn"
+        size: 1Gi
+    replica:
+      replicaCount: 0
+    metrics:
+      enabled: true
