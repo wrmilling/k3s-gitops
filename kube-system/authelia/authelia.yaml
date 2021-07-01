@@ -47,7 +47,7 @@ spec:
       session:
         redis:
           enabled: true
-          enabledSecret: false
+          enabledSecret: true
           username: ""
           host: authelia-redis-master
           port: 6379
