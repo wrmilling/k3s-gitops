@@ -8,9 +8,11 @@ This is probably overly-complicated for what I actually need and I will probably
 * [authelia/authelia-helm-values.yaml](authelia/authelia-helm-values.yaml) - Encrypted secrets for Authelia
 * [authelia/authelia-postgres-helm-values.template](authelia/authelia-postgres-helm-values.template) - Template used to create helm value secrets for postgres via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [authelia/authelia-postgres-helm-values.yaml](authelia/authelia-postgres-helm-values.yaml) - Encrypted secrets for Postgres
-* [authelia/authelia-postgres.yaml](authelia/authelia-postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
-* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions
+* [authelia/authelia-redis-password.template](authelia/authelia-redis-password.template) - Template used to create password secrets for redis via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [authelia/authelia-redis-password.yaml](authelia/authelia-redis-password.yaml) - Encrypted password secret for Redis
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
+* [authelia/postgres.yaml](authelia/postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
+* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions
 
 ## dynamic-dns
 
