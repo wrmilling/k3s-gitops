@@ -42,10 +42,11 @@ spec:
               readOnly: true
       volumes:
         - name: users-ldif
-          secret: openldap
-          items:
-            - key: 01-default-users.ldif
-              path: 01-default-users.ldif
+          secret: 
+            secretName: openldap
+            items:
+              - key: 01-default-users.ldif
+                path: 01-default-users.ldif
 ---
 apiVersion: v1
 kind: Service
