@@ -21,6 +21,11 @@ spec:
           image: docker.io/bitnami/openldap:2.4.58
           imagePullPolicy: "Always"
           env:
+            - name: LDAP_ROOT
+              valueFrom:
+                secretKeyRef:
+                  key: ldaproot
+                  name: openldap
             - name: LDAP_ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
