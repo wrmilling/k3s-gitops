@@ -13,10 +13,10 @@ stringData:
           implementation: custom
           url: "ldap://openldap:1389"
           username_attribute: uid
-          additional_users_dn: "users"
-          additional_groups_dn: "groups"
-          base_dn: o=homelab,c=us
-          user: CN=${LDAP_ADMIN_USERNAME},o=homelab,c=us
+          additional_users_dn: ""
+          additional_groups_dn: ""
+          base_dn: ${LDAP_ROOT}
+          user: CN=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}
           users_filter: "(&({username_attribute}={input})(objectClass=person))"
           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
       notifier:
