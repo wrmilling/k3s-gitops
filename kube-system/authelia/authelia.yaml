@@ -35,7 +35,7 @@ spec:
     configMap:
       enabled: true
       access_control:
-        default_policy: two_factor
+        default_policy: one_factor
       storage:
         postgres:
           enabled: true
