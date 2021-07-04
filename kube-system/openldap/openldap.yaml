@@ -21,11 +21,6 @@ spec:
           image: docker.io/bitnami/openldap:2.4.58
           imagePullPolicy: "Always"
           env:
-            - name: LDAP_ROOT
-              valueFrom:
-                secretKeyRef:
-                  key: ldaproot
-                  name: openldap
             - name: LDAP_ADMIN_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -36,19 +31,21 @@ spec:
                 secretKeyRef:
                   key: adminpassword
                   name: openldap
-            - name: LDAP_USERS
-              valueFrom:
-                secretKeyRef:
-                  key: users
-                  name: openldap
-            - name: LDAP_PASSWORDS
-              valueFrom:
-                secretKeyRef:
-                  key: passwords
-                  name: openldap
+            - name: LDAP_CUSTOM_LDIF_DIR
+              value: "/ldifs"
           ports:
             - name: tcp-ldap
               containerPort: 1389
+          volumeMounts:
+            - name: users-ldif
+              mountPath: "/ldifs"
+              readOnly: true
+      volumes:
+        - name: users-ldif
+          secret: openldap
+          items:
+            - key: 01-default-users.ldif
+              path: 01-default-users.ldif
 ---
 apiVersion: v1
 kind: Service

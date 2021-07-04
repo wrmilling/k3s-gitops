@@ -16,10 +16,10 @@ stringData:
     bind_dn = "cn=${LDAP_ADMIN_USERNAME},${LDAP_ROOT}"
     bind_password = "${LDAP_ADMIN_PASSWORD}"
     search_filter = "(cn=%s)"
-    search_base_dns = ["ou=Users,${LDAP_ROOT}"]
+    search_base_dns = ["ou=users,o=homelab,c=us"]
     [servers.attributes]
     name = "givenName"
     surname = "sn"
-    username = "cn"
+    username = "uid"
     member_of = "memberOf"
-    email =  "email"
+    email =  "mail"
