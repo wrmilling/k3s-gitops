@@ -1,0 +1,17 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: monica-helm-values
+  namespace: default
+spec:
+  encryptedData:
+    values.yaml: AgBuqOc8Cws5aHBeRnD5ua1+35e1rVwYy05MT6/6y/xFjLXxWw9jENHzc+9jVxK/IL/o2p9tdon/ADs+9QK9d9HW4ZMBuT30OhnZ4LF5hGs/uZiyppfSUvcqXbz2Ed8fKw0zF0sotwV1zvos9S3Vu1H5xs1zEHzycolwtHOqI7Vt0NahwyV1toINrR+Uu5enXaVt5PW7kPXRlH1LcwEfHQXbVGneUweWb8LRz0WFSiXJlD5OjiBqajDQD3RTsY8DjWtFCw7c4QnD8u9922LScWBU5nvCMqSYCR1+btYFHaAbREiKmT4m/UJ1urAP9KP4EBA70yKf3NIoEsat83Gx0BxS0SptLBbTIqu2C8VtfFndHe4Faxdb44sbItnlv8fj3QKcJ7+XofWj7laaFAqJK4Ws0LnKCAAQ35TfcV3uULwFa5bhl6yPD+wYuOJx0ofE3LT87fKmxSZtI40XWlkNiqIaQEZuHV74fWjrYzDn7kh9I2ZoE7GO40UGBOUNlJdCX+h91/XubvtcyqDAdytzJLv5WhV8XVU9StjgazEIbuEn2K1kfHdBEIixnSOSlWtv/tI620hAiCmsyzwtaiDC9qHjJlgjL3mBkkHKUfuSpmfZvxxxuq3gwQQNiwDa6WPKqUZtt/wH1wYev1Cp8eVd+xB2/3ltbE9SR4Jrm9oJMvG5TkYWDGWd00J4KKrwIddGT9tzqFUREXro9XZczxA65HnA8Vsm6GNga3AHqTPx5Gk28w2eFYPxWKkuj33IhWfGvPaYsik1XLWEt1kTBJQy8qguSCPLwb3v8j7NbIIC50UL+gpMbU0FG6xG0L6uqEnS26OU7mmGVoc8bwmrSzfKocxtAIY0bkcLx0fxhcatz862I9FdIijnCI1ljyUyYuMvZyIr6J54bRm7cfvn2Oln+kukHLfmRq0h5zlb8CEmirvAUZW7fSCqMNyQApuzaMfp6829WEOZ3xG3HpHeNsQiRGZJYBiA
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: monica-helm-values
+      namespace: default
+    type: Opaque
+
