@@ -22,6 +22,9 @@ spec:
       size: 2Gi
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
+    nodeSelector:
+      matchExpressions:
+        - {key: k3s.io/hostname, operator: In, values: ["k3s-amd64-a", "k3s-amd64-c"]}
   valuesFrom:
   - kind: Secret
     name: authelia-postgres-helm-values
