@@ -22,9 +22,6 @@ spec:
       tag: v4.3.4.1
     env:
       TZ: "America/Chicago"
-    addons:
-      netshoot:
-        enabled: true
     service:
       bittorrent:
         enabled: true
