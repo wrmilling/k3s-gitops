@@ -49,7 +49,7 @@ jobs:
       uses: yokawasa/action-setup-kube-tools@v0.8.0
       with:
         setup-tools: |
-          helmv3
+          helm
           yq
     - name: Checkout live branch
       uses: actions/checkout@v2
