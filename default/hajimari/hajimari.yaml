@@ -28,6 +28,7 @@ spec:
           - default
           - media
           - monitoring
+          - longhorn-system
       groups:
         - name: Media
           links:
