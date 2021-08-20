@@ -68,6 +68,8 @@ spec:
         storageClass: "longhorn"
         accessMode: ReadWriteOnce
         size: 1Gi
+    podSecurityContext:
+      fsGroup: 101
     resources:
       requests:
         cpu: 100m
