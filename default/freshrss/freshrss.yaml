@@ -38,6 +38,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
           hajimari.io/enable: "true"
           hajimari.io/icon: "rss-box"
+          hajimari.io/instance: "internal"
         hosts:
         - host: rss.k.homelab.tokyo
           paths:
@@ -55,6 +56,9 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "rss-box"
+          hajimari.io/instance: "external"
         hosts:
         - host: reader.homelab.tokyo
           paths:

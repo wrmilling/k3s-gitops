@@ -23,12 +23,13 @@ spec:
     env:
       TZ: "America/Chicago"
     hajimari:
+      title: Hajimari (External)
+      name: "Winston"
+      instanceName: "external"
       namespaceSelector:
         matchNames:
           - default
           - media
-          - monitoring
-          - longhorn-system
       groups:
         - name: Media
           links:
@@ -42,19 +43,19 @@ spec:
       main:
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: nginx-internal
+          kubernetes.io/ingress.class: nginx-external
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
         hosts:
-          - host: "hajimari.k.homelab.tokyo"
+          - host: "hajimari.homelab.tokyo"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.k.homelab.tokyo"
+              - "hajimari.homelab.tokyo"
     persistence:
       data:
         enabled: true
