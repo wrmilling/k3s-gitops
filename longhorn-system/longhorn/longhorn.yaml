@@ -41,3 +41,4 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "harddisk"
         hajimari.io/instance: "internal"
+        hajimari.io/appName: "Longhorn"

@@ -66,6 +66,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
           hajimari.io/instance: "external"
+          hajimari.io/appName: "Plex"
         hosts:
         - host: "plex.homelab.tokyo"
           paths:

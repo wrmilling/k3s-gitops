@@ -59,6 +59,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "rss-box"
           hajimari.io/instance: "external"
+          hajimari.io/appName: "FreshRSS"
         hosts:
         - host: reader.homelab.tokyo
           paths:
