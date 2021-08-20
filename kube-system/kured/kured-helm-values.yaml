@@ -1,0 +1,17 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: monica-helm-values
+  namespace: kube-system
+spec:
+  encryptedData:
+    values.yaml: AgBpDWYuHIUlLjiskDFYzIdX02QESeY3IyREIfV4nEFriIT36JIvr3iWqbbZOe1Il9elatiMPCGas8F+wUDg8T+zvbS/q6XiKLYgcp06HAsfpYZbTw6Z3HPWSXflQhjwaAlVqYW91NSLcUWyMV3ju5WWhcQLaJJs5MVVUhzhlFdF/1PZxXjrmMEvXNy2x5/HjuZ5eJJtxvuO2fB4ySKJHEDSUpg7nYnfslqpy6aez7JtbhDntLW4KZ0ajQRWTkSQ5UdjpINryZUJ24Dn/RFvrJ5eTh86uNjakYkH9Lf3/78+0yyuGWdVxdzSFvxXq3WHFhcqi5OdYx5RNARxj1nZChOpiQYaXTmAM+/pD1nIbAt0cZPenK4++s1s3h31ejw2ECZrAQHAwMwdwtLI3vW+3AWkZUSo0t25VMNsJtLk8TjESGPE3C8Nwdp2ycKhAA/l6AQ7WnWwKm8LblxhEVWrWoe5kLve9+SmdqPxCwcvuMr2NJ8ybakaE6OziDNWWU9eoKuYBQhLR207oZZeLxjDR5yG4VVGkkb+61z4HSAB/2+6uz5bOZsfIwXhkGko9c2VbVyjHKIprlykwz+JZLuHgoe+/tF8Mu0UiCdsdQusNp64vIwny5NNB9nQIfez4Z8G9urPMA711OcqBST+O00uY1h8zfziRT8vrDud2XbhdezMSszE1okU8OlLzHZOUrt58afJh0btus12XNKxh8t5DhB/n6Lw/nMiB/pEK6++nPlzPk4ZbPru5f5Sc5IoQcX6LTZO4Tv+xYkalbKyPiG1a4Z9Z1M8p/Dx3nJgdm0kD+y6orHVW3q9K9+n7HPnWjzefyKKh7226ohBQvAYHCOHd8PCZkRsdHivQMNSIqfAW3/UNkcrFsd0wnWfv5oGs7WypD5XOO66F+E=
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: monica-helm-values
+      namespace: kube-system
+    type: Opaque
+

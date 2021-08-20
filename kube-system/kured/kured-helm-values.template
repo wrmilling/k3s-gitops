@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monica-helm-values
+  namespace: kube-system
+type: Opaque
+stringData:
+  values.yaml: |
+    configuration:
+      notifyUrl: "$DISCORD_KURED_WEBHOOK_URL"

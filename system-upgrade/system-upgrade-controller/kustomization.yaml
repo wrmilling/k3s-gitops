@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
 - ./system-upgrade-controller.yaml
 - ./k3s-plan.yaml
-- ./ubuntu-plan.yaml
