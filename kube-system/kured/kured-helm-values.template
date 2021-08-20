@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: monica-helm-values
+  name: kured-helm-values
   namespace: kube-system
 type: Opaque
 stringData:
