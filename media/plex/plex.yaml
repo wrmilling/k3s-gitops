@@ -47,6 +47,7 @@ spec:
           kubernetes.io/ingress.class: "nginx-internal"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hajimari.io/enable: "true"
+          hajimari.io/icon: "plex"
         hosts:
         - host: "plex.k.homelab.tokyo"
           paths:

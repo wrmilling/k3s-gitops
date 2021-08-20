@@ -28,6 +28,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "nginx-internal"
           hajimari.io/enable: "true"
+          hajimari.io/icon: "movie-search"
         hosts:
         - host: radarr.k.homelab.tokyo
           paths:

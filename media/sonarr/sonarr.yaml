@@ -28,6 +28,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "nginx-internal"
           hajimari.io/enable: "true"
+          hajimari.io/icon: “television-box”
         hosts:
         - host: sonarr.k.homelab.tokyo
           paths:

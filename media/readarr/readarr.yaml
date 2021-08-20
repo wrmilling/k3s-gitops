@@ -28,6 +28,7 @@ spec:
         annotations:
           kubernetes.io/ingress.class: "nginx-internal"
           hajimari.io/enable: "true"
+          hajimari.io/icon: "book-search"
         hosts:
         - host: readarr.k.homelab.tokyo
           paths:
