@@ -32,6 +32,10 @@ spec:
           - media
           - monitoring
           - longhorn-system
+      customApps: 
+        - name: "Monica"
+          url: "https://monica.homelab.tokyo"
+          icon: "card-account-phone"
       groups:
         - name: Media
           links:

@@ -39,6 +39,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
           hajimari.io/enable: "true"
           hajimari.io/icon: "card-account-phone"
+          hajimari.io/instance: "external"
         hosts:
         - host: "monica.homelab.tokyo"
           paths:
