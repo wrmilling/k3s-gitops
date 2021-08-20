@@ -9,28 +9,30 @@ jobs:
   helm-releases:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.PAT }}
-        fetch-depth: 1
+    - name: Checkout
+      uses: actions/checkout@v2
 
     - name: Install yq
       run: |
         sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/3.3.0/yq_linux_amd64
         sudo chmod +x /usr/local/bin/yq
 
-    - name: Create HelmRelease annotations
-      run: ./.github/create-helmrelease-annotations.sh
+    - name: Renovate Helm Releases
+      uses: k8s-at-home/renovate-helm-releases@v1
+      with:
+        cluster-path: "./"
 
     - name: Create pull request for HelmRelease annotations
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: helm-release-annotations
+        delete-branch: true
         title: "[renovate] create helmrelease annotations [ci-skip]"
         signoff: true
-        committer: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
-        author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+        committer: "Winston R. Milling <wrmilling@users.noreply.github.com>"
+        author: "Winston R. Milling <wrmilling@users.noreply.github.com>"
+        assignees: "wrmilling"
         commit-message: Create renovatebot helmrelease annotations
         body: |
           Signed-off-by: Winston R. Milling <WRMilling@users.noreply.github.com>
