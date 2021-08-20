@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.21.3-orange?style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?color=green&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?color=purple&style=flat-square"></a> <a href="https://discord.gg/Yv2gzFy"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square"></a>
+  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.21.4-orange?style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?color=green&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?color=purple&style=flat-square"></a> <a href="https://discord.gg/Yv2gzFy"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square"></a>
 </p>
 
 <p align="center">
