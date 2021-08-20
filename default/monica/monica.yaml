@@ -37,6 +37,7 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
           nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+          hajimari.io/enable: "true"
         hosts:
         - host: "monica.homelab.tokyo"
           paths:
