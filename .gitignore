@@ -10,4 +10,4 @@
 auth
 bin/
 
-.decrypted-*
+*.decrypted*.sops.yaml
