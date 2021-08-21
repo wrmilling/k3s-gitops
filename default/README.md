@@ -8,6 +8,13 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 * [freshrss/freshrss.yaml](freshrss/freshrss.yaml) - HelmRelease for FreshRSS from the k8s-at-home repo
 
+## Hajimari
+
+[Hajimari](https://hajimari.io) is a beautiful & customizable browser startpage/dashboard with Kubernetes application discovery.
+
+* [hajimari/hajimari-external.yaml](hajimari/hajimari-external.yaml) - HelmRelease which deploys Hajimari, this release covering externally accesible applications.
+* [hajimari/hajimari-internal.yaml](hajimari/hajimari-internal.yaml) - HelmRelease which deploys Hajimari, this release covering internally accesible applications.
+
 ## Haste
 
 [Haste](https://github.com/seejohnrun/haste-server) is an open-source pastebin software written in node.js.
