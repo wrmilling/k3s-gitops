@@ -9,3 +9,5 @@
 
 auth
 bin/
+
+.decrypted-*

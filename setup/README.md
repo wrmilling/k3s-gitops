@@ -1,5 +1,7 @@
 # Cluster setup with k3s
 
+**Notice**: I am in the process of migrating to SOPS, documentation may be out of date during this transition. I am generally following the [k8s-at-home template cluster](https://github.com/k8s-at-home/template-cluster-k3s#wave-introduction) for this process. 
+
 ## .env File
 
 I use a .env file which is encrypted using git-crypt and is referenced in any script below. I have provided a .env.sample file which should show all the environment variables potentially needed for any of the following to function. If copying this repo, you may want to re-initialize git-crypt and copy the `.env.sample` file to .env and over-write default values with your specific ones.
