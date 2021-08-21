@@ -14,7 +14,7 @@ seal() {
 }
 
 # cert-manager
-# seal "cert-manager/cert-manager/route53-api-key"
+seal 'cert-manager/cert-manager' 'route53-api-key'
 
 # default
 seal 'default/minio' 'minio-helm-values'

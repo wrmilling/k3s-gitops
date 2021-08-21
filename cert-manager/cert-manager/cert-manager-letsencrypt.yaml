@@ -51,6 +51,6 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - homelab.tokyo
-  - '*.homelab.tokyo'
-  - '*.k.homelab.tokyo'
+  - "${SECRET_DOMAIN}"
+  - "*.${SECRET_DOMAIN}"
+  - "*.k.${SECRET_DOMAIN}"
