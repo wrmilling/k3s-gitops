@@ -34,7 +34,7 @@ spec:
           - longhorn-system
       customApps: 
         - name: "Monica"
-          url: "https://monica.homelab.tokyo"
+          url: "https://monica.${SECRET_DOMAIN}"
           icon: "card-account-phone"
       groups:
         - name: Media
@@ -52,16 +52,16 @@ spec:
           kubernetes.io/ingress.class: nginx-internal
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-          nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
         hosts:
-          - host: "hajimari.homelab.tokyo"
+          - host: "hajimari.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.homelab.tokyo"
+              - "hajimari.${SECRET_DOMAIN}"
     persistence:
       data:
         enabled: true
