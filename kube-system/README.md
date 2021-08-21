@@ -22,6 +22,14 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [dynamic-dns/route53-env.template](dynamic-dns/route53-env.template) - Template used to create environment variable secrets for the update script via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [dynamic-dns/route53-env.yaml](dynamic-dns/route53-env.yaml) - Environment secrets for update script inside docker image
 
+## kured
+
+[Kured](https://github.com/weaveworks/kured) is a Kubernetes daemonset that performs safe automatic node reboots when the need to do so is indicated by the package management system of the underlying OS.
+
+* [kured/kured-helm-values.template](kured/kured-helm-values.template) - Template used to create helm value secrets for kured via [seal-secrets.sh](/setup/seal-secrets.sh)
+* [kured/kured-helm-values.yaml](kured/kured-helm-values.yaml) - Encrypted secrets for kured
+* [kured/kured.yaml](kured/kured.yaml) - HelmRelease for kured
+
 ## metallb
 
 [MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below.
@@ -39,9 +47,8 @@ Persistent Volume configuration for shared NFS storage.
 
 [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) for the cluster, works with cert-manager to secure and route traffic to specific pods/applications.
 
-* [nginx/nginx.yaml](nginx/nginx.yaml) - HelmRelease for nginx-ingress, including custom 404 pages from billimek/custom-error-pages
-* [nginx/nginx-basic-auth-winston.template](nginx/nginx-basic-auth-winston.template) - Template used to create a basic-auth secret via [seal-secrets.sh](/setup/seal-secrets.sh)
-* [nginx/nginx-basic-auth-winston.yaml](nginx/nginx-basic-auth-winston.yaml) - My encrypted basic-auth secret.
+* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - HelmRelease for nginx-ingress serving internal traffic, including custom 404 pages from billimek/custom-error-pages
+* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - HelmRelease for nginx-ingress serving external traffic, including custom 404 pages from billimek/custom-error-pages
 
 ## openldap
 
