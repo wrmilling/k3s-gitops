@@ -68,9 +68,3 @@ Provide authentication using [alexellis' registry-creds](https://github.com/alex
 * [registry-creds/registry-creds-secret.template](registry-creds/registry-creds-secret.template) - Template used to create the docker-registry type secret via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [registry-creds/registry-creds-secret.yaml](registry-creds/registry-creds-secret.yaml) - My encrypted open dockerhub secret
 
-
-## sealed-secrets
-
-[sealed-secrets](https://github.com/bitnami-labs/sealed-secrets) provides a Kubernetes controller and tool for creating one-way encrypted secrets so that they can be stored and managed in the git repository. First time setup of sealed-secrets is managed as part of the [bootstrap process](/setup/README.md) for the cluster. Sealing new secrets to add to the repo is through the [seal-secrets.sh](/setup/seal-secrets.sh) script.
-
-* [sealed-secrets/sealed-secrets.yaml](sealed-secrets/sealed-secrets.yaml) - HelmRelease for the sealed-secrets controller and system.
