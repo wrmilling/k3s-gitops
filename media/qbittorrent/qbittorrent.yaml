@@ -43,13 +43,13 @@ spec:
           hajimari.io/icon: "pirate"
           hajimari.io/instance: "internal"
         hosts:
-        - host: "qbit.k.homelab.tokyo"
+        - host: "qbit.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "qbit.k.homelab.tokyo"
+          - "qbit.k.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true

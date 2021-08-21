@@ -10,8 +10,7 @@
 
 [Plex](https://www.plex.tv/) Serving up all the beautiful content direct from my personal library and Plex's own sources.
 
-* [plex/plex-secrets.template](plex/plex-secrets.template) - Template file only used on first boot/first run to take in the plex claim key
-* [plex/plex-secrets.yaml](plex/plex-secrets.yaml) - Encrypted claim token for Plex first run
+* [plex/plex-secrets.sops.yaml](plex/plex-secrets.sops.yaml) - Encrypted claim token for Plex first run
 * [plex/plex.yaml](plex/plex.yaml) - HelmRelease for Plex
 
 ## qBittorrent

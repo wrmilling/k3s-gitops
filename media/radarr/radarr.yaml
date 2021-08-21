@@ -31,13 +31,13 @@ spec:
           hajimari.io/icon: "movie-search"
           hajimari.io/instance: "internal"
         hosts:
-        - host: radarr.k.homelab.tokyo
+        - host: "radarr.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "radarr.k.homelab.tokyo"
+          - "radarr.k.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true

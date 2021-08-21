@@ -50,13 +50,13 @@ spec:
           hajimari.io/icon: "plex"
           hajimari.io/instance: "internal"
         hosts:
-        - host: "plex.k.homelab.tokyo"
+        - host: "plex.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "plex.k.homelab.tokyo"
+          - "plex.k.${SECRET_DOMAIN}"
           secretName: plex-cert-internal
       external:
         enabled: true
@@ -68,13 +68,13 @@ spec:
           hajimari.io/instance: "external"
           hajimari.io/appName: "Plex"
         hosts:
-        - host: "plex.homelab.tokyo"
+        - host: "plex.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "plex.homelab.tokyo"
+          - "plex.${SECRET_DOMAIN}"
           secretName: plex-cert-external
     persistence:
       config:

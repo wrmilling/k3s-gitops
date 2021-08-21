@@ -31,13 +31,13 @@ spec:
           hajimari.io/icon: "download-box"
           hajimari.io/instance: "internal"
         hosts:
-        - host: nzbget.k.homelab.tokyo
+        - host: "nzbget.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "nzbget.k.homelab.tokyo"
+          - "nzbget.k.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true

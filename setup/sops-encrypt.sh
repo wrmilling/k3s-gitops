@@ -36,7 +36,7 @@ seal 'flux-system-extra/discord-alerts' 'discord-webhook-url'
 # seal 'kube-system/registry-creds/registry-creds-secret'
 
 # media
-# seal 'media/plex/plex-secrets'
+seal 'media/plex' 'plex-secrets'
 
 # monitoring
 # seal "monitoring/botkube/botkube-helm-values"

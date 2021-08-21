@@ -31,13 +31,13 @@ spec:
           hajimari.io/icon: "book-search"
           hajimari.io/instance: "internal"
         hosts:
-        - host: readarr.k.homelab.tokyo
+        - host: "readarr.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "readarr.k.homelab.tokyo"
+          - "readarr.k.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true

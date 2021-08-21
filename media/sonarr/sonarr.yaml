@@ -31,13 +31,13 @@ spec:
           hajimari.io/icon: "television-box"
           hajimari.io/instance: "internal"
         hosts:
-        - host: sonarr.k.homelab.tokyo
+        - host: "sonarr.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "sonarr.k.homelab.tokyo"
+          - "sonarr.k.${SECRET_DOMAIN}"
     persistence:
       config:
         enabled: true
