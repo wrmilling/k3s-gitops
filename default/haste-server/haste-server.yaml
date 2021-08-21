@@ -51,24 +51,24 @@ spec:
         annotations:
           kubernetes.io/ingress.class: nginx-internal
         hosts:
-        - host: bin.k.homelab.tokyo
+        - host: "bin.k.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - bin.k.homelab.tokyo
+          - "bin.k.${SECRET_DOMAIN}"
           secretName: haste-server-cert-internal
       external:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: nginx-external
         hosts:
-        - host: bin.homelab.tokyo
+        - host: "bin.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - bin.homelab.tokyo
+          - "bin.${SECRET_DOMAIN}"
           secretName: haste-server-cert-external

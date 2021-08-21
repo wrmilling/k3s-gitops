@@ -49,25 +49,25 @@ spec:
       loadBalancerIP: 10.10.40.61
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
-    virtualHost: pihole.k.homelab.tokyo
+    virtualHost: "pihole.k.${SECRET_DOMAIN}"
     ingress:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: nginx-internal
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-        nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+        nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+        nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
         hajimari.io/enable: "true"
         hajimari.io/icon: "dns"
         hajimari.io/instance: "internal"
       path: /
       hosts:
-        - pihole.k.homelab.tokyo
+        - "pihole.k.${SECRET_DOMAIN}"
       tls:
         - secretName: pihole2-cert
           hosts:
-            - pihole.k.homelab.tokyo
+            - "pihole.k.${SECRET_DOMAIN}"
     persistentVolumeClaim:
       enabled: false
     tolerations:

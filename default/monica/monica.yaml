@@ -22,7 +22,7 @@ spec:
       repository: monica
       tag: 3.1.3-apache
     env:
-      APP_URL: https://monica.homelab.tokyo
+      APP_URL: "https://monica.${SECRET_DOMAIN}"
       APP_ENV: production
       DB_HOST: monica-mariadb
       DB_DATABASE: monica
@@ -35,19 +35,19 @@ spec:
           kubernetes.io/ingress.class: "nginx-external"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-          nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
           hajimari.io/enable: "true"
           hajimari.io/icon: "card-account-phone"
           hajimari.io/instance: "external"
         hosts:
-        - host: "monica.homelab.tokyo"
+        - host: "monica.${SECRET_DOMAIN}"
           paths:
           - path: /
             pathType: Prefix
         tls:
         - hosts:
-          - "monica.homelab.tokyo"
+          - "monica.${SECRET_DOMAIN}"
           secretName: monica-cert-external
     persistence:
       config:

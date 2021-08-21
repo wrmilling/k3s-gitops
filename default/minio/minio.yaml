@@ -34,10 +34,10 @@ spec:
         kubernetes.io/ingress.class: nginx-internal
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts: [minio.k.homelab.tokyo]
+      hosts: ["minio.k.${SECRET_DOMAIN}"]
       tls:
       - hosts:
-        - minio.k.homelab.tokyo
+        - "minio.k.${SECRET_DOMAIN}"
         secretName: minio-cert
     tolerations:
     - key: "arm"
