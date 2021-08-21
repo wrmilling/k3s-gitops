@@ -62,6 +62,7 @@ spec:
         tls:
           - hosts:
               - "hajimari.${SECRET_DOMAIN}"
+            secretName: hajimari-internal-cert
     persistence:
       data:
         enabled: true
