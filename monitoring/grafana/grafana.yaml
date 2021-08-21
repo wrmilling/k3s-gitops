@@ -40,10 +40,10 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: "nginx-internal"
-      hosts: [grafana.k.homelab.tokyo]
+      hosts: ["grafana.k.${SECRET_DOMAIN}"]
       tls:
       - hosts:
-        - grafana.k.homelab.tokyo
+        - "grafana.k.${SECRET_DOMAIN}"
         secretName: grafana-cert
     plugins:
     - natel-discrete-panel
@@ -153,7 +153,7 @@ spec:
           isDefault: true
     grafana.ini:
       server:
-        root_url: "https://grafana.k.homelab.tokyo"
+        root_url: "https://grafana.k.${SECRET_DOMAIN}"
       # security:
       #   admin_user: "winston@milli.ng"
       paths:
