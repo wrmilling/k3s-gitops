@@ -23,8 +23,8 @@ seal 'default/pihole' 'pihole-secret'
 seal 'default/pihole' 'pihole-helm-values'
 
 # flux-system
-# seal "flux-system-extra/github-alerts/github-api-token"
-# seal "flux-system-extra/discord-alerts/discord-webhook-url"
+seal 'flux-system-extra/github-alerts' 'github-api-token'
+seal 'flux-system-extra/discord-alerts' 'discord-webhook-url'
 
 # kube-system
 # seal 'kube-system/authelia/authelia-helm-values'

@@ -1,0 +1,60 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+    name: discord-webhook-url
+    namespace: flux-system
+type: Opaque
+stringData:
+    address: ENC[AES256_GCM,data:4HZUuaWHUq5Xn3rtxLxQ4oLP8kPew+iOOyCLXnmMeAGTjwRz6VCguRZQVpYY9gPXdN9hFEvFoLTe4XMmqRyCFrgCjHjyN4IBi/A7sZ4pgX2llsRygZm/iXgvkKC+UPFMsZWZf/vWadI43nw/2ZdlOJdAOxhi+Q7u,iv:errpmxtAwDWDEVj9fiv7sKYv1LNLiOr9GhiqSb7A+Gc=,tag:6ehVoDUsCFwWUR0oGeXX9A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age: []
+    lastmodified: "2021-08-21T22:06:38Z"
+    mac: ENC[AES256_GCM,data:KgoJvn6PcckffyVCE39Nt1w3id/GyKBqNfyqEivMnYuuwCZPf1qbSfqfD4XfrHshAFG08dxyCSjhEPQL+4sG1ergCl28izv9CnY1ANTUYsCx/cgMq+ear9CZOrwYymeD4FhTEcp0jYB/cegTu+6gJk3jVb40IehR5BgGN5E2XX0=,iv:+iio3UCEqxqfHIgnKnFjMb7KYvKz6P2A10lw6F93DKc=,tag:awJPX3l73cxy5P4HMFwBww==,type:str]
+    pgp:
+        - created_at: "2021-08-21T22:06:37Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMAwAAAAAAAAAAAQ//eYPpnSh/wlrnSEiGc9opjwlCaks0TaxmQQDoiOXgtwgz
+            VfuOWeOjPWG0yYlY9/KAV/KGYMYeDzXgdOYSmgzDhf3V2mnruGdIF+2mpJkBbPk+
+            l369oVeMXr+nSgMJMZLcROPngDvMnsB0PA/FEV/Y6L2ibm+rKiC7D5eS4+C/M3sj
+            5AfFOz9F5ONz9sM7OyavuyrukbmXgQJJorgetxNpkdDyqPavD1t9TufONLoPZLPs
+            rHxsUseGaDV02Kr5AeRd3DkmGZmFP12aSjFjGbI1ha0oqCwQ+GrzjhiKTmQuxazs
+            Eqpen4XdNNyZ19IQAQq50AFmy+8re+2mbwn7yXeBmIl/fZhRqnznKkUOj1mJrNTW
+            8dc68sZs99pzyk216D1mNbCav0HNx4Nr6NUnfvIQsh57iJs7794fhUK+DUvgCnes
+            PKDvhEA3vLjEfxkVnD+zug2Z2i5KgBEc51IAyHozg6EDCl6CJZ5WA5FA0fFiPrKI
+            0cTeZSM4W2Tx/bD2AadQm7S9LPGQsxfO+u/e5yuHcRCBVSURP2jfPncnm5XfuXt3
+            G87gQdAAA0o0UtOJPWQzbdZfUk4WUkiQR5kLR2z1b1cfEQI1UaNWDvuNkv1OlHNq
+            itkorJGG8rISlSqaB48d8JXbX4mV27bEXp9/Wz8rDZKf9xX9W8+NuEo6Khf3heLS
+            XgHFvsSSGzERBh3XUPiRY/Jg0NQjb+6piHLj6Bt3ZDBI63fsKqrxn2SG+leXiKOR
+            4vfbw9LbTkQBPMlwB9hb+Jao1dzLv69FNVMQtMcYlXk46IEglJa7d0SfA1M6a6U=
+            =okCD
+            -----END PGP MESSAGE-----
+          fp: B738248A67073DCE9E761E389DB6852043CF2CC7
+        - created_at: "2021-08-21T22:06:37Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            wcFMA39aiX8PMwmBARAAGuUb4DrUmXQOq23POuky0HD/BKXrAHpGUCXBTLZjVAJ0
+            Qx8OViBAh6sDRARFsm/Hz+8jlgSgJu4IEn9WT3aLsHahZMJp8gYZ/m3+exVf/JQv
+            vZy8jG6omcJqW4QSCXEhXr0nE7/PutGnN0VJwmOgry7v2z15ThFgQV6qjBU/rpmM
+            XiMEamufG0Bhpo+psbv5wdk79QleX5cYe4Ej9qsARGD94BAauACwMTDgq8b1s/Kr
+            9t3V/KTR2Kyk3cZKSBeEiLUgtk+BXn0ad4GdsIXKT/8+ftKKzSa/87L1vVY17nFP
+            f4yCPUBeq/CcQHxeyGbgOmCKgIxi//YPQMF8iX4SgyOv2nCnhK+xjdYt9DrlcDnG
+            hiX2djG1gwCy6GP0SWTqQenQRjqzEhfpfjq6dcQ3JKMXdyBfL+pG6ourOLHx46/g
+            dmnJSMgCQ0KsZZjwdErldUuL6UdqZLaPoiRqmABxzWmwo2AUEmY07q05S9SzIbZ6
+            QASca+HP0RVupBB2TCagPMfpkA3/azdH42BG6yR2nnxbD7mUT5wpqM2NZBfL+12J
+            rjF/3kOd0NXxnsVXTeGbOh7zfnku/fcl4t6sWUR4BQZrNvv8acs8yNSrTSq6SG0D
+            YyoIGWTkutoDKdvxop7pEq1hiJ+vP+hhtCNZB8svnwLkXH8kMhxAY2n96rvAreXS
+            5gFCAJN7bVD23FIZjj31dJ48dJEby2cWs9tPRZhyeFVpZzF7CekJghsTxcuW7Luw
+            H+5FVpjngYrWyby8QiU8mqfkpOzMFZuXkInvqzZlzafxU+Kdf4mIAA==
+            =NdHL
+            -----END PGP MESSAGE-----
+          fp: 21E16B8D2EE875306A6C9968D83077B99F8C6643
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.1

@@ -1,8 +1,9 @@
+# yamllint disable
 apiVersion: v1
 kind: Secret
 metadata:
-  name: discord-webhook-url
+  name: github-api-token
   namespace: flux-system
 type: Opaque
 stringData:
-  address: ${DISCORD_WEBHOOK_URL}
+  token: ${GITHUB_TOKEN}
