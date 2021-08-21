@@ -39,8 +39,8 @@ seal 'flux-system-extra/discord-alerts' 'discord-webhook-url'
 seal 'media/plex' 'plex-secrets'
 
 # monitoring
-# seal "monitoring/botkube/botkube-helm-values"
-# seal "monitoring/grafana/grafana-helm-values"
-# seal "monitoring/grafana/grafana-ldap-toml"
-# seal "monitoring/kube-prometheus-stack/kube-prometheus-stack-helm-values"
-# seal "monitoring/thanos/thanos-helm-values"
+seal 'monitoring/botkube' 'botkube-helm-values'
+seal 'monitoring/grafana' 'grafana-helm-values'
+seal 'monitoring/grafana' 'grafana-ldap-toml'
+seal 'monitoring/kube-prometheus-stack' 'kube-prometheus-stack-helm-values'
+seal 'monitoring/thanos' 'thanos-helm-values'

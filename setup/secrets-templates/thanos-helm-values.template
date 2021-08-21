@@ -1,3 +1,4 @@
+# yamllint disable
 apiVersion: v1
 kind: Secret
 metadata:

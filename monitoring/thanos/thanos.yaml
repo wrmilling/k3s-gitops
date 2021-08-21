@@ -31,11 +31,11 @@ spec:
             kubernetes.io/ingress.class: "nginx-internal"
             nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16"
             cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/auth-signin: https://auth.homelab.tokyo
-            nginx.ingress.kubernetes.io/auth-url: https://auth.homelab.tokyo/api/verify
-          hosts: ["thanos.k.homelab.tokyo"]
+            nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+            nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+          hosts: ["thanos.k.${SECRET_DOMAIN}"]
           tls:
-          - hosts: ["thanos.k.homelab.tokyo"]
+          - hosts: ["thanos.k.${SECRET_DOMAIN}"]
             secretName: thanos-cert
     compact:
       retentionResolution1h: 5y
