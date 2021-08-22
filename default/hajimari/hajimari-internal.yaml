@@ -32,19 +32,6 @@ spec:
           - media
           - monitoring
           - longhorn-system
-      customApps: 
-        - name: "Monica"
-          url: "https://monica.${SECRET_DOMAIN}"
-          icon: "card-account-phone"
-      groups:
-        - name: Media
-          links:
-            - name: YouTube
-              url: "https://youtube.com/feed/subscriptions"
-        - name: Tech
-          links:
-            - name: Hacker News
-              url: "https://news.ycombinator.com/"
     ingress:
       main:
         enabled: true
@@ -75,3 +62,10 @@ spec:
       requests:
         cpu: 100m
         memory: 128M
+  valuesFrom:
+  - kind: Secret
+    name: "hajimari-shared-secrets"
+    optional: false
+  - kind: Secret
+    name: "hajimari-internal-secrets"
+    optional: false

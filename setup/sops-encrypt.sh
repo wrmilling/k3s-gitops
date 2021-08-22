@@ -18,6 +18,7 @@ seal 'cert-manager/cert-manager' 'route53-api-key'
 
 # default
 seal 'default/minio' 'minio-helm-values'
+seal 'default/hajimari' 'hajimari-internal-helm-values'
 seal 'default/monica' 'monica-helm-values'
 seal 'default/pihole' 'pihole-secret'
 seal 'default/pihole' 'pihole-helm-values'
