@@ -30,6 +30,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "book-search"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
         - host: "readarr.k.${SECRET_DOMAIN}"
           paths:

@@ -30,6 +30,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-search"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
         - host: "radarr.k.${SECRET_DOMAIN}"
           paths:

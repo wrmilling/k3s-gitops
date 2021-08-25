@@ -42,3 +42,4 @@ spec:
         hajimari.io/icon: "harddisk"
         hajimari.io/instance: "internal"
         hajimari.io/appName: "Longhorn"
+        hajimari.io/group: "Cluster Ops"

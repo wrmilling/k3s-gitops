@@ -39,6 +39,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "rss-box"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "News"
         hosts:
         - host: "rss.k.${SECRET_DOMAIN}"
           paths:

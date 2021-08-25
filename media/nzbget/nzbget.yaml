@@ -30,6 +30,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "download-box"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
         - host: "nzbget.k.${SECRET_DOMAIN}"
           paths:

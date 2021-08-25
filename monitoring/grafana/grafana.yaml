@@ -40,6 +40,11 @@ spec:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: "nginx-internal"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-areaspline"
+        hajimari.io/instance: "internal"
+        hajimari.io/appName: "Grafana"
+        hajimari.io/group: "Cluster Ops"
       hosts: ["grafana.k.${SECRET_DOMAIN}"]
       tls:
       - hosts:

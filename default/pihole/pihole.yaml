@@ -61,6 +61,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "dns"
         hajimari.io/instance: "internal"
+        hajimari.io/group: "Cluster Ops"
       path: /
       hosts:
         - "pihole.k.${SECRET_DOMAIN}"

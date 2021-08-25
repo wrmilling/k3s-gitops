@@ -49,6 +49,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
         - host: "plex.k.${SECRET_DOMAIN}"
           paths:

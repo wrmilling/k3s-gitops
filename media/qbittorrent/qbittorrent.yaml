@@ -42,6 +42,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "pirate"
           hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
         - host: "qbit.k.${SECRET_DOMAIN}"
           paths:

@@ -49,20 +49,10 @@ spec:
       main: 
         enabled: true
         annotations:
-          kubernetes.io/ingress.class: nginx-internal
-        hosts:
-        - host: "bin.k.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "bin.k.${SECRET_DOMAIN}"
-          secretName: haste-server-cert-internal
-      external:
-        enabled: true
-        annotations:
           kubernetes.io/ingress.class: nginx-external
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "content-paste"
+          hajimari.io/instance: "external"
         hosts:
         - host: "bin.${SECRET_DOMAIN}"
           paths:
