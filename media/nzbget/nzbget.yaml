@@ -58,7 +58,7 @@ spec:
       fsGroup: 1001
     resources:
       requests:
-        memory: 300Mi
+        memory: 301Mi
         cpu: 100m
       limits:
         memory: 4000Mi
