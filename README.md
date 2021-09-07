@@ -44,6 +44,7 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [media](/media)
 * [monitoring](/monitoring)
 * [system-upgrade](/system-upgrade)
+* [velero](/velero)
 
 ## Credits + Community
 
