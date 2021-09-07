@@ -92,6 +92,8 @@ spec:
         readOnly: true
         mountPath: /data
         existingClaim: nfs-media-pvc
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     # resources:
     #   requests:
     #     gpu.intel.com/i915: 1
