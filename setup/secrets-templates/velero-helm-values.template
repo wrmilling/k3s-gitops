@@ -1,0 +1,16 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+  name: velero-helm-values
+  namespace: velero
+type: Opaque
+stringData:
+  values.yaml: |
+    credentials:
+      secretContents:
+        cloud: |
+          [default]
+          aws_access_key_id = $MINIO_ACCESS_KEY
+          aws_secret_access_key = $MINIO_SECRET_KEY
+
