@@ -43,4 +43,7 @@ spec:
     - kind: HelmRelease
       namespace: 'monitoring'
       name: '*'
+    - kind: HelmRelease
+      namespace: 'velero'
+      name: '*'
   suspend: false
