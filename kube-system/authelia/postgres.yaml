@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     persistence:
-      storageClass: "longhorn"
+      storageClass: "rook-ceph-block"
       size: 2Gi
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
