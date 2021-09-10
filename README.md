@@ -40,7 +40,6 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [default](/default)
 * [flux-system](/flux-system-extra)
 * [kube-system](/kube-system)
-* [longhorn-system](/longhorn-system)
 * [media](/media)
 * [monitoring](/monitoring)
 * [system-upgrade](/system-upgrade)

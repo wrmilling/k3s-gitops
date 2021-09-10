@@ -35,9 +35,6 @@ spec:
       namespace: 'kube-system'
       name: '*'
     - kind: HelmRelease
-      namespace: 'longhorn-system'
-      name: '*'
-    - kind: HelmRelease
       namespace: 'media'
       name: '*'
     - kind: HelmRelease

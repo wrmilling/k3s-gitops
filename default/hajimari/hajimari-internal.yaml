@@ -31,7 +31,7 @@ spec:
           - default
           - media
           - monitoring
-          - longhorn-system
+          - rook-ceph
     ingress:
       main:
         enabled: true
