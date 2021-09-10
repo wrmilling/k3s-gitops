@@ -54,6 +54,8 @@ spec:
         enabled: true
         storageClass: "longhorn"
         size: 2Gi
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     tolerations:
     - key: "arm"
       operator: "Exists"

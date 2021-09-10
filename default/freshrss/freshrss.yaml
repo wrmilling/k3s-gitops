@@ -78,6 +78,8 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         skipuninstall: true
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     resources:
       limits:
         memory: 513Mi
