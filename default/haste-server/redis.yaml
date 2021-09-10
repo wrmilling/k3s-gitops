@@ -19,7 +19,7 @@ spec:
   values:
     master:
       persistence:
-        storageClass: "longhorn"
+        storageClass: "rook-ceph-block"
         size: 1Gi
     replica:
       replicaCount: 0
