@@ -61,6 +61,8 @@ spec:
         readOnly: false
         mountPath: /nfs-media
         existingClaim: nfs-media-pvc
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001

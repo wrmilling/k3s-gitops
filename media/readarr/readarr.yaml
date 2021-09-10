@@ -48,6 +48,8 @@ spec:
         enabled: true
         readOnly: false
         existingClaim: nfs-media-pvc
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     resources:
       requests:
         memory: 350Mi
