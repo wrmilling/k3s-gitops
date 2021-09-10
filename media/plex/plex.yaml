@@ -1,120 +1,116 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: plex
-  namespace: media
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: plex
-      version: 6.0.1
-      sourceRef:
-        kind: HelmRepository
-        name: k8s-at-home-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: plexinc/pms-docker
-      tag: 1.22.3.4523-d0ce30438
-    env:
-      TZ: "America/Chicago"
-    envValueFrom:
-      PLEX_CLAIM:
-        secretKeyRef:
-          key: plex-claim
-          name: plex-secrets
-    podSecurityContext:
-      supplementalGroups:
-      - 44
-      - 109
-      - 100
-    service:
-      main: 
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: 10.10.40.63
-        externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/allow-shared-ip: plex
-    ingress:
-      main: 
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: "nginx-internal"
-          # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-        - host: "plex.k.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "plex.k.${SECRET_DOMAIN}"
-          secretName: plex-cert-internal
-      external:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: "nginx-external"
-          # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
-          hajimari.io/instance: "external"
-          hajimari.io/appName: "Plex"
-        hosts:
-        - host: "plex.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "plex.${SECRET_DOMAIN}"
-          secretName: plex-cert-external
-    persistence:
-      config:
-        enabled: true
-        existingClaim: plex-config
-      transcode:
-        enabled: true
-        type: emptyDir
-        medium: Memory
-      media:
-        enabled: true
-        readOnly: true
-        mountPath: /data
-        existingClaim: nfs-media-pvc
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    # resources:
-    #   requests:
-    #     gpu.intel.com/i915: 1
-    #     cpu: 1000m
-    #     memory: 1500Mi
-    #   limits:
-    #     gpu.intel.com/i915: 1
-    #     memory: 4900Mi
-    # addons:
-    #   promtail:
-    #     enabled: true
-    #     image:
-    #       repository: grafana/promtail
-    #       tag: 2.2.1
-    #     loki: http://loki.logs.svc.cluster.local:3100/loki/api/v1/push
-    #     logs:
-    #     - name: promtail/plex
-    #       path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
-    #     - name: promtail/plex/plugins
-    #       path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
-    #     volumeMounts:
-    #     - name: config
-    #       mountPath: /config
-    #       readOnly: true
-    #     securityContext:
-    #       runAsUser: 0
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: plex
+#   namespace: media
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://k8s-at-home.com/charts/
+#       chart: plex
+#       version: 6.0.1
+#       sourceRef:
+#         kind: HelmRepository
+#         name: k8s-at-home-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: plexinc/pms-docker
+#       tag: 1.22.3.4523-d0ce30438
+#     env:
+#       TZ: "America/Chicago"
+#       PLEX_CLAIM: ${PLEX_CLAIM}
+#     podSecurityContext:
+#       supplementalGroups:
+#       - 44
+#       - 109
+#       - 100
+#     service:
+#       main: 
+#         enabled: true
+#         type: LoadBalancer
+#         loadBalancerIP: 10.10.40.63
+#         externalTrafficPolicy: Local
+#         annotations:
+#           metallb.universe.tf/allow-shared-ip: plex
+#     ingress:
+#       main: 
+#         enabled: true
+#         annotations:
+#           kubernetes.io/ingress.class: "nginx-internal"
+#           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "plex"
+#           hajimari.io/instance: "internal"
+#           hajimari.io/group: "Media"
+#         hosts:
+#         - host: "plex.k.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#         tls:
+#         - hosts:
+#           - "plex.k.${SECRET_DOMAIN}"
+#           secretName: plex-cert-internal
+#       external:
+#         enabled: true
+#         annotations:
+#           kubernetes.io/ingress.class: "nginx-external"
+#           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "plex"
+#           hajimari.io/instance: "external"
+#           hajimari.io/appName: "Plex"
+#         hosts:
+#         - host: "plex.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#         tls:
+#         - hosts:
+#           - "plex.${SECRET_DOMAIN}"
+#           secretName: plex-cert-external
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: plex-config
+#       transcode:
+#         enabled: true
+#         type: emptyDir
+#         medium: Memory
+#       media:
+#         enabled: true
+#         readOnly: true
+#         mountPath: /data
+#         existingClaim: nfs-media-pvc
+#     podAnnotations:
+#       backup.velero.io/backup-volumes: config
+#     # resources:
+#     #   requests:
+#     #     gpu.intel.com/i915: 1
+#     #     cpu: 1000m
+#     #     memory: 1500Mi
+#     #   limits:
+#     #     gpu.intel.com/i915: 1
+#     #     memory: 4900Mi
+#     # addons:
+#     #   promtail:
+#     #     enabled: true
+#     #     image:
+#     #       repository: grafana/promtail
+#     #       tag: 2.2.1
+#     #     loki: http://loki.logs.svc.cluster.local:3100/loki/api/v1/push
+#     #     logs:
+#     #     - name: promtail/plex
+#     #       path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+#     #     - name: promtail/plex/plugins
+#     #       path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+#     #     volumeMounts:
+#     #     - name: config
+#     #       mountPath: /config
+#     #       readOnly: true
+#     #     securityContext:
+#     #       runAsUser: 0
