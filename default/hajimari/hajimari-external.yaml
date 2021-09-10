@@ -1,69 +1,69 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: hajimari-external
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://toboshii.github.io/hajimari
-      chart: hajimari
-      version: 1.1.1
-      sourceRef:
-        kind: HelmRepository
-        name: hajimari-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: ghcr.io/toboshii/hajimari
-      tag: v0.1.0
-    env:
-      TZ: "America/Chicago"
-    hajimari:
-      title: Hajimari (External)
-      name: "Winston"
-      instanceName: "external"
-      namespaceSelector:
-        matchNames:
-          - default
-          - media
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          kubernetes.io/ingress.class: nginx-external
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
-          nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
-        hosts:
-          - host: "hajimari.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "hajimari.${SECRET_DOMAIN}"
-            secretName: hajimari-external-cert
-    persistence:
-      data:
-        enabled: true
-        storageClass: "rook-ceph-block"
-        accessMode: ReadWriteOnce
-        size: 1Gi
-    podSecurityContext:
-      fsGroup: 101
-    resources:
-      requests:
-        cpu: 100m
-        memory: 128M
-  valuesFrom:
-  - kind: Secret
-    name: "hajimari-shared-secrets"
-    optional: false
-  - kind: Secret
-    name: "hajimari-external-secrets"
-    optional: false
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: hajimari-external
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://toboshii.github.io/hajimari
+#       chart: hajimari
+#       version: 1.1.1
+#       sourceRef:
+#         kind: HelmRepository
+#         name: hajimari-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: ghcr.io/toboshii/hajimari
+#       tag: v0.1.0
+#     env:
+#       TZ: "America/Chicago"
+#     hajimari:
+#       title: Hajimari (External)
+#       name: "Winston"
+#       instanceName: "external"
+#       namespaceSelector:
+#         matchNames:
+#           - default
+#           - media
+#     ingress:
+#       main:
+#         enabled: true
+#         annotations:
+#           kubernetes.io/ingress.class: nginx-external
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#           nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
+#           nginx.ingress.kubernetes.io/auth-url: https://auth.${SECRET_DOMAIN}/api/verify
+#         hosts:
+#           - host: "hajimari.${SECRET_DOMAIN}"
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#         tls:
+#           - hosts:
+#               - "hajimari.${SECRET_DOMAIN}"
+#             secretName: hajimari-external-cert
+#     persistence:
+#       data:
+#         enabled: true
+#         storageClass: "rook-ceph-block"
+#         accessMode: ReadWriteOnce
+#         size: 1Gi
+#     podSecurityContext:
+#       fsGroup: 101
+#     resources:
+#       requests:
+#         cpu: 100m
+#         memory: 128M
+#   valuesFrom:
+#   - kind: Secret
+#     name: "hajimari-shared-secrets"
+#     optional: false
+#   - kind: Secret
+#     name: "hajimari-external-secrets"
+#     optional: false
