@@ -27,6 +27,7 @@ spec:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "nginx-internal"
+          nginx.ingress.kubernetes.io/proxy-body-size: 5m
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-search"
           hajimari.io/instance: "internal"
