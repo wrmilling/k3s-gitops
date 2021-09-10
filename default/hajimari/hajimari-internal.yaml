@@ -53,7 +53,7 @@ spec:
     persistence:
       data:
         enabled: true
-        storageClass: "longhorn"
+        storageClass: "rook-ceph-block"
         accessMode: ReadWriteOnce
         size: 1Gi
     podSecurityContext:
