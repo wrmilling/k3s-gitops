@@ -1,30 +1,30 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: authelia-redis
-#   namespace: kube-system
-# spec:
-#   interval: 5m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://charts.bitnami.com/bitnami
-#       chart: redis
-#       version: 15.3.1
-#       sourceRef:
-#         kind: HelmRepository
-#         name: bitnami-charts
-#         namespace: flux-system
-#       interval: 5m
-#   values:
-#     master:
-#       persistence:
-#         storageClass: "rook-ceph-block"
-#         size: 1Gi
-#     replica:
-#       replicaCount: 0
-#     metrics:
-#       enabled: true
-#     auth:
-#       existingSecret: authelia-redis-password
-#       existingSecretPasswordKey: password
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia-redis
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: redis
+      version: 15.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    master:
+      persistence:
+        storageClass: "rook-ceph-block"
+        size: 1Gi
+    replica:
+      replicaCount: 0
+    metrics:
+      enabled: true
+    auth:
+      existingSecret: authelia-redis-password
+      existingSecretPasswordKey: password
