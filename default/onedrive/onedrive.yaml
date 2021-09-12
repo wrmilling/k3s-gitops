@@ -17,6 +17,7 @@ spec:
       interval: 5m
   values:
     env:
+      ONEDRIVE_AUTHFILES: "/onedrive/conf/auth-request:/onedrive/conf/auth-response"
       ONEDRIVE_DOWNLOADONLY: 1
     persistence:
       config:
