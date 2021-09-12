@@ -22,6 +22,7 @@ seal 'default/minio' 'minio-helm-values'
 seal 'default/monica' 'monica-helm-values'
 seal 'default/pihole' 'pihole-secret'
 seal 'default/pihole' 'pihole-helm-values'
+seal 'default/onedrive' 'onedrive-auth'
 
 # flux-system
 seal 'flux-system-extra/github-alerts' 'github-api-token'
@@ -37,7 +38,7 @@ seal 'kube-system/openldap' 'openldap-secrets'
 seal 'kube-system/registry-creds' 'registry-creds-secret'
 
 # media
-seal 'media/plex' 'plex-secrets'
+# seal 'media/plex' 'plex-secrets'
 
 # monitoring
 seal 'monitoring/botkube' 'botkube-helm-values'

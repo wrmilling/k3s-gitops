@@ -1,0 +1,9 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+  name: onedrive-auth
+  namespace: default
+type: Opaque
+stringData:
+  auth-response: "${ONEDRIVE_AUTH_RESPONSE}"
