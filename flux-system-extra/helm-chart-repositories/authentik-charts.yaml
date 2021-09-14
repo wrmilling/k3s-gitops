@@ -8,5 +8,3 @@ spec:
   interval: 1h
   url: https://goauthentik.github.io/helm
   timeout: 3m
-
-

@@ -29,7 +29,7 @@ spec:
       DB_USERNAME: monica
       DEFAULT_MAX_STORAGE_SIZE: 4096
     ingress:
-      main: 
+      main:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "nginx-external"
@@ -41,14 +41,14 @@ spec:
           hajimari.io/icon: "card-account-phone"
           hajimari.io/instance: "external"
         hosts:
-        - host: "monica.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "monica.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - hosts:
-          - "monica.${SECRET_DOMAIN}"
-          secretName: monica-cert-external
+          - hosts:
+              - "monica.${SECRET_DOMAIN}"
+            secretName: monica-cert-external
     persistence:
       config:
         enabled: true
@@ -56,8 +56,8 @@ spec:
     podAnnotations:
       backup.velero.io/backup-volumes: config
     tolerations:
-    - key: "arm"
-      operator: "Exists"
+      - key: "arm"
+        operator: "Exists"
     mariadb:
       enabled: true
       image:
@@ -72,6 +72,6 @@ spec:
         database: monica
         username: monica
   valuesFrom:
-  - kind: Secret
-    name: "monica-helm-values"
-    optional: false
+    - kind: Secret
+      name: "monica-helm-values"
+      optional: false

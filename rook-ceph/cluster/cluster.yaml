@@ -7,7 +7,7 @@
 #   kubectl create -f crds.yaml -f common.yaml -f operator.yaml
 #   kubectl create -f cluster.yaml
 #################################################################################################################
-
+---
 apiVersion: ceph.rook.io/v1
 kind: CephCluster
 metadata:
@@ -45,10 +45,10 @@ spec:
     allowMultiplePerNode: false
   mgr:
     modules:
-    # Several modules should not need to be included in this list. The "dashboard" and "monitoring" modules
-    # are already enabled by other settings in the cluster CR.
-    - name: pg_autoscaler
-      enabled: true
+      # Several modules should not need to be included in this list. The "dashboard" and "monitoring" modules
+      # are already enabled by other settings in the cluster CR.
+      - name: pg_autoscaler
+        enabled: true
   # enable the ceph dashboard for viewing cluster status
   dashboard:
     enabled: true
@@ -172,8 +172,8 @@ spec:
 #    cleanup:
     mon:
       requests:
-          cpu: 35m
-          memory: 800Mi
+        cpu: 35m
+        memory: 800Mi
       limits:
         memory: 1024Mi
     osd:

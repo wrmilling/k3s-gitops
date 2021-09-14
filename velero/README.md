@@ -1,6 +1,6 @@
 # `velero` Namespace
 
-This namespace contains the configuration for the cluster backup and restore solution [velero](https://velero.io). 
+This namespace contains the configuration for the cluster backup and restore solution [velero](https://velero.io).
 
 ## velero
 

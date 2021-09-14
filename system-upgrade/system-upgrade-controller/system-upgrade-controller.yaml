@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -7,15 +8,15 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name:  system-upgrade
+  name: system-upgrade
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: system-upgrade
-  namespace: system-upgrade
+  - kind: ServiceAccount
+    name: system-upgrade
+    namespace: system-upgrade
 ---
 apiVersion: v1
 kind: ConfigMap

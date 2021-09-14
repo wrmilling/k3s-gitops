@@ -8,4 +8,3 @@ spec:
   interval: 1h
   url: https://mojo2600.github.io/pihole-kubernetes
   timeout: 3m
-

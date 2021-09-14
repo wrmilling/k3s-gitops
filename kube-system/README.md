@@ -16,7 +16,7 @@ This is probably overly-complicated for what I actually need and I will probably
 
 ## dynamic-dns
 
-A custom docker image and cron job that uses the AWS cli to udpate a dns reocord pointing to the cluster's external IP address. 
+A custom docker image and cron job that uses the AWS cli to udpate a dns reocord pointing to the cluster's external IP address.
 
 * [dynamic-dns/cronjob.yaml](dynamic-dns/cronjob.yaml) - Cron Job which schedules the DNS update
 * [dynamic-dns/route53-env.template](dynamic-dns/route53-env.template) - Template used to create environment variable secrets for the update script via [seal-secrets.sh](/setup/seal-secrets.sh)
@@ -67,4 +67,3 @@ Provide authentication using [alexellis' registry-creds](https://github.com/alex
 * [registry-creds/dockerhub.yaml](registry-creds/dockerhub.yaml) - The ClusterPullSecret which binds the docker-registry secrets to teh registry-creds deployment to be used by kubernetes
 * [registry-creds/registry-creds-secret.template](registry-creds/registry-creds-secret.template) - Template used to create the docker-registry type secret via [seal-secrets.sh](/setup/seal-secrets.sh)
 * [registry-creds/registry-creds-secret.yaml](registry-creds/registry-creds-secret.yaml) - My encrypted open dockerhub secret
-

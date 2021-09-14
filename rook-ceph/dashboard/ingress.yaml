@@ -14,16 +14,16 @@ metadata:
 #      proxy_ssl_verify off;
 spec:
   tls:
-   - hosts:
-     - rook.k.${SECRET_DOMAIN}
+    - hosts:
+        - rook.k.${SECRET_DOMAIN}
   rules:
-  - host: rook.k.${SECRET_DOMAIN}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: rook-ceph-mgr-dashboard
-            port:
-              number: 7000
+    - host: rook.k.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rook-ceph-mgr-dashboard
+                port:
+                  number: 7000
