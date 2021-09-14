@@ -6,6 +6,7 @@ Default namespace for applications.
 
 Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
+* [freshrss/freshrss-pvc.yaml](freshrss/freshrss-pvc.yaml) - PVC for freshrss configuration files
 * [freshrss/freshrss.yaml](freshrss/freshrss.yaml) - HelmRelease for FreshRSS from the k8s-at-home repo
 
 ## Hajimari
@@ -34,7 +35,14 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 [Monica](https://github.com/monicahq/monica) is an opensource Source personal CRM.
 
 * [monica/monica-helm-values.sops.yaml](monica/monica-helm-values.sops.yaml) - Encrypted Monica helm values
+* [monica/monica-pvc.yaml](monica/monica-pvc.yaml) - PVC for monica configuration files
 * [monica/monica.yaml](monica/monica.yaml) - HelmRelease for Monica
+
+## OneDrive
+
+Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup. 
+
+* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for onedrive
 
 ## PiHole
 
