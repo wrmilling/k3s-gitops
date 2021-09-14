@@ -1,2 +1,3 @@
 .github/
 .sops.yaml
+.pre-commit-config.yaml
