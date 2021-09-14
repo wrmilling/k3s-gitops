@@ -8,7 +8,7 @@ type: Opaque
 stringData:
   values.yaml: |
     hajimari:
-      customApps: 
+      customApps:
         - name: "Monica"
           url: "https://monica.${CLUSTER_DOMAIN}"
           icon: "card-account-phone"

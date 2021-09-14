@@ -8,4 +8,3 @@ spec:
   interval: 1h
   url: https://infracloudio.github.io/charts
   timeout: 3m
-

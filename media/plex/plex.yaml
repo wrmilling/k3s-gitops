@@ -25,11 +25,11 @@ spec:
       # PLEX_CLAIM: claim-hash
     podSecurityContext:
       supplementalGroups:
-      - 44
-      - 109
-      - 100
+        - 44
+        - 109
+        - 100
     service:
-      main: 
+      main:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: 10.10.40.63
@@ -37,7 +37,7 @@ spec:
         annotations:
           metallb.universe.tf/allow-shared-ip: plex
     ingress:
-      main: 
+      main:
         enabled: true
         annotations:
           kubernetes.io/ingress.class: "nginx-internal"
@@ -47,14 +47,14 @@ spec:
           hajimari.io/instance: "internal"
           hajimari.io/group: "Media"
         hosts:
-        - host: "plex.k.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "plex.k.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - hosts:
-          - "plex.k.${SECRET_DOMAIN}"
-          secretName: plex-cert-internal
+          - hosts:
+              - "plex.k.${SECRET_DOMAIN}"
+            secretName: plex-cert-internal
       external:
         enabled: true
         annotations:
@@ -65,14 +65,14 @@ spec:
           hajimari.io/instance: "external"
           hajimari.io/appName: "Plex"
         hosts:
-        - host: "plex.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: "plex.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - hosts:
-          - "plex.${SECRET_DOMAIN}"
-          secretName: plex-cert-external
+          - hosts:
+              - "plex.${SECRET_DOMAIN}"
+            secretName: plex-cert-external
     persistence:
       config:
         enabled: true
@@ -88,29 +88,3 @@ spec:
         existingClaim: nfs-media-pvc
     podAnnotations:
       backup.velero.io/backup-volumes: config
-    # resources:
-    #   requests:
-    #     gpu.intel.com/i915: 1
-    #     cpu: 1000m
-    #     memory: 1500Mi
-    #   limits:
-    #     gpu.intel.com/i915: 1
-    #     memory: 4900Mi
-    # addons:
-    #   promtail:
-    #     enabled: true
-    #     image:
-    #       repository: grafana/promtail
-    #       tag: 2.2.1
-    #     loki: http://loki.logs.svc.cluster.local:3100/loki/api/v1/push
-    #     logs:
-    #     - name: promtail/plex
-    #       path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
-    #     - name: promtail/plex/plugins
-    #       path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
-    #     volumeMounts:
-    #     - name: config
-    #       mountPath: /config
-    #       readOnly: true
-    #     securityContext:
-    #       runAsUser: 0

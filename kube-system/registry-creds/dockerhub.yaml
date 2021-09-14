@@ -1,3 +1,4 @@
+---
 apiVersion: ops.alexellis.io/v1
 kind: ClusterPullSecret
 metadata:

@@ -35,7 +35,7 @@ spec:
       name: "cloudflared"
       repository: "crazymax/cloudflared"
       tag: "2021.5.7"
-    serviceDhcp: 
+    serviceDhcp:
       enabled: false
     serviceDns:
       type: LoadBalancer
@@ -92,5 +92,5 @@ spec:
       existingSecret: "pihole-secret"
       passwordKey: "password"
   valuesFrom:
-  - kind: Secret
-    name: pihole-helm-values
+    - kind: Secret
+      name: pihole-helm-values

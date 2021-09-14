@@ -4,7 +4,7 @@
 # It should be installed as part of the base Kubernetes distribution in an appropriate
 # namespace for components implementing base system functionality. For installing with
 # Vanilla Kubernetes, kube-system makes sense for the namespace.
-
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -65,9 +65,9 @@ metadata:
   namespace: rook-ceph # TODO: replace with the namespace you want for your controller, e.g. kube-system
   name: snapshot-controller-leaderelection
 rules:
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "watch", "list", "delete", "update", "create"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "watch", "list", "delete", "update", "create"]
 
 ---
 kind: RoleBinding
