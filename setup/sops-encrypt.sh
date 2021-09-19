@@ -22,7 +22,8 @@ seal 'default/minio' 'minio-helm-values'
 seal 'default/monica' 'monica-helm-values'
 seal 'default/pihole' 'pihole-secret'
 seal 'default/pihole' 'pihole-helm-values'
-seal 'default/onedrive' 'onedrive-auth'
+# seal 'default/onedrive' 'onedrive-auth'
+seal 'default/valheim' 'valheim'
 
 # flux-system
 seal 'flux-system-extra/github-alerts' 'github-api-token'

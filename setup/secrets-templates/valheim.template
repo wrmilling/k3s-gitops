@@ -1,0 +1,10 @@
+# yamllint disable
+apiVersion: v1
+kind: Secret
+metadata:
+  name: valheim-sops
+  namespace: default
+type: Opaque
+stringData:
+  SERVER_PASS: $VALHEIM_SERVER_PASS
+  SUPERVISOR_HTTP_PASS: $VALHEIM_SUPERVISOR_PASS
