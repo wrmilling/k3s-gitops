@@ -61,6 +61,6 @@ spec:
       replicas: 3
     metrics:
       serviceMonitor:
-        enabled: true
+        enabled: false
     securityContext:
       enabled: false
