@@ -8,9 +8,9 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.min.io/
+      # renovate: registryUrl=https://helm.min.io/
       chart: minio
-      version: 3.1.1
+      version: 8.0.10
       sourceRef:
         kind: HelmRepository
         name: minio-charts
@@ -18,15 +18,16 @@ spec:
       interval: 5m
   values:
     image:
-      repository: quay.io/minio/minio
-      tag: RELEASE.2021-09-09T21-37-07Z
+      repository: jessestuart/minio
+      tag: RELEASE.2020-08-08T04-50-06Z
     mcImage:
-      repository: quay.io/minio/mc
-      tag: RELEASE.2021-09-02T09-21-27Z
-    replicas: 4
-    tolerations:
-      - key: "arm"
-        operator: "Exists"
+      repository: jessestuart/mc
+      tag: RELEASE.2020-08-08T02-33-58Z
+    helmKubectlJqImage:
+      repository: drnic/kubectl
+      tag: 1.16
+    persistence:
+      existingClaim: "nfs-minio-pvc"
     ingress:
       enabled: true
       annotations:
@@ -38,30 +39,25 @@ spec:
         - hosts:
             - "minio.k.${SECRET_DOMAIN}"
           secretName: minio-cert
-    consoleIngress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx-internal
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-      hosts: ["console.minio.k.${SECRET_DOMAIN}"]
-      tls:
-        - hosts:
-            - "console.minio.k.${SECRET_DOMAIN}"
-          secretName: minio-console-cert
-    persistence:
-      existingClaim: "nfs-minio-pvc"
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
     resources:
       requests:
         memory: 350Mi
         cpu: 25m
       limits:
         memory: 1000Mi
-    gateway:
-      type: "nas"
-      replicas: 3
+    securityContext:
+      enabled: false
     metrics:
       serviceMonitor:
         enabled: true
-    securityContext:
-      enabled: false
+    nasgateway:
+      enabled: true
+      # Number of parallel instances
+      replicas: 3
+  valuesFrom:
+    - kind: Secret
+      name: "minio-helm-values"
+      optional: false
