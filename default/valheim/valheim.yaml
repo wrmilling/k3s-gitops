@@ -27,7 +27,7 @@ spec:
       SERVER_PUBLIC: true
       SUPERVISOR_HTTP: true
       STATUS_HTTP: true
-      VALHEIM_PLUS: true
+      VALHEIM_PLUS: false
       VPCFG_Server_enabled: true
       VPCFG_Server_enforceMod: true
       VPCFG_FireSource_enabled: true
