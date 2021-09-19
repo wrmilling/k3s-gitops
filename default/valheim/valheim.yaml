@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: lloesche/valheim-server
+      repository: ghcr.io/lloesche/valheim-server
       tag: latest
       pullPolicy: Always
     env:
