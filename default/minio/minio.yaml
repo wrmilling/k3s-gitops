@@ -8,9 +8,9 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://helm.min.io/
+      # renovate: registryUrl=https://charts.min.io/
       chart: minio
-      version: 8.0.10
+      version: 3.1.3
       sourceRef:
         kind: HelmRepository
         name: minio-charts
@@ -18,16 +18,14 @@ spec:
       interval: 5m
   values:
     image:
-      repository: jessestuart/minio
-      tag: RELEASE.2020-08-08T04-50-06Z
+      repository: quay.io/minio/minio
+      tag: RELEASE.2021-09-09T21-37-07Z
     mcImage:
-      repository: jessestuart/mc
-      tag: RELEASE.2020-08-08T02-33-58Z
-    helmKubectlJqImage:
-      repository: drnic/kubectl
-      tag: 1.16
-    persistence:
-      existingClaim: "nfs-minio-pvc"
+      repository: quay.io/minio/mc
+      tag: RELEASE.2021-09-02T09-21-27Z
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
     ingress:
       enabled: true
       annotations:
@@ -36,28 +34,33 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       hosts: ["minio.k.${SECRET_DOMAIN}"]
       tls:
-      - hosts:
-        - "minio.k.${SECRET_DOMAIN}"
-        secretName: minio-cert
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
+        - hosts:
+            - "minio.k.${SECRET_DOMAIN}"
+          secretName: minio-cert
+    consoleIngress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx-internal
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts: ["console.minio.k.${SECRET_DOMAIN}"]
+      tls:
+        - hosts:
+            - "console.minio.k.${SECRET_DOMAIN}"
+          secretName: minio-console-cert
+    persistence:
+      existingClaim: "nfs-minio-pvc"
     resources:
       requests:
         memory: 350Mi
         cpu: 25m
       limits:
         memory: 1000Mi
-    securityContext:
-      enabled: false
+    gateway:
+      type: "nas"
+      replicas: 3
     metrics:
       serviceMonitor:
         enabled: true
-    nasgateway:
-      enabled: true
-      # Number of parallel instances
-      replicas: 3
-  valuesFrom:
-  - kind: Secret
-    name: "minio-helm-values"
-    optional: false
+    securityContext:
+      enabled: false
