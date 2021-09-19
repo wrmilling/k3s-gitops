@@ -23,7 +23,7 @@ spec:
     mcImage:
       repository: quay.io/minio/mc
       tag: RELEASE.2021-09-02T09-21-27Z
-    replicas: 3
+    replicas: 4
     tolerations:
       - key: "arm"
         operator: "Exists"
