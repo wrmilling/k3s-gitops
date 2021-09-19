@@ -37,6 +37,17 @@ spec:
         - hosts:
             - "minio.k.${SECRET_DOMAIN}"
           secretName: minio-cert
+    consoleIngress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx-internal
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts: ["console.minio.k.${SECRET_DOMAIN}"]
+      tls:
+        - hosts:
+            - "console.minio.k.${SECRET_DOMAIN}"
+          secretName: minio-console-cert
     persistence:
       existingClaim: "nfs-minio-pvc"
     resources:
@@ -53,7 +64,3 @@ spec:
         enabled: true
     securityContext:
       enabled: false
-  valuesFrom:
-  - kind: Secret
-    name: "minio-helm-values"
-    optional: false
