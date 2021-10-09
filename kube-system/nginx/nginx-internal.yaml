@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://kubernetes.github.io/ingress-nginx
       chart: ingress-nginx
-      version: 3.39.0
+      version: 4.0.5
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx-charts
@@ -18,7 +18,8 @@ spec:
       interval: 5m
   values:
     controller:
-      ingressClass: nginx-internal
+      ingressClassResource:
+        name: nginx-internal
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
