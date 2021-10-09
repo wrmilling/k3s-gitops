@@ -33,8 +33,8 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: nginx-external
         annotations:
-          kubernetes.io/ingress.class: nginx-external
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/auth-signin: https://auth.${SECRET_DOMAIN}
