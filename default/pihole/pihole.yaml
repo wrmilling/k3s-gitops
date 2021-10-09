@@ -52,8 +52,8 @@ spec:
     virtualHost: "pihole.k.${SECRET_DOMAIN}"
     ingress:
       enabled: true
+      ingressClassName: nginx-internal
       annotations:
-        kubernetes.io/ingress.class: "nginx"
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
