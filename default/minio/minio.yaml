@@ -18,11 +18,11 @@ spec:
       interval: 5m
   values:
     image:
-      repository: jessestuart/minio
-      tag: RELEASE.2020-08-08T04-50-06Z
+      repository: quay.io/minio/minio
+      tag: RELEASE.2021-10-08T23-58-24Z
     mcImage:
-      repository: jessestuart/mc
-      tag: RELEASE.2020-08-08T02-33-58Z
+      repository: quay.io/minio/mc
+      tag: RELEASE.2021-09-23T05-44-03Z
     helmKubectlJqImage:
       repository: drnic/kubectl
       tag: 1.16
