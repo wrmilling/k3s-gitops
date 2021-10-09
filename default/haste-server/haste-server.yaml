@@ -48,8 +48,8 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClass: nginx-external
         annotations:
-          kubernetes.io/ingress.class: nginx-external
           hajimari.io/enable: "true"
           hajimari.io/icon: "content-paste"
           hajimari.io/instance: "external"
