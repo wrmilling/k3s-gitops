@@ -48,7 +48,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClass: nginx-external
+        ingressClassName: nginx-external
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "content-paste"
