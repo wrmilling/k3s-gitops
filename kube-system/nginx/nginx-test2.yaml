@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: ingress-nginx-external
+  name: ingress-nginx-test2
   namespace: kube-system
 spec:
   interval: 5m
