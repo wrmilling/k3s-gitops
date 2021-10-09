@@ -37,8 +37,8 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: nginx-internal
         annotations:
-          kubernetes.io/ingress.class: nginx-internal
           hajimari.io/enable: "true"
           hajimari.io/icon: "pirate"
           hajimari.io/instance: "internal"
