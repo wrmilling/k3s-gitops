@@ -20,6 +20,7 @@ spec:
     controller:
       ingressClassResource:
         name: nginx-internal
+        default: true
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
