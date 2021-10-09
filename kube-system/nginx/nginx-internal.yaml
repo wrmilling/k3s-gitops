@@ -20,7 +20,9 @@ spec:
     controller:
       ingressClassResource:
         name: nginx-internal
+        enabled: true
         default: true
+        controllerValue: "k8s.io/ingress-nginx-internal"
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
