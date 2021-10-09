@@ -38,8 +38,8 @@ spec:
       existingSecret: grafana-ldap-toml
     ingress:
       enabled: true
+      ingressClassName: nginx-internal
       annotations:
-        kubernetes.io/ingress.class: "nginx-internal"
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-areaspline"
         hajimari.io/instance: "internal"
