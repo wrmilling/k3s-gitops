@@ -60,6 +60,6 @@ spec:
         cpu: 25m
       limits:
         memory: 1000Mi
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
+    # tolerations:
+    # - key: "arm"
+    #   operator: "Exists"
