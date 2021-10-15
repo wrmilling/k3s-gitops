@@ -22,7 +22,6 @@ spec:
       tag: v3.0.6.1342
     env:
       TZ: "America/Chicago"
-      MONO_TLS_PROVIDER: "btls"
     ingress:
       main:
         enabled: true
@@ -50,8 +49,8 @@ spec:
         readOnly: false
         existingClaim: nfs-media-pvc
     podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
+      runAsUser: 1001
+      runAsGroup: 1001
       fsGroup: 1001
     podAnnotations:
       backup.velero.io/backup-volumes: config
