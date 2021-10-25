@@ -1,4 +1,3 @@
-Flag --arch has been deprecated, multi-arch container image is now available for AMD64, ARMv7 and ARM64
 ---
 # Flux version: v0.19.1
 # Components: source-controller,kustomize-controller,helm-controller,notification-controller
