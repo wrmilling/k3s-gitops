@@ -20,7 +20,6 @@ jobs:
           UGLY_VERSION="$(bin/flux -v)"
           VERSION="v${UGLY_VERSION#*flux version }"
           bin/flux install --version="${VERSION}" \
-            --arch=amd64 \
             --export > ./flux-system/gotk-components.yaml
           echo "::set-output name=flux_version::$VERSION"
       - name: Create pull request for Flux update
