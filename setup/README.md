@@ -23,4 +23,4 @@ This script was originally pulled from [billimek/k8s-gitops](https://github.com/
 
 ### Setting up SOPS
 
-I setup [SOPS](https://github.com/mozilla/sops) based on the setup in [](https://github.com/k8s-at-home/template-cluster), my setup can be derrived from the instructions available in this repo. Better documentation will be coming here soon.
+I setup [SOPS](https://github.com/mozilla/sops) based on the setup in [](https://github.com/k8s-at-home/template-cluster), my setup can be derived from the instructions available in this repo. Better documentation will be coming here soon.
