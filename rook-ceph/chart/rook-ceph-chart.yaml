@@ -23,6 +23,8 @@ spec:
       kubeletDirPath: /var/lib/kubelet
       enableGrpcMetrics: true
       enableCSIHostNetwork: true
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       pluginTolerations:
         - key: "arm"
           operator: "Exists"
