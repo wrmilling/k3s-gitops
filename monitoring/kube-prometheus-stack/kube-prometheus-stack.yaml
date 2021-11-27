@@ -27,9 +27,12 @@ spec:
           memory: 2000Mi
     prometheusOperator:
       createCustomResource: true
-      configReloaderCpu: 200m
       admissionWebhooks:
         enabled: false
+      prometheusConfigReloader:
+        resources:
+          limits:
+            cpu: 200m
     alertmanager:
       alertmanagerSpec:
         storage:
