@@ -10,16 +10,13 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: onedrive
-      version: 2.1.0
+      version: 2.1.1
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      repository: ghcr.io/wrmilling/onedrive-docker
-      tag: v2.0.5
     env:
       TZ: America/Chicago
       ONEDRIVE_DOWNLOADONLY: 1
