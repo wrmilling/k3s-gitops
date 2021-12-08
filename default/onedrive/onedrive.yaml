@@ -17,6 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    image:
+      repository: ghcr.io/wrmilling/onedrive-docker
+      tag: v2.0.5
     env:
       TZ: America/Chicago
       ONEDRIVE_DOWNLOADONLY: 1
