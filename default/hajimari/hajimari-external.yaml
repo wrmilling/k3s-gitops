@@ -34,6 +34,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx-external
+        labels:
+          ingress-class: nginx-external
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
