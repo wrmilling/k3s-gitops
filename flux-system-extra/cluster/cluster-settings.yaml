@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: flux-system
+  name: cluster-settings
+data:
+  SVC_NGINX_INTERNAL_IP: 10.10.40.60
+  SVC_PIHOLE_IP: 10.10.40.61
+  SVC_PLEX_IP: 10.10.40.63
+  SVC_GITEA_IP: 10.10.40.64
+  SVC_QBIT_IP: 10.10.40.65
+  SVC_VALHEIM_IP: 10.10.40.66
+  SVC_NGINX_EXTERNAL_IP: 10.10.40.70

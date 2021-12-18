@@ -40,13 +40,13 @@ spec:
     serviceDns:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
+      loadBalancerIP: ${SVC_PIHOLE_IP}
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     serviceWeb:
       type: LoadBalancer
       externalTrafficPolicy: Local
-      loadBalancerIP: 10.10.40.61
+      loadBalancerIP: ${SVC_PIHOLE_IP}
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     virtualHost: "pihole.k.${SECRET_DOMAIN}"

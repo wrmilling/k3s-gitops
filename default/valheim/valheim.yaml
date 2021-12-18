@@ -56,13 +56,13 @@ spec:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Cluster
-        loadBalancerIP: 10.10.40.66
+        loadBalancerIP: ${SVC_VALHEIM_IP}
         annotations:
           metallb.universe.tf/allow-shared-ip: valheim
       supervisor:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: 10.10.40.66
+        loadBalancerIP: ${SVC_VALHEIM_IP}
         ports:
           supervisor:
             enabled: true

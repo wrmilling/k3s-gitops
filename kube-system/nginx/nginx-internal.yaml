@@ -27,10 +27,10 @@ spec:
       admissionWebhooks:
         objectSelector:
           matchExpressions:
-          - key: ingress-class
-            operator: NotIn
-            values:
-            - nginx-external
+            - key: ingress-class
+              operator: NotIn
+              values:
+                - nginx-external
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
@@ -39,8 +39,8 @@ spec:
       service:
         type: LoadBalancer
         exernalIPs:
-        - 10.10.40.60
-        loadBalancerIP: 10.10.40.60
+          - ${SVC_NGINX_INTERNAL_IP}
+        loadBalancerIP: ${SVC_NGINX_INTERNAL_IP}
         externalTrafficPolicy: Local
       metrics:
         enabled: true
@@ -50,8 +50,8 @@ spec:
         prometheusRule:
           enabled: false
       tolerations:
-      - key: "arm"
-        operator: "Exists"
+        - key: "arm"
+          operator: "Exists"
       extraArgs:
         default-ssl-certificate: "cert-manager/acme-crt-secret"
       resources:
