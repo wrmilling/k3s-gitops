@@ -20,7 +20,7 @@ spec:
     env:
       TZ: America/Chicago
       ONEDRIVE_DOWNLOADONLY: 1
-      ONEDRIVE_AUTHRESPONSE: "${ONEDRIVE_AUTHRESPONSE}"
+      ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
     persistence:
       config:
         storageClass: "rook-ceph-block"
