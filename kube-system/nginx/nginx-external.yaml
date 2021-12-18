@@ -24,6 +24,13 @@ spec:
         enabled: true
         default: false
         controllerValue: "k8s.io/ingress-nginx-external"
+      admissionWebhooks:
+        objectSelector:
+          matchExpressions:
+          - key: ingress-class
+            operator: In
+            values:
+            - nginx-external
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
