@@ -38,8 +38,6 @@ spec:
                   name: openldap
             - name: LDAP_CUSTOM_LDIF_DIR
               value: "/ldifs"
-            - name: BITNAMI_DEBUG
-              value: "true"
           ports:
             - name: tcp-ldap
               containerPort: 1389
