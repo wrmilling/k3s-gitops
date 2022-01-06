@@ -49,7 +49,7 @@ spec:
         port: 22
         externalTrafficPolicy: Local
         externalIPs:
-          - "${SVC_GITEA_ADDRESS}"
+          - "${SVC_GITEA_IP}"
     gitea:
       admin:
         email: ${SECRET_GITEA_ADMIN_EMAIL}
