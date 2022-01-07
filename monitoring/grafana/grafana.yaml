@@ -17,6 +17,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
+    adminPassword: ${SECRET_GRAFANA_ADMIN_PASSWORD}
     deploymentStrategy:
       type: Recreate
     podAnnotations:
@@ -159,8 +160,10 @@ spec:
     grafana.ini:
       server:
         root_url: "https://grafana.k.${SECRET_DOMAIN}"
-      # security:
-      #   admin_user: "winston@milli.ng"
+      auth.ldap:
+        enabled: true
+        allow_sign_up: true
+        config_file: /etc/grafana/ldap.toml
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
@@ -174,6 +177,3 @@ spec:
         url: https://grafana.net
       auth.basic:
         disable_login_form: false
-  valuesFrom:
-  - kind: Secret
-    name: "grafana-helm-values"
