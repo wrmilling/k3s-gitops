@@ -26,6 +26,8 @@ spec:
     helmKubectlJqImage:
       repository: drnic/kubectl
       tag: 1.16
+    accessKey: ${SECRET_MINIO_ACCESS_KEY}
+    secretKey: ${SECRET_MINIO_SECRET_KEY}
     persistence:
       existingClaim: "nfs-minio-pvc"
     ingress:
@@ -57,7 +59,3 @@ spec:
       enabled: true
       # Number of parallel instances
       replicas: 3
-  valuesFrom:
-    - kind: Secret
-      name: "minio-helm-values"
-      optional: false
