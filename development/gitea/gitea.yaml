@@ -81,7 +81,7 @@ spec:
           user: ${SECRET_GITEA_SMTP_USER}
           passwd: ${SECRET_GITEA_SMTP_PASSWORD}
           mailer_type: smtp
-          is_tls_enabled: true
+          # is_tls_enabled: true
       database:
         builtIn:
           postgresql:
