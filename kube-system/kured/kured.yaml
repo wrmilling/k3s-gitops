@@ -26,6 +26,7 @@ spec:
       endTime: "4:00"
       timeZone: "America/Chicago"
       rebootCommand: "/usr/bin/systemctl reboot"
+      notifyUrl: "${SECRET_KURED_NOTIFY_URL}"
     tolerations:
     - key: "arm"
       operator: "Exists"
@@ -33,7 +34,3 @@ spec:
       operator: "Exists"
     metrics:
       create: true
-  valuesFrom:
-  - kind: Secret
-    name: "kured-helm-values"
-    optional: false
