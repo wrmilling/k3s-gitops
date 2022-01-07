@@ -185,6 +185,10 @@ spec:
             - create
             - delete
             - error
-  valuesFrom:
-  - kind: Secret
-    name: botkube-helm-values
+    communications:
+      discord:
+        enabled: true
+        token: ${SECRET_BOTKUBE_TOKEN}
+        botid: ${SECRET_BOTKUBE_BOTID}
+        channel: ${SECRET_BOTKUBE_CHANNEL}
+        notiftype: short
