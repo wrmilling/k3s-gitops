@@ -22,6 +22,5 @@ spec:
       existingClaim: "authelia-postgres-data"
     postgresqlUsername: authelia
     postgresqlDatabase: authelia
-  valuesFrom:
-  - kind: Secret
-    name: authelia-postgres-helm-values
+    postgresqlPostgresPassword: ${SECRET_AUTH_POSTGRES_PASSWORD}
+    postgresqlPassword: ${SECRET_AUTH_STORAGE_PASSWORD}

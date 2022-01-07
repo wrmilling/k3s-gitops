@@ -26,5 +26,4 @@ spec:
     metrics:
       enabled: true
     auth:
-      existingSecret: authelia-redis-password
-      existingSecretPasswordKey: password
+      password: ${SECRET_AUTH_REDIS_PASSWORD}
