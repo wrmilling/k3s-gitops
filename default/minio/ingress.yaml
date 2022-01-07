@@ -10,6 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
 spec:
+  ingressClassName: nginx-internal
   tls:
     - hosts:
       - minio.k.${SECRET_DOMAIN}
