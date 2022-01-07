@@ -24,9 +24,11 @@ spec:
     env:
       APP_URL: "https://monica.${SECRET_DOMAIN}"
       APP_ENV: production
+      APP_KEY: ${SECRET_MONICA_APP_KEY}
       DB_HOST: monica-mariadb
       DB_DATABASE: monica
       DB_USERNAME: monica
+      DB_PASSWORD: ${SECRET_MONICA_DB_PASSWORD}
       DEFAULT_MAX_STORAGE_SIZE: 4096
     ingress:
       main:
@@ -71,7 +73,5 @@ spec:
       auth:
         database: monica
         username: monica
-  valuesFrom:
-    - kind: Secret
-      name: "monica-helm-values"
-      optional: false
+        password: ${SECRET_MONICA_DB_PASSWORD}
+        rootPassword: ${SECRET_MONICA_DB_ROOT_PASSWORD}
