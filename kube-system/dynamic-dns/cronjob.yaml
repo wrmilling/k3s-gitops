@@ -1,31 +1,35 @@
-# ---
-# apiVersion: batch/v1beta1
-# kind: CronJob
-# metadata:
-#   namespace: kube-system
-#   name: dyndns-updater
-# spec:
-#   schedule: "0 * * * *"
-#   failedJobsHistoryLimit: 1
-#   successfulJobsHistoryLimit: 3
-#   concurrencyPolicy: Forbid
-#   jobTemplate:
-#     spec:
-#       template:
-#         spec:
-#           restartPolicy: Never
-#           tolerations:
-#           - key: "arm"
-#             operator: "Exists"
-#           containers:
-#           - name: dyndns-updater
-#             image: ghcr.io/wrmilling/route53-ddns:v1.0.0
-#             imagePullPolicy: IfNotPresent
-#             env:
-#               AWS_ACCESS_KEY_ID: ${SECRET_DYNDNS_AWS_ACCESS_KEY_ID}
-#               AWS_SECRET_ACCESS_KEY: ${SECRET_DYNDNS_AWS_SECRET_ACCESS_KEY}
-#               RECORDSET: ipv4.${SECRET_DOMAIN}
-#               ZONEID: ${SECRET_DYNDNS_ZONEID}
-#             command:
-#             - "/bin/bash"
-#             - "/usr/local/bin/update-route53"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  namespace: kube-system
+  name: dyndns-updater
+spec:
+  schedule: "0 * * * *"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          tolerations:
+          - key: "arm"
+            operator: "Exists"
+          containers:
+          - name: dyndns-updater
+            image: ghcr.io/wrmilling/route53-ddns:v1.0.0
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              value: ${SECRET_DYNDNS_AWS_ACCESS_KEY_ID}
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ${SECRET_DYNDNS_AWS_SECRET_ACCESS_KEY}
+            - name: RECORDSET
+              value: ipv4.${SECRET_DOMAIN}
+            - name: ZONEID
+              value: ${SECRET_DYNDNS_ZONEID}
+            command:
+            - "/bin/bash"
+            - "/usr/local/bin/update-route53"
