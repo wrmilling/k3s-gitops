@@ -88,9 +88,7 @@ spec:
         labelSelector:
           matchLabels:
             release: pihole
-    admin:
-      existingSecret: "pihole-secret"
-      passwordKey: "password"
+    adminPassword: ${SECRET_PIHOLE_ADMIN_PASSWORD}
   valuesFrom:
     - kind: Secret
       name: pihole-helm-values

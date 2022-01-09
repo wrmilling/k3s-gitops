@@ -17,24 +17,15 @@ seal() {
 seal 'cert-manager/cert-manager' 'route53-api-key'
 
 # default
-seal 'default/minio' 'minio-helm-values'
-# seal 'default/hajimari' 'hajimari-internal-helm-values'
-seal 'default/monica' 'monica-helm-values'
 seal 'default/pihole' 'pihole-secret'
-seal 'default/pihole' 'pihole-helm-values'
-# seal 'default/onedrive' 'onedrive-auth'
-seal 'default/valheim' 'valheim'
 
 # flux-system
 seal 'flux-system-extra/github-alerts' 'github-api-token'
 seal 'flux-system-extra/discord-alerts' 'discord-webhook-url'
 
 # kube-system
-seal 'kube-system/authelia' 'authelia-helm-values'
-seal 'kube-system/authelia' 'authelia-postgres-helm-values'
 seal 'kube-system/authelia' 'authelia-redis-password'
 seal 'kube-system/dynamic-dns' 'route53-env'
-seal 'kube-system/kured' 'kured-helm-values'
 seal 'kube-system/openldap' 'openldap-secrets'
 seal 'kube-system/registry-creds' 'registry-creds-secret'
 
@@ -42,11 +33,4 @@ seal 'kube-system/registry-creds' 'registry-creds-secret'
 # seal 'media/plex' 'plex-secrets'
 
 # monitoring
-seal 'monitoring/botkube' 'botkube-helm-values'
-seal 'monitoring/grafana' 'grafana-helm-values'
 seal 'monitoring/grafana' 'grafana-ldap-toml'
-seal 'monitoring/kube-prometheus-stack' 'kube-prometheus-stack-helm-values'
-seal 'monitoring/thanos' 'thanos-helm-values'
-
-# velero
-seal 'velero/velero' 'velero-helm-values'
