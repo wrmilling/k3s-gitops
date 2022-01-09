@@ -4,6 +4,8 @@ Default namespace for applications.
 
 ## FreshRSS
 
+![](https://i.imgur.com/KbI1XXx.png)
+
 Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 * [freshrss/freshrss-pvc.yaml](freshrss/freshrss-pvc.yaml) - PVC for freshrss configuration files
@@ -11,12 +13,16 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 ## Hajimari
 
+![](https://i.imgur.com/HvBLy48.png)
+
 [Hajimari](https://hajimari.io) is a beautiful & customizable browser startpage/dashboard with Kubernetes application discovery.
 
 * [hajimari/hajimari-external.yaml](hajimari/hajimari-external.yaml) - HelmRelease which deploys Hajimari, this release covering externally accesible applications.
 * [hajimari/hajimari-internal.yaml](hajimari/hajimari-internal.yaml) - HelmRelease which deploys Hajimari, this release covering internally accesible applications.
 
 ## Haste
+
+![](https://i.imgur.com/vpB5jFe.png)
 
 [Haste](https://github.com/seejohnrun/haste-server) is an open-source pastebin software written in node.js.
 
@@ -44,6 +50,8 @@ Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to 
 * [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for onedrive
 
 ## PiHole
+
+![](https://i.imgur.com/o2X1qU0.png)
 
 [Pi-hole](https://pi-hole.net/) is a DNS resolver that likes to help you block ads as well. This implementation uses MetalLB to expose the DNS server on its own dedicated IP, allows authenticated and secure ingress through nginx-ingress and authelia, and has implemented DNS-over-HTTPS (DoH) for secure querying. I also use it to do DNS resolution on internal domains.
 

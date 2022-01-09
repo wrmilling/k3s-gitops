@@ -2,6 +2,8 @@
 
 ## authelia
 
+![](https://i.imgur.com/GyZQTB9.png)
+
 This is probably overly-complicated for what I actually need and I will probably simplify it in the future. Authelia provides SSO capabilities for the cluster and is integrated with nginx-ingress.
 
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
