@@ -40,6 +40,8 @@ Persistent Volume configuration for shared NFS storage.
 
 ## nginx
 
+![](https://i.imgur.com/W5roLT7.png)
+
 [Nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) for the cluster, works with cert-manager to secure and route traffic to specific pods/applications.
 
 * [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - HelmRelease for nginx-ingress serving internal traffic, including custom 404 pages from billimek/custom-error-pages

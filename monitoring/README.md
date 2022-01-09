@@ -12,12 +12,16 @@ Provides configuration for all the monitoring applications used on the cluster.
 
 ## grafana
 
+![](https://i.imgur.com/iPzCQlB.png)
+
 [Grafana](https://grafana.com/) is the dashboarding software backed by Prometheus, InfluxDB, and others for visualizing metrics and data.
 
 * [grafana/dashboards/](grafana/dashboards/) - Dashboard definitions for Grafana
 * [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
 
 ## kube-prometheus-stack
+
+![](https://i.imgur.com/EeOVfQA.png)
 
 [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) installs Prometheus Operator, required CRDs, and a default altering ruleset.
 
@@ -26,6 +30,8 @@ Provides configuration for all the monitoring applications used on the cluster.
 * [kube-prometheus-stack/kube-prometheus-stack.yaml](kube-prometheus-stack/kube-prometheus-stack.yaml) - HelmRelease for kube-prometheus-stack
 
 ## thanos
+
+![](https://i.imgur.com/4foNI2f.png)
 
 [Thanos](https://github.com/thanos-io/thanos) is a highly available Prometheus setup with long term storage capabilities (backed by [minio](../default/minio/) in this case).
 
