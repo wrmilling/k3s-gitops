@@ -2,6 +2,13 @@
 
 I am using [flux2](https://github.com/fluxcd/flux2) to automate management of the cluster and setting the cluster state as defined in this repository. All items below are actually in the flux-system namespace, but unable to reside in the [flux-system](/flux-system) directory due to some issues with Kustomize.
 
+## cluster
+
+Service configurations and secrets that can be used cluster wide for consistency. These are referenced at the end of [gotk-sync.yaml](/flux-system/gotk-sync.yaml) and provided as part of reconcilliation for creation of managed deployments.
+
+* [cluster/cluster-secrets.sops.yaml](cluster/cluster-secrets.sops.yaml) - Cluster secrets encrypted with Mozilla SOPS
+* [cluster/cluster-settings.yaml](cluster/cluster-settings.yaml) - Cluster settings in a config map
+
 ## discord-alerts
 
 ![FluxBot Alert](https://i.imgur.com/XRnEra4.png)
