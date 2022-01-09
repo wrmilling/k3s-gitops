@@ -6,9 +6,8 @@ This namespace contains the configuration for the cluster backup and restore sol
 
 [Velero](https://velero.io/) is an open source tool to safely backup and restore, perform disaster recovery, and migrate Kubernetes cluster resources and persistent volumes.
 
-* [velero/velero.yaml](velero/velero.yaml) - HelmRelease for velero
-* [velero/velero-helm-values.sops.yaml](velero/velero-helm-values.sops.yaml) - SOPS encrypted secret helm values for velero, check out the [velero-helm-values.template](/setup/secrets-templates/velero-helm-values.template) for the contents
 * [velero/crds/kustomizations.yaml](velero/crds/kustomizations.yaml) - CRDs required by velero
+* [velero/velero.yaml](velero/velero.yaml) - HelmRelease for velero
 
 ### Restore Process
 

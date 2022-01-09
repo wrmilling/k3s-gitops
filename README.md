@@ -38,6 +38,7 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 
 * [cert-manager](/cert-manager)
 * [default](/default)
+* [development](/development)
 * [flux-system](/flux-system-extra)
 * [kube-system](/kube-system)
 * [media](/media)

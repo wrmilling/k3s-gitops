@@ -25,7 +25,6 @@ Provides configuration for all the monitoring applications used on the cluster.
 * [kube-prometheus-stack/prometheus-rules/](kube-prometheus-stack/prometheus-rules/) - Custom rule sets for Prometheus
 * [kube-prometheus-stack/kube-prometheus-stack.yaml](kube-prometheus-stack/kube-prometheus-stack.yaml) - HelmRelease for kube-prometheus-stack
 
-
 ## thanos
 
 [Thanos](https://github.com/thanos-io/thanos) is a highly available Prometheus setup with long term storage capabilities (backed by [minio](../default/minio/) in this case).
