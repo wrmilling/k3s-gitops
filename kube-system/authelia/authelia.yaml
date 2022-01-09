@@ -61,7 +61,7 @@ spec:
           additional_users_dn: ""
           additional_groups_dn: ""
           base_dn: ${SECRET_LDAP_BASE_DN}
-          user: ${SECRET_AUTH_LDAP_USER}
+          user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
           users_filter: "(&({username_attribute}={input})(objectClass=person))"
           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
       notifier:
@@ -78,7 +78,7 @@ spec:
     secret:
       ldap:
         key: LDAP_PASSWORD
-        value: ${SECRET_AUTH_LDAP_PASSWORD}
+        value: ${SECRET_LDAP_ADMIN_PASSWORD}
       smtp:
         key: SMTP_PASSWORD
         value: ${SECRET_AUTH_SMTP_PASSWORD}
