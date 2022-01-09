@@ -26,6 +26,3 @@ seal 'kube-system/registry-creds' 'registry-creds-secret'
 
 # media
 # seal 'media/plex' 'plex-secrets'
-
-# monitoring
-seal 'monitoring/grafana' 'grafana-ldap-toml'
