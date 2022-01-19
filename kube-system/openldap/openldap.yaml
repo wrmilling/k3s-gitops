@@ -22,20 +22,11 @@ spec:
           imagePullPolicy: "Always"
           env:
             - name: LDAP_ROOT
-              valueFrom:
-                secretKeyRef:
-                  key: ldaproot
-                  name: openldap
+              value: ${SECRET_LDAP_BASE_DN}
             - name: LDAP_ADMIN_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: adminusername
-                  name: openldap
+              value: ${SECRET_LDAP_ADMIN_USERNAME}
             - name: LDAP_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: adminpassword
-                  name: openldap
+              value: ${SECRET_LDAP_ADMIN_PASSWORD}
             - name: LDAP_CUSTOM_LDIF_DIR
               value: "/ldifs"
           ports:

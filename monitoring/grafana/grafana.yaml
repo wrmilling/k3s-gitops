@@ -10,13 +10,14 @@ spec:
     spec:
       # renovate: registryUrl=https://grafana.github.io/helm-charts
       chart: grafana
-      version: 6.20.4
+      version: 6.20.5
       sourceRef:
         kind: HelmRepository
         name: grafana-charts
         namespace: flux-system
       interval: 5m
   values:
+    adminPassword: ${SECRET_GRAFANA_ADMIN_PASSWORD}
     deploymentStrategy:
       type: Recreate
     podAnnotations:
@@ -35,7 +36,23 @@ spec:
       GF_LOG_FILTERS: rendering:debug
     ldap:
       enabled: true
-      existingSecret: grafana-ldap-toml
+      config: |-
+        [[servers]]
+        host = "openldap.kube-system.svc"
+        port = 1389
+        use_ssl = false
+        start_tls = false
+        ssl_skip_verify = true
+        bind_dn = "cn=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}"
+        bind_password = "${SECRET_LDAP_ADMIN_PASSWORD}"
+        search_filter = "(cn=%s)"
+        search_base_dns = ["ou=users,${SECRET_LDAP_BASE_DN}"]
+        [servers.attributes]
+        name = "givenName"
+        surname = "sn"
+        username = "uid"
+        member_of = "memberOf"
+        email =  "mail"
     ingress:
       enabled: true
       ingressClassName: nginx-internal
@@ -159,8 +176,10 @@ spec:
     grafana.ini:
       server:
         root_url: "https://grafana.k.${SECRET_DOMAIN}"
-      # security:
-      #   admin_user: "winston@milli.ng"
+      auth.ldap:
+        enabled: true
+        allow_sign_up: true
+        config_file: /etc/grafana/ldap.toml
       paths:
         data: /var/lib/grafana/data
         logs: /var/log/grafana
@@ -174,6 +193,3 @@ spec:
         url: https://grafana.net
       auth.basic:
         disable_login_form: false
-  valuesFrom:
-  - kind: Secret
-    name: "grafana-helm-values"

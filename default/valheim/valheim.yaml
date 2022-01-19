@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: valheim
-      version: 4.1.0
+      version: 4.2.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home-charts
@@ -23,9 +23,11 @@ spec:
       pullPolicy: Always
     env:
       SERVER_NAME: Hearthlab Valheim
+      SERVER_PASS: ${SECRET_VALHEIM_SERVER_PASS}
       WORLD_NAME: hearthlab
       SERVER_PUBLIC: true
       SUPERVISOR_HTTP: true
+      SUPERVISOR_HTTP_PASS: ${SECRET_VALHEIM_SUPERVISOR_HTTP_PASS}
       STATUS_HTTP: true
       VALHEIM_PLUS: false
       VPCFG_Server_enabled: true
@@ -43,15 +45,11 @@ spec:
       TZ: America/Chicago
       # DNS_1: 8.8.8.8
       # DNS_2: 8.8.4.4
-    envFrom:
-      - secretRef:
-          name: valheim-sops
     persistence:
       config:
         enabled: true
         mountPath: /config
-        storageClass: "rook-ceph-block"
-        size: 5Gi
+        existingClaim: valheim-config
     service:
       main:
         type: LoadBalancer

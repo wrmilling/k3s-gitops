@@ -44,6 +44,8 @@ spec:
       config:
         bucket: "thanos"
         endpoint: "minio.default.svc:9000"
+        access_key: "${SECRET_MINIO_ACCESS_KEY}"
+        secret_key: "${SECRET_MINIO_SECRET_KEY}"
         region: ""
         insecure: true
         signature_version2: false
@@ -55,7 +57,3 @@ spec:
         trace:
           enable: false
         part_size: 0
-  valuesFrom:
-  - kind: Secret
-    name: "thanos-helm-values"
-    optional: false

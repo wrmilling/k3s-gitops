@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://weaveworks.github.io/kured
       chart: kured
-      version: 2.11.1
+      version: 2.11.2
       sourceRef:
         kind: HelmRepository
         name: weaveworks-kured-charts
@@ -19,13 +19,14 @@ spec:
   values:
     image:
       repository: raspbernetes/kured
-      tag: 1.9.0
+      tag: 1.9.1
     updateStrategy: RollingUpdate
     configuration:
       startTime: "0:00"
       endTime: "4:00"
       timeZone: "America/Chicago"
       rebootCommand: "/usr/bin/systemctl reboot"
+      notifyUrl: "${SECRET_KURED_NOTIFY_URL}"
     tolerations:
     - key: "arm"
       operator: "Exists"
@@ -33,7 +34,3 @@ spec:
       operator: "Exists"
     metrics:
       create: true
-  valuesFrom:
-  - kind: Secret
-    name: "kured-helm-values"
-    optional: false

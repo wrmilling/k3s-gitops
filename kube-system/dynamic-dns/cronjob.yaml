@@ -21,9 +21,15 @@ spec:
           - name: dyndns-updater
             image: ghcr.io/wrmilling/route53-ddns:v1.0.0
             imagePullPolicy: IfNotPresent
-            envFrom:
-            - secretRef:
-                name: route53-env
+            env:
+            - name: AWS_ACCESS_KEY_ID
+              value: ${SECRET_DYNDNS_AWS_ACCESS_KEY_ID}
+            - name: AWS_SECRET_ACCESS_KEY
+              value: ${SECRET_DYNDNS_AWS_SECRET_ACCESS_KEY}
+            - name: RECORDSET
+              value: ipv4.${SECRET_DOMAIN}
+            - name: ZONEID
+              value: ${SECRET_DYNDNS_ZONEID}
             command:
             - "/bin/bash"
             - "/usr/local/bin/update-route53"

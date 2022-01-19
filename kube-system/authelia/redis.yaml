@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: redis
-      version: 15.7.1
+      version: 15.7.5
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
@@ -26,5 +26,4 @@ spec:
     metrics:
       enabled: true
     auth:
-      existingSecret: authelia-redis-password
-      existingSecretPasswordKey: password
+      password: ${SECRET_AUTH_REDIS_PASSWORD}

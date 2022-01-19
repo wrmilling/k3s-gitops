@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: gitea/gitea
-      tag: 1.15.7
+      tag: 1.15.10
       pullPolicy: IfNotPresent
     persistence:
       enabled: true
@@ -76,10 +76,10 @@ spec:
           REQUIRE_SIGNIN_VIEW: true
         mailer:
           enabled: true
-          host: "${SECRET_SMTP_DOMAIN}:465"
-          from: "${SECRET_SMTP_USER}"
-          user: ${SECRET_SMTP_USER}
-          passwd: ${SECRET_SMTP_PASSWORD}
+          host: "${SECRET_SMTP_DOMAIN}:587"
+          from: "${SECRET_GITEA_SMTP_USER}"
+          user: ${SECRET_GITEA_SMTP_USER}
+          passwd: ${SECRET_GITEA_SMTP_PASSWORD}
           mailer_type: smtp
     postgresql:
       enabled: true
