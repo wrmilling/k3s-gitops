@@ -81,11 +81,8 @@ spec:
           user: ${SECRET_SMTP_USER}
           passwd: ${SECRET_SMTP_PASSWORD}
           mailer_type: smtp
-      database:
-        builtIn:
-          postgresql:
-            enabled: true
     postgresql:
+      enabled: true
       persistence:
         existingClaim: gitea-postgresql-pvc
       metrics:
