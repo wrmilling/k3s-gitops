@@ -7,7 +7,7 @@ need() {
 }
 
 echo "Applying cert-manager CRD"
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.crds.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
 
 echo "Applying registry-creds CRD"
 kubectl apply -f "${REPO_ROOT}"/kube-system/registry-creds/registry-creds-crd.yaml
