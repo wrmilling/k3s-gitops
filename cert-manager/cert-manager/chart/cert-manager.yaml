@@ -16,8 +16,12 @@ spec:
         name: jetstack-charts
         namespace: flux-system
       interval: 5m
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
   values:
-    installCRDs: false
+    installCRDs: true
     webhook:
       enabled: true
       tolerations:
@@ -36,8 +40,8 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
-    # prometheus:
-    #   enabled: true
-    #   servicemonitor:
-    #     enabled: true
-    #     prometheusInstance: monitoring
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
+        prometheusInstance: monitoring
