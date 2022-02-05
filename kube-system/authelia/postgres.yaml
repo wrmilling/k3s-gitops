@@ -17,10 +17,12 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    persistence:
-      enabled: true
-      existingClaim: "authelia-postgres-data"
-    postgresqlUsername: authelia
-    postgresqlDatabase: authelia
-    postgresqlPostgresPassword: ${SECRET_AUTH_POSTGRES_PASSWORD}
-    postgresqlPassword: ${SECRET_AUTH_STORAGE_PASSWORD}
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: "authelia-postgres-data"
+    auth:
+      username: authelia
+      database: authelia
+      password: ${SECRET_AUTH_STORAGE_PASSWORD}
+      postgresPassword: ${SECRET_AUTH_POSTGRES_PASSWORD}
