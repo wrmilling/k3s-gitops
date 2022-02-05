@@ -1,56 +1,56 @@
-apiVersion: cert-manager.io/v1alpha2
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-test
-spec:
-  acme:
-    email: winston@milli.ng
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-test
-    solvers:
-    # An empty 'selector' means that this solver matches all domains
-    - selector: {}
-      dns01:
-        route53:
-          region: us-east-1
-          accessKeyID: AKIAJBNZNM4ASS2TFJEQ
-          secretAccessKeySecretRef:
-            name: route53-api-key
-            key: key
----
-apiVersion: cert-manager.io/v1alpha2
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-prod
-spec:
-  acme:
-    email: winston@milli.ng
-    server: https://acme-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-prod
-    solvers:
-    # An empty 'selector' means that this solver matches all domains
-    - selector: {}
-      dns01:
-        route53:
-          region: us-east-1
-          accessKeyID: AKIAJBNZNM4ASS2TFJEQ
-          secretAccessKeySecretRef:
-            name: route53-api-key
-            key: key
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Certificate
-metadata:
-  name: acme-crt
-  namespace: cert-manager
-spec:
-  secretName: acme-crt-secret
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
-  dnsNames:
-  - "${SECRET_DOMAIN}"
-  - "*.${SECRET_DOMAIN}"
-  - "*.k.${SECRET_DOMAIN}"
+# apiVersion: cert-manager.io/v1alpha2
+# kind: ClusterIssuer
+# metadata:
+#   name: letsencrypt-test
+# spec:
+#   acme:
+#     email: winston@milli.ng
+#     server: https://acme-staging-v02.api.letsencrypt.org/directory
+#     privateKeySecretRef:
+#       name: letsencrypt-test
+#     solvers:
+#     # An empty 'selector' means that this solver matches all domains
+#     - selector: {}
+#       dns01:
+#         route53:
+#           region: us-east-1
+#           accessKeyID: AKIAJBNZNM4ASS2TFJEQ
+#           secretAccessKeySecretRef:
+#             name: route53-api-key
+#             key: key
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+# kind: ClusterIssuer
+# metadata:
+#   name: letsencrypt-prod
+# spec:
+#   acme:
+#     email: winston@milli.ng
+#     server: https://acme-v02.api.letsencrypt.org/directory
+#     privateKeySecretRef:
+#       name: letsencrypt-prod
+#     solvers:
+#     # An empty 'selector' means that this solver matches all domains
+#     - selector: {}
+#       dns01:
+#         route53:
+#           region: us-east-1
+#           accessKeyID: AKIAJBNZNM4ASS2TFJEQ
+#           secretAccessKeySecretRef:
+#             name: route53-api-key
+#             key: key
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Certificate
+# metadata:
+#   name: acme-crt
+#   namespace: cert-manager
+# spec:
+#   secretName: acme-crt-secret
+#   issuerRef:
+#     name: letsencrypt-prod
+#     kind: ClusterIssuer
+#   dnsNames:
+#   - "${SECRET_DOMAIN}"
+#   - "*.${SECRET_DOMAIN}"
+#   - "*.k.${SECRET_DOMAIN}"
