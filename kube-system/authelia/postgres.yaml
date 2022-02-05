@@ -10,17 +10,19 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: postgresql
-      version: 10.16.2
+      version: 11.0.2
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
       interval: 5m
   values:
-    persistence:
-      enabled: true
-      existingClaim: "authelia-postgres-data"
-    postgresqlUsername: authelia
-    postgresqlDatabase: authelia
-    postgresqlPostgresPassword: ${SECRET_AUTH_POSTGRES_PASSWORD}
-    postgresqlPassword: ${SECRET_AUTH_STORAGE_PASSWORD}
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: "authelia-postgres-data"
+    auth:
+      username: authelia
+      database: authelia
+      password: ${SECRET_AUTH_STORAGE_PASSWORD}
+      postgresPassword: ${SECRET_AUTH_POSTGRES_PASSWORD}
