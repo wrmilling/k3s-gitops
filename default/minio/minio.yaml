@@ -58,7 +58,3 @@ spec:
     tolerations:
       - key: "arm"
         operator: "Exists"
-    users:
-      - accessKey: console
-        secretKey: ${SECRET_MINIO_CONSOLE_KEY}
-        policy: consoleAdmin
