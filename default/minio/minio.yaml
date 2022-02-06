@@ -32,7 +32,7 @@ spec:
       enabled: true
       existingClaim: "nfs-minio-pvc"
     ingress:
-      enabled: true
+      enabled: false
       hosts:
         - minio.k.${SECRET_DOMAIN}
       tls:
