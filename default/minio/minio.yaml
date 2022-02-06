@@ -13,7 +13,7 @@ spec:
       version: 8.0.10
       sourceRef:
         kind: HelmRepository
-        name: minio-charts
+        name: helm-minio-charts
         namespace: flux-system
       interval: 5m
   values:
