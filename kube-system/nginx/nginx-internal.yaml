@@ -18,6 +18,7 @@ spec:
       interval: 5m
   values:
     controller:
+      ingressClass: nginx-internal
       ingressClassByName: true
       ingressClassResource:
         name: nginx-internal
