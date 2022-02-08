@@ -35,6 +35,6 @@ spec:
     persistence:
       enabled: true
       existingClaim: code-server-pvc
-    extraVars:
-      - name: DISABLE_TELEMETRY
-        value: true
+    # extraVars:
+    #   - name: DISABLE_TELEMETRY
+    #     value: true
