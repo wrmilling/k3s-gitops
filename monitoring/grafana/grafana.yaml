@@ -93,30 +93,18 @@ spec:
         1-node-exporter:
           url: https://grafana.com/api/dashboards/11074/revisions/9/download
           datasource: Prometheus
-        # cable-modem-stats:
-        #   url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/cable_modem_stats.json
-        #   datasource: influxdb
-        # Ref: https://grafana.com/grafana/dashboards/2842
-        # comcast-sucks:
-        #   url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/comcast_sucks.json
-        #   datasource: influxdb
         flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/v0.7.6/manifests/monitoring/grafana/dashboards/cluster.json
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
           datasource: Prometheus
         flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/v0.7.6/manifests/monitoring/grafana/dashboards/control-plane.json
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
           datasource: Prometheus
-        # internet-speed:
-        #   url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/internet_speed.json
-        #   datasource: influxdb
-        # minio-overview:
-        #   url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/minio_overview.json
-        #   datasource: influxdb
         nginx-dashboard:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
         node-exporter-full:
-          url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/node_exporter_full.json
+          gnetId: 1860
+          revision: 23
           datasource: Prometheus
         prometheus-exporter-summary:
           url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
@@ -127,35 +115,6 @@ spec:
         thanos-dashboard:
           url: https://grafana.com/api/dashboards/12937/revisions/1/download
           datasource: Prometheus
-        # TrueNAS:
-        #   url: https://grafana.com/api/dashboards/12921/revisions/1/download
-        #   datasource: TrueNAS
-        # Ref: https://grafana.com/grafana/dashboards/11315
-        # unifi-client-insights:
-        #   gnetId: 11315
-        #   revision: 8
-        #   datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11311
-        # unifi-network-sites:
-        #   gnetId: 11311
-        #   revision: 4
-        #   datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11314
-        # unifi-uap-insights:
-        #   gnetId: 11314
-        #   revision: 9
-        #   datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11312
-        # unifi-usw-insights:
-        #   gnetId: 11312
-        #   revision: 8
-        #   datasource: Prometheus
-        # ups:
-        #   url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/ups.json
-        #   datasource: influxdb
-        # uptimerobot:
-        #   url: https://raw.githubusercontent.com/lekpamartin/uptimerobot_exporter/master/dashboards/grafana.json
-        #   datasource: Prometheus
     sidecar:
       datasources:
         enabled: true
