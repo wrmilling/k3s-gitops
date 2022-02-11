@@ -2,6 +2,8 @@
 
 ## code-server
 
+![](https://i.imgur.com/kAxmM03.png)
+
 [code-server](https://coder.com/docs/code-server/latest) allows you to run VS Code on any machine anywhere and access it in the browser.
 
 * [code-server/code-server-pvc.yaml](code-server/code-server-pvc.yaml) - PVCs for code-server config and data storage
