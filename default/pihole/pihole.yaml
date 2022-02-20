@@ -25,7 +25,7 @@ spec:
         image:
           pullPolicy: "IfNotPresent"
           repository: "ekofr/pihole-exporter"
-          tag: "v0.2.0"
+          tag: "v0.3.0"
           port: 9617
         resources:
           limits:
