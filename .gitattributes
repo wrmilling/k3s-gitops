@@ -1,4 +1,1 @@
-.env filter=git-crypt diff=git-crypt
-*.key filter=git-crypt diff=git-crypt
-pihole-helm-values.template filter=git-crypt diff=git-crypt
 *.sops.* diff=sopsdiffer
