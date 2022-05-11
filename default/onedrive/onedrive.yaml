@@ -25,11 +25,6 @@ spec:
       TZ: America/Chicago
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
-      ONEDRIVE_UID: 1001
-      ONEDRIVE_GID: 1004
-    securityContext:
-      runAsUser: 1001
-      runAsGroup: 1004
     persistence:
       config:
         storageClass: "rook-ceph-block"
