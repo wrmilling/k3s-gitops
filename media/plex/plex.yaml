@@ -39,24 +39,6 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx-internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-          - host: "plex.k.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "plex.k.${SECRET_DOMAIN}"
-            secretName: plex-cert-internal
-      external:
-        enabled: true
         ingressClassName: nginx-external
         annotations:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
