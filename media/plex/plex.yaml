@@ -44,8 +44,8 @@ spec:
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
-          hajimari.io/instance: "external"
-          hajimari.io/appName: "Plex"
+          hajimari.io/instance: "internal"
+          hajimari.io/group: "Media"
         hosts:
           - host: "plex.${SECRET_DOMAIN}"
             paths:
