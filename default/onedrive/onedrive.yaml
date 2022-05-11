@@ -31,5 +31,8 @@ spec:
         size: 1Gi
       data:
         existingClaim: nfs-onedrive-pvc
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
     podAnnotations:
       backup.velero.io/backup-volumes: config
