@@ -10,19 +10,13 @@ spec:
     spec:
       # renovate: registryUrl=https://metallb.github.io/metallb
       chart: metallb
-      version: 0.12.1
+      version: 0.13.3
       sourceRef:
         kind: HelmRepository
         name: metallb-charts
         namespace: flux-system
       interval: 5m
   values:
-    configInline:
-        address-pools:
-        - name: default
-          protocol: layer2
-          addresses:
-          - 10.10.40.60-10.10.40.99
     prometheusRule:
       enabled: true
     prometheus:
