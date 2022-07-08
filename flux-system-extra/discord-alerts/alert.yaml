@@ -32,6 +32,9 @@ spec:
       namespace: 'default'
       name: '*'
     - kind: HelmRelease
+      namespace: 'development'
+      name: '*'
+    - kind: HelmRelease
       namespace: 'kube-system'
       name: '*'
     - kind: HelmRelease
