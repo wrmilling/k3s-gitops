@@ -12,6 +12,9 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.7
 echo "Applying registry-creds CRD"
 kubectl apply -f "${REPO_ROOT}"/kube-system/registry-creds/registry-creds-crd.yaml
 
+echo "Applying MetalLB CRDs"
+kubectl apply -f "${REPO_ROOT}"/kube-system/metallb/crds.yaml
+
 echo "Applying Prometheus CRD"
 kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
 kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.50.0/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
