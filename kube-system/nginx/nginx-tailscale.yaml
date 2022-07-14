@@ -18,31 +18,27 @@ spec:
       interval: 5m
   values:
     controller:
-      ingressClass: nginx-internal
+      ingressClass: nginx-tailscale
       ingressClassByName: true
       ingressClassResource:
-        name: nginx-internal
+        name: nginx-tailscale
         enabled: true
         default: true
-        controllerValue: "k8s.io/ingress-nginx-internal"
+        controllerValue: "k8s.io/ingress-nginx-tailscale"
       admissionWebhooks:
         objectSelector:
           matchExpressions:
             - key: ingress-class
               operator: In
               values:
-                - nginx-internal
+                - nginx-tailscale
       replicaCount: 2
       config:
         custom-http-errors: 404,401,403,500,503
         hsts-max-age: "31449600"
       use-forwarded-headers: "true"
       service:
-        type: LoadBalancer
-        exernalIPs:
-          - ${SVC_NGINX_INTERNAL_IP}
-        loadBalancerIP: ${SVC_NGINX_INTERNAL_IP}
-        externalTrafficPolicy: Local
+        type: ClusterIP
       metrics:
         enabled: true
         serviceMonitor:
@@ -50,9 +46,6 @@ spec:
           namespace: kube-system
         prometheusRule:
           enabled: false
-      tolerations:
-        - key: "arm"
-          operator: "Exists"
       extraArgs:
         default-ssl-certificate: "cert-manager/acme-crt-secret"
       resources:
@@ -72,3 +65,18 @@ spec:
           cpu: 25m
         limits:
           memory: 350Mi
+    extraContainers:
+      - name: tailscaled
+        image: billimek/ts:latest
+        imagePullPolicy: Always
+        env:
+        - name: KUBE_SECRET
+          value: tailscale
+        - name: USERSPACE
+          value: "false"
+        - name: AUTH_KEY
+          value: ${SECRET_TAILSCALE_AUTH_KEY}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
