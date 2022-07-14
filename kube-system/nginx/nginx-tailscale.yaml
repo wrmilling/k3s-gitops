@@ -56,14 +56,14 @@ spec:
           memory: 600Mi
       extraContainers:
         - name: tailscaled
-          image: billimek/ts:latest
+          image: ghcr.io/tailscale/tailscale:latest
           imagePullPolicy: Always
           env:
-          - name: KUBE_SECRET
+          - name: TS_KUBE_SECRET
             value: tailscale
-          - name: USERSPACE
+          - name: TS_USERSPACE
             value: "false"
-          - name: AUTH_KEY
+          - name: TS_AUTH_KEY
             value: ${SECRET_TAILSCALE_AUTH_KEY}
           securityContext:
             capabilities:
@@ -80,4 +80,4 @@ spec:
           cpu: 25m
         limits:
           memory: 350Mi
-    
+
