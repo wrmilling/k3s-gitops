@@ -54,6 +54,21 @@ spec:
           cpu: 25m
         limits:
           memory: 600Mi
+      extraContainers:
+        - name: tailscaled
+          image: billimek/ts:latest
+          imagePullPolicy: Always
+          env:
+          - name: KUBE_SECRET
+            value: tailscale
+          - name: USERSPACE
+            value: "false"
+          - name: AUTH_KEY
+            value: ${SECRET_TAILSCALE_AUTH_KEY}
+          securityContext:
+            capabilities:
+              add:
+              - NET_ADMIN
     defaultBackend:
       enabled: true
       image:
@@ -65,18 +80,4 @@ spec:
           cpu: 25m
         limits:
           memory: 350Mi
-    extraContainers:
-      - name: tailscaled
-        image: billimek/ts:latest
-        imagePullPolicy: Always
-        env:
-        - name: KUBE_SECRET
-          value: tailscale
-        - name: USERSPACE
-          value: "false"
-        - name: AUTH_KEY
-          value: ${SECRET_TAILSCALE_AUTH_KEY}
-        securityContext:
-          capabilities:
-            add:
-            - NET_ADMIN
+    
