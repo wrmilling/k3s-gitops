@@ -32,7 +32,7 @@ spec:
               operator: In
               values:
                 - nginx-tailscale
-      replicaCount: 2
+      replicaCount: 1
       config:
         custom-http-errors: 404,401,403,500,503
         hsts-max-age: "31449600"
