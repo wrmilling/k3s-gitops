@@ -6,6 +6,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: tailscale
+  namespace: kube-system
 rules:
 - apiGroups: [""] # "" indicates the core API group
   resources: ["secrets"]
@@ -23,6 +24,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: tailscale
+  namespace: kube-system
 subjects:
 - kind: ServiceAccount
   name: "ingress-nginx-tailscale"
