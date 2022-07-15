@@ -18,12 +18,13 @@ spec:
       interval: 5m
   values:
     controller:
+      hostname: "ingress-tailscale"
       ingressClass: nginx-tailscale
       ingressClassByName: true
       ingressClassResource:
         name: nginx-tailscale
         enabled: true
-        default: true
+        default: false
         controllerValue: "k8s.io/ingress-nginx-tailscale"
       admissionWebhooks:
         objectSelector:
