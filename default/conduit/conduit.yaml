@@ -39,5 +39,6 @@ spec:
           hosts:
             - conduit.${SECRET_DOMAIN}
     persistence:
-      enabled: true
-      existingClaim: conduit-pvc
+      config:
+        enabled: true
+        existingClaim: conduit-pvc
