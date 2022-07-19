@@ -23,21 +23,22 @@ spec:
       CONDUIT_ALLOW_REGISTRATION: true
       CONDUIT_ALLOW_FEDERATIONS: true
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-        nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
-      hosts:
-        - host: conduit.${SECRET_DOMAIN}
-          paths:
-            - /
-      ingressClassName: nginx-external
-      tls:
-        - secretName: conduit-cert
-          hosts:
-            - conduit.${SECRET_DOMAIN}
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+        hosts:
+          - host: conduit.${SECRET_DOMAIN}
+            paths:
+              - /
+        ingressClassName: nginx-external
+        tls:
+          - secretName: conduit-cert
+            hosts:
+              - conduit.${SECRET_DOMAIN}
     persistence:
       config:
         enabled: true
