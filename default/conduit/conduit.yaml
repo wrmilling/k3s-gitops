@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://wrmilling.github.io/wrmilling-charts/
       chart: conduit
-      version: 0.0.3
+      version: 0.0.5
       sourceRef:
         kind: HelmRepository
         name: wrmilling-charts
