@@ -21,7 +21,8 @@ spec:
       TZ: America/Chicago
       CONDUIT_SERVER_NAME: conduit.${SECRET_DOMAIN}
       CONDUIT_ALLOW_REGISTRATION: true
-      CONDUIT_ALLOW_FEDERATIONS: true
+      CONDUIT_ALLOW_FEDERATION: true
+      CONDUIT_PORT: 6167
     ingress:
       main:
         enabled: true
