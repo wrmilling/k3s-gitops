@@ -33,7 +33,8 @@ spec:
         hosts:
           - host: conduit.${SECRET_DOMAIN}
             paths:
-              - /
+              - path: /
+                pathType: Prefix
         ingressClassName: nginx-external
         tls:
           - secretName: conduit-cert
