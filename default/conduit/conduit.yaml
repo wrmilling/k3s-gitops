@@ -29,6 +29,16 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.org/server-snippets: |
+            location /.well-known/matrix/server {
+              return 200 '{"m.server": "conduit.${SECRET_DOMAIN}:443"}';
+              add_header Content-Type application/json;
+            }
+            location /.well-known/matrix/client {
+                return 200 '{"m.homeserver": {"base_url": "https://conduit.${SECRET_DOMAIN}"}}';
+                add_header Content-Type application/json;
+                add_header "Access-Control-Allow-Origin" *;
+            }
         hosts:
           - host: conduit.${SECRET_DOMAIN}
             paths:
