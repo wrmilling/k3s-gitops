@@ -29,7 +29,7 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: ""
+          nginx.ingress.kubernetes.io/custom-http-errors: "418"
           nginx.ingress.kubernetes.io/default-backend: "conduit"
         hosts:
           - host: conduit.${SECRET_DOMAIN}
