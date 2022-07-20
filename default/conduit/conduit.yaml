@@ -20,7 +20,7 @@ spec:
     env:
       TZ: America/Chicago
       CONDUIT_SERVER_NAME: ${SECRET_DOMAIN_SECONDARY}
-      CONDUIT_ALLOW_REGISTRATION: true
+      CONDUIT_ALLOW_REGISTRATION: false
       CONDUIT_ALLOW_FEDERATION: true
       CONDUIT_PORT: 6167
     ingress:
