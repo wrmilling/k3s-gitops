@@ -29,6 +29,8 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/enable-cors: "true"
+          nginx.ingress.kubernetes.io/cors-allow-origin: "*"
           # nginx.org/server-snippets: |
           #   location /.well-known/matrix/server {
           #     return 200 '{"m.server": "conduit.${SECRET_DOMAIN}:443"}';
