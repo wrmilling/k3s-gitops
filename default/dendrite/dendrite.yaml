@@ -44,8 +44,7 @@ spec:
     dendrite:
       polylithEnabled: false
       matrix_key_secret:
-        create: true
-        key_body: ${SECRET_DENDRITE_KEY_BODY}
+        existingSecret: dendrite-matrix-key
       global:
         server_name: ${SECRET_DOMAIN_SECONDARY}
         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
