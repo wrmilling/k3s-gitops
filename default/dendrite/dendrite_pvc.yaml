@@ -1,39 +1,39 @@
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: dendrite-media-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: dendrite-jetstream-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: dendrite-postgres-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 15Gi
-  storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: dendrite-media-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: dendrite-jetstream-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 2Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: dendrite-postgres-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 15Gi
+#   storageClassName: rook-ceph-block
