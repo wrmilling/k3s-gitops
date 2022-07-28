@@ -50,33 +50,33 @@ spec:
         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
     keyserver:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     appserviceapi:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     clientapi:
       config:
         registration_disabled: true
         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
     federationapi:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     userapi:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     syncapi:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     room_server:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     mediaapi:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     mscs:
       database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     database:
-      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     postgresql:
       enabled: false
