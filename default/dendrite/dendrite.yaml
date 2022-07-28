@@ -48,11 +48,35 @@ spec:
       global:
         server_name: ${SECRET_DOMAIN_SECONDARY}
         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
+    keyserver:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    appserviceapi:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
     clientapi:
       config:
         registration_disabled: true
         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
+    federationapi:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    userapi:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    syncapi:
+        database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    room_server:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    mediaapi:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
+    mscs:
+      database:
+        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
     database:
-      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/dendrite?sslmode=disable
+      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
     postgresql:
       enabled: false
