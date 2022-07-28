@@ -1,56 +1,58 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: dendrite
-#   namespace: default
-# spec:
-#   interval: 5m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://k8s-at-home.com/charts/
-#       chart: dendrite
-#       version: 6.0.0
-#       sourceRef:
-#         kind: HelmRepository
-#         name: k8s-at-home-charts
-#         namespace: flux-system
-#   values:
-#     ingress:
-#       main:
-#         enabled: true
-#         annotations:
-#           kubernetes.io/tls-acme: "true"
-#           cert-manager.io/cluster-issuer: letsencrypt-prod
-#           nginx.ingress.kubernetes.io/custom-http-errors: "418"
-#           nginx.ingress.kubernetes.io/default-backend: "dendrite"
-#         hosts:
-#           - host: dendrite.${SECRET_DOMAIN}
-#             paths:
-#               - path: /
-#                 pathType: Prefix
-#         ingressClassName: nginx-external
-#         tls:
-#           - secretName: conduit-cert
-#             hosts:
-#               - dendrite.${SECRET_DOMAIN}
-#     persistence:
-#       media:
-#         enabled: true
-#         existingClaim: dendrite-media-pvc
-#       jetstream:
-#         enabled: true
-#         existingClaim: dendrite-jetstream-pvc
-#     dendrite:
-#       polylithEnabled: false
-#       matrix_key_secret:
-#         existingSecret: dendrite-matrix-key
-#       global:
-#         server_name: ${SECRET_DOMAIN_SECONDARY}
-#         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
-#     clientapi:
-#       config:
-#         registration_disabled: true
-#         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
-#     postgresql:
-#       enabled: false
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dendrite
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: dendrite
+      version: 6.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/custom-http-errors: "418"
+          nginx.ingress.kubernetes.io/default-backend: "dendrite"
+        hosts:
+          - host: dendrite.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        ingressClassName: nginx-external
+        tls:
+          - secretName: conduit-cert
+            hosts:
+              - dendrite.${SECRET_DOMAIN}
+    persistence:
+      media:
+        enabled: true
+        existingClaim: dendrite-media-pvc
+      jetstream:
+        enabled: true
+        existingClaim: dendrite-jetstream-pvc
+    dendrite:
+      polylithEnabled: false
+      matrix_key_secret:
+        existingSecret: dendrite-matrix-key
+      global:
+        server_name: ${SECRET_DOMAIN_SECONDARY}
+        well_known_server_name: dendrite.${SECRET_DOMAIN}:443
+    clientapi:
+      config:
+        registration_disabled: true
+        registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
+    database:
+      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/dendrite?sslmode=disable
+    postgresql:
+      enabled: false
