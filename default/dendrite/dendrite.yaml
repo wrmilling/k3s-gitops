@@ -53,9 +53,4 @@
 #         registration_disabled: true
 #         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
 #     postgresql:
-#       enabled: true
-#       auth:
-#         password: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
-#       persistence:
-#         enabled: true
-#         existingClaim: dendrite-postgres-pvc
+#       enabled: false

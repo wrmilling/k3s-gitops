@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dendrite-postgres-init
+  namespace: default
+data:
+  create-db.sh: |
+    #!/bin/sh
+    for db in userapi_accounts mediaapi syncapi roomserver keyserver federationapi appservice; do
+    createdb -U dendrite -O dendrite dendrite_$db
+    done
