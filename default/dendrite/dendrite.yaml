@@ -65,7 +65,7 @@ spec:
       database:
         connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
     syncapi:
-        database:
+      database:
         connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql-0/
     room_server:
       database:
