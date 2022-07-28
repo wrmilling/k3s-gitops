@@ -1,47 +1,47 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: conduit
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://wrmilling.github.io/wrmilling-charts/
-      chart: conduit
-      version: 0.0.6
-      sourceRef:
-        kind: HelmRepository
-        name: wrmilling-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    env:
-      TZ: America/Chicago
-      CONDUIT_SERVER_NAME: ${SECRET_DOMAIN_SECONDARY}
-      CONDUIT_ALLOW_REGISTRATION: false
-      CONDUIT_ALLOW_FEDERATION: true
-      CONDUIT_PORT: 6167
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-          nginx.ingress.kubernetes.io/default-backend: "conduit"
-        hosts:
-          - host: conduit.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-        ingressClassName: nginx-external
-        tls:
-          - secretName: conduit-cert
-            hosts:
-              - conduit.${SECRET_DOMAIN}
-    persistence:
-      config:
-        enabled: true
-        existingClaim: conduit-pvc
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: conduit
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://wrmilling.github.io/wrmilling-charts/
+#       chart: conduit
+#       version: 0.0.6
+#       sourceRef:
+#         kind: HelmRepository
+#         name: wrmilling-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     env:
+#       TZ: America/Chicago
+#       CONDUIT_SERVER_NAME: ${SECRET_DOMAIN_SECONDARY}
+#       CONDUIT_ALLOW_REGISTRATION: false
+#       CONDUIT_ALLOW_FEDERATION: true
+#       CONDUIT_PORT: 6167
+#     ingress:
+#       main:
+#         enabled: true
+#         annotations:
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#           nginx.ingress.kubernetes.io/custom-http-errors: "418"
+#           nginx.ingress.kubernetes.io/default-backend: "conduit"
+#         hosts:
+#           - host: conduit.${SECRET_DOMAIN}
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#         ingressClassName: nginx-external
+#         tls:
+#           - secretName: conduit-cert
+#             hosts:
+#               - conduit.${SECRET_DOMAIN}
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: conduit-pvc
