@@ -54,9 +54,10 @@ spec:
         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
     postgresql:
       enabled: true
-      persistence:
-        enabled: true
-        existingClaim: "dendrite-postgres-pvc"
+      primary:
+        persistence:
+          enabled: true
+          existingClaim: "dendrite-postgres-pvc"
       auth:
         username: dendrite
         database: dendrite
