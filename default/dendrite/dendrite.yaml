@@ -13,7 +13,7 @@ spec:
       version: 6.0.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: wrmilling-charts
         namespace: flux-system
   values:
     ingress:
@@ -48,35 +48,17 @@ spec:
       global:
         server_name: ${SECRET_DOMAIN_SECONDARY}
         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
-    keyserver:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    appserviceapi:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     clientapi:
       config:
         registration_disabled: true
         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
-    federationapi:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    userapi:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    syncapi:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    room_server:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    mediaapi:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    mscs:
-      database:
-        connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
-    database:
-      connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/
     postgresql:
-      enabled: false
+      enabled: true
+      persistence:
+        enabled: true
+        existingClaim: "dendrite-postgres-pvc"
+      auth:
+        username: dendrite
+        database: dendrite
+        password: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+        postgresPassword: ${SECRET_DENDRITE_POSTGRES_POSTGRES_PASSWORD}
