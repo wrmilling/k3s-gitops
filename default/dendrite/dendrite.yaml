@@ -57,6 +57,7 @@ spec:
         registration_shared_secret: ${SECRET_DENDRITE_REGISTRATION_SECRET}
     podAnnotations:
       backup.velero.io/backup-volumes: media
+      secret.reloader.stakater.com/reload: "dendrite-config"
     postgresql:
       enabled: true
       primary:
