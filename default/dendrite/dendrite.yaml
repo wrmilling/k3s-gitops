@@ -48,7 +48,9 @@ spec:
       global:
         server_name: ${SECRET_DOMAIN_SECONDARY}
         well_known_server_name: dendrite.${SECRET_DOMAIN}:443
-        mscs: [msc2946]
+        mscs:
+          - msc2946
+          - msc2444
     clientapi:
       config:
         registration_disabled: true
