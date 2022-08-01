@@ -10,10 +10,10 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: dendrite
-      version: 6.1.0
+      version: 6.1.1
       sourceRef:
         kind: HelmRepository
-        name: wrmilling-charts
+        name: k8s-at-home-charts
         namespace: flux-system
   values:
     ingress:
