@@ -2,6 +2,14 @@
 
 Default namespace for applications.
 
+## Dedrite
+
+[Dendrite](https://matrix-org.github.io/dendrite/) is a second-generation Matrix homeserver written in Go! Following the microservice architecture model, Dendrite is designed to be efficient, reliable and scalable.
+
+* [dendrite/dendrite_pvc.yaml](dendrite/dendrite_pvc.yaml) - PVCs for dendrite, postgres, and jetstream
+* [dendrite/dendrite.sops.yaml](dendrite/dendrite.sops.yaml) - Matrix secret for for dendrite server
+* [dendrite/dendrite.yaml](dendrite/dendrite.yaml) - HelmRelease for Dendrite in the k8s-at-home incubator repo
+
 ## FreshRSS
 
 ![](https://i.imgur.com/KbI1XXx.png)
