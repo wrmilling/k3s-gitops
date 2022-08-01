@@ -18,8 +18,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/wrmilling/onedrive-docker
-      tag: v2.4.17
+      repository: driveone/onedrive
+      tag: 2.4.20-debian
       pullPolicy: IfNotPresent
     env:
       TZ: America/Chicago
