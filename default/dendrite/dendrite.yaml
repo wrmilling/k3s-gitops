@@ -16,6 +16,10 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
+    image:
+      repository: matrixdotorg/dendrite-monolith
+      tag: 0.9.3
+      pullPolicy: IfNotPresent
     ingress:
       main:
         enabled: true
