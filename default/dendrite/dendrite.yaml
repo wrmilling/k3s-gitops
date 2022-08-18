@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: matrixdotorg/dendrite-monolith
-      tag: 0.9.3
+      tag: v0.9.3
       pullPolicy: IfNotPresent
     ingress:
       main:
