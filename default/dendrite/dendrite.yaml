@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: matrixdotorg/dendrite-monolith
+      repository: ghcr.io/matrix-org/dendrite-monolith
       tag: v0.9.3
       pullPolicy: IfNotPresent
     ingress:
