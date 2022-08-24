@@ -47,11 +47,11 @@ spec:
       STORAGE_PORT: "6379"
       STORAGE_DB: "2"
       STORAGE_FILEPATH: "/config"
-   service:
-    main:
-      ports:
-        http:
-          port: 7777
+    service:
+      main:
+        ports:
+          http:
+            port: 7777
     ingress:
       main:
         enabled: true
