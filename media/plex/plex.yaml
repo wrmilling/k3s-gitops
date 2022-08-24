@@ -22,7 +22,7 @@ spec:
       tag: 1.22.3.4523-d0ce30438
     env:
       TZ: "America/Chicago"
-      # PLEX_CLAIM: claim-hash
+      PLEX_CLAIM: ${SECRET_PLEX_CLAIM}
     podSecurityContext:
       supplementalGroups:
         - 44
