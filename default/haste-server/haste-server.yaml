@@ -5,24 +5,24 @@ metadata:
   name: haste-server
   namespace: default
 spec:
-  maxHistory: 3
-  interval: 10m0s
-  suspend: false
-  releaseName: haste-server
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: haste-server
-      version: 3.4.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
   values:
     image:
       repository: ghcr.io/k8s-at-home/haste-server
       pullPolicy: IfNotPresent
       tag: latest
+    strategy:
+      type: Recreate
     env:
       TZ: America/Chicago
       HOST: 0.0.0.0
@@ -45,6 +45,12 @@ spec:
       STORAGE_HOST: haste-server-redis-master.default.svc
       STORAGE_PORT: "6379"
       STORAGE_DB: "2"
+      STORAGE_FILEPATH: "/config"
+   service:
+    main:
+      ports:
+        http:
+          port: 7777
     ingress:
       main:
         enabled: true
