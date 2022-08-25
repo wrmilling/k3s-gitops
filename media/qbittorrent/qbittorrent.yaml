@@ -5,24 +5,32 @@ metadata:
   name: qbittorrent
   namespace: media
 spec:
-  interval: 5m
+  releaseName: qbittorrent
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: qbittorrent
-      version: 13.5.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
-      interval: 5m
   values:
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
+      pullPolicy: IfNotPresent
       tag: v4.4.2
+    strategy:
+      type: Recreate
     env:
-      TZ: "America/Chicago"
+      TZ: America/Chicago
     service:
+      main:
+        ports:
+          http:
+            port: 8080
       bittorrent:
         enabled: true
         type: LoadBalancer
@@ -51,6 +59,26 @@ spec:
         tls:
           - hosts:
               - "qbit.k.${SECRET_DOMAIN}"
+    configmap: 
+      scripts: 
+        enabled: true
+        data:
+          31-update-port: |-
+            #!/bin/bash
+            QBITTORRENT_CONFIGFILE="/config/qBittorrent/qBittorrent.conf"
+            INCOMING_PORT=50413
+
+            incoming_port_exist=$(cat ${QBITTORRENT_CONFIGFILE} | grep -m 1 'Connection\\PortRangeMin='${INCOMING_PORT})
+            if [[ -z "${incoming_port_exist}" ]]; then
+              incoming_exist=$(cat ${QBITTORRENT_CONFIGFILE} | grep -m 1 'Connection\\PortRangeMin')
+              if [[ ! -z "${incoming_exist}" ]]; then
+                # Get line number of Incoming
+                LINE_NUM=$(grep -Fn -m 1 'Connection\PortRangeMin' ${QBITTORRENT_CONFIGFILE} | cut -d: -f 1)
+                sed -i "${LINE_NUM}s@.*@Connection\\\PortRangeMin=${INCOMING_PORT}@" ${QBITTORRENT_CONFIGFILE}
+              else
+                echo "Connection\\PortRangeMin=${INCOMING_PORT}" >> ${QBITTORRENT_CONFIGFILE}
+              fi
+            fi
     persistence:
       config:
         enabled: true
@@ -60,6 +88,14 @@ spec:
         readOnly: false
         mountPath: /nfs-media
         existingClaim: nfs-media-pvc
+      qbittorrent-scripts:
+        enabled: true
+        mountPath: /config/custom-cont-init.d
+        type: custom
+        volumeSpec:
+          configMap:
+            name: qbittorrent-scripts
+            defaultMode: 511
     podAnnotations:
       backup.velero.io/backup-volumes: config
     podSecurityContext:
