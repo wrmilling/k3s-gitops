@@ -5,23 +5,32 @@ metadata:
   name: nzbget
   namespace: media
 spec:
-  interval: 5m
+  releaseName: nzbget
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: nzbget
-      version: 12.4.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
-      interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/nzbget
+     repository: ghcr.io/k8s-at-home/nzbget
+      pullPolicy: IfNotPresent
       tag: v21.1
+    strategy:
+      type: Recreate
     env:
-      TZ: "America/Chicago"
+      TZ: America/Chicago
+    service:
+      main:
+        ports:
+          http:
+            port: 6789
     ingress:
       main:
         enabled: true
@@ -46,6 +55,7 @@ spec:
       media:
         enabled: true
         readOnly: false
+        mountPath: /media
         existingClaim: nfs-media-pvc
       downloads:
         enabled: true
