@@ -5,24 +5,32 @@ metadata:
   name: sonarr
   namespace: media
 spec:
-  interval: 5m
+  releaseName: sonarr
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: sonarr
-      version: 16.3.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
-      interval: 5m
   values:
     image:
       repository: ghcr.io/k8s-at-home/sonarr
+      pullPolicy: IfNotPresent
       tag: v3.0.9.1549
-      pullPolicy: Always
+    strategy:
+      type: Recreate
     env:
-      TZ: "America/Chicago"
+      TZ: America/Chicago
+    service:
+      main:
+        ports:
+          http:
+            port: 8989
     ingress:
       main:
         enabled: true
@@ -41,6 +49,23 @@ spec:
         tls:
         - hosts:
           - "sonarr.k.${SECRET_DOMAIN}"
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+            - /usr/bin/env
+            - bash
+            - -c
+            - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
+              read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+          failureThreshold: 5
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
     persistence:
       config:
         enabled: true
