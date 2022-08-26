@@ -35,6 +35,9 @@ spec:
         externalTrafficPolicy: Local
         annotations:
           metallb.universe.tf/allow-shared-ip: plex
+        ports:
+          http:
+            port: 32400
     hostNetwork: false
     ingress:
       main:
