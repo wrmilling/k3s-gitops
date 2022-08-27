@@ -5,28 +5,34 @@ metadata:
   name: freshrss
   namespace: default
 spec:
-  maxHistory: 3
-  interval: 10m0s
-  suspend: false
   releaseName: freshrss
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: freshrss
-      version: 6.4.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 0.1.1
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
   values:
     image:
       repository: linuxserver/freshrss
+      pullPolicy: IfNotPresent
       tag: 1.18.0-ls88
+    strategy:
+      type: Recreate
     env:
       TZ: America/Chicago
-    controllerType: statefulset
-    strategy:
-      type: RollingUpdate
+      PUID: "1001"
+      PGID: "1001"
+    service:
+      main:
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
