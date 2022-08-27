@@ -48,7 +48,8 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup.
 
-* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for onedrive
+* [onedrive/onedrive-pvc.yaml](onedrive/onedrive-pvc.yaml) - Config PVC for OneDrive
+* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive
 
 ## PiHole
 
