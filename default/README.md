@@ -44,13 +44,6 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 * [minio/ingress.yaml](minio/ingress.yaml) - Ingresss for minio due to the fact that I am using a really old helm repo
 * [minio/minio.yaml](minio/minio.yaml) - HelmRelease for minio from the helm.min.io repo
 
-## Monica
-
-[Monica](https://github.com/monicahq/monica) is an opensource Source personal CRM.
-
-* [monica/monica-pvc.yaml](monica/monica-pvc.yaml) - PVC for monica configuration files
-* [monica/monica.yaml](monica/monica.yaml) - HelmRelease for Monica
-
 ## OneDrive
 
 Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup.
