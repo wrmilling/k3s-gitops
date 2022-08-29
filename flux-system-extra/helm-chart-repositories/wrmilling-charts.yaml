@@ -5,6 +5,6 @@ metadata:
   name: wrmilling-charts
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   url: https://wrmilling.github.io/wrmilling-charts/
   timeout: 3m

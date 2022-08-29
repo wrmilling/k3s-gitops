@@ -5,6 +5,6 @@ metadata:
   name: hajimari-charts
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   url: https://toboshii.github.io/hajimari
   timeout: 3m
