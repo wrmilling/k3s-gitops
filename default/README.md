@@ -6,9 +6,10 @@ Default namespace for applications.
 
 [Dendrite](https://matrix-org.github.io/dendrite/) is a second-generation Matrix homeserver written in Go! Following the microservice architecture model, Dendrite is designed to be efficient, reliable and scalable.
 
-* [dendrite/dendrite_pvc.yaml](dendrite/dendrite_pvc.yaml) - PVCs for dendrite, postgres, and jetstream
 * [dendrite/dendrite.sops.yaml](dendrite/dendrite.sops.yaml) - Matrix secret for for dendrite server
-* [dendrite/dendrite.yaml](dendrite/dendrite.yaml) - HelmRelease for Dendrite in the k8s-at-home incubator repo
+* [dendrite/dendrite.yaml](dendrite/dendrite.yaml) - HelmRelease for Dendrite using app-template
+* [dendrite/postgres.yaml](dendrite/postgres.yaml) - PostgreSQL deployment for dendrite
+* [dendrite/pvc.yaml](dendrite/pvc.yaml) - PVCs for dendrite, postgres, and jetstream
 
 ## FreshRSS
 
@@ -17,7 +18,7 @@ Default namespace for applications.
 Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 * [freshrss/freshrss-pvc.yaml](freshrss/freshrss-pvc.yaml) - PVC for freshrss configuration files
-* [freshrss/freshrss.yaml](freshrss/freshrss.yaml) - HelmRelease for FreshRSS from the k8s-at-home repo
+* [freshrss/freshrss.yaml](freshrss/freshrss.yaml) - HelmRelease for FreshRSS using app-template
 
 ## Hajimari
 
@@ -34,22 +35,21 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 [Haste](https://github.com/seejohnrun/haste-server) is an open-source pastebin software written in node.js.
 
-* [haste-server/haste-server.yaml](haste-server/haste-server.yaml) - HelmRelease for haste-server froom the k8s-at-home repo
+* [haste-server/haste-server.yaml](haste-server/haste-server.yaml) - HelmRelease for haste-server using app-template
 * [haste-server/redis.yaml](haste-server/redis.yaml) - Key/Value store which acts as storage for Haste
 
 ## Minio
 
 [Minio](https://min.io/) is a high performance S3-compatible kubernetes object storage solution / bucket service.
 
-* [minio/ingress.yaml](minio/ingress.yaml) - Ingresss for minio due to the fact that I am using a really old helm repo
-* [minio/minio.yaml](minio/minio.yaml) - HelmRelease for minio from the helm.min.io repo
+* [minio/minio.yaml](minio/minio.yaml) - HelmRelease for minio from the charts.min.io repo
 
 ## OneDrive
 
 Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup.
 
 * [onedrive/onedrive-pvc.yaml](onedrive/onedrive-pvc.yaml) - Config PVC for OneDrive
-* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive
+* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive using app-template
 
 ## PiHole
 
