@@ -20,6 +20,8 @@ spec:
     crds:
       enabled: true
     prometheus:
+      serviceAccount: kube-prometheus-stack-prometheus
+      namespace: monitoring
       podMonitor:
         enabled: true
       prometheusRule:
