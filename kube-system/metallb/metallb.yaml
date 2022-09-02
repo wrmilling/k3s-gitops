@@ -19,11 +19,8 @@ spec:
   values:
     crds:
       enabled: true
-    prometheusRule:
-      enabled: true
     prometheus:
-      enabled: true
-      serviceMonitor:
+      podMonitor:
         enabled: true
       prometheusRule:
         enabled: true
