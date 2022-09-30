@@ -156,6 +156,10 @@ spec:
             - msc2444
         room_server:
         sync_api:
+          search:
+            enabled: true
+            index_path: "/var/dendrite/search"
+            language: "en"
         user_api:
           bcrypt_cost: 10
         tracing:
@@ -180,6 +184,10 @@ spec:
         enabled: true
         mountPath: /var/dendrite/media
         existingClaim: dendrite-media-pvc
+      media:
+        enabled: true
+        mountPath: /var/dendrite/search
+        existingClaim: dendrite-search-pvc
       jetstream:
         enabled: true
         mountPath: /var/dendrite/jetstream
