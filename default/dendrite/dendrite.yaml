@@ -184,7 +184,7 @@ spec:
         enabled: true
         mountPath: /var/dendrite/media
         existingClaim: dendrite-media-pvc
-      media:
+      search:
         enabled: true
         mountPath: /var/dendrite/search
         existingClaim: dendrite-search-pvc
