@@ -98,7 +98,7 @@ spec:
             cache_lifetime: 5m
           database:
             connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/dendrite?sslmode=disable
-            max_open_conns: 100
+            max_open_conns: 90
             max_idle_conns: 5
             conn_max_lifetime: -1
         app_service_api:
