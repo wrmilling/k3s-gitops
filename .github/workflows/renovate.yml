@@ -9,8 +9,10 @@ jobs:
   helm-releases:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.PAT }}
+        fetch-depth: 1
 
     - name: Install yq
       run: |
@@ -27,13 +29,11 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: helm-release-annotations
-        delete-branch: true
         title: "[renovate] create helmrelease annotations [ci-skip]"
         signoff: true
-        committer: "Winston R. Milling <wrmilling@users.noreply.github.com>"
-        author: "Winston R. Milling <wrmilling@users.noreply.github.com>"
-        assignees: "wrmilling"
+        committer: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+        author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
         commit-message: Create renovatebot helmrelease annotations
         body: |
-          Signed-off-by: Winston R. Milling <WRMilling@users.noreply.github.com>
+          Signed-off-by: Jeff Billimek <billimek@users.noreply.github.com>
         labels: renovate/helm-release-annotations
