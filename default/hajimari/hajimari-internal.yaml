@@ -29,6 +29,7 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - development
           - media
           - monitoring
           - rook-ceph
