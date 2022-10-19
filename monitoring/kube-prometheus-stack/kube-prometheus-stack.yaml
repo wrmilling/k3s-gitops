@@ -185,7 +185,7 @@ spec:
                 requests:
                   storage: 10Gi
         thanos:
-          image: quay.io/thanos/thanos:v0.28.1
+          image: quay.io/thanos/thanos:v0.28.1@sha256:3e95df4ce38edf1ca60666be0be229bed71ae155e8f5cf3ebbe7b45fbea487cb
           version: v0.17.0
           objectStorageConfig:
             name: thanos
