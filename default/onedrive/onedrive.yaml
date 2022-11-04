@@ -30,7 +30,7 @@ spec:
       ONEDRIVE_GID: 1000
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
-    configmap:
+    configMaps:
       config:
         enabled: true
         data: 
