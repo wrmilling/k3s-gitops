@@ -11,7 +11,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 0.2.2
+      version: 1.0.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -30,7 +30,7 @@ spec:
       ONEDRIVE_GID: 1000
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
-    configmap:
+    configMaps:
       config:
         enabled: true
         data: 
