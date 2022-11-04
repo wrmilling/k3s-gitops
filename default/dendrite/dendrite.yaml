@@ -21,7 +21,7 @@ spec:
     image:
       repository: ghcr.io/matrix-org/dendrite-monolith
       pullPolicy: IfNotPresent
-      tag: v0.10.6
+      tag: v0.10.7
     strategy:
       type: Recreate
     env:
@@ -211,6 +211,8 @@ spec:
     podAnnotations:
       backup.velero.io/backup-volumes: media
       configmap.reloader.stakater.com/reload: "dendrite-config"
+    podSecurityContext:
+      fsGroup: 1337
     probes:
       liveness:
         enabled: true
