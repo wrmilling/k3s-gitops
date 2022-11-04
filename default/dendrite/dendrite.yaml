@@ -180,9 +180,13 @@ spec:
             logging:
               - level: info
                 params:
-                  path: /var/log/dendrite
+                  path: /var/dendrite-log/dendrite
                 type: file
     persistence:
+      logs:
+        enabled: true
+        mountPath: /var/dendrite-log
+        type: emptyDir
       media:
         enabled: true
         mountPath: /var/dendrite/media
@@ -212,8 +216,6 @@ spec:
       backup.velero.io/backup-volumes: media
       configmap.reloader.stakater.com/reload: "dendrite-config"
     podSecurityContext:
-      runAsUser: 1337
-      runAsGroup: 1337
       fsGroup: 1337
     probes:
       liveness:
