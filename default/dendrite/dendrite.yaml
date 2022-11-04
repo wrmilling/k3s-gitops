@@ -53,7 +53,7 @@ spec:
           - secretName: conduit-cert
             hosts:
               - dendrite.${SECRET_DOMAIN}
-    secrets:
+    secret:
       dendrite.yaml: |
         version: 2
         global:
