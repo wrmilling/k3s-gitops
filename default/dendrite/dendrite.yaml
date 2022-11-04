@@ -54,131 +54,133 @@ spec:
             hosts:
               - dendrite.${SECRET_DOMAIN}
     secrets:
-      dendrite.yaml: |
-        version: 2
-        global:
-          server_name: "${SECRET_DOMAIN_SECONDARY}"
-          private_key: matrix_key.pem
-          key_validity_period: "168h0m0s"
-          cache:
-            max_size_estimated: "1gb"
-            max_age: "1h"
-          well_known_server_name: "dendrite.${SECRET_DOMAIN}:443"
-          well_known_client_name: "https://dendrite.${SECRET_DOMAIN}/"
-          trusted_third_party_id_servers:
-            - matrix.org
-            - vector.im
-          disable_federation: false
-          presence:
-            enable_inbound: false
-            enable_outbound: false
-          report_stats:
-            enabled: false
-            endpoint: https://matrix.org/report-usage-stats/push
-          server_notices:
-            enabled: false
-            local_part: "_server"
-            display_name: "Server alerts"
-            avatar_url: ""
-            room_name: "Server Alerts"
-          jetstream:
-            addresses:
+      dendrite.yaml:
+        enabled: true
+        stringDate: |
+          version: 2
+          global:
+            server_name: "${SECRET_DOMAIN_SECONDARY}"
+            private_key: matrix_key.pem
+            key_validity_period: "168h0m0s"
+            cache:
+              max_size_estimated: "1gb"
+              max_age: "1h"
+            well_known_server_name: "dendrite.${SECRET_DOMAIN}:443"
+            well_known_client_name: "https://dendrite.${SECRET_DOMAIN}/"
+            trusted_third_party_id_servers:
+              - matrix.org
+              - vector.im
+            disable_federation: false
+            presence:
+              enable_inbound: false
+              enable_outbound: false
+            report_stats:
+              enabled: false
+              endpoint: https://matrix.org/report-usage-stats/push
+            server_notices:
+              enabled: false
+              local_part: "_server"
+              display_name: "Server alerts"
+              avatar_url: ""
+              room_name: "Server Alerts"
+            jetstream:
+              addresses:
+                []
+              in_memory: false
+              storage_path: /var/dendrite/jetstream
+              topic_prefix: "Dendrite"
+            metrics:
+              enabled: false
+              basic_auth:
+                username: "metrics"
+                password: "metrics"
+            dns_cache:
+              enabled: false
+              cache_size: 256
+              cache_lifetime: 5m
+            database:
+              connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/dendrite?sslmode=disable
+              max_open_conns: 90
+              max_idle_conns: 5
+              conn_max_lifetime: -1
+          app_service_api:
+            config_files:
               []
-            in_memory: false
-            storage_path: /var/dendrite/jetstream
-            topic_prefix: "Dendrite"
-          metrics:
-            enabled: false
-            basic_auth:
-              username: "metrics"
-              password: "metrics"
-          dns_cache:
-            enabled: false
-            cache_size: 256
-            cache_lifetime: 5m
-          database:
-            connection_string: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-postgres-postgresql/dendrite?sslmode=disable
-            max_open_conns: 90
-            max_idle_conns: 5
-            conn_max_lifetime: -1
-        app_service_api:
-          config_files:
-            []
-        client_api:
-          registration_disabled: true
-          registration_shared_secret: "${SECRET_DENDRITE_REGISTRATION_SECRET}"
-          enable_registration_captcha: false
-          recaptcha_public_key: ""
-          recaptcha_private_key: ""
-          recaptcha_bypass_secret: ""
-          recaptcha_siteverify_api: ""
-          turn:
-            turn_password: ""
-            turn_shared_secret: ""
-            turn_uris: []
-            turn_user_lifetime: ""
-            turn_username: ""
-          rate_limiting:
-            enabled: true
-            threshold: 5
-            cooloff_ms: 500
-            exempt_user_ids:
-        federation_api:
-          send_max_retries: 16
-          disable_tls_validation: false
-          key_perspectives:
-            - keys:
-              - key_id: ed25519:auto
-                public_key: Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw
-              - key_id: ed25519:a_RXGa
-                public_key: l8Hft5qXKn1vfHrg3p4+W8gELQVo8N13JkluMfmn2sQ
-              server_name: matrix.org
-          prefer_direct_fetch: false
-        key_server:
-        media_api:
-          base_path: "/var/dendrite/media"
-          max_file_size_bytes: 10485760
-          dynamic_thumbnails: false
-          max_thumbnail_generators: 10
-          thumbnail_sizes:
-            - height: 32
-              method: crop
-              width: 32
-            - height: 96
-              method: crop
-              width: 96
-            - height: 480
-              method: scale
-              width: 640
-        mscs:
+          client_api:
+            registration_disabled: true
+            registration_shared_secret: "${SECRET_DENDRITE_REGISTRATION_SECRET}"
+            enable_registration_captcha: false
+            recaptcha_public_key: ""
+            recaptcha_private_key: ""
+            recaptcha_bypass_secret: ""
+            recaptcha_siteverify_api: ""
+            turn:
+              turn_password: ""
+              turn_shared_secret: ""
+              turn_uris: []
+              turn_user_lifetime: ""
+              turn_username: ""
+            rate_limiting:
+              enabled: true
+              threshold: 5
+              cooloff_ms: 500
+              exempt_user_ids:
+          federation_api:
+            send_max_retries: 16
+            disable_tls_validation: false
+            key_perspectives:
+              - keys:
+                - key_id: ed25519:auto
+                  public_key: Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw
+                - key_id: ed25519:a_RXGa
+                  public_key: l8Hft5qXKn1vfHrg3p4+W8gELQVo8N13JkluMfmn2sQ
+                server_name: matrix.org
+            prefer_direct_fetch: false
+          key_server:
+          media_api:
+            base_path: "/var/dendrite/media"
+            max_file_size_bytes: 10485760
+            dynamic_thumbnails: false
+            max_thumbnail_generators: 10
+            thumbnail_sizes:
+              - height: 32
+                method: crop
+                width: 32
+              - height: 96
+                method: crop
+                width: 96
+              - height: 480
+                method: scale
+                width: 640
           mscs:
-            - msc2946
-            - msc2444
-        room_server:
-        sync_api:
-          search:
-            enabled: true
-            index_path: "/var/dendrite/search"
-            language: "en"
-        user_api:
-          bcrypt_cost: 10
-        tracing:
-          enabled: false
-          jaeger:
-            baggage_restrictions: null
-            disabled: false
-            headers: null
-            reporter: null
-            rpc_metrics: false
-            sampler: null
-            serviceName: ""
-            tags: []
-            throttler: null
-        logging:
-          - level: info
-            params:
-              path: /var/log/dendrite
-            type: file
+            mscs:
+              - msc2946
+              - msc2444
+          room_server:
+          sync_api:
+            search:
+              enabled: true
+              index_path: "/var/dendrite/search"
+              language: "en"
+          user_api:
+            bcrypt_cost: 10
+          tracing:
+            enabled: false
+            jaeger:
+              baggage_restrictions: null
+              disabled: false
+              headers: null
+              reporter: null
+              rpc_metrics: false
+              sampler: null
+              serviceName: ""
+              tags: []
+              throttler: null
+          logging:
+            - level: info
+              params:
+                path: /var/log/dendrite
+              type: file
     persistence:
       media:
         enabled: true
