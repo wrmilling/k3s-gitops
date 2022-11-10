@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mastodon-postgres-pvc
-  namespace: default
+  namespace: social
 spec:
   accessModes:
     - ReadWriteOnce
