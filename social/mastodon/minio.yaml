@@ -1,0 +1,65 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mastodon-minio
+  namespace: social
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.min.io/
+      chart: minio
+      version: 5.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: minio-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: quay.io/minio/minio
+      tag: RELEASE.2022-10-24T18-35-07Z
+      pullPolicy: IfNotPresent
+    mcImage:
+      repository: quay.io/minio/mc
+      tag: RELEASE.2021-12-29T06-52-55Z
+      pullPolicy: IfNotPresent
+    mode: standalone
+    rootUser: ${SECRET_MASTODON_ADMIN_S3_ACCESS_KEY}
+    rootPassword: ${SECRET_MASTODON_ADMIN_S3_SECRET_KEY}
+    users:
+    - accessKey: ${SECRET_MASTODON_S3_ACCESS_KEY}
+      secretKey: ${SECRET_MASTODON_S3_SECRET_KEY}
+      policy: readwrite
+    persistence:
+      enabled: true
+      existingClaim: "nfs-mastodon-pvc"
+    ingress:
+      enabled: true
+      ingressClassName: nginx-external
+      hosts:
+        - mfiles.${SECRET_DOMAIN}
+      tls:
+        - secretName: mastodon-minio-cert
+          hosts:
+            - mfiles.${SECRET_DOMAIN}
+    consoleIngress:
+      enabled: true
+      hosts:
+        - mmc.k.${SECRET_DOMAIN}
+      tls:
+        - secretName: mastodon-minio-console-cert
+          hosts:
+            - mmc.k.${SECRET_DOMAIN}
+    securityContext:
+      enabled: false
+    resources:
+      requests:
+        memory: 350Mi
+        cpu: 25m
+      limits:
+        memory: 1000Mi
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
