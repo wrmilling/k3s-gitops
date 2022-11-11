@@ -71,7 +71,7 @@ spec:
 
     postgresql:
       enabled: false
-      postgresqlHostname: mastodon-postgresql-postgresql.social.svc
+      postgresqlHostname: mastodon-postgres-postgresql.social.svc
       auth:
         database: mastodon
         username: mastodon
