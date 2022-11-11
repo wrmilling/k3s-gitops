@@ -35,7 +35,7 @@ spec:
         bucket: "mastodon"
         endpoint: https://mfile.${SECRET_DOMAIN}
         hostname: mfile.${SECRET_DOMAIN}
-        alias_host: mfile.${SECRET_DOMAIN}/mastodon
+        alias_host: mcdn.${SECRET_DOMAIN}
       secrets:
         secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
         otp_secret: "${SECRET_MASTODON_OTP_SECRET}"
