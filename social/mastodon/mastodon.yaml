@@ -94,9 +94,9 @@ spec:
         persistence:
           storageClass: rook-ceph-block
           size: 1Gi
+      password: "${SECRET_MASTODON_REDIS_PASSWORD}"
       auth:
-        enabled: false
-        # password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+        password: "${SECRET_MASTODON_REDIS_PASSWORD}"
       replica:
         replicaCount: 0
     
