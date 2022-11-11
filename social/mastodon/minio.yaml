@@ -39,11 +39,11 @@ spec:
       enabled: true
       ingressClassName: nginx-external
       hosts:
-        - mfiles.${SECRET_DOMAIN}
+        - mfile.${SECRET_DOMAIN}
       tls:
         - secretName: mastodon-minio-cert
           hosts:
-            - mfiles.${SECRET_DOMAIN}
+            - mfile.${SECRET_DOMAIN}
     consoleIngress:
       enabled: true
       hosts:
