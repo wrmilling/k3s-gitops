@@ -33,8 +33,8 @@ spec:
         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
         access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
         bucket: "mastodon"
-        endpoint: http://mastodon-minio.social.svc
-        hostname: mastodon-minio.social.svc
+        endpoint: https://mfile.${SECRET_DOMAIN}
+        hostname: mfile.${SECRET_DOMAIN}
         alias_host: "https://mcdn.${SECRET_DOMAIN}"
       secrets:
         secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
