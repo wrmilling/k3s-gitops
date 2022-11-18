@@ -56,6 +56,9 @@ spec:
 
     ingress:
       enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: 40m
+        nginx.org/client-max-body-size: 40m
       ingressClassName: nginx-external
       hosts:
         - host: mastodon.${SECRET_DOMAIN}
