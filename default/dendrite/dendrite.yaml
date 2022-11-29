@@ -21,7 +21,7 @@ spec:
     image:
       repository: ghcr.io/matrix-org/dendrite-monolith
       pullPolicy: IfNotPresent
-      tag: v0.10.7
+      tag: v0.10.8
     strategy:
       type: Recreate
     env:
