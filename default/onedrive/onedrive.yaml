@@ -21,7 +21,7 @@ spec:
     image:
       repository: driveone/onedrive
       pullPolicy: IfNotPresent
-      tag: 2.4.20
+      tag: 2.4.22
     strategy:
       type: Recreate
     env:
