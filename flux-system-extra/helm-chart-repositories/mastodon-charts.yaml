@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    branch: main
+    branch: 642870c82ba33302ac03981c73bb8e57f03be1e4
   url: https://github.com/mastodon/mastodon
   ignore: |
     # exclude all
