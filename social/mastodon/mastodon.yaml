@@ -70,7 +70,7 @@ spec:
             - mastodon.${SECRET_DOMAIN}
 
     elasticsearch:
-      enabled: false
+      enabled: true
       # master:
       #   replicaCount: 1
       # data:
