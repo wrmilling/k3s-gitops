@@ -22,7 +22,7 @@ spec:
 
     mastodon:
       createAdmin:
-        enabled: true
+        enabled: false
         username: "winston"
         email: "winston@${SECRET_DOMAIN_SECONDARY}"
       local_domain: "${SECRET_DOMAIN_SECONDARY}"
