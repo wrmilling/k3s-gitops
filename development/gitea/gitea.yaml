@@ -64,6 +64,10 @@ spec:
           SSH_LISTEN_PORT: 22
           SSH_DOMAIN: ssh.git.${SECRET_DOMAIN}
           root_url: "https://git.${SECRET_DOMAIN}"
+        git:
+          timeout:
+            MIGRATE: 1000
+            MIRROR: 1000
         respository:
           DEFAULT_PRIVATE: true
         admin:
