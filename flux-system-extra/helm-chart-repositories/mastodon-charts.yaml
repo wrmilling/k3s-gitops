@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    commit: ad568924c064c41e056dfec651217dbe7bb637fc
+    commit: 736b4283b0936134e83092f8b16d686f6478a51f
   url: https://github.com/mastodon/mastodon
   ignore: |
     # exclude all
