@@ -35,6 +35,16 @@ spec:
         ports:
           http:
             port: 8123
+          mdns-tcp:
+            enabled: true
+            port: 5353
+            protocol: TCP
+            targetPort: 5353
+          mdns-udp:
+            enabled: true
+            port: 5353
+            protocol: UDP
+            targetPort: 5353
     ingress:
       main:
         enabled: true
