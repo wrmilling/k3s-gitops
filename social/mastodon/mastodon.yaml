@@ -20,6 +20,9 @@ spec:
       tag: 3868ba683d56dbbeecc839fdeaeb7b3d0b18bb9a
       pullPolicy: IfNotPresent
 
+    env:
+      MAX_TOOT_CHARS: 1024
+
     mastodon:
       createAdmin:
         enabled: false
