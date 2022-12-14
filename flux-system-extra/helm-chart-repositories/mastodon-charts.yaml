@@ -8,8 +8,3 @@ spec:
   ref:
     commit: ae892d539ed35433ceadeadaf87113cca75c2ea7
   url: https://github.com/mastodon/chart
-  ignore: |
-    # exclude all
-    /*
-    # include gitops dirs
-    !/chart
