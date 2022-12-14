@@ -16,8 +16,8 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: tootsuite/mastodon
-      tag: v4.0.2
+      repository: ghcr.io/glitch-soc/mastodon
+      tag: 3868ba683d56dbbeecc839fdeaeb7b3d0b18bb9a
       pullPolicy: IfNotPresent
 
     mastodon:
