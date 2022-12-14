@@ -6,8 +6,8 @@ metadata:
 spec:
   interval: 30m
   ref:
-    commit: 736b4283b0936134e83092f8b16d686f6478a51f
-  url: https://github.com/mastodon/mastodon
+    commit: ae892d539ed35433ceadeadaf87113cca75c2ea7
+  url: https://github.com/mastodon/chart
   ignore: |
     # exclude all
     /*
