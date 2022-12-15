@@ -1,99 +1,98 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: mastodon
-  namespace: social
-spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: ./
-      version: 4.0.0
-      sourceRef:
-        kind: GitRepository
-        name: mastodon-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/glitch-soc/mastodon
-      tag: 3868ba683d56dbbeecc839fdeaeb7b3d0b18bb9a
-      pullPolicy: IfNotPresent
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: mastodon
+#   namespace: social
+# spec:
+#   interval: 15m
+#   chart:
+#     spec:
+#       chart: ./
+#       version: 4.0.0
+#       sourceRef:
+#         kind: GitRepository
+#         name: mastodon-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/glitch-soc/mastodon
+#       tag: 3868ba683d56dbbeecc839fdeaeb7b3d0b18bb9a
+#       pullPolicy: IfNotPresent
 
-    mastodon:
-      createAdmin:
-        enabled: false
-        username: "winston"
-        email: "winston@${SECRET_DOMAIN_SECONDARY}"
-      local_domain: "${SECRET_DOMAIN_SECONDARY}"
-      web_domain: "mastodon.${SECRET_DOMAIN}"
-      singleUserMode: true
-      max_post_length: 1024
-      s3:
-        enabled: true
-        access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
-        access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
-        bucket: "mastodon"
-        endpoint: "https://mfile.${SECRET_DOMAIN}"
-        hostname: "mfile.${SECRET_DOMAIN}"
-        alias_host: "mcdn.${SECRET_DOMAIN}"
-      secrets:
-        secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
-        otp_secret: "${SECRET_MASTODON_OTP_SECRET}"
-        vapid:
-          private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
-          public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
-      smtp:
-        domain: "${SECRET_DOMAIN}"
-        from_address: "${SECRET_MASTODON_SMTP_USER}"
-        server: "${SECRET_SMTP_DOMAIN}"
-        port: 587
-        login: "${SECRET_MASTODON_SMTP_USER}"
-        password: "${SECRET_MASTODON_SMTP_PASS}"
-      streaming:
-        port: 4000
-      web:
-        port: 3000
+#     mastodon:
+#       createAdmin:
+#         enabled: false
+#         username: "winston"
+#         email: "winston@${SECRET_DOMAIN_SECONDARY}"
+#       local_domain: "${SECRET_DOMAIN_SECONDARY}"
+#       web_domain: "mastodon.${SECRET_DOMAIN}"
+#       singleUserMode: true
+#       s3:
+#         enabled: true
+#         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
+#         access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
+#         bucket: "mastodon"
+#         endpoint: "https://mfile.${SECRET_DOMAIN}"
+#         hostname: "mfile.${SECRET_DOMAIN}"
+#         alias_host: "mcdn.${SECRET_DOMAIN}"
+#       secrets:
+#         secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
+#         otp_secret: "${SECRET_MASTODON_OTP_SECRET}"
+#         vapid:
+#           private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
+#           public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
+#       smtp:
+#         domain: "${SECRET_DOMAIN}"
+#         from_address: "${SECRET_MASTODON_SMTP_USER}"
+#         server: "${SECRET_SMTP_DOMAIN}"
+#         port: 587
+#         login: "${SECRET_MASTODON_SMTP_USER}"
+#         password: "${SECRET_MASTODON_SMTP_PASS}"
+#       streaming:
+#         port: 4000
+#       web:
+#         port: 3000
 
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 40m
-        nginx.org/client-max-body-size: 40m
-      ingressClassName: nginx-external
-      hosts:
-        - host: mastodon.${SECRET_DOMAIN}
-          paths:
-            - path: '/'
-      tls:
-        - secretName: mastodon-cert
-          hosts:
-            - mastodon.${SECRET_DOMAIN}
+#     ingress:
+#       enabled: true
+#       annotations:
+#         nginx.ingress.kubernetes.io/proxy-body-size: 40m
+#         nginx.org/client-max-body-size: 40m
+#       ingressClassName: nginx-external
+#       hosts:
+#         - host: mastodon.${SECRET_DOMAIN}
+#           paths:
+#             - path: '/'
+#       tls:
+#         - secretName: mastodon-cert
+#           hosts:
+#             - mastodon.${SECRET_DOMAIN}
 
-    elasticsearch:
-      enabled: false
+#     elasticsearch:
+#       enabled: false
 
-    postgresql:
-      enabled: true
-      primary:
-        podAnnotations:
-          backup.velero.io/backup-volumes: data
-        persistence:
-          enabled: true
-          existingClaim: "mastodon-postgres-pvc"
-      auth:
-        database: mastodon
-        username: mastodon
-        password: "${SECRET_MASTODON_DB_PASS}"
-        postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
+#     postgresql:
+#       enabled: true
+#       primary:
+#         podAnnotations:
+#           backup.velero.io/backup-volumes: data
+#         persistence:
+#           enabled: true
+#           existingClaim: "mastodon-postgres-pvc"
+#       auth:
+#         database: mastodon
+#         username: mastodon
+#         password: "${SECRET_MASTODON_DB_PASS}"
+#         postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
 
-    redis:
-      master:
-        persistence:
-          storageClass: rook-ceph-block
-          size: 1Gi
-      password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-      auth:
-        password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-      replica:
-        replicaCount: 0
+#     redis:
+#       master:
+#         persistence:
+#           storageClass: rook-ceph-block
+#           size: 1Gi
+#       password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+#       auth:
+#         password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+#       replica:
+#         replicaCount: 0
