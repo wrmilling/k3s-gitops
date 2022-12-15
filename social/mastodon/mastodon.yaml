@@ -20,9 +20,6 @@ spec:
       tag: 3868ba683d56dbbeecc839fdeaeb7b3d0b18bb9a
       pullPolicy: IfNotPresent
 
-    env:
-      MAX_TOOT_CHARS: 1024
-
     mastodon:
       createAdmin:
         enabled: false
@@ -31,6 +28,7 @@ spec:
       local_domain: "${SECRET_DOMAIN_SECONDARY}"
       web_domain: "mastodon.${SECRET_DOMAIN}"
       singleUserMode: true
+      max_post_length: 1024
       s3:
         enabled: true
         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
