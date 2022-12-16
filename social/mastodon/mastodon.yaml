@@ -28,6 +28,7 @@ spec:
       local_domain: "${SECRET_DOMAIN_SECONDARY}"
       web_domain: "mastodon.${SECRET_DOMAIN}"
       singleUserMode: true
+      max_post_length: 1024
       s3:
         enabled: true
         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
