@@ -31,7 +31,7 @@ spec:
     recreatePods: true
     service:
       type: LoadBalancer
-      loadBalancerIP: $SVC_EMQX_IP
+      loadBalancerIP: ${SVC_EMQX_IP}
     tolerations:
       - key: "arm"
         operator: "Exists"
