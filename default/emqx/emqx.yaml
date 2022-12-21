@@ -1,0 +1,84 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: emqx
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://repos.emqx.io/charts
+      chart: emqx
+      version: 5.0.11
+      sourceRef:
+        kind: HelmRepository
+        name: emqx-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  timeout: 20m
+  values:
+    image:
+      repository: emqx/emqx
+    replicaCount: 3
+    recreatePods: true
+    service:
+      type: LoadBalancer
+      loadBalancerIP: $SVC_EMQX_IP
+    tolerations:
+      - key: "arm"
+        operator: "Exists"
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - emqx
+          topologyKey: "kubernetes.io/hostname"
+    emqxConfig:
+      EMQX_ALLOW_ANONYMOUS: "false"
+      EMQX_LOADED_MODULES: "emqx_mod_presence,emqx_mod_acl_internal,emqx_mod_topic_metrics"
+      EMQX_LOADED_PLUGINS: "emqx_management,emqx_recon,emqx_retainer,emqx_dashboard,emqx_rule_engine,emqx_auth_mnesia,emqx_prometheus"
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: ${SECRET_EMQX_ADMIN_PASSWORD}
+      EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
+      EMQX_AUTH__USER__1__USERNAME: mqtt
+      EMQX_AUTH__USER__1__PASSWORD: ${SECRET_EMQX_MQTT_USER_PASSWORD}
+
+    emqxAclConfig: >
+      {allow, {user, "dashboard"}, subscribe, ["$SYS/#"]}.
+      {allow, {ipaddr, "127.0.0.1"}, pubsub, ["$SYS/#", "#"]}.
+      {allow, all, subscribe, ["$SYS/#", {eq, "#"}]}.
+      {allow, all}.
+
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 100m
+        memory: 256Mi
+
+    ingress:
+      dashboard:
+        enabled: true
+        ingressClassName: nginx-internal
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+        path: /
+        hosts:
+        - emqx.${SECRET_DOMAIN}
+        tls:
+        - hosts:
+          - emqx.${SECRET_DOMAIN}
