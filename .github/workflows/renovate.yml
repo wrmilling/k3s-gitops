@@ -33,5 +33,5 @@ jobs:
         author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
         commit-message: Create renovatebot helmrelease annotations
         body: |
-          Signed-off-by: Jeff Billimek <billimek@users.noreply.github.com>
+          Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>
         labels: renovate/helm-release-annotations
