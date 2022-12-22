@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: velero/velero
-      tag: v1.9.4
+      tag: v1.9.5
     configuration:
       provider: aws
       backupStorageLocation:
