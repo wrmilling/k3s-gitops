@@ -18,6 +18,8 @@ spec:
       interval: 5m
   values:
     adminPassword: ${SECRET_GRAFANA_ADMIN_PASSWORD}
+    rbac:
+      pspEnabled: false
     deploymentStrategy:
       type: Recreate
     podAnnotations:
