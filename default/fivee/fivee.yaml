@@ -7,6 +7,7 @@ metadata:
 spec:
   releaseName: fivee
   interval: 15m
+  timeout: 10m
   chart:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
