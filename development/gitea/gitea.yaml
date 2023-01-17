@@ -18,8 +18,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: gitea/gitea
-      tag: 1.18.1
+      repository: codeberg.org/forgejo/forgejo
+      tag: 1.18.0-1
       pullPolicy: IfNotPresent
     persistence:
       enabled: true
