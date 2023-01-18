@@ -19,11 +19,11 @@ spec:
   values:
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2022-12-12T19-27-27Z
+      tag: RELEASE.2023-01-18T04-36-38Z
       pullPolicy: IfNotPresent
     mcImage:
       repository: quay.io/minio/mc
-      tag: RELEASE.2021-12-29T06-52-55Z
+      tag: RELEASE.2023-01-18T04-36-38Z
       pullPolicy: IfNotPresent
     mode: standalone
     rootUser: ${SECRET_MASTODON_ADMIN_S3_ACCESS_KEY}
