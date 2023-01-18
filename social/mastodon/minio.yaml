@@ -23,7 +23,7 @@ spec:
       pullPolicy: IfNotPresent
     mcImage:
       repository: quay.io/minio/mc
-      tag: RELEASE.2023-01-18T04-36-38Z
+      tag: RELEASE.2023-01-11T03-14-16Z
       pullPolicy: IfNotPresent
     mode: standalone
     rootUser: ${SECRET_MASTODON_ADMIN_S3_ACCESS_KEY}
