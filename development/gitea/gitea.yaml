@@ -58,7 +58,7 @@ spec:
       security:
         SECRET_KEY: "${SECRET_GITEA_SECRET_KEY}"
       config:
-        APP_NAME: "Homelab Gitea"
+        APP_NAME: "The Homelab Git"
         server:
           SSH_PORT: 22
           SSH_LISTEN_PORT: 22
@@ -76,7 +76,7 @@ spec:
           MIN_PASSWORD_LENGTH: 12
         service:
           DISABLE_REGISTRATION: true
-          REQUIRE_SIGNIN_VIEW: true
+          REQUIRE_SIGNIN_VIEW: false
         mailer:
           enabled: true
           host: "${SECRET_SMTP_DOMAIN}:587"
