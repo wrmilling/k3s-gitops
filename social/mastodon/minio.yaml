@@ -66,3 +66,6 @@ spec:
     tolerations:
       - key: "arm"
         operator: "Exists"
+    metrics:
+      serviceMonitor:
+        enabled: true
