@@ -22,7 +22,7 @@ spec:
     image:
       repository: ghcr.io/5etools-mirror-1/5etools
       pullPolicy: IfNotPresent
-      tag: 1.174.4
+      tag: 1.175.0
     strategy:
       type: Recreate
     persistence:
