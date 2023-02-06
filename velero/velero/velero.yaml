@@ -47,7 +47,7 @@ spec:
           aws_secret_access_key = ${SECRET_MINIO_SECRET_KEY}
     initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.5.3@sha256:42e85af860e5250047a8dbeebae03d2363833eb89203759734a19ece9f2b3855
+      image: velero/velero-plugin-for-aws:v1.6.1@sha256:39734038bcdffd50a050bac004deef2578a29c756de330e70566279152d6d5b1
       imagePullPolicy: IfNotPresent
       volumeMounts:
       - mountPath: /target
