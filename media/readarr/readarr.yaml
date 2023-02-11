@@ -21,7 +21,7 @@ spec:
     image:
       repository: hotio/readarr
       pullPolicy: IfNotPresent
-      tag: nightly-0.1.3.1573
+      tag: nightly-0.1.3.1584
     strategy:
       type: Recreate
     env:
