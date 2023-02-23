@@ -23,7 +23,7 @@ spec:
   tolerations:
     - {key: node-role.kubernetes.io/master, effect: NoSchedule, operator: Equal, value: "true"}
   upgrade:
-    image: rancher/k3s-upgrade
+    image: rancher/k3s-upgrade@sha256:70a238fdf8da99b99fcdb835f8162c9176e8078c170f5d6f349d3b38c3bfed7b
   channel: https://update.k3s.io/v1-release/channels/v1.25
 ---
 # Agent plan
@@ -58,10 +58,10 @@ spec:
   prepare:
     # Since v0.5.0-m1 SUC will use the resolved version of the plan for the tag on the prepare container.
     # image: rancher/k3s-upgrade:v1.17.4-k3s1
-    image: rancher/k3s-upgrade
+    image: rancher/k3s-upgrade@sha256:70a238fdf8da99b99fcdb835f8162c9176e8078c170f5d6f349d3b38c3bfed7b
     args: ["prepare", "k3s-server"]
   # drain:
   #   force: true
   #   skipWaitForDeleteTimeout: 60 # set this to prevent upgrades from hanging on small clusters since k8s v1.18
   upgrade:
-    image: rancher/k3s-upgrade
+    image: rancher/k3s-upgrade@sha256:70a238fdf8da99b99fcdb835f8162c9176e8078c170f5d6f349d3b38c3bfed7b
