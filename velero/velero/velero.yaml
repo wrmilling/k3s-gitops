@@ -38,7 +38,6 @@ spec:
         name: aws
         config:
           region: us-east-1
-      resticTimeout: 6h
     credentials:
       secretContents:
         cloud: |
@@ -67,9 +66,9 @@ spec:
       serviceMonitor:
         enabled: true
     snapshotsEnabled: true
-    deployRestic: true
+    deployNodeAgent: true
     upgradeCRDs: false
-    restic:
+    nodeAgent:
       podVolumePath: /var/lib/kubelet/pods
       privileged: false
       tolerations:
