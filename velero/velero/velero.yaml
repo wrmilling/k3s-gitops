@@ -40,9 +40,9 @@ spec:
             name: plugins
     backupsEnabled: true
     snapshotsEnabled: true
-    deployRestic: true
+    deployNodeAgent: true
     upgradeCRDs: true
-    restic:
+    nodeAgent:
       podVolumePath: /var/lib/kubelet/pods
       privileged: true
     credentials:
@@ -73,10 +73,6 @@ spec:
         cpu: 25m
       limits:
         memory: 1500Mi
-    # tolerations:
-    # - key: "arm"
-    #   operator: "Exists"
-    # enableHelmHooks: false
     metrics:
       enabled: true
       serviceMonitor:
