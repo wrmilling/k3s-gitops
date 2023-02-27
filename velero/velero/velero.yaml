@@ -42,9 +42,6 @@ spec:
     snapshotsEnabled: true
     deployNodeAgent: true
     upgradeCRDs: true
-    nodeAgent:
-      podVolumePath: /var/lib/kubelet/pods
-      privileged: true
     credentials:
       useSecret: true
       name: velero-s3-keys
