@@ -21,7 +21,7 @@ spec:
     image:
       repository: plexinc/pms-docker
       pullPolicy: IfNotPresent
-      tag: 1.31.0.6654-02189b09f
+      tag: 1.31.1.6733-bc0674160
     strategy:
       type: Recreate
     env:
