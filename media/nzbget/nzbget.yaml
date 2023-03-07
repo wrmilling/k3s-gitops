@@ -1,75 +1,75 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: nzbget
-  namespace: media
-spec:
-  releaseName: nzbget
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 1.3.2
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/k8s-at-home/nzbget
-      pullPolicy: IfNotPresent
-      tag: v21.1
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-    service:
-      main:
-        ports:
-          http:
-            port: 6789
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx-internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "download-box"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-        - host: "nzbget.k.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "nzbget.k.${SECRET_DOMAIN}"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: nzbget-config
-      media:
-        enabled: true
-        readOnly: false
-        mountPath: /media
-        existingClaim: nfs-media-pvc
-      downloads:
-        enabled: true
-        type: emptyDir
-        mountPath: /downloads
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    resources:
-      requests:
-        memory: 301Mi
-        cpu: 100m
-      limits:
-        memory: 4000Mi
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: nzbget
+#   namespace: media
+# spec:
+#   releaseName: nzbget
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 1.3.2
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/k8s-at-home/nzbget
+#       pullPolicy: IfNotPresent
+#       tag: v21.1
+#     strategy:
+#       type: Recreate
+#     env:
+#       TZ: America/Chicago
+#     service:
+#       main:
+#         ports:
+#           http:
+#             port: 6789
+#     ingress:
+#       main:
+#         enabled: true
+#         ingressClassName: nginx-internal
+#         annotations:
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "download-box"
+#           hajimari.io/instance: "internal"
+#           hajimari.io/group: "Media"
+#         hosts:
+#         - host: "nzbget.k.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#         tls:
+#         - hosts:
+#           - "nzbget.k.${SECRET_DOMAIN}"
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: nzbget-config
+#       media:
+#         enabled: true
+#         readOnly: false
+#         mountPath: /media
+#         existingClaim: nfs-media-pvc
+#       downloads:
+#         enabled: true
+#         type: emptyDir
+#         mountPath: /downloads
+#     podSecurityContext:
+#       runAsUser: 1001
+#       runAsGroup: 1001
+#       fsGroup: 1001
+#     podAnnotations:
+#       backup.velero.io/backup-volumes: config
+#     resources:
+#       requests:
+#         memory: 301Mi
+#         cpu: 100m
+#       limits:
+#         memory: 4000Mi

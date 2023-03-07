@@ -1,91 +1,91 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: sonarr
-  namespace: media
-spec:
-  releaseName: sonarr
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 1.3.2
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/k8s-at-home/sonarr
-      pullPolicy: IfNotPresent
-      tag: v3.0.9.1549
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-    service:
-      main:
-        ports:
-          http:
-            port: 8989
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx-internal
-        annotations:
-          nginx.ingress.kubernetes.io/proxy-body-size: 5m
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "television-box"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-        - host: "sonarr.k.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "sonarr.k.${SECRET_DOMAIN}"
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:
-            - /usr/bin/env
-            - bash
-            - -c
-            - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
-              read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
-          failureThreshold: 5
-          initialDelaySeconds: 60
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 10
-    persistence:
-      config:
-        enabled: true
-        existingClaim: sonarr-config
-      media:
-        enabled: true
-        readOnly: false
-        existingClaim: nfs-media-pvc
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: sonarr
+#   namespace: media
+# spec:
+#   releaseName: sonarr
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 1.3.2
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/k8s-at-home/sonarr
+#       pullPolicy: IfNotPresent
+#       tag: v3.0.9.1549
+#     strategy:
+#       type: Recreate
+#     env:
+#       TZ: America/Chicago
+#     service:
+#       main:
+#         ports:
+#           http:
+#             port: 8989
+#     ingress:
+#       main:
+#         enabled: true
+#         ingressClassName: nginx-internal
+#         annotations:
+#           nginx.ingress.kubernetes.io/proxy-body-size: 5m
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "television-box"
+#           hajimari.io/instance: "internal"
+#           hajimari.io/group: "Media"
+#         hosts:
+#         - host: "sonarr.k.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#         tls:
+#         - hosts:
+#           - "sonarr.k.${SECRET_DOMAIN}"
+#     probes:
+#       liveness:
+#         enabled: true
+#         custom: true
+#         spec:
+#           exec:
+#             command:
+#             - /usr/bin/env
+#             - bash
+#             - -c
+#             - curl --fail localhost:8989/api/v3/system/status?apiKey=`IFS=\> && while
+#               read -d \< E C; do if [[ $E = "ApiKey" ]]; then echo $C; fi; done < /config/config.xml`
+#           failureThreshold: 5
+#           initialDelaySeconds: 60
+#           periodSeconds: 10
+#           successThreshold: 1
+#           timeoutSeconds: 10
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: sonarr-config
+#       media:
+#         enabled: true
+#         readOnly: false
+#         existingClaim: nfs-media-pvc
+#     podSecurityContext:
+#       runAsUser: 1001
+#       runAsGroup: 1001
+#       fsGroup: 1001
+#     podAnnotations:
+#       backup.velero.io/backup-volumes: config
+#     resources:
+#       requests:
+#         memory: 350Mi
+#         cpu: 25m
+#       limits:
+#         memory: 1000Mi
+#     tolerations:
+#     - key: "arm"
+#       operator: "Exists"

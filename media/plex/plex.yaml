@@ -1,80 +1,80 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: plex
-  namespace: media
-spec:
-  releaseName: plex
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 1.3.2
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: plexinc/pms-docker
-      pullPolicy: IfNotPresent
-      tag: 1.31.1.6733-bc0674160
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-    service:
-      main:
-        enabled: true
-        primary: true
-        type: LoadBalancer
-        loadBalancerIP: ${SVC_PLEX_IP}
-        externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/allow-shared-ip: plex
-        ports:
-          http:
-            port: 32400
-    hostNetwork: false
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx-external
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "plex"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-          - host: "plex.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "plex.${SECRET_DOMAIN}"
-            secretName: plex-cert-external
-    persistence:
-      config:
-        enabled: true
-        existingClaim: plex-config
-      transcode:
-        enabled: true
-        type: emptyDir
-        medium: Memory
-      media:
-        enabled: true
-        readOnly: true
-        mountPath: /data
-        existingClaim: nfs-media-pvc
-    podSecurityContext:
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: plex
+#   namespace: media
+# spec:
+#   releaseName: plex
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 1.3.2
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: plexinc/pms-docker
+#       pullPolicy: IfNotPresent
+#       tag: 1.31.1.6733-bc0674160
+#     strategy:
+#       type: Recreate
+#     env:
+#       TZ: America/Chicago
+#     service:
+#       main:
+#         enabled: true
+#         primary: true
+#         type: LoadBalancer
+#         loadBalancerIP: ${SVC_PLEX_IP}
+#         externalTrafficPolicy: Local
+#         annotations:
+#           metallb.universe.tf/allow-shared-ip: plex
+#         ports:
+#           http:
+#             port: 32400
+#     hostNetwork: false
+#     ingress:
+#       main:
+#         enabled: true
+#         ingressClassName: nginx-external
+#         annotations:
+#           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "plex"
+#           hajimari.io/instance: "internal"
+#           hajimari.io/group: "Media"
+#         hosts:
+#           - host: "plex.${SECRET_DOMAIN}"
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#         tls:
+#           - hosts:
+#               - "plex.${SECRET_DOMAIN}"
+#             secretName: plex-cert-external
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: plex-config
+#       transcode:
+#         enabled: true
+#         type: emptyDir
+#         medium: Memory
+#       media:
+#         enabled: true
+#         readOnly: true
+#         mountPath: /data
+#         existingClaim: nfs-media-pvc
+#     podSecurityContext:
+#       supplementalGroups:
+#         - 44
+#         - 109
+#         - 100
+#     podAnnotations:
+#       backup.velero.io/backup-volumes: config

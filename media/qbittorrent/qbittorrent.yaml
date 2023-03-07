@@ -1,82 +1,82 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: qbittorrent
-  namespace: media
-spec:
-  releaseName: qbittorrent
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 1.3.2
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/k8s-at-home/qbittorrent
-      pullPolicy: IfNotPresent
-      tag: v4.4.2
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
-      bittorrent:
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: ${SVC_QBIT_IP}
-        externalTrafficPolicy: Local
-        ports:
-          bittorrent:
-            enabled: true
-            port: 50413
-            protocol: TCP
-            targetPort: 50413
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx-internal
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "pirate"
-          hajimari.io/instance: "internal"
-          hajimari.io/group: "Media"
-        hosts:
-          - host: "qbit.k.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "qbit.k.${SECRET_DOMAIN}"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: qbittorrent-config
-      media:
-        enabled: true
-        readOnly: false
-        mountPath: /nfs-media
-        existingClaim: nfs-media-pvc
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
-    resources:
-      requests:
-        memory: 250Mi
-        cpu: 500m
-      limits:
-        memory: 2000Mi
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: qbittorrent
+#   namespace: media
+# spec:
+#   releaseName: qbittorrent
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 1.3.2
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/k8s-at-home/qbittorrent
+#       pullPolicy: IfNotPresent
+#       tag: v4.4.2
+#     strategy:
+#       type: Recreate
+#     env:
+#       TZ: America/Chicago
+#     service:
+#       main:
+#         ports:
+#           http:
+#             port: 8080
+#       bittorrent:
+#         enabled: true
+#         type: LoadBalancer
+#         loadBalancerIP: ${SVC_QBIT_IP}
+#         externalTrafficPolicy: Local
+#         ports:
+#           bittorrent:
+#             enabled: true
+#             port: 50413
+#             protocol: TCP
+#             targetPort: 50413
+#     ingress:
+#       main:
+#         enabled: true
+#         ingressClassName: nginx-internal
+#         annotations:
+#           hajimari.io/enable: "true"
+#           hajimari.io/icon: "pirate"
+#           hajimari.io/instance: "internal"
+#           hajimari.io/group: "Media"
+#         hosts:
+#           - host: "qbit.k.${SECRET_DOMAIN}"
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#         tls:
+#           - hosts:
+#               - "qbit.k.${SECRET_DOMAIN}"
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: qbittorrent-config
+#       media:
+#         enabled: true
+#         readOnly: false
+#         mountPath: /nfs-media
+#         existingClaim: nfs-media-pvc
+#     podAnnotations:
+#       backup.velero.io/backup-volumes: config
+#     podSecurityContext:
+#       runAsUser: 1001
+#       runAsGroup: 1001
+#       fsGroup: 1001
+#     resources:
+#       requests:
+#         memory: 250Mi
+#         cpu: 500m
+#       limits:
+#         memory: 2000Mi
