@@ -1,53 +1,53 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: fivee
-  namespace: default
-spec:
-  releaseName: fivee
-  interval: 15m
-  timeout: 10m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 1.3.2
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/5etools-mirror-1/5etools
-      pullPolicy: IfNotPresent
-      tag: 1.177.0
-    strategy:
-      type: Recreate
-    persistence:
-      config:
-        enabled: false
-    service:
-      main:
-        ports:
-          http:
-            port: 80
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
-        hosts:
-        - host: "5e.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-        tls:
-        - hosts:
-          - "5e.${SECRET_DOMAIN}"
-          secretName: 5e-cert
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: fivee
+#   namespace: default
+# spec:
+#   releaseName: fivee
+#   interval: 15m
+#   timeout: 10m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 1.3.2
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/5etools-mirror-1/5etools
+#       pullPolicy: IfNotPresent
+#       tag: 1.177.0
+#     strategy:
+#       type: Recreate
+#     persistence:
+#       config:
+#         enabled: false
+#     service:
+#       main:
+#         ports:
+#           http:
+#             port: 80
+#     ingress:
+#       main:
+#         enabled: true
+#         ingressClassName: nginx-external
+#         annotations:
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#           nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+#           nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+#         hosts:
+#         - host: "5e.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#         tls:
+#         - hosts:
+#           - "5e.${SECRET_DOMAIN}"
+#           secretName: 5e-cert
