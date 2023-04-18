@@ -41,7 +41,6 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [development](/development)
 * [flux-system](/flux-system-extra)
 * [kube-system](/kube-system)
-* [media](/media)
 * [monitoring](/monitoring)
 * [rook-ceph](/rook-ceph)
 * [system-upgrade](/system-upgrade)
