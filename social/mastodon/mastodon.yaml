@@ -71,7 +71,7 @@ spec:
             - mastodon.${SECRET_DOMAIN}
 
     elasticsearch:
-      enabled: false
+      enabled: true
 
     postgresql:
       enabled: true
