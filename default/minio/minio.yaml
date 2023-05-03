@@ -47,11 +47,11 @@ spec:
     consoleIngress:
       enabled: true
       hosts:
-        - mmc.k.${SECRET_DOMAIN}
+        - mc.k.${SECRET_DOMAIN}
       tls:
         - secretName: minio-console-cert
           hosts:
-            - mmc.k.${SECRET_DOMAIN}
+            - mc.k.${SECRET_DOMAIN}
     securityContext:
       enabled: false
     resources:
