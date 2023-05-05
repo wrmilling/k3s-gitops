@@ -36,6 +36,7 @@ spec:
       GF_DISABLE_SANITIZE_HTML: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_LOG_FILTERS: rendering:debug
+      TZ: America/Chicago
     ldap:
       enabled: true
       config: |-
