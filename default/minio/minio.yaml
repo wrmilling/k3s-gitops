@@ -1,68 +1,68 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: minio
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://charts.min.io/
-      chart: minio
-      version: 5.0.9
-      sourceRef:
-        kind: HelmRepository
-        name: minio-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: quay.io/minio/minio
-      tag: RELEASE.2023-04-28T18-11-17Z
-      pullPolicy: IfNotPresent
-    mcImage:
-      repository: quay.io/minio/mc
-      tag: RELEASE.2023-01-11T03-14-16Z
-      pullPolicy: IfNotPresent
-    mode: standalone
-    rootUser: ${SECRET_MINIO_ACCESS_KEY}
-    rootPassword: ${SECRET_MINIO_SECRET_KEY}
-    users:
-    - accessKey: ${SECRET_THANOS_S3_ACCESS_KEY}
-      secretKey: ${SECRET_THANOS_S3_SECRET_KEY}
-      policy: readwrite
-    persistence:
-      enabled: true
-      existingClaim: "nfs-minio-pvc"
-    ingress:
-      enabled: false
-      ingressClassName: nginx-internal
-      hosts:
-        - minio.k.${SECRET_DOMAIN}
-      tls:
-        - secretName: minio-cert
-          hosts:
-            - minio.k.${SECRET_DOMAIN}
-    consoleIngress:
-      enabled: true
-      hosts:
-        - mc.k.${SECRET_DOMAIN}
-      tls:
-        - secretName: minio-console-cert
-          hosts:
-            - mc.k.${SECRET_DOMAIN}
-    securityContext:
-      enabled: false
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
-    tolerations:
-      - key: "arm"
-        operator: "Exists"
-    metrics:
-      serviceMonitor:
-        enabled: true
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: minio
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://charts.min.io/
+#       chart: minio
+#       version: 5.0.9
+#       sourceRef:
+#         kind: HelmRepository
+#         name: minio-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: quay.io/minio/minio
+#       tag: RELEASE.2023-04-28T18-11-17Z
+#       pullPolicy: IfNotPresent
+#     mcImage:
+#       repository: quay.io/minio/mc
+#       tag: RELEASE.2023-01-11T03-14-16Z
+#       pullPolicy: IfNotPresent
+#     mode: standalone
+#     rootUser: ${SECRET_MINIO_ACCESS_KEY}
+#     rootPassword: ${SECRET_MINIO_SECRET_KEY}
+#     users:
+#     - accessKey: ${SECRET_THANOS_S3_ACCESS_KEY}
+#       secretKey: ${SECRET_THANOS_S3_SECRET_KEY}
+#       policy: readwrite
+#     persistence:
+#       enabled: true
+#       existingClaim: "nfs-minio-pvc"
+#     ingress:
+#       enabled: false
+#       ingressClassName: nginx-internal
+#       hosts:
+#         - minio.k.${SECRET_DOMAIN}
+#       tls:
+#         - secretName: minio-cert
+#           hosts:
+#             - minio.k.${SECRET_DOMAIN}
+#     consoleIngress:
+#       enabled: true
+#       hosts:
+#         - mc.k.${SECRET_DOMAIN}
+#       tls:
+#         - secretName: minio-console-cert
+#           hosts:
+#             - mc.k.${SECRET_DOMAIN}
+#     securityContext:
+#       enabled: false
+#     resources:
+#       requests:
+#         memory: 350Mi
+#         cpu: 25m
+#       limits:
+#         memory: 1000Mi
+#     tolerations:
+#       - key: "arm"
+#         operator: "Exists"
+#     metrics:
+#       serviceMonitor:
+#         enabled: true
