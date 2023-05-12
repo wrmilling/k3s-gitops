@@ -72,6 +72,8 @@ spec:
 
     elasticsearch:
       enabled: true
+      image:
+        tag: 7.17.9
 
     postgresql:
       enabled: true
