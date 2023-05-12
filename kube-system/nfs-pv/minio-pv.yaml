@@ -12,7 +12,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: 10.10.10.31
+    server: 10.10.10.30
     path: "/mnt/tardisk/minio"
   mountOptions:
     - nfsvers=4.1
