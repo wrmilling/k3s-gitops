@@ -12,10 +12,13 @@ jobs:
     steps: 
       - name: Check Out Code
         uses: actions/checkout@v3
+      - name: Prepare Git
+        run: |
+          sudo apt install git git-email
+          git config --global user.name "GitOps Integration"
+          git config --global user.email "${SMTP_USER}"
       - name: Send Patch
         run: |
-          git config --global user.name "GitOps Integration"
-          git config --global user.email ${SMTP_USER}
           git send-email \
             --no-thread \
             --quiet \
