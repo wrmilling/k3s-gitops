@@ -1,0 +1,31 @@
+---
+name: "Send PRs via git send-email"
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  components:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Check Out Code
+        uses: actions/checkout@v3
+      - name: Send Patch
+        run: |
+          git config --global user.name "GitOps Integration"
+          git config --global user.email ${SMTP_USER}
+          git send-email \
+            --no-thread \
+            --quiet \
+            --confirm=never \
+            --suppress-cc=all \
+            --to="${GITOPS_EMAIL}" \
+            --from="${SMTP_USER}" \
+            --smtp-server="${SMTP_SERVER}" \
+            --smtp-server-port=587 \
+            --smtp-auth="tls" \
+            --smtp-user="${SMTP_USER}" \
+            --smtp-pass="${SMTP_PASS}" \
+            HEAD^
