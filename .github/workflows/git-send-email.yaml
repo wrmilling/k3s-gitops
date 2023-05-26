@@ -47,7 +47,7 @@ jobs:
             --from="${SMTP_USER}" \
             --smtp-server="${SMTP_SERVER}" \
             --smtp-server-port=587 \
-            --smtp-auth="tls" \
+            --smtp-encryption="tls" \
             --smtp-user="${SMTP_USER}" \
             --smtp-pass="${SMTP_PASS}" \
             HEAD~1
