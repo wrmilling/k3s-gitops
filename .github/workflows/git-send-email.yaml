@@ -40,5 +40,5 @@ jobs:
             --smtp-auth="tls" \
             --smtp-user="${SMTP_USER}" \
             --smtp-pass="${SMTP_PASS}" \
-            HEAD^
+            HEAD~1
         shell: alpine.sh {0}
