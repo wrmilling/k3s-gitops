@@ -23,7 +23,6 @@ jobs:
       - name: Send Patch
         env:
           GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
