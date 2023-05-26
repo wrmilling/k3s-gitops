@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: homeassistant/home-assistant
-      tag: 2023.5.3
+      tag: 2023.5.4
       pullPolicy: IfNotPresent
     strategy:
       type: Recreate
