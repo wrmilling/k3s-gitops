@@ -28,12 +28,12 @@ jobs:
             --quiet \
             --confirm=never \
             --suppress-cc=all \
-            --to="${GITOPS_EMAIL}" \
-            --from="${SMTP_USER}" \
-            --smtp-server="${SMTP_SERVER}" \
+            --to="${{ secrets.GITOPS_EMAIL }}" \
+            --from="${{ secrets.SMTP_USER }}" \
+            --smtp-server="${{ secrets.SMTP_SERVER }}" \
             --smtp-server-port=587 \
             --smtp-auth="tls" \
-            --smtp-user="${SMTP_USER}" \
-            --smtp-pass="${SMTP_PASS}" \
+            --smtp-user="${{ secrets.SMTP_USER }}" \
+            --smtp-pass="${{ secrets.SMTP_PASS }}" \
             HEAD^
         shell: alpine.sh {0}
