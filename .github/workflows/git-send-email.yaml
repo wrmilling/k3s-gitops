@@ -8,15 +8,19 @@ on:
 
 jobs:
   components:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps: 
       - name: Check Out Code
         uses: actions/checkout@v3
+
+      - name: Setup Alpine
+        uses: jirutka/setup-alpine@v1
+
       - name: Prepare Git
         run: |
-          sudo apt-get update && sudo apt-get install git git-email
-          git config --global user.name "GitOps Integration"
-          git config --global user.email "${SMTP_USER}"
+          apk add git git-email
+        shell: alpine.sh --root {0}
+
       - name: Send Patch
         run: |
           git send-email \
@@ -32,3 +36,4 @@ jobs:
             --smtp-user="${SMTP_USER}" \
             --smtp-pass="${SMTP_PASS}" \
             HEAD^
+        shell: alpine.sh {0}
