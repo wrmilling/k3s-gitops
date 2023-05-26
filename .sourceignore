@@ -1,3 +1,4 @@
 .github/
+.builds
 .sops.yaml
 .pre-commit-config.yaml
