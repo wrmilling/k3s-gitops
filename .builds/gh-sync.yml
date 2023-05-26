@@ -1,0 +1,15 @@
+image: alpine/edge
+secrets:
+- 329ad4aa-97db-4640-9ec0-c0cff60331d1
+sources:
+- https://git.sr.ht/~wrmilling/k3s-gitops
+tasks:
+- push: |
+    # Ensure we are on the main branch, exit build if not
+    cd k3s-gitops
+    git diff -s --exit-code origin/master || complete-build
+
+    # Push copy of code to GitHub
+    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+    git remote add github git@github.com:wrmilling/k3s-gitops.git
+    git push github master
