@@ -15,25 +15,31 @@ jobs:
 
       - name: Setup Alpine
         uses: jirutka/setup-alpine@v1
-
-      - name: Prepare Git
-        run: |
-          apk add git git-email
-        shell: alpine.sh --root {0}
+        with:
+          packages: >
+            git
+            git-email
 
       - name: Send Patch
+        env:
+          GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
         run: |
+          echo ${GITOPS_EMAIL}
           git send-email \
             --no-thread \
             --quiet \
             --confirm=never \
             --suppress-cc=all \
-            --to="${{ secrets.GITOPS_EMAIL }}" \
-            --from="${{ secrets.SMTP_USER }}" \
-            --smtp-server="${{ secrets.SMTP_SERVER }}" \
+            --to="${GITOPS_EMAIL}" \
+            --from="${SMTP_USER}" \
+            --smtp-server="${SMTP_SERVER}" \
             --smtp-server-port=587 \
             --smtp-auth="tls" \
-            --smtp-user="${{ secrets.SMTP_USER }}" \
-            --smtp-pass="${{ secrets.SMTP_PASS }}" \
+            --smtp-user="${SMTP_USER}" \
+            --smtp-pass="${SMTP_PASS}" \
             HEAD^
         shell: alpine.sh {0}
