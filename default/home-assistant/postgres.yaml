@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: postgres
-      tag: 14.7
+      tag: 14.8
     postgresqlDataDir: "/data/pgdata"
     primary:
       persistence:
