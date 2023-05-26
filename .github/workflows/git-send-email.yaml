@@ -20,6 +20,13 @@ jobs:
             git
             git-email
 
+      - name: Debug step
+        run: |
+          git status
+          ls -al
+          git log -10
+        shell: alpine.sh {0}
+        
       - name: Send Patch
         env:
           GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
