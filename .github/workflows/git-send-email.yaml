@@ -37,7 +37,8 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
         run: |
-          echo ${GITOPS_EMAIL}
+          git config --global user.name "GitOps Integration"
+          git config --global user.email ${GITOPS_EMAIL}
           git send-email \
             --no-thread \
             --quiet \
