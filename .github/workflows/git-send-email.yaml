@@ -12,6 +12,8 @@ jobs:
     steps: 
       - name: Check Out Code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup Alpine
         uses: jirutka/setup-alpine@v1
@@ -26,7 +28,7 @@ jobs:
           ls -al
           git log -10
         shell: alpine.sh {0}
-        
+
       - name: Send Patch
         env:
           GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
