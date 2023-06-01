@@ -32,19 +32,19 @@ Setup for the individual nodes OS and base k3s install can be found in [WRMillin
 
 ## :gear:&nbsp; Setup
 
-Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here under the [setup](/setup) directory.
+Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here under the [setup](setup/README.md) directory.
 
 ## :wrench:&nbsp; Namespaces
 
-* [cert-manager](cert-manager)
-* [default](default)
-* [development](development)
-* [flux-system](flux-system-extra)
-* [kube-system](kube-system)
-* [monitoring](monitoring)
-* [rook-ceph](rook-ceph)
-* [system-upgrade](system-upgrade)
-* [velero](velero)
+* [cert-manager](cert-manager/README.md)
+* [default](default/README.md)
+* [development](development/README.md)
+* [flux-system](flux-system-extra/README.md)
+* [kube-system](kube-system/README.md)
+* [monitoring](monitoring/README.md)
+* [rook-ceph](rook-ceph/README.md)
+* [system-upgrade](system-upgrade/README.md)
+* [velero](velero/README.md)
 
 ## :handshake:&nbsp; Credits + Community
 
