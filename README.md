@@ -36,15 +36,15 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 
 ## :wrench:&nbsp; Namespaces
 
-* [cert-manager](/cert-manager)
-* [default](/default)
-* [development](/development)
-* [flux-system](/flux-system-extra)
-* [kube-system](/kube-system)
-* [monitoring](/monitoring)
-* [rook-ceph](/rook-ceph)
-* [system-upgrade](/system-upgrade)
-* [velero](/velero)
+* [cert-manager](cert-manager)
+* [default](default)
+* [development](development)
+* [flux-system](flux-system-extra)
+* [kube-system](kube-system)
+* [monitoring](monitoring)
+* [rook-ceph](rook-ceph)
+* [system-upgrade](system-upgrade)
+* [velero](velero)
 
 ## :handshake:&nbsp; Credits + Community
 
