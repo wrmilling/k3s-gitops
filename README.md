@@ -20,21 +20,21 @@
 Using GitOps principals and workflow to manage a lightweight <a href="https://k3s.io">k3s</a> cluster.
 </p>
 
-## :book:&nbsp; Overview
+## Overview
 
 ![k3s Nodes](https://i.imgur.com/8Zgf3jS.png)
 
 This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps principals and define the state of my cluster using code.
 
-## :computer:&nbsp; Infrastructure
+## Infrastructure
 
 Setup for the individual nodes OS and base k3s install can be found in [WRMilling/homelab-infrastructure](https://github.com/WRMilling/homelab-infrastructure/) repository.
 
-## :gear:&nbsp; Setup
+## Setup
 
 Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here under the [setup](setup/README.md) directory.
 
-## :wrench:&nbsp; Namespaces
+## Namespaces
 
 * [cert-manager](cert-manager/README.md)
 * [default](default/README.md)
@@ -46,6 +46,6 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [system-upgrade](system-upgrade/README.md)
 * [velero](velero/README.md)
 
-## :handshake:&nbsp; Credits + Community
+## Credits + Community
 
 A huge thanks to the community at k8s-at-home via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/k8s-at-home). K8s-at-home Logo image used with permission, check out the community for some awesome and helpful people.
