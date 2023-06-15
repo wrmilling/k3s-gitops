@@ -6,5 +6,5 @@ metadata:
 spec:
   interval: 30m
   ref:
-    commit: ed3b64462e10615bc224f307fedce67080582c54
+    commit: 35639f845b1e638f8307bb9a335af7a9f73fb2bd
   url: https://github.com/wrmilling/mastodon-chart
