@@ -1,6 +1,6 @@
 image: alpine/edge
 secrets:
-- 329ad4aa-97db-4640-9ec0-c0cff60331d1
+- 26e0dc51-9620-4f61-82e2-998932a415c7
 sources:
 - https://git.sr.ht/~wrmilling/k3s-gitops
 tasks:
@@ -13,3 +13,8 @@ tasks:
     ssh-keyscan -H github.com >> ~/.ssh/known_hosts
     git remote add github git@github.com:wrmilling/k3s-gitops.git
     git push github master
+
+    # Push copy of code to Codeberg
+    ssh-keyscan -H codeberg.org >> ~/.ssh/known_hosts
+    git remote add codeberg git@codeberg.org:wrmilling/k3s-gitops.git
+    git push codeberg master
