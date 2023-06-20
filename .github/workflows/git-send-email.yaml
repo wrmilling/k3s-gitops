@@ -15,10 +15,6 @@ jobs:
   components:
     runs-on: ubuntu-latest
     steps: 
-      - name: Sleep for Cancellation 
-				run: |
-					sleep 60
-
 			- name: Check Out Code
         uses: actions/checkout@v3
         with:
@@ -39,6 +35,7 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASS: ${{ secrets.SMTP_PASS }}
         run: |
+          sleep 60
           git config --global user.name "GitOps Integration"
           git config --global user.email ${GITOPS_EMAIL}
           git send-email \
