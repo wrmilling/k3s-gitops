@@ -15,7 +15,7 @@ jobs:
   components:
     runs-on: ubuntu-latest
     steps: 
-			- name: Check Out Code
+      - name: Check Out Code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
