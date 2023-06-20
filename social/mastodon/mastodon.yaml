@@ -43,6 +43,28 @@ spec:
         vapid:
           private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
           public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
+      sidekiq:
+        workers:
+          - name: all-queues
+            concurrency: 25
+            replicas: 1
+            resources: {}
+            affinity: {}
+            queues:
+              - default,8
+              - push,6
+              - ingress,4
+              - mailers,2
+              - pull
+              - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
+          - name: pull-ingress
+            concurrency: 50
+            replicas: 1
+            resources: {}
+            affinity: {}
+            queues:
+              - pull
+              - ingress
       smtp:
         domain: "${SECRET_DOMAIN}"
         from_address: "${SECRET_MASTODON_SMTP_USER}"
