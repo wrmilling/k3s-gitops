@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: codeberg.org/forgejo/forgejo
-      tag: 1.19.3-0
+      tag: 1.19.4-0
       pullPolicy: IfNotPresent
     persistence:
       enabled: true
