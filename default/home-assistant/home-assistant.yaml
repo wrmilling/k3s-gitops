@@ -77,9 +77,6 @@ spec:
         existingClaim: hass-pvc
     podAnnotations:
       backup.velero.io/backup-volumes: config
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
     resources:
       limits:
         memory: 3000Mi
