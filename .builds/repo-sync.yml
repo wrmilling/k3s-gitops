@@ -5,16 +5,24 @@ sources:
 - https://git.sr.ht/~wrmilling/k3s-gitops
 tasks:
 - push: |
+    # Set Repo Name
+    REPO=k3s-gitops
+    
     # Ensure we are on the main branch, exit build if not
-    cd k3s-gitops
+    cd $REPO
     git diff -s --exit-code origin/master || complete-build
 
+    # Ignore hosts keys, since we accept them as-is
+    git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no' 
+
     # Push copy of code to GitHub
-    ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-    git remote add github git@github.com:wrmilling/k3s-gitops.git
+    git remote add github git@github.com:wrmilling/${REPO}.git
     git push github master
 
     # Push copy of code to Codeberg
-    ssh-keyscan -H codeberg.org >> ~/.ssh/known_hosts
-    git remote add codeberg git@codeberg.org:wrmilling/k3s-gitops.git
+    git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
     git push codeberg master
+
+    # Push copy of code to GitLab
+    git remote add gitlab git@gitlab.com:WRMilling/${REPO}.git
+    git push gitlab master
