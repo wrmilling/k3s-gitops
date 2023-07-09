@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/glitch-soc/mastodon
-      tag: c25ba31e95148fb1d1809720b9060a0c1891a23b
+      tag: a40529fa79c6882eb1929014e5f9324d8e81ae49
       pullPolicy: IfNotPresent
 
     mastodon:
@@ -84,7 +84,7 @@ spec:
         nginx.org/client-max-body-size: 40m
         nginx.ingress.kubernetes.io/configuration-snippet: |
           more_set_headers "Content-Security-Policy: \"default-src 'none'; form-action 'none'\"";
-          more_set_headers "X-Content-Type-Options nosniff;";
+          more_set_headers "X-Content-Type-Options nosniff";
       ingressClassName: nginx-external
       hosts:
         - host: mastodon.${SECRET_DOMAIN}
