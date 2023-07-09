@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: openldap
-          image: docker.io/bitnami/openldap:2.6.4@sha256:e56d76a113016fc6ef3883fc151edd4d7fec18a22d7a5b1bcc99eab7b32fd250
+          image: docker.io/bitnami/openldap:2.6.4@sha256:775b07b099387eb95cd401a5c392ab149fc2665baff8825f6c72eb4ef98f0be0
           imagePullPolicy: "Always"
           env:
             - name: LDAP_ROOT
