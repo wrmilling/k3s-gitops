@@ -65,7 +65,7 @@ spec:
       enabled: true
       image:
         repository: billimek/custom-error-pages
-        tag: 0.4.4
+        tag: 0.4.4@sha256:96e6ba8bffcce419ea665ba60ff84e03c5ea5879617bb25298a17cfaff9b6495
       resources:
         requests:
           memory: 250Mi

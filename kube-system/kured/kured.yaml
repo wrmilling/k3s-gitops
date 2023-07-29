@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: raspbernetes/kured
-      tag: 1.11.0
+      tag: 1.11.0@sha256:38b525ffcc41e5bc75e948dce490b2d6449c72aeb50fae1e422ec1df92bc5ce3
     updateStrategy: RollingUpdate
     configuration:
       startTime: "0:00"

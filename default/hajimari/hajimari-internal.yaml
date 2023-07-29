@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/toboshii/hajimari
-      tag: v0.3.1
+      tag: v0.3.1@sha256:2ee4cab12878fd0771092bf1b7e271f2715731d2ba60d92461f8010094cda994
     env:
       TZ: "America/Chicago"
     hajimari:
