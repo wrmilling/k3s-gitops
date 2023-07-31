@@ -88,7 +88,7 @@ spec:
         enabled: true
         image:
           repository: ghcr.io/coder/code-server
-          tag: 4.15.0@sha256:d0a5bc6149d3eb4587a419d91d47f9c4573e21d3267332367494c7740bfd3da1
+          tag: 4.16.1@sha256:5e3cedfc6e029035b0c74364d9bfb89faa896379f284a648c296b7a2425fa015
           pullPolicy: IfNotPresent
         env:
           TZ: "America/Chicago"
