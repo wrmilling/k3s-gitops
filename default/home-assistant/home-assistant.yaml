@@ -20,7 +20,7 @@ spec:
   values:
     image:
       repository: homeassistant/home-assistant
-      tag: 2023.8.0@sha256:3f0a89daca26b40574333bac112bdee66d9ba06beaf1ae587702ad4282283ce9
+      tag: 2023.8.1@sha256:5802094954ff92730dfefa2f321dcc910debe290c9f8660b039d5a5883cede8a
       pullPolicy: IfNotPresent
     strategy:
       type: Recreate
