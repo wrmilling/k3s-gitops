@@ -1,95 +1,95 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: gitea
-  namespace: development
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://dl.gitea.io/charts/
-      chart: gitea
-      version: 7.0.4
-      sourceRef:
-        kind: HelmRepository
-        name: gitea-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: codeberg.org/forgejo/forgejo
-      tag: 1.20.2-0@sha256:f597c14a403c2fdee9a62dae8bae29d6442f7b2cc85872cc9bb535a24cb1630e
-      pullPolicy: IfNotPresent
-    persistence:
-      enabled: true
-      existingClaim: gitea-pvc
-    ingress:
-      enabled: true
-      className: nginx-external
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 128m
-      hosts:
-        - host: "git.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-            - "git.${SECRET_DOMAIN}"
-          secretName: gitea-cert
-    service:
-      annotations:
-        prometheus.io/probe: "true"
-        prometheus.io/protocol: "tcp"
-      http:
-        port: 3000
-      ssh:
-        type: LoadBalancer
-        port: 22
-        externalTrafficPolicy: Local
-        externalIPs:
-          - "${SVC_GITEA_IP}"
-    gitea:
-      admin:
-        email: ${SECRET_GITEA_ADMIN_EMAIL}
-        username: "wrmilling"
-        password: ${SECRET_GITEA_ADMIN_PASSWORD}
-      security:
-        SECRET_KEY: "${SECRET_GITEA_SECRET_KEY}"
-      config:
-        APP_NAME: "The Homelab Git"
-        server:
-          SSH_PORT: 22
-          SSH_LISTEN_PORT: 22
-          SSH_DOMAIN: ssh.git.${SECRET_DOMAIN}
-          root_url: "https://git.${SECRET_DOMAIN}"
-        "git.timeout":
-          MIGRATE: 1000
-          MIRROR: 1000
-        respository:
-          DEFAULT_PRIVATE: true
-        admin:
-          DISABLE_REGULAR_ORG_CREATION: true
-        security:
-          PASSWORD_COMPLEXITY: "lower,upper"
-          MIN_PASSWORD_LENGTH: 12
-        service:
-          DISABLE_REGISTRATION: true
-          REQUIRE_SIGNIN_VIEW: false
-        mailer:
-          enabled: true
-          host: "${SECRET_SMTP_DOMAIN}:587"
-          from: "${SECRET_GITEA_SMTP_USER}"
-          user: ${SECRET_GITEA_SMTP_USER}
-          passwd: ${SECRET_GITEA_SMTP_PASSWORD}
-          mailer_type: smtp
-    postgresql:
-      enabled: true
-      persistence:
-        existingClaim: gitea-postgresql-pvc
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-          namespace: development
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: gitea
+#   namespace: development
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://dl.gitea.io/charts/
+#       chart: gitea
+#       version: 7.0.4
+#       sourceRef:
+#         kind: HelmRepository
+#         name: gitea-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: codeberg.org/forgejo/forgejo
+#       tag: 1.20.2-0@sha256:f597c14a403c2fdee9a62dae8bae29d6442f7b2cc85872cc9bb535a24cb1630e
+#       pullPolicy: IfNotPresent
+#     persistence:
+#       enabled: true
+#       existingClaim: gitea-pvc
+#     ingress:
+#       enabled: true
+#       className: nginx-external
+#       annotations:
+#         nginx.ingress.kubernetes.io/proxy-body-size: 128m
+#       hosts:
+#         - host: "git.${SECRET_DOMAIN}"
+#           paths:
+#             - path: /
+#               pathType: Prefix
+#       tls:
+#         - hosts:
+#             - "git.${SECRET_DOMAIN}"
+#           secretName: gitea-cert
+#     service:
+#       annotations:
+#         prometheus.io/probe: "true"
+#         prometheus.io/protocol: "tcp"
+#       http:
+#         port: 3000
+#       ssh:
+#         type: LoadBalancer
+#         port: 22
+#         externalTrafficPolicy: Local
+#         externalIPs:
+#           - "${SVC_GITEA_IP}"
+#     gitea:
+#       admin:
+#         email: ${SECRET_GITEA_ADMIN_EMAIL}
+#         username: "wrmilling"
+#         password: ${SECRET_GITEA_ADMIN_PASSWORD}
+#       security:
+#         SECRET_KEY: "${SECRET_GITEA_SECRET_KEY}"
+#       config:
+#         APP_NAME: "The Homelab Git"
+#         server:
+#           SSH_PORT: 22
+#           SSH_LISTEN_PORT: 22
+#           SSH_DOMAIN: ssh.git.${SECRET_DOMAIN}
+#           root_url: "https://git.${SECRET_DOMAIN}"
+#         "git.timeout":
+#           MIGRATE: 1000
+#           MIRROR: 1000
+#         respository:
+#           DEFAULT_PRIVATE: true
+#         admin:
+#           DISABLE_REGULAR_ORG_CREATION: true
+#         security:
+#           PASSWORD_COMPLEXITY: "lower,upper"
+#           MIN_PASSWORD_LENGTH: 12
+#         service:
+#           DISABLE_REGISTRATION: true
+#           REQUIRE_SIGNIN_VIEW: false
+#         mailer:
+#           enabled: true
+#           host: "${SECRET_SMTP_DOMAIN}:587"
+#           from: "${SECRET_GITEA_SMTP_USER}"
+#           user: ${SECRET_GITEA_SMTP_USER}
+#           passwd: ${SECRET_GITEA_SMTP_PASSWORD}
+#           mailer_type: smtp
+#     postgresql:
+#       enabled: true
+#       persistence:
+#         existingClaim: gitea-postgresql-pvc
+#       metrics:
+#         enabled: true
+#         serviceMonitor:
+#           enabled: true
+#           namespace: development
