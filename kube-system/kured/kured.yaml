@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: ghcr.io/kubereboot/kured
-      tag: 1.13.2
+      tag: 1.14.0@sha256:c30e74d23b172f11cd12e43caf223279a008ca8be944025dd2d131f259c0ec02
     updateStrategy: RollingUpdate
     configuration:
       startTime: "0:00"
