@@ -158,6 +158,7 @@ spec:
                 - msc2946
                 - msc2444
             room_server:
+              default_room_version: 11
             sync_api:
               search:
                 enabled: true
