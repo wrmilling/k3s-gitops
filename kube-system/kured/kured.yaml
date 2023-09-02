@@ -1,38 +1,38 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: kured
-  namespace: kube-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://kubereboot.github.io/charts
-      chart: kured
-      version: 5.2.0
-      sourceRef:
-        kind: HelmRepository
-        name: weaveworks-kured-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: ghcr.io/kubereboot/kured
-      tag: 1.14.0@sha256:c30e74d23b172f11cd12e43caf223279a008ca8be944025dd2d131f259c0ec02
-    updateStrategy: RollingUpdate
-    configuration:
-      startTime: "0:00"
-      endTime: "4:00"
-      timeZone: "America/Chicago"
-      rebootCommand: "/usr/bin/systemctl reboot"
-      notifyUrl: "${SECRET_KURED_NOTIFY_URL}"
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
-    - key: "node-role.kubernetes.io/master"
-      operator: "Exists"
-    metrics:
-      create: true
-      labels:
-        release: kube-prometheus-stack
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: kured
+#   namespace: kube-system
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://kubereboot.github.io/charts
+#       chart: kured
+#       version: 5.2.0
+#       sourceRef:
+#         kind: HelmRepository
+#         name: weaveworks-kured-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: ghcr.io/kubereboot/kured
+#       tag: 1.14.0@sha256:c30e74d23b172f11cd12e43caf223279a008ca8be944025dd2d131f259c0ec02
+#     updateStrategy: RollingUpdate
+#     configuration:
+#       startTime: "0:00"
+#       endTime: "4:00"
+#       timeZone: "America/Chicago"
+#       rebootCommand: "/usr/bin/systemctl reboot"
+#       notifyUrl: "${SECRET_KURED_NOTIFY_URL}"
+#     tolerations:
+#     - key: "arm"
+#       operator: "Exists"
+#     - key: "node-role.kubernetes.io/master"
+#       operator: "Exists"
+#     metrics:
+#       create: true
+#       labels:
+#         release: kube-prometheus-stack
