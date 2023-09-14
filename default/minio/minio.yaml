@@ -23,7 +23,7 @@ spec:
       pullPolicy: IfNotPresent
     mcImage:
       repository: quay.io/minio/mc
-      tag: RELEASE.2023-01-11T03-14-16Z
+      tag: RELEASE.2023-01-11T03-14-16Z@sha256:1f374e2f61a8a4902ed528fb1d19f93a44b3d81a158b003779f85883833990c3
       pullPolicy: IfNotPresent
     mode: standalone
     rootUser: ${SECRET_MINIO_ACCESS_KEY}

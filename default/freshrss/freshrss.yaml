@@ -21,7 +21,7 @@ spec:
     image:
       repository: linuxserver/freshrss
       pullPolicy: IfNotPresent
-      tag: 1.18.0-ls88
+      tag: 1.18.0-ls88@sha256:e57223c96daab2baea9e10d6ea363ca4f8bd7cc6adf967199540fb1372ab2d74
     strategy:
       type: Recreate
     env:

@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: infracloudio/botkube
-      tag: latest
+      tag: latest@sha256:586350029b79bd3b485dc8a5955fe2404f48da7577bae794aeba8629df12bd70
     # serviceMonitor:
     #   enabled: true
     config:
