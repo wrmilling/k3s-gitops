@@ -49,6 +49,7 @@ spec:
       runAsUser: 421
       runAsGroup: 421
       fsGroup: 421
+      fsGroupChangePolicy: "always"
     persistence:
       config:
         enabled: true
@@ -83,3 +84,5 @@ spec:
         value: 421
       - name: FOUNDRY_GID
         value: 421
+      - name: CONTAINER_PRESERVE_OWNER
+        value: "/data"
