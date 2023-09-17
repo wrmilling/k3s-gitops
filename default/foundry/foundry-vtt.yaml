@@ -24,8 +24,6 @@ spec:
       tag: 11.308.0@sha256:1ec25ca65cdb0399556e634dcf865d5f9c3c22b64d110be86adaa3a0204fcb9b
     strategy:
       type: Recreate
-    env:
-      TZ: America/Chicago
     service:
       main:
         ports:
@@ -57,6 +55,8 @@ spec:
         mountPath: /data
         existingClaim: fvtt-test-pvc
     env:
+      - name: TZ
+        value: America/Chicago
       - name: FOUNDRY_USERNAME
         value: ${SECRET_FVTT_USERNAME}
       - name: FOUNDRY_PASSWORD
