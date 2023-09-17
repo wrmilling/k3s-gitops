@@ -46,9 +46,9 @@ spec:
             hosts:
               - fvtt-test.${SECRET_DOMAIN}
     podSecurityContext:
-      runAsUser: 421
-      runAsGroup: 421
-      fsGroup: 421
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
       fsGroupChangePolicy: "Always"
     persistence:
       config:
@@ -81,8 +81,8 @@ spec:
       - name: FOUNDRY_TELEMETRY
         value: false
       - name: FOUNDRY_UID
-        value: 421
+        value: 568
       - name: FOUNDRY_GID
-        value: 421
+        value: 568
       - name: CONTAINER_PRESERVE_OWNER
         value: "/data"
