@@ -79,3 +79,7 @@ spec:
         value: true
       - name: FOUNDRY_TELEMETRY
         value: false
+      - name: FOUNDRY_UID
+        value: 421
+      - name: FOUNDRY_GID
+        value: 421
