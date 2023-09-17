@@ -46,8 +46,8 @@ spec:
             hosts:
               - fvtt-test.${SECRET_DOMAIN}
     podSecurityContext:
-      runAsUser: 421
-      runAsGroup: 421
+      # runAsUser: 421
+      # runAsGroup: 421
       fsGroup: 421
       fsGroupChangePolicy: "Always"
     persistence:
