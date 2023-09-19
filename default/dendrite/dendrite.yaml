@@ -56,7 +56,7 @@ spec:
     secrets:
       yaml:
         enabled: true
-        stringData: 
+        stringData:
           dendrite.yaml: |
             version: 2
             global:
@@ -214,7 +214,6 @@ spec:
         mountPath: "/etc/dendrite/dendrite.yaml"
         subPath: "dendrite.yaml"
     podAnnotations:
-      backup.velero.io/backup-volumes: media
       configmap.reloader.stakater.com/reload: "dendrite-config"
     podSecurityContext:
       fsGroup: 1337

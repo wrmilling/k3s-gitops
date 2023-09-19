@@ -45,7 +45,6 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [rook-ceph](rook-ceph/README.md)
 * [social](social/README.md)
 * [system-upgrade](system-upgrade/README.md)
-* [velero](velero/README.md)
 
 ## Credits + Community
 

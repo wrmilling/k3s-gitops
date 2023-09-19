@@ -23,7 +23,6 @@ spec:
     deploymentStrategy:
       type: Recreate
     podAnnotations:
-#       backup.velero.io/backup-volumes: storage
 #       configmap.reloader.stakater.com/reload: "grafana"
     persistence:
       enabled: true

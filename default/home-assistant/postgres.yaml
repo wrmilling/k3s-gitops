@@ -29,8 +29,6 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
-      podAnnotations:
-        backup.velero.io/backup-volumes: data
     auth:
       enablePostgresUser: false
       username: home-assistant

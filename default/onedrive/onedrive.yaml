@@ -95,8 +95,6 @@
 #         enabled: true
 #         mountPath: /onedrive/data
 #         existingClaim: nfs-onedrive-pvc
-#     podAnnotations:
-#       backup.velero.io/backup-volumes: config
 #     service:
 #       main:
 #         enabled: false

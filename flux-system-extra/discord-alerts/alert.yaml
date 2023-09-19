@@ -46,7 +46,4 @@ spec:
     - kind: HelmRelease
       namespace: 'rook-ceph'
       name: '*'
-    - kind: HelmRelease
-      namespace: 'velero'
-      name: '*'
   suspend: false

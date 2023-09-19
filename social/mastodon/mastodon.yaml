@@ -103,8 +103,6 @@ spec:
     postgresql:
       enabled: true
       primary:
-        podAnnotations:
-          backup.velero.io/backup-volumes: data
         persistence:
           enabled: true
           existingClaim: "mastodon-postgres-pvc"

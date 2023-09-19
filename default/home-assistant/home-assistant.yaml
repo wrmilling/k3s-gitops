@@ -75,8 +75,6 @@ spec:
       config:
         enabled: true
         existingClaim: hass-pvc
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
     resources:
       limits:
         memory: 3000Mi

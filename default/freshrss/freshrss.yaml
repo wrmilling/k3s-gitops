@@ -82,8 +82,6 @@ spec:
         mountPath: /config
         existingClaim: freshrss-config
         skipuninstall: true
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
     resources:
       limits:
         memory: 513Mi
