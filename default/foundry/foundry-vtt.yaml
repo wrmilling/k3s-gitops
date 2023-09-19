@@ -19,9 +19,9 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: felddy/foundryvtt
+      repository: ghcr.io/felddy/foundryvtt
       pullPolicy: IfNotPresent
-      tag: 11.308.0@sha256:1ec25ca65cdb0399556e634dcf865d5f9c3c22b64d110be86adaa3a0204fcb9b
+      tag: 11.308.0@sha256:12eba9bd7ac34989f8977a62bf041208e0ba752f04f34f74d0cbfe9d1f1da585
     strategy:
       type: Recreate
     service:
