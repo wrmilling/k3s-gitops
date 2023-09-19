@@ -11,6 +11,12 @@ Default namespace for applications.
 * [dendrite/postgres.yaml](dendrite/postgres.yaml) - PostgreSQL deployment for dendrite
 * [dendrite/pvc.yaml](dendrite/pvc.yaml) - PVCs for dendrite, postgres, and jetstream
 
+## emqx
+
+[emqx](https://www.emqx.io/) is a scalable MQTT broker used in conjunction with Home Assistant to enable communication with specific wifi smart devices.
+
+* [emqx/emqx.yaml](emqx/emqx.yaml) - HelmRelease for emqx using their official chart.
+
 ## FreshRSS
 
 ![](https://i.imgur.com/KbI1XXx.png)
@@ -37,6 +43,14 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 
 * [haste-server/haste-server.yaml](haste-server/haste-server.yaml) - HelmRelease for haste-server using app-template
 * [haste-server/redis.yaml](haste-server/redis.yaml) - Key/Value store which acts as storage for Haste
+
+## Home Assistant
+
+[Home Assistant](https://www.home-assistant.io/) is an open source home automation solution that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts.
+
+* [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
+* [home-assistant/postgres.yaml](home-assistant/postgres.yaml) - PostgreSQL deployment utilizing the Bitnami helm chart.
+* [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistant volume claims for the Home Assistant and PostgreSQL deployments.
 
 ## Minio
 
