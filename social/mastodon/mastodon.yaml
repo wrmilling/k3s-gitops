@@ -96,7 +96,7 @@ spec:
             - mastodon.${SECRET_DOMAIN}
 
     elasticsearch:
-      enabled: true
+      enabled: false
       image:
         tag: 7.17.9
 
