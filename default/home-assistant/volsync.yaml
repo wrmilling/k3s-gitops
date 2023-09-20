@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: home-assistant-restic-config
+  namespace: default
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio.default.svc:9000/restic/home-assistant"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: home-assistant
+  namespace: default
+spec:
+  sourcePVC: hass-pvc
+  trigger:
+    schedule: "0 6 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: home-assistant-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      runAsUser: 421
+      runAsGroup: 421
+      fsGroup: 421
+    retain:
+      daily: 10
+      within: 3d
