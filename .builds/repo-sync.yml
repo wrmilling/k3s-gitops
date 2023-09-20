@@ -4,49 +4,37 @@ secrets:
 sources:
 - https://git.sr.ht/~wrmilling/k3s-gitops
 tasks:
+- prep-remotes: |
+    # Set Repo Name, move to repo
+    REPO=k3s-gitops
+    cd $REPO
+
+    # Ignore hosts keys, since we accept them as-is, add remotes
+    git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+    git remote add github git@github.com:wrmilling/${REPO}.git
+    git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
+    git remote add gitlab git@gitlab.com:WRMilling/${REPO}.git
 - push-master: |
     # Set Repo Name
     REPO=k3s-gitops
     BRANCH=master
 
-    # Ensure we are on the main branch, exit build if not
-    cd $REPO
+    # Ensure we are on the configured branch, exit build if not
     git diff -s --exit-code origin/${BRANCH} || complete-build
 
-    # Ignore hosts keys, since we accept them as-is
-    git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-
-    # Push copy of code to GitHub
-    git remote add github git@github.com:wrmilling/${REPO}.git
+    # Push copy of code to remotes
     git push github $BRANCH
-
-    # Push copy of code to Codeberg
-    git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
     git push codeberg $BRANCH
-
-    # Push copy of code to GitLab
-    git remote add gitlab git@gitlab.com:WRMilling/${REPO}.git
     git push gitlab $BRANCH
 - push-main: |
-    # Set Repo Name
+   # Set Repo Name
     REPO=k3s-gitops
     BRANCH=main
 
-    # Ensure we are on the main branch, exit build if not
-    cd $REPO
+    # Ensure we are on the configured branch, exit build if not
     git diff -s --exit-code origin/${BRANCH} || complete-build
 
-    # Ignore hosts keys, since we accept them as-is
-    git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-
-    # Push copy of code to GitHub
-    git remote add github git@github.com:wrmilling/${REPO}.git
+    # Push copy of code to remotes
     git push github $BRANCH
-
-    # Push copy of code to Codeberg
-    git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
     git push codeberg $BRANCH
-
-    # Push copy of code to GitLab
-    git remote add gitlab git@gitlab.com:WRMilling/${REPO}.git
     git push gitlab $BRANCH
