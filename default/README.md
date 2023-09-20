@@ -17,33 +17,6 @@ Default namespace for applications.
 
 * [emqx/emqx.yaml](emqx/emqx.yaml) - HelmRelease for emqx using their official chart.
 
-## FreshRSS
-
-![](https://i.imgur.com/KbI1XXx.png)
-
-Self-hosted RSS reader akin to the old (and now gone) Google Reader.
-
-* [freshrss/freshrss-pvc.yaml](freshrss/freshrss-pvc.yaml) - PVC for freshrss configuration files
-* [freshrss/freshrss.yaml](freshrss/freshrss.yaml) - HelmRelease for FreshRSS using app-template
-
-## Hajimari
-
-![](https://i.imgur.com/HvBLy48.png)
-
-[Hajimari](https://hajimari.io) is a beautiful & customizable browser startpage/dashboard with Kubernetes application discovery.
-
-* [hajimari/hajimari-external.yaml](hajimari/hajimari-external.yaml) - HelmRelease which deploys Hajimari, this release covering externally accesible applications.
-* [hajimari/hajimari-internal.yaml](hajimari/hajimari-internal.yaml) - HelmRelease which deploys Hajimari, this release covering internally accesible applications.
-
-## Haste
-
-![](https://i.imgur.com/vpB5jFe.png)
-
-[Haste](https://github.com/seejohnrun/haste-server) is an open-source pastebin software written in node.js.
-
-* [haste-server/haste-server.yaml](haste-server/haste-server.yaml) - HelmRelease for haste-server using app-template
-* [haste-server/redis.yaml](haste-server/redis.yaml) - Key/Value store which acts as storage for Haste
-
 ## Home Assistant
 
 [Home Assistant](https://www.home-assistant.io/) is an open source home automation solution that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts.
@@ -51,12 +24,6 @@ Self-hosted RSS reader akin to the old (and now gone) Google Reader.
 * [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
 * [home-assistant/postgres.yaml](home-assistant/postgres.yaml) - PostgreSQL deployment utilizing the Bitnami helm chart.
 * [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistant volume claims for the Home Assistant and PostgreSQL deployments.
-
-## Minio
-
-[Minio](https://min.io/) is a high performance S3-compatible kubernetes object storage solution / bucket service.
-
-* [minio/minio.yaml](minio/minio.yaml) - HelmRelease for minio from the charts.min.io repo
 
 ## OneDrive
 
