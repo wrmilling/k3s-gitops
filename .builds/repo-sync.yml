@@ -18,6 +18,7 @@ tasks:
     # Set Repo Name
     REPO=k3s-gitops
     BRANCH=master
+    cd $REPO
 
     # Ensure we are on the configured branch, exit build if not
     git diff -s --exit-code origin/${BRANCH} || complete-build
@@ -30,6 +31,7 @@ tasks:
    # Set Repo Name
     REPO=k3s-gitops
     BRANCH=main
+    cd $REPO
 
     # Ensure we are on the configured branch, exit build if not
     git diff -s --exit-code origin/${BRANCH} || complete-build
