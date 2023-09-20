@@ -1,0 +1,102 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dendrite-media-restic-config
+  namespace: default
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/dendrite-media"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dendrite-search-restic-config
+  namespace: default
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/dendrite-search"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dendrite-jetstream-restic-config
+  namespace: default
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/dendrite-jetstream"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: dendrite-media
+  namespace: default
+spec:
+  sourcePVC: dendrite-media-pvc
+  trigger:
+    schedule: "0 5 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: dendrite-media-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      fsGroup: 1337
+    retain:
+      daily: 10
+      within: 3d
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: dendrite-search
+  namespace: default
+spec:
+  sourcePVC: dendrite-search-pvc
+  trigger:
+    schedule: "0 5 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: dendrite-search-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      fsGroup: 1337
+    retain:
+      daily: 10
+      within: 3d
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: dendrite-jetstream
+  namespace: default
+spec:
+  sourcePVC: dendrite-jetstream-pvc
+  trigger:
+    schedule: "0 5 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: dendrite-jetstream-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      fsGroup: 1337
+    retain:
+      daily: 10
+      within: 3d
