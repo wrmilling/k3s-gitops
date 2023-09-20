@@ -35,17 +35,17 @@ spec:
       enabled: false
       ingressClassName: nginx-internal
       hosts:
-        - vminio.k.${SECRET_DOMAIN}
+        - vm.k.${SECRET_DOMAIN}
       tls:
-        - secretName: volsync-minio-cert
+        - secretName: minio-volsync-cert
           hosts:
-            - vminio.k.${SECRET_DOMAIN}
+            - vm.k.${SECRET_DOMAIN}
     consoleIngress:
       enabled: true
       hosts:
         - vmc.k.${SECRET_DOMAIN}
       tls:
-        - secretName: volsync-minio-console-cert
+        - secretName: minio-volsync-console-cert
           hosts:
             - vmc.k.${SECRET_DOMAIN}
     securityContext:

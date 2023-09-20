@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fvtt-test-restic-config
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio-volsync.kube-system.svc:9000/restic/fvtt-test"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fvtt-restic-config
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio-volsync.kube-system.svc:9000/restic/fvtt"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: fvtt-test
+  namespace: default
+spec:
+  sourcePVC: fvtt-test-pvc
+  trigger:
+    schedule: "0 6 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: fvtt-test-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      runAsUser: 421
+      runAsGroup: 421
+      fsGroup: 421
+    retain:
+      daily: 10
+      within: 3d
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: fvtt
+  namespace: default
+spec:
+  sourcePVC: fvtt-pvc
+  trigger:
+    schedule: "0 6 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: fvtt-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      runAsUser: 421
+      runAsGroup: 421
+      fsGroup: 421
+    retain:
+      daily: 10
+      within: 3d
