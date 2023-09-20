@@ -61,3 +61,11 @@ Provide authentication using [alexellis' registry-creds](https://github.com/alex
 * [registry-creds/dockerhub.yaml](registry-creds/dockerhub.yaml) - The ClusterPullSecret which binds the docker-registry secrets to teh registry-creds deployment to be used by kubernetes
 * [registry-creds/registry-creds-secret.sops.yaml](registry-creds/registry-creds-secret.sops.yaml) - My encrypted open dockerhub secret
 * [registry-creds/registry-creds.yaml](registry-creds/registry-creds.yaml) - Deployment for registry-creds.
+
+## snapshot-controller
+
+Placeholder
+
+## volsync
+
+Placeholder
