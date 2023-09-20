@@ -62,7 +62,7 @@ spec:
         memory: 350Mi
         cpu: 25m
       limits:
-        memory: 1000Mi
+        memory: 1500Mi
     tolerations:
       - key: "arm"
         operator: "Exists"
