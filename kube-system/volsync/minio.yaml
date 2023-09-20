@@ -1,61 +1,61 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: minio-volsync
-  namespace: kube-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://charts.min.io/
-      chart: minio
-      version: 5.0.13
-      sourceRef:
-        kind: HelmRepository
-        name: minio-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: quay.io/minio/minio
-      tag: RELEASE.2023-09-16T01-01-47Z@sha256:3f91ec66b2c7997481f68ae1a380e42ff413a36f6704031f1b3f6a89357112ee
-      pullPolicy: IfNotPresent
-    mcImage:
-      repository: quay.io/minio/mc
-      tag: RELEASE.2023-01-11T03-14-16Z
-      pullPolicy: IfNotPresent
-    mode: standalone
-    rootUser: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
-    rootPassword: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
-    persistence:
-      enabled: true
-      existingClaim: "nfs-volsync-pvc"
-    ingress:
-      enabled: false
-      ingressClassName: nginx-internal
-      hosts:
-        - vminio.k.${SECRET_DOMAIN}
-      tls:
-        - secretName: volsync-minio-cert
-          hosts:
-            - vminio.k.${SECRET_DOMAIN}
-    consoleIngress:
-      enabled: true
-      hosts:
-        - vmc.k.${SECRET_DOMAIN}
-      tls:
-        - secretName: volsync-minio-console-cert
-          hosts:
-            - vmc.k.${SECRET_DOMAIN}
-    securityContext:
-      enabled: false
-    resources:
-      requests:
-        memory: 350Mi
-        cpu: 25m
-      limits:
-        memory: 1000Mi
-    metrics:
-      serviceMonitor:
-        enabled: true
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: minio-volsync
+#   namespace: kube-system
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://charts.min.io/
+#       chart: minio
+#       version: 5.0.13
+#       sourceRef:
+#         kind: HelmRepository
+#         name: minio-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: quay.io/minio/minio
+#       tag: RELEASE.2023-09-16T01-01-47Z@sha256:3f91ec66b2c7997481f68ae1a380e42ff413a36f6704031f1b3f6a89357112ee
+#       pullPolicy: IfNotPresent
+#     mcImage:
+#       repository: quay.io/minio/mc
+#       tag: RELEASE.2023-01-11T03-14-16Z
+#       pullPolicy: IfNotPresent
+#     mode: standalone
+#     rootUser: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+#     rootPassword: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+#     persistence:
+#       enabled: true
+#       existingClaim: "nfs-volsync-pvc"
+#     ingress:
+#       enabled: false
+#       ingressClassName: nginx-internal
+#       hosts:
+#         - vminio.k.${SECRET_DOMAIN}
+#       tls:
+#         - secretName: volsync-minio-cert
+#           hosts:
+#             - vminio.k.${SECRET_DOMAIN}
+#     consoleIngress:
+#       enabled: true
+#       hosts:
+#         - vmc.k.${SECRET_DOMAIN}
+#       tls:
+#         - secretName: volsync-minio-console-cert
+#           hosts:
+#             - vmc.k.${SECRET_DOMAIN}
+#     securityContext:
+#       enabled: false
+#     resources:
+#       requests:
+#         memory: 350Mi
+#         cpu: 25m
+#       limits:
+#         memory: 1000Mi
+#     metrics:
+#       serviceMonitor:
+#         enabled: true

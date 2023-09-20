@@ -1,36 +1,36 @@
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: nfs-volsync-pv
-  namespace: default
-spec:
-  storageClassName: volsync
-  capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: 10.10.10.30
-    path: "/mnt/tardisk/volsync"
-  mountOptions:
-    - nfsvers=4.1
-    - tcp
-    - intr
-    - hard
-    - noatime
-    - nodiratime
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: nfs-volsync-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: volsync
-  resources:
-    requests:
-      storage: 1Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: nfs-volsync-pv
+#   namespace: kube-system
+# spec:
+#   storageClassName: volsync
+#   capacity:
+#     storage: 1Mi
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   nfs:
+#     server: 10.10.10.30
+#     path: "/mnt/tardisk/volsync"
+#   mountOptions:
+#     - nfsvers=4.1
+#     - tcp
+#     - intr
+#     - hard
+#     - noatime
+#     - nodiratime
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: nfs-volsync-pvc
+#   namespace: kube-system
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   storageClassName: volsync
+#   resources:
+#     requests:
+#       storage: 1Mi
