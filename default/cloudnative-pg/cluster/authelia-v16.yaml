@@ -86,7 +86,6 @@ spec:
       connectionParameters:
         host: authelia-postgres-postgresql.kube-system.svc
         user: authelia
-        port: 5432
         dbname: authelia
         sslmode: disable
       password:
