@@ -1,8 +1,0 @@
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ./cluster-migration.sops.yaml
-  - ./authelia-v16.yaml
-  # - ./dendrite-v16.yaml
-  # - ./mastodon-v16.yaml
