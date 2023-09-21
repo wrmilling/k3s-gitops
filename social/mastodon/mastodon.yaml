@@ -78,7 +78,7 @@ spec:
         port: 3000
 
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: 40m
         nginx.org/client-max-body-size: 40m
