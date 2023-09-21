@@ -60,7 +60,7 @@ spec:
       import:
         type: monolith
         databases:
-          - "*"
+          - dendrite
         roles:
           - "*"
         source:
@@ -85,7 +85,7 @@ spec:
     - name: dendrite
       connectionParameters:
         host: dendrite-postgres-postgresql.default.svc
-        user: postgres
+        user: dendrite
         dbname: dendrite
         sslmode: disable
       password:
