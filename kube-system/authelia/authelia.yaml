@@ -39,7 +39,7 @@ spec:
       storage:
         postgres:
           enabled: true
-          host: authelia-postgres-postgresql
+          host: authelia-psql-v16.default.svc
           port: 5432
           database: authelia
           username: authelia
