@@ -6,7 +6,7 @@ metadata:
     namespace: default
 type: Opaque
 stringData:
-    username: ENC[AES256_GCM,data:ymTbIFpDt9kwYWFo5z1hQg==,iv:mFObG01UsLm54xANc5bHbrfUmlm/HviU92SYT5BZ+Lg=,tag:RZ8j8eBUac6A5jF8k6QpRw==,type:str]
+    username: ENC[AES256_GCM,data:iOFQ3GfoFB4=,iv:EjXz3i5RaU3uyaqd0VxKffGAiNMqR/4vVIVCjNqei+A=,tag:JAGCAfpVpMXYqfP3W4ipTg==,type:str]
     password: ENC[AES256_GCM,data:ci0/qjTGWpFn/GosBQiyvz4UCXRkcRrjRsf6GwDa94g=,iv:pnD48UPHqcykmWuniKeHoOQTyGJTAd77WYNxzGfHJQk=,tag:RmegI2gfUxMzyQCVD1m/tg==,type:str]
     MINIO_ACCESS_KEY: ENC[AES256_GCM,data:5bPYgXa3Y9ECV26vY1gzihoZbxg=,iv:bwa+ylxr+OLssoBZGseoerAPIxQ/3Wc3eXI8MvlmSRo=,tag:hy/Iq5JYonAUl7kdIqoonw==,type:str]
     MINIO_SECRET_KEY: ENC[AES256_GCM,data:R7yiMIOUMVlXlBNVhNsxZXt/Xe7rVAnhe5Hn29DwKGE=,iv:Zoo2YesmgyOuOMe8LH1sW50JfS2+xflxWGsvcn1PYgk=,tag:O3X7d3z0dZh0lrd1kpA8xA==,type:str]
@@ -16,8 +16,8 @@ sops:
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-09-21T19:44:30Z"
-    mac: ENC[AES256_GCM,data:kfQEpHNfZ+VZS+nmMkp8NYIbHHdKCJupNOJPW32tX2HLPMRQyOpsIKx5TUIJygO0A3K975MQy6ejInMjRiuGIb+KE0QJh3U2grhcMR18PkufD/ENMRsl5yXtsnIkP/oECjv8WRu24LJWNE1ThslcKIyg9udWLvRHA5xVnWwKXG0=,iv:FMiMyANpS+gkgDawI2s5Gn78JtL4sLxAtlzN6tKacjE=,tag:+YXIUF4XJhD2NWV/XQ3gHA==,type:str]
+    lastmodified: "2023-09-21T20:15:10Z"
+    mac: ENC[AES256_GCM,data:EHJJvkH9rYYf0nFnNi21w3xbNBSZDXovUZ0q60lS/WuWWK7bMMjpe6X2UCtfo6ibG8nrgcxM4XDLwPkdjWqnlkx1LjIjo+V/o/tzVWjTFqEM2nhKkApToFJ8JBwLx4euVXS/TklPCIoWVYdWhumvkK+GcqcywVY1r4U98eOyOhc=,iv:cfuCFB8cwFTgyLlNCP16017I6aAyRai10CIDxSSdVII=,tag:eEfvvhC79KuSpS05+lRI5w==,type:str]
     pgp:
         - created_at: "2021-08-21T21:26:26Z"
           enc: |
