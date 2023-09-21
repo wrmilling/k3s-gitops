@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: postgres
-      tag: 14.9@sha256:b2f06ce12103bedbc0a49ae4ffff062d90824e0f45462de712f66952679f7670
+      tag: 16.0@sha256:1e90f8560705b0daccbd8eb25573627c8452fc9282496433aab1259ae4c85824
     postgresqlDataDir: "/data/pgdata"
     primary:
       persistence:
