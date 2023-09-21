@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres-v16
+  name: authelia-psql-v16
   namespace: default
   annotations:
     kyverno.io/ignore: "true"
