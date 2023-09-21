@@ -35,6 +35,9 @@ spec:
     - accessKey: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
       secretKey: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
       policy: readwrite
+    - accessKey: ${SECRET_CNPG_MINIO_ACCESS_KEY}
+      secretKey: ${SECRET_CNPG_MINIO_SECRET_KEY}
+      policy: readWrite
     persistence:
       enabled: true
       existingClaim: "nfs-minio-pvc"
