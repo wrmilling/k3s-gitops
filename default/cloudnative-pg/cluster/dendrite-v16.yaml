@@ -52,19 +52,19 @@ spec:
 
   bootstrap:
     # use this to recover a net-new cluster from a backup
-    # recovery:
-    #   source: dendrite-psql-backup
+    recovery:
+      source: dendrite-psql-backup
 
     # # use this to 'migrate' from an existing cnpg cluster (e.g. "cluster-pg14") to the new cluster
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - dendrite
-        roles:
-          - "*"
-        source:
-          externalCluster: dendrite
+    # initdb:
+    #   import:
+    #     type: monolith
+    #     databases:
+    #       - dendrite
+    #     roles:
+    #       - "*"
+    #     source:
+    #       externalCluster: dendrite
 
   externalClusters:
     # this represents the s3 backup to restore from. *nota-bene: the backup must be the same major version of the target cluster
@@ -82,12 +82,12 @@ spec:
           secretAccessKey:
             name: cloudnative-pg
             key: MINIO_SECRET_KEY
-    - name: dendrite
-      connectionParameters:
-        host: dendrite-postgres-postgresql.default.svc
-        user: postgres
-        dbname: dendrite
-        sslmode: disable
-      password:
-        name: cloudnative-pg-migration
-        key: DENDRITE_POSTGRES_PASS
+    # - name: dendrite
+    #   connectionParameters:
+    #     host: dendrite-postgres-postgresql.default.svc
+    #     user: postgres
+    #     dbname: dendrite
+    #     sslmode: disable
+    #   password:
+    #     name: cloudnative-pg-migration
+    #     key: DENDRITE_POSTGRES_PASS

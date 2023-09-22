@@ -1,0 +1,39 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: mastodon-psql-v16
+  namespace: default
+spec:
+  # daily, 2am UCT
+  schedule: "0 0 2 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: mastodon-psql-v16
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: dendrite-psql-v16
+  namespace: default
+spec:
+  # daily, 3am UCT
+  schedule: "0 0 3 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: dendrite-psql-v16
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: authelia-psql-v16
+  namespace: default
+spec:
+  # daily, 4am UCT
+  schedule: "0 0 4 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: authelia-psql-v16
