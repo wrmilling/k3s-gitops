@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: social
   annotations:
-    volsync.backube/privileged-movers: "true"
+    # volsync.backube/privileged-movers: "true"
