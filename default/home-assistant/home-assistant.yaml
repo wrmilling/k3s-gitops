@@ -28,11 +28,16 @@ spec:
       init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.8
         imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: home-assistant-secret
+        env:
+          POSTGRES_DB: home_assistant
+          POSTGRES_HOST: home-assistant-psql-v16-rw.default.svc.cluster.local
+          POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+          POSTGRES_USER: home-assistant
+          POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
     env:
       TZ: "America/Chicago"
+      HASS_TOKEN: ${SECRET_HASS_TOKEN}
+      HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@home-assistant-psql-v16-rw.default.svc.cluster.local/home_assistant"
     hostNetwork: true
     dnsPolicy: ClusterFirstWithHostNet
     service:
