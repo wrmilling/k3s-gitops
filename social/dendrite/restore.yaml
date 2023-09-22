@@ -1,0 +1,40 @@
+# Left as example of restore, also check namespace annotation to avoid lchown issues.
+# ---
+# apiVersion: volsync.backube/v1alpha1
+# kind: ReplicationDestination
+# metadata:
+#   name: dendrite-media-restore
+#   namespace: social
+# spec:
+#   trigger:
+#     manual: restore-once
+#   restic:
+#     repository: dendrite-media-restic-config
+#     destinationPVC: dendrite-media-pvc
+#     copyMethod: Direct
+# ---
+# apiVersion: volsync.backube/v1alpha1
+# kind: ReplicationDestination
+# metadata:
+#   name: dendrite-search-restore
+#   namespace: social
+# spec:
+#   trigger:
+#     manual: restore-once
+#   restic:
+#     repository: dendrite-search-restic-config
+#     destinationPVC: dendrite-search-pvc
+#     copyMethod: Direct
+# ---
+# apiVersion: volsync.backube/v1alpha1
+# kind: ReplicationDestination
+# metadata:
+#   name: dendrite-jetstream-restore
+#   namespace: social
+# spec:
+#   trigger:
+#     manual: restore-once
+#   restic:
+#     repository: dendrite-jetstream-restic-config
+#     destinationPVC: dendrite-jetstream-pvc
+#     copyMethod: Direct
