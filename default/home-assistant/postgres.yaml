@@ -30,7 +30,7 @@ spec:
       - key: "arm"
         operator: "Exists"
     auth:
-      enablePostgresUser: false
+      enablePostgresUser: true
       username: home-assistant
       database: home-assistant
       password: ${SECRET_HASS_DB_PASSWORD}
