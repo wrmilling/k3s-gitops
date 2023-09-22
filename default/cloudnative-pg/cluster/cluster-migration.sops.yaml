@@ -9,14 +9,15 @@ stringData:
     AUTHELIA_POSTGRES_PASS: ENC[AES256_GCM,data:/NWceN4YtpS0n59YjRXfocbtUdCoiSI=,iv:DHo4/5biQPXmLmn5pndDJRb0SwoEBvSvBuqe2oVWlbc=,tag:ZD1Fx+71r3heuw4gjdgD8Q==,type:str]
     DENDRITE_POSTGRES_PASS: ENC[AES256_GCM,data:zIiw+bBmrUgCM4o2FwvgCKu+LEVFEhuu,iv:igAC60J8jvlm7XH6R9NUJhKkPivvNyAix+dh2MoXf1A=,tag:ic/Qif/WP5KZS4Q2iBtt8Q==,type:str]
     MASTODON_POSTGRES_PASS: ENC[AES256_GCM,data:PU3nIQxQuDzPxH2XLsB3ZJbSktrj8YFP,iv:96HqlmkTBlBuCAXAGUoSiFQNzvf1HnLIQgcgTlVyDYw=,tag:MAimns5djT8HYHCy2JU9Qg==,type:str]
+    HOME_ASSISTANT_POSTGRES_PASS: ENC[AES256_GCM,data:qd/ViA9M6i1ZT/c9OdtiKb0EZaz0LOq0R5Dwbm8uGSM=,iv:iZy+WcTOew0vDFs5Z1gm5zCo2LBa49LBQ5SzH/iFlV0=,tag:Cp6UVgmpWUuPNFnBHtSG8Q==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2023-09-21T21:17:19Z"
-    mac: ENC[AES256_GCM,data:YoBHX3rehHPj0ioAry2Wa2XpVDkL/OYU6WToqFpZ7PLr/B1i1NyvpQO+eEZCUM6Oe7knB1cq+ot9FCmmdxu+Nbg5Y2qdjpCsPniEi1B0ua3NPGN0I/heamCbncazHbUbFqmuynKcf29g9KPVHMP2JnmODWVt0cMCCZzlIBDr5Rw=,iv:I1xZ+07F2yqTBeAsVVk8hpnV4uuSL8694D+H9bHFDnM=,tag:v2TUdA6wWQ6P4zaSMGtxeA==,type:str]
+    lastmodified: "2023-09-22T13:40:52Z"
+    mac: ENC[AES256_GCM,data:O7KkIkhzwo3c9ppkNG6XDJ/pakgZJ0omEwUOrXWScGB7n0wMbIWmLK6QLEDWg9lZTRI9cQnCJcBT0n1E60OT8YPOsHhJolTn8wk1iNGv/LDzoexCrv3ANUM9NDjnhbJjs4fUmMfzTmDVMbmOEG/Kat5hSusyb6h1qmGLvIRTUDU=,iv:9g1kKEjN9ciy+xMowvOW4EK+FVZ39MkfW67SWv+VXwQ=,tag:JP0ChzFOI42xGyDdVEHKgQ==,type:str]
     pgp:
         - created_at: "2021-08-21T21:26:26Z"
           enc: |
