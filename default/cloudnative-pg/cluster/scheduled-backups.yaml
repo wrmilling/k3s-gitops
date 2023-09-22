@@ -37,3 +37,16 @@ spec:
   backupOwnerReference: self
   cluster:
     name: authelia-psql-v16
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: home-assistant-psql-v16
+  namespace: default
+spec:
+  # daily, 4am UCT
+  schedule: "0 0 4 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: home-assistant-psql-v16
