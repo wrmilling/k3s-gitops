@@ -113,6 +113,7 @@ spec:
         username: mastodon
         password: "${SECRET_MASTODON_DB_PASS}"
         postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
+        existingSecret: mastodon-postgresql
 
     redis:
       master:
