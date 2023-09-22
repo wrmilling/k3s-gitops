@@ -1,127 +1,127 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: mastodon
-#   namespace: social
-# spec:
-#   interval: 15m
-#   chart:
-#     spec:
-#       chart: ./
-#       version: 4.0.3
-#       sourceRef:
-#         kind: GitRepository
-#         name: mastodon-charts
-#         namespace: flux-system
-#   values:
-#     image:
-#       repository: ghcr.io/glitch-soc/mastodon
-#       tag: latest@sha256:9a45dd3e946f9c83bbf751f827776cca2c4cf8f56d06a683b214acc9c904f224
-#       pullPolicy: IfNotPresent
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mastodon
+  namespace: social
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: ./
+      version: 4.0.3
+      sourceRef:
+        kind: GitRepository
+        name: mastodon-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/glitch-soc/mastodon
+      tag: latest@sha256:9a45dd3e946f9c83bbf751f827776cca2c4cf8f56d06a683b214acc9c904f224
+      pullPolicy: IfNotPresent
 
-#     mastodon:
-#       createAdmin:
-#         enabled: false
-#         username: "winston"
-#         email: "winston@${SECRET_DOMAIN_SECONDARY}"
-#       local_domain: "${SECRET_DOMAIN_SECONDARY}"
-#       web_domain: "mastodon.${SECRET_DOMAIN}"
-#       singleUserMode: true
-#       max_post_length: 2048
-#       s3:
-#         enabled: true
-#         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
-#         access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
-#         bucket: "mastodon"
-#         endpoint: "https://mfile.${SECRET_DOMAIN}"
-#         hostname: "mfile.${SECRET_DOMAIN}"
-#         alias_host: "mcdn.${SECRET_DOMAIN}"
-#       secrets:
-#         secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
-#         otp_secret: "${SECRET_MASTODON_OTP_SECRET}"
-#         vapid:
-#           private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
-#           public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
-#       sidekiq:
-#         workers:
-#           - name: all-queues
-#             concurrency: 25
-#             replicas: 1
-#             resources: {}
-#             affinity: {}
-#             queues:
-#               - default,8
-#               - push,6
-#               - ingress,4
-#               - mailers,2
-#               - pull
-#               - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
-#           - name: pull-ingress
-#             concurrency: 50
-#             replicas: 1
-#             resources: {}
-#             affinity: {}
-#             queues:
-#               - pull
-#               - ingress
-#       smtp:
-#         domain: "${SECRET_DOMAIN}"
-#         from_address: "${SECRET_MASTODON_SMTP_USER}"
-#         server: "${SECRET_SMTP_DOMAIN}"
-#         port: 587
-#         login: "${SECRET_MASTODON_SMTP_USER}"
-#         password: "${SECRET_MASTODON_SMTP_PASS}"
-#       streaming:
-#         port: 4000
-#       web:
-#         port: 3000
+    mastodon:
+      createAdmin:
+        enabled: false
+        username: "winston"
+        email: "winston@${SECRET_DOMAIN_SECONDARY}"
+      local_domain: "${SECRET_DOMAIN_SECONDARY}"
+      web_domain: "mastodon.${SECRET_DOMAIN}"
+      singleUserMode: true
+      max_post_length: 2048
+      s3:
+        enabled: true
+        access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
+        access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
+        bucket: "mastodon"
+        endpoint: "https://mfile.${SECRET_DOMAIN}"
+        hostname: "mfile.${SECRET_DOMAIN}"
+        alias_host: "mcdn.${SECRET_DOMAIN}"
+      secrets:
+        secret_key_base: "${SECRET_MASTODON_SECRET_KEY_BASE}"
+        otp_secret: "${SECRET_MASTODON_OTP_SECRET}"
+        vapid:
+          private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
+          public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
+      sidekiq:
+        workers:
+          - name: all-queues
+            concurrency: 25
+            replicas: 1
+            resources: {}
+            affinity: {}
+            queues:
+              - default,8
+              - push,6
+              - ingress,4
+              - mailers,2
+              - pull
+              - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
+          - name: pull-ingress
+            concurrency: 50
+            replicas: 1
+            resources: {}
+            affinity: {}
+            queues:
+              - pull
+              - ingress
+      smtp:
+        domain: "${SECRET_DOMAIN}"
+        from_address: "${SECRET_MASTODON_SMTP_USER}"
+        server: "${SECRET_SMTP_DOMAIN}"
+        port: 587
+        login: "${SECRET_MASTODON_SMTP_USER}"
+        password: "${SECRET_MASTODON_SMTP_PASS}"
+      streaming:
+        port: 4000
+      web:
+        port: 3000
 
-#     ingress:
-#       enabled: false
-#       annotations:
-#         nginx.ingress.kubernetes.io/proxy-body-size: 40m
-#         nginx.org/client-max-body-size: 40m
-#           #nginx.ingress.kubernetes.io/configuration-snippet: |
-#           #  more_set_headers "Content-Security-Policy: \"default-src 'none'; form-action 'none'\"";
-#           #  more_set_headers "X-Content-Type-Options: nosniff";
-#       ingressClassName: nginx-external
-#       hosts:
-#         - host: mastodon.${SECRET_DOMAIN}
-#           paths:
-#             - path: '/'
-#       tls:
-#         - secretName: mastodon-cert
-#           hosts:
-#             - mastodon.${SECRET_DOMAIN}
+    ingress:
+      enabled: false
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-body-size: 40m
+        nginx.org/client-max-body-size: 40m
+          #nginx.ingress.kubernetes.io/configuration-snippet: |
+          #  more_set_headers "Content-Security-Policy: \"default-src 'none'; form-action 'none'\"";
+          #  more_set_headers "X-Content-Type-Options: nosniff";
+      ingressClassName: nginx-external
+      hosts:
+        - host: mastodon.${SECRET_DOMAIN}
+          paths:
+            - path: '/'
+      tls:
+        - secretName: mastodon-cert
+          hosts:
+            - mastodon.${SECRET_DOMAIN}
 
-#     elasticsearch:
-#       enabled: false
-#       image:
-#         tag: 7.17.9
+    elasticsearch:
+      enabled: false
+      image:
+        tag: 7.17.9
 
-#     postgresql:
-#       enabled: false
-#       postgresqlHostname: mastodon-psql-v16-rw.default.svc
-#       postgresqlPort: 5432
-#       primary:
-#         persistence:
-#           enabled: false
-#           existingClaim: "mastodon-postgres-pvc"
-#       auth:
-#         database: mastodon
-#         username: mastodon
-#         password: "${SECRET_MASTODON_DB_PASS}"
-#         postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
-#         existingSecret: mastodon-postgresql
+    postgresql:
+      enabled: false
+      postgresqlHostname: mastodon-psql-v16-rw.default.svc
+      postgresqlPort: 5432
+      primary:
+        persistence:
+          enabled: false
+          existingClaim: "mastodon-postgres-pvc"
+      auth:
+        database: mastodon
+        username: mastodon
+        password: "${SECRET_MASTODON_DB_PASS}"
+        postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
+        existingSecret: mastodon-postgresql
 
-#     redis:
-#       master:
-#         persistence:
-#           storageClass: rook-ceph-block
-#           size: 1Gi
-#       password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-#       auth:
-#         password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-#       replica:
-#         replicaCount: 0
+    redis:
+      master:
+        persistence:
+          storageClass: rook-ceph-block
+          size: 1Gi
+      password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+      auth:
+        password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+      replica:
+        replicaCount: 0
