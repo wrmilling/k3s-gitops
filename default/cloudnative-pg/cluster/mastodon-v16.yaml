@@ -37,7 +37,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 4
-      destinationPath: s3://mastodon-psql/
+      destinationPath: s3://postgresql/
       endpointURL: http://minio.kube-system.svc:9000
       serverName: mastodon-psql-v16
       s3Credentials:
@@ -71,7 +71,7 @@ spec:
         wal:
           compression: bzip2
           maxParallel: 4
-        destinationPath: s3://mastodon-psql/
+        destinationPath: s3://postgresql/
         endpointURL: http://minio.kube-system.svc:9000
         s3Credentials:
           accessKeyId:
