@@ -1,46 +1,46 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: home-assistant-postgres
-  namespace: default
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
-      chart: postgresql
-      version: 11.9.13
-      sourceRef:
-        kind: HelmRepository
-        name: bitnami-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    image:
-      repository: postgres
-      tag: 14.9@sha256:b2f06ce12103bedbc0a49ae4ffff062d90824e0f45462de712f66952679f7670
-    postgresqlDataDir: "/data/pgdata"
-    primary:
-      persistence:
-        enabled: true
-        existingClaim: hass-postgres-pvc
-        mountPath: "/data/"
-      tolerations:
-      - key: "arm"
-        operator: "Exists"
-    auth:
-      enablePostgresUser: true
-      username: home-assistant
-      database: home-assistant
-      password: ${SECRET_HASS_DB_PASSWORD}
-      postgresqlPassword: ${SECRET_HASS_DB_ADMIN_PASSWORD}
-    shmVolume:
-      enabled: false
-    volumePermissions:
-      enabled: false
-    resources:
-      limits:
-        memory: 4000Mi
-      requests:
-        memory: 2000Mi
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: home-assistant-postgres
+#   namespace: default
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://charts.bitnami.com/bitnami
+#       chart: postgresql
+#       version: 11.9.13
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bitnami-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     image:
+#       repository: postgres
+#       tag: 14.9@sha256:b2f06ce12103bedbc0a49ae4ffff062d90824e0f45462de712f66952679f7670
+#     postgresqlDataDir: "/data/pgdata"
+#     primary:
+#       persistence:
+#         enabled: true
+#         existingClaim: hass-postgres-pvc
+#         mountPath: "/data/"
+#       tolerations:
+#       - key: "arm"
+#         operator: "Exists"
+#     auth:
+#       enablePostgresUser: true
+#       username: home-assistant
+#       database: home-assistant
+#       password: ${SECRET_HASS_DB_PASSWORD}
+#       postgresqlPassword: ${SECRET_HASS_DB_ADMIN_PASSWORD}
+#     shmVolume:
+#       enabled: false
+#     volumePermissions:
+#       enabled: false
+#     resources:
+#       limits:
+#         memory: 4000Mi
+#       requests:
+#         memory: 2000Mi
