@@ -84,7 +84,7 @@ spec:
             key: MINIO_SECRET_KEY
     - name: home-assistant
       connectionParameters:
-        host: home-assistant-postgres-postgresql.kube-system.svc
+        host: home-assistant-postgres-postgresql.default.svc
         user: postgres
         dbname: home-assistant
         sslmode: disable
