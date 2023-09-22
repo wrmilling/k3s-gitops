@@ -78,7 +78,7 @@ spec:
         port: 3000
 
     ingress:
-      enabled: false
+      enabled: true
       annotations:
         nginx.ingress.kubernetes.io/proxy-body-size: 40m
         nginx.org/client-max-body-size: 40m
@@ -96,7 +96,7 @@ spec:
             - mastodon.${SECRET_DOMAIN}
 
     elasticsearch:
-      enabled: false
+      enabled: true
       image:
         tag: 7.17.9
 
