@@ -101,10 +101,12 @@ spec:
         tag: 7.17.9
 
     postgresql:
-      enabled: true
+      enabled: false
+      postgresqlHostname: mastodon-psql-v16-rw.default.svc
+      postgresqlPort: 5432
       primary:
         persistence:
-          enabled: true
+          enabled: false
           existingClaim: "mastodon-postgres-pvc"
       auth:
         database: mastodon
