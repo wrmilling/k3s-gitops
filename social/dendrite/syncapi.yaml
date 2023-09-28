@@ -19,7 +19,7 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: ghcr.io/matrix-org/sliding-sync:
+      repository: ghcr.io/matrix-org/sliding-sync
       pullPolicy: IfNotPresent
       tag: v0.99.10@sha256:242d559f1bee4b93b950a7e7f3f50fdbff17fe9df6cdfda3d4ab0c8f8e5306f6
     strategy:
