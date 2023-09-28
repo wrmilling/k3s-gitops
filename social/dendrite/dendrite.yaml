@@ -155,8 +155,7 @@ spec:
                   width: 640
             mscs:
               mscs:
-                - msc2946
-                - msc2444
+                - msc2836
             room_server:
               default_room_version: 11
             sync_api:
