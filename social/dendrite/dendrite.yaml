@@ -68,6 +68,7 @@ spec:
                 max_age: "1h"
               well_known_server_name: "dendrite.${SECRET_DOMAIN}:443"
               well_known_client_name: "https://dendrite.${SECRET_DOMAIN}/"
+              well_known_sliding_sync_proxy: "https://syncv3.${SECRET_DOMAIN}"
               trusted_third_party_id_servers:
                 - matrix.org
                 - vector.im
