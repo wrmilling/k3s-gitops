@@ -215,6 +215,7 @@ spec:
         subPath: "dendrite.yaml"
     podAnnotations:
       configmap.reloader.stakater.com/reload: "dendrite-config"
+      secret.reloader.stakater.com/reload: "dendrite-yaml"
     podSecurityContext:
       fsGroup: 1337
     probes:
