@@ -21,7 +21,7 @@ spec:
     image:
       repository: ghcr.io/felddy/foundryvtt
       pullPolicy: IfNotPresent
-      tag: 11.308.0@sha256:12eba9bd7ac34989f8977a62bf041208e0ba752f04f34f74d0cbfe9d1f1da585
+      tag: 11.311.0@sha256:ce1c30044b86037d6245f988f35ff9f00cb1b4ffe95620024472e7ecd1aded7d
     strategy:
       type: Recreate
     service:
