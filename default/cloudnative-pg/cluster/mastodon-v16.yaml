@@ -55,17 +55,6 @@ spec:
     recovery:
       source: mastodon-psql-backup
 
-    # # use this to 'migrate' from an existing cnpg cluster (e.g. "cluster-pg14") to the new cluster
-    # initdb:
-    #   import:
-    #     type: monolith
-    #     databases:
-    #       - mastodon
-    #     roles:
-    #       - "*"
-    #     source:
-    #       externalCluster: mastodon
-
   externalClusters:
     # this represents the s3 backup to restore from. *nota-bene: the backup must be the same major version of the target cluster
     - name: mastodon-psql-backup
@@ -83,12 +72,3 @@ spec:
           secretAccessKey:
             name: cloudnative-pg
             key: MINIO_SECRET_KEY
-    # - name: mastodon
-    #   connectionParameters:
-    #     host: mastodon-postgresql.social.svc
-    #     user: postgres
-    #     dbname: mastodon
-    #     sslmode: disable
-    #   password:
-    #     name: cloudnative-pg-migration
-    #     key: MASTODON_POSTGRES_PASS

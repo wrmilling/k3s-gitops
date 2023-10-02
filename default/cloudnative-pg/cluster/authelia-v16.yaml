@@ -55,17 +55,6 @@ spec:
     recovery:
       source: authelia-psql-backup
 
-    # # use this to 'migrate' from an existing cnpg cluster (e.g. "cluster-pg14") to the new cluster
-    # initdb:
-    #   import:
-    #     type: monolith
-    #     databases:
-    #       - authelia
-    #     roles:
-    #       - "*"
-    #     source:
-    #       externalCluster: authelia
-
   externalClusters:
     # this represents the s3 backup to restore from. *nota-bene: the backup must be the same major version of the target cluster
     - name: authelia-psql-backup
@@ -75,6 +64,7 @@ spec:
           maxParallel: 4
         destinationPath: s3://postgresql/
         endpointURL: http://minio.kube-system.svc:9000
+        serverName: authelia-psql-v16
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg
@@ -82,12 +72,3 @@ spec:
           secretAccessKey:
             name: cloudnative-pg
             key: MINIO_SECRET_KEY
-    # - name: authelia
-    #   connectionParameters:
-    #     host: authelia-postgres-postgresql.kube-system.svc
-    #     user: postgres
-    #     dbname: authelia
-    #     sslmode: disable
-    #   password:
-    #     name: cloudnative-pg-migration
-    #     key: AUTHELIA_POSTGRES_PASS
