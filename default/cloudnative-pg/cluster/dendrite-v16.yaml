@@ -51,7 +51,7 @@ spec:
           key: MINIO_SECRET_KEY
 
   bootstrap:
-    use this to recover a net-new cluster from a backup
+    # use this to recover a net-new cluster from a backup
     recovery:
       source: dendrite-psql-backup
 
