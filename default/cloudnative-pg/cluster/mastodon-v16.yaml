@@ -33,22 +33,22 @@ spec:
     tolerations:
     - key: "arm"
       operator: "Exists"
-  # backup:
-  #   retentionPolicy: 30d
-  #   barmanObjectStore:
-  #     wal:
-  #       compression: bzip2
-  #       maxParallel: 4
-  #     destinationPath: s3://postgresql/
-  #     endpointURL: http://minio.kube-system.svc:9000
-  #     serverName: mastodon-psql-v16
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: cloudnative-pg
-  #         key: MINIO_ACCESS_KEY
-  #       secretAccessKey:
-  #         name: cloudnative-pg
-  #         key: MINIO_SECRET_KEY
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      destinationPath: s3://postgresql/
+      endpointURL: http://minio.kube-system.svc:9000
+      serverName: mastodon-psql-v16
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg
+          key: MINIO_SECRET_KEY
 
   bootstrap:
     # use this to recover a net-new cluster from a backup
@@ -75,6 +75,7 @@ spec:
           maxParallel: 4
         destinationPath: s3://postgresql/
         endpointURL: http://minio.kube-system.svc:9000
+        serverName: mastodon-psql-v16
         s3Credentials:
           accessKeyId:
             name: cloudnative-pg
