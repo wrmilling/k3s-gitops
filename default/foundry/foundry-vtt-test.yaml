@@ -20,8 +20,7 @@ spec:
   values:
     controllers:
       main:
-        strategy:
-          type: Recreate
+        strategy: Recreate
         containers:
           main:
             image:
