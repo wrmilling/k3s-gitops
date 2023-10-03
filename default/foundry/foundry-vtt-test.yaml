@@ -11,19 +11,27 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-helm-charts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/felddy/foundryvtt
-      pullPolicy: IfNotPresent
-      tag: 11.311.0@sha256:ce1c30044b86037d6245f988f35ff9f00cb1b4ffe95620024472e7ecd1aded7d
-    strategy:
-      type: Recreate
+    controllers:
+      main:
+        strategy:
+          type: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/felddy/foundryvtt
+              pullPolicy: IfNotPresent
+              tag: 11.311.0@sha256:ce1c30044b86037d6245f988f35ff9f00cb1b4ffe95620024472e7ecd1aded7d
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 421
+        fsGroupChangePolicy: "Always"
     service:
       main:
         ports:
@@ -31,7 +39,6 @@ spec:
             port: 30000
     ingress:
       main:
-        enabled: true
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -40,19 +47,19 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        ingressClassName: nginx-external
+                service:
+                  name: main
+                  port: http
+        className: nginx-external
         tls:
           - secretName: fvtt-test-cert
             hosts:
               - fvtt-test.${SECRET_DOMAIN}
-    podSecurityContext:
-      fsGroup: 421
-      fsGroupChangePolicy: "Always"
     persistence:
       config:
-        enabled: true
-        mountPath: /data
         existingClaim: fvtt-test-pvc
+        globalMounts:
+          - path: /data
     env:
       - name: TZ
         value: America/Chicago
