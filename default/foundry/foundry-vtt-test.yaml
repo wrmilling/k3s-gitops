@@ -27,6 +27,35 @@ spec:
               repository: ghcr.io/felddy/foundryvtt
               pullPolicy: IfNotPresent
               tag: 11.311.0@sha256:ce1c30044b86037d6245f988f35ff9f00cb1b4ffe95620024472e7ecd1aded7d
+            env:
+            - name: TZ
+              value: America/Chicago
+            - name: FOUNDRY_USERNAME
+              value: ${SECRET_FVTT_USERNAME}
+            - name: FOUNDRY_PASSWORD
+              value: ${SECRET_FVTT_PASSWORD}
+            - name: FOUNDRY_HOSTNAME
+              value: fvtt-test.${SECRET_DOMAIN}
+            - name: FOUNDRY_LICENSE_KEY
+              value: ${SECRET_FVTT_LICENSE_KEY}
+            - name: FOUNDRY_ADMIN_KEY
+              value: ${SECRET_FVTT_TEST_ADMIN_KEY}
+            - name: FOUNDRY_PASSWORD_SALT
+              value: ${SECRET_FVTT_TEST_PASSWORD_SALT}
+            - name: FOUNDRY_MINIFY_STATIC_FILES
+              value: true
+            - name: FOUNDRY_PROTOCOL
+              value: 4
+            - name: FOUNDRY_PROXY_PORT
+              value: 443
+            - name: FOUNDRY_PROXY_SSL
+              value: true
+            - name: FOUNDRY_TELEMETRY
+              value: false
+            - name: FOUNDRY_UID
+              value: 421
+            - name: FOUNDRY_GID
+              value: 421
     defaultPodOptions:
       securityContext:
         fsGroup: 421
@@ -59,32 +88,3 @@ spec:
         existingClaim: fvtt-test-pvc
         globalMounts:
           - path: /data
-    env:
-      - name: TZ
-        value: America/Chicago
-      - name: FOUNDRY_USERNAME
-        value: ${SECRET_FVTT_USERNAME}
-      - name: FOUNDRY_PASSWORD
-        value: ${SECRET_FVTT_PASSWORD}
-      - name: FOUNDRY_HOSTNAME
-        value: fvtt-test.${SECRET_DOMAIN}
-      - name: FOUNDRY_LICENSE_KEY
-        value: ${SECRET_FVTT_LICENSE_KEY}
-      - name: FOUNDRY_ADMIN_KEY
-        value: ${SECRET_FVTT_TEST_ADMIN_KEY}
-      - name: FOUNDRY_PASSWORD_SALT
-        value: ${SECRET_FVTT_TEST_PASSWORD_SALT}
-      - name: FOUNDRY_MINIFY_STATIC_FILES
-        value: true
-      - name: FOUNDRY_PROTOCOL
-        value: 4
-      - name: FOUNDRY_PROXY_PORT
-        value: 443
-      - name: FOUNDRY_PROXY_SSL
-        value: true
-      - name: FOUNDRY_TELEMETRY
-        value: false
-      - name: FOUNDRY_UID
-        value: 421
-      - name: FOUNDRY_GID
-        value: 421
