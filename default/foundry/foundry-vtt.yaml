@@ -67,6 +67,7 @@ spec:
             port: 30000
     ingress:
       main:
+        enabled: true
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
