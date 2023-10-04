@@ -68,7 +68,6 @@ spec:
               TZ: "America/Chicago"
               HASS_SERVER: http://localhost:8123
               HASS_TOKEN: ${SECRET_HASS_TOKEN}
-            workingDir: "/config"
             args:
                 - --user-data-dir
                 - "/config/.vscode"
@@ -76,6 +75,7 @@ spec:
                 - "none"
                 - --port
                 - "12321"
+                - "/config"
             volumeMounts:
             - name: config
               mountPath: /config
