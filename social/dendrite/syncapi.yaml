@@ -11,34 +11,39 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-helm-charts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/matrix-org/sliding-sync
-      pullPolicy: IfNotPresent
-      tag: v0.99.10@sha256:242d559f1bee4b93b950a7e7f3f50fdbff17fe9df6cdfda3d4ab0c8f8e5306f6
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-      SYNCV3_SERVER: "https://dendrite.${SECRET_DOMAIN}"
-      SYNCV3_DB: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-psql-v16-rw.default.svc/syncv3?sslmode=disable
-      SYNCV3_SECRET: ${SECRET_SYNCV3_SECRET}
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        imagePullPolicy: IfNotPresent
-        env:
-          POSTGRES_DB: syncv3
-          POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
-          POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-          POSTGRES_USER: dendrite
-          POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+    controllers:
+      main:
+        strategy: Recreate
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: 14.8
+              imagePullPolicy: IfNotPresent
+            env:
+              POSTGRES_DB: syncv3
+              POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
+              POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              POSTGRES_USER: dendrite
+              POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+        containers:
+          main:
+            image:
+              repository: ghcr.io/matrix-org/sliding-sync
+              pullPolicy: IfNotPresent
+              tag: v0.99.10@sha256:242d559f1bee4b93b950a7e7f3f50fdbff17fe9df6cdfda3d4ab0c8f8e5306f6
+            env:
+              TZ: America/Chicago
+              SYNCV3_SERVER: "https://dendrite.${SECRET_DOMAIN}"
+              SYNCV3_DB: postgresql://dendrite:${SECRET_DENDRITE_POSTGRES_PASSWORD}@dendrite-psql-v16-rw.default.svc/syncv3?sslmode=disable
+              SYNCV3_SECRET: ${SECRET_SYNCV3_SECRET}
     service:
       main:
         ports:
@@ -55,7 +60,10 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        ingressClassName: nginx-external
+                service:
+                  name: main
+                  port: http
+        className: nginx-external
         tls:
           - secretName: conduit-cert
             hosts:
