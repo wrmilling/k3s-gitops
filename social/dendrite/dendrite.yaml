@@ -11,31 +11,76 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-helm-charts
         namespace: flux-system
   values:
-    image:
-      repository: ghcr.io/matrix-org/dendrite-monolith
-      pullPolicy: IfNotPresent
-      tag: v0.13.3@sha256:e9ee2ad8bc11662e544fbd4dd5abc12ac2aa28665bd6e953494042b565f81b2a
-    strategy:
-      type: Recreate
-    env:
-      TZ: America/Chicago
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        imagePullPolicy: IfNotPresent
-        env:
-          POSTGRES_DB: dendrite
-          POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
-          POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-          POSTGRES_USER: dendrite
-          POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+    controllers:
+      main:
+        strategy: Recreate
+        pod:
+          annotations:
+            configmap.reloader.stakater.com/reload: "dendrite-config"
+            secret.reloader.stakater.com/reload: "dendrite-yaml"
+          securityContext:
+            fsGroup: 1337
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: 14.8
+              imagePullPolicy: IfNotPresent
+            env:
+              POSTGRES_DB: dendrite
+              POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
+              POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              POSTGRES_USER: dendrite
+              POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+        containers:
+          main:
+            image:
+              repository: ghcr.io/matrix-org/dendrite-monolith
+              pullPolicy: IfNotPresent
+              tag: v0.13.3@sha256:e9ee2ad8bc11662e544fbd4dd5abc12ac2aa28665bd6e953494042b565f81b2a
+            env:
+              TZ: America/Chicago
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 10
+                  httpGet:
+                    path: /_dendrite/monitor/health
+                    port: http
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 10
+                  httpGet:
+                    path: /_dendrite/monitor/health
+                    port: http
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 10
+                  httpGet:
+                    path: /_dendrite/monitor/up
+                    port: http
     service:
       main:
         ports:
@@ -58,7 +103,10 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-        ingressClassName: nginx-external
+                service:
+                  name: main
+                  port: http
+        className: nginx-external
         tls:
           - secretName: conduit-cert
             hosts:
@@ -223,42 +271,3 @@ spec:
         name: dendrite-yaml
         mountPath: "/etc/dendrite/dendrite.yaml"
         subPath: "dendrite.yaml"
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "dendrite-config"
-      secret.reloader.stakater.com/reload: "dendrite-yaml"
-    podSecurityContext:
-      fsGroup: 1337
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 10
-          httpGet:
-            path: /_dendrite/monitor/health
-            port: http
-      readiness:
-        enabled: true
-        custom: true
-        spec:
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 10
-          httpGet:
-            path: /_dendrite/monitor/health
-            port: http
-      startup:
-        enabled: true
-        custom: true
-        spec:
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 10
-          httpGet:
-            path: /_dendrite/monitor/up
-            port: http
