@@ -74,6 +74,8 @@ spec:
                 - "/config/.vscode"
                 - --auth
                 - "none"
+                - --port
+                - 12321
             volumeMounts:
             - name: config
               mountPath: /config
