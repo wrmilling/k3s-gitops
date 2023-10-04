@@ -243,31 +243,31 @@ spec:
                 type: file
     persistence:
       logs:
-        enabled: true
-        mountPath: /var/dendrite-log
+        globalMounts:
+          - path: /var/dendrite-log
         type: emptyDir
       media:
-        enabled: true
-        mountPath: /var/dendrite/media
+        globalMounts:
+          - path: /var/dendrite/media
         existingClaim: dendrite-media-pvc
       search:
-        enabled: true
-        mountPath: /var/dendrite/search
+        globalMounts:
+          - path: /var/dendrite/search
         existingClaim: dendrite-search-pvc
       jetstream:
-        enabled: true
-        mountPath: /var/dendrite/jetstream
+        globalMounts:
+          - path: /var/dendrite/jetstream
         existingClaim: dendrite-jetstream-pvc
       matrix-key:
-        enabled: true
         type: secret
         name: dendrite-matrix-key
-        mountPath: "/etc/dendrite/matrix_key.pem"
-        subPath: "matrix_key.pem"
-        defaultMode: 0600
+        advancedMounts:
+          - path: "/etc/dendrite/matrix_key.pem"
+            subPath: "matrix_key.pem"
+            defaultMode: 0600
       dendrite-config:
-        enabled: true
         type: secret
         name: dendrite-yaml
-        mountPath: "/etc/dendrite/dendrite.yaml"
-        subPath: "dendrite.yaml"
+        advancedMounts:
+          - path: "/etc/dendrite/dendrite.yaml"
+            subPath: "dendrite.yaml"
