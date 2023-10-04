@@ -261,13 +261,17 @@ spec:
       matrix-key:
         type: secret
         name: dendrite-matrix-key
+        defaultMode: 0600
         advancedMounts:
-          - path: "/etc/dendrite/matrix_key.pem"
-            subPath: "matrix_key.pem"
-            defaultMode: 0600
+          main:
+            main:
+              - path: "/etc/dendrite/matrix_key.pem"
+                subPath: "matrix_key.pem"
       dendrite-config:
         type: secret
         name: dendrite-yaml
         advancedMounts:
-          - path: "/etc/dendrite/dendrite.yaml"
-            subPath: "dendrite.yaml"
+          main:
+            main:
+              - path: "/etc/dendrite/dendrite.yaml"
+                subPath: "dendrite.yaml"
