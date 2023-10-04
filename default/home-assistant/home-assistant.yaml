@@ -11,35 +11,72 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 1.5.1
+      version: 2.0.1
       interval: 15m
       sourceRef:
         kind: HelmRepository
         name: bjw-s-helm-charts
         namespace: flux-system
   values:
-    image:
-      repository: homeassistant/home-assistant
-      tag: 2023.9.3@sha256:067490d7b65cfa8b9e494a9447b0e5a7876be83ead7ec01738681c55d66e7cfe
-      pullPolicy: IfNotPresent
-    strategy:
-      type: Recreate
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        imagePullPolicy: IfNotPresent
-        env:
-          POSTGRES_DB: home_assistant
-          POSTGRES_HOST: home-assistant-psql-v16-rw.default.svc.cluster.local
-          POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-          POSTGRES_USER: home-assistant
-          POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
-    env:
-      TZ: "America/Chicago"
-      HASS_TOKEN: ${SECRET_HASS_TOKEN}
-      HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@home-assistant-psql-v16-rw.default.svc.cluster.local/home_assistant"
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
+    controllers:
+      main:
+        strategy: Recreate
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-initdb
+              tag: 14.8
+              imagePullPolicy: IfNotPresent
+            env:
+              POSTGRES_DB: home_assistant
+              POSTGRES_HOST: home-assistant-psql-v16-rw.default.svc.cluster.local
+              POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              POSTGRES_USER: home-assistant
+              POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
+        containers:
+          main:
+            image:
+              repository: homeassistant/home-assistant
+              tag: 2023.9.3@sha256:067490d7b65cfa8b9e494a9447b0e5a7876be83ead7ec01738681c55d66e7cfe
+              pullPolicy: IfNotPresent
+            env:
+              TZ: "America/Chicago"
+              HASS_TOKEN: ${SECRET_HASS_TOKEN}
+              HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@home-assistant-psql-v16-rw.default.svc.cluster.local/home_assistant"
+            pod:
+              hostNetwork: true
+              dnsPolicy: ClusterFirstWithHostNet
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: true
+            resources:
+              limits:
+                memory: 3000Mi
+              requests:
+                cpu: 100m
+                memory: 1000Mi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.17.1@sha256:69f3b3952cd7a9680c290cf2c8030888064c759b7b599505eda5b52bdd841e74
+              pullPolicy: IfNotPresent
+            env:
+              TZ: "America/Chicago"
+              HASS_SERVER: http://localhost:8123
+              HASS_TOKEN: ${SECRET_HASS_TOKEN}
+            workingDir: "/config"
+            args:
+                - --user-data-dir
+                - "/config/.vscode"
+                - --auth
+                - "none"
+            volumeMounts:
+            - name: config
+              mountPath: /config
     service:
       main:
         type: LoadBalancer
@@ -57,10 +94,19 @@ spec:
             port: 5353
             protocol: UDP
             targetPort: 5353
+      codeserver:
+        type: ClusterIP
+        controller: main
+        ports:
+          http:
+            enabled: true
+            port: 12321
+            protocol: TCP
+            targetPort: 12321
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx-external
+        className: nginx-external
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -69,64 +115,38 @@ spec:
           paths:
           - path: /
             pathType: Prefix
+            service:
+              name: main
+              port: http
         tls:
         - hosts:
           - "hass.${SECRET_DOMAIN}"
           secretName: hass-cert
-    prometheus:
-      serviceMonitor:
-        enabled: false
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
+      codeserver:
         enabled: true
+        className: nginx-external
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+        hosts:
+        - host: "hass-vscode.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: codeserver
+              port: http
+        tls:
+        - hosts:
+          - "hass-vscode.${SECRET_DOMAIN}"
+          secretName: hass-vscode-cert
+    serviceMonitor:
+      main:
+        enabled: false
     persistence:
       config:
         enabled: true
         existingClaim: hass-pvc
-    resources:
-      limits:
-        memory: 3000Mi
-      requests:
-        cpu: 100m
-        memory: 1000Mi
-    addons:
-      codeserver:
-        enabled: true
-        image:
-          repository: ghcr.io/coder/code-server
-          tag: 4.17.1@sha256:69f3b3952cd7a9680c290cf2c8030888064c759b7b599505eda5b52bdd841e74
-          pullPolicy: IfNotPresent
-        env:
-          TZ: "America/Chicago"
-          HASS_SERVER: http://localhost:8123
-          HASS_TOKEN: ${SECRET_HASS_TOKEN}
-        workingDir: "/config"
-        args:
-            - --user-data-dir
-            - "/config/.vscode"
-            - --auth
-            - "none"
-        ingress:
-          enabled: true
-          ingressClassName: nginx-external
-          annotations:
-            kubernetes.io/tls-acme: "true"
-            cert-manager.io/cluster-issuer: letsencrypt-prod
-            nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-            nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
-          hosts:
-          - host: "hass-vscode.${SECRET_DOMAIN}"
-            paths:
-            - path: /
-              pathType: Prefix
-          tls:
-          - hosts:
-            - "hass-vscode.${SECRET_DOMAIN}"
-            secretName: hass-vscode-cert
-        volumeMounts:
-        - name: config
-          mountPath: /config
+
