@@ -261,7 +261,7 @@ spec:
       matrix-key:
         type: secret
         name: dendrite-matrix-key
-        defaultMode: 0600
+        defaultMode: 384
         advancedMounts:
           main:
             main:
