@@ -75,7 +75,7 @@ spec:
                 - --auth
                 - "none"
                 - --port
-                - 12321
+                - "12321"
             volumeMounts:
             - name: config
               mountPath: /config
