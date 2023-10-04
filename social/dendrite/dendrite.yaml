@@ -58,7 +58,7 @@ spec:
                   failureThreshold: 10
                   httpGet:
                     path: /_dendrite/monitor/health
-                    port: http
+                    port: 8008
               readiness:
                 enabled: true
                 custom: true
@@ -69,7 +69,7 @@ spec:
                   failureThreshold: 10
                   httpGet:
                     path: /_dendrite/monitor/health
-                    port: http
+                    port: 8008
               startup:
                 enabled: true
                 custom: true
@@ -80,7 +80,7 @@ spec:
                   failureThreshold: 10
                   httpGet:
                     path: /_dendrite/monitor/up
-                    port: http
+                    port: 8008
     service:
       main:
         ports:
