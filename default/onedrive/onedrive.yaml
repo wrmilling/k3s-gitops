@@ -21,6 +21,9 @@ spec:
     controllers:
       main:
         strategy: Recreate
+        pod:
+          annotations:
+            secret.reloader.stakater.com/reload: "onedrive-secret"
         containers:
           main:
             image:
@@ -32,7 +35,9 @@ spec:
               ONEDRIVE_UID: 1000
               ONEDRIVE_GID: 1000
               ONEDRIVE_DOWNLOADONLY: 1
-              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
+            envFrom:
+              - secretRef:
+                  name: onedrive-secret
             probes:
               liveness:
                 enabled: false
