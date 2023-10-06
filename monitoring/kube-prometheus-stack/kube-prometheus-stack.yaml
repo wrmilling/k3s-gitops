@@ -5,7 +5,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
@@ -15,53 +15,29 @@ spec:
         kind: HelmRepository
         name: prometheus-community-charts
         namespace: flux-system
-      interval: 5m
-  timeout: 20m
+  maxHistory: 3
   install:
-    crds: Create
+    createNamespace: true
+    remediation:
+      retries: 3
   upgrade:
-    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
-    server:
-      resources:
-        requests:
-          memory: 1500Mi
-          cpu: 25m
-        limits:
-          memory: 2000Mi
-    prometheusOperator:
-      createCustomResource: true
-      admissionWebhooks:
-        enabled: false
-      prometheusConfigReloader:
-        resources:
-          limits:
-            cpu: 200m
+
+    crds:
+      enabled: true
+
+    cleanPrometheusOperatorObjectNames: true
+
+    defaultRules:
+      disabled:
+        HostHighCpuLoad: true
+
     alertmanager:
-      alertmanagerSpec:
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: rook-ceph-block
-              resources:
-                requests:
-                  storage: 10Gi
-        tolerations:
-        - key: "arm"
-          operator: "Exists"
-      ingress:
-        enabled: true
-        pathType: ImplementationSpecific
-        ingressClassName: nginx-internal
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
-        hosts: ["prom-alert.k.${SECRET_DOMAIN}"]
-        tls:
-        - hosts:
-          - "prom-alert.k.${SECRET_DOMAIN}"
-          secretName: prom-alert-cert
       config:
         global:
           resolve_timeout: 5m
@@ -75,12 +51,12 @@ spec:
               username: 'Alertmanager'
               send_resolved: true
               title: |-
-                [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .C    ommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
+                [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}
               text: >-
                 {{ range .Alerts -}}
                   *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
 
-                {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.des    cription ""}}*Description:* {{ .Annotations.description }}{{ end }}
+                {{ if ne .Annotations.summary ""}}*Summary:* {{ .Annotations.summary }} {{ else if ne .Annotations.message ""}}*Message:* {{ .Annotations.message }} {{ else if ne .Annotations.description ""}}*Description:* {{ .Annotations.description }}{{ end }}
 
                 *Details:*
                   {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
@@ -92,47 +68,73 @@ spec:
               description: |-
                 {{ template "pagerduty.custom.description" . }}
         route:
+          group_by: ["alertname", "job"]
+          group_wait: 45s
+          group_interval: 10m
+          repeat_interval: 12h
           receiver: 'slack-notifications'
-          # receiver: 'pagerduty'
           routes:
-            - match:
-                alertname: Watchdog
-              receiver: 'null'
-            - receiver: 'pagerduty'
-              match:
-                severity: critical
-              continue: true
+            - receiver: "null" # quote
+              matchers:
+                - alertname =~ "Watchdog"
+            - receiver: "null" # quote
+              matchers:
+                - alertname =~ "InfoInhibitor"
+            # - receiver: 'pagerduty'
+            #   matchers:
+            #     - severity = "critical"
+            #   continue: true
             - receiver: 'slack-notifications'
         inhibit_rules:
-        - source_match:
-            severity: 'critical'
-          target_match:
-            severity: 'warning'
-          # Apply inhibition if the alertname is the same.
-          equal: ['alertname', 'namespace']
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
+
         templates: ["*.tmpl"]
       templateFiles:
         pagerduty-custom.tmpl: |-
           {{- define "pagerduty.custom.description" -}}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }} {{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }} {{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }} {{ else }}{{ .CommonLabels.alertname }}{{ end }}{{- end -}}
-    nodeExporter:
-      serviceMonitor:
-        relabelings:
-        - sourceLabels: [__meta_kubernetes_pod_node_name]
-          targetLabel: instance
-          action: replace
+      ingress:
+        enabled: true
+        pathType: ImplementationSpecific
+        ingressClassName: nginx-internal
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/verify"
+        hosts: ["prom-alert.k.${SECRET_DOMAIN}"]
+        tls:
+        - hosts:
+          - "prom-alert.k.${SECRET_DOMAIN}"
+          secretName: prom-alert-cert
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: rook-ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
+        tolerations:
+        - key: "arm"
+          operator: "Exists"
+
     grafana:
       enabled: false
-    kubeApiServer:
+      forceDeployDashboards: true
+
+    kubelet:
       enabled: true
-    kubeEtcd:
-      enabled: false
-    kubeControllerManager:
-      enabled: false
-    kubeScheduler:
-      enabled: false
-    kubeProxy:
-      enabled: false
-    prometheus-node-exporter:
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels: ["node"]
+            targetLabel: instance
+
+    kube-state-metrics:
+      metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
       prometheus:
         monitor:
           enabled: true
@@ -140,14 +142,67 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels:
-                - __meta_kubernetes_pod_node_name
-              targetLabel: instance
-      tolerations:
-      - key: "arm"
-        operator: "Exists"
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+
+    kubeApiServer:
+      enabled: true
+
+    kubeControllerManager:
+      enabled: false
+      endpoints:
+        - 10.10.40.40
+      service:
+        enabled: true
+        port: 10257
+        targetPort: 10257
+      serviceMonitor:
+        enabled: true
+        https: true
+        insecureSkipVerify: true
+
+    kubeScheduler:
+      enabled: false
+      endpoints:
+        - 10.10.40.40
+      service:
+        enabled: true
+        port: 10259
+        targetPort: 10259
+      serviceMonitor:
+        enabled: true
+        https: true
+        insecureSkipVerify: true
+
+    kubeProxy:
+      enabled: false
+      endpoints:
+        - 10.10.40.40
+
+    kubeEtcd:
+      enabled: false
+      endpoints:
+        - 10.10.40.40
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
+
+    prometheusOperator:
+      createCustomResource: true
+      # prometheusConfigReloaderImage:
+      #   repository: quay.io/coreos/prometheus-config-reloader
+      #   tag: v0.39.0
+      # configmapReloadImage:
+      #   repository: jimmidyson/configmap-reload
+      #   tag: v0.4.0
+      prometheusConfigReloader:
+        resources:
+          limits:
+            cpu: 200m
+      admissionWebhooks:
+        enabled: false
+
     prometheus:
       ingress:
         enabled: true
@@ -162,19 +217,25 @@ spec:
         - hosts:
           - "prom-server.k.${SECRET_DOMAIN}"
           secretName: prom-server-cert
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
       prometheusSpec:
         replicas: 2
         replicaExternalLabelName: "replica"
-        ruleSelector: {}
-        ruleNamespaceSelector: {}
+        thanos:
+          image: quay.io/thanos/thanos:v0.32.4
+          version: v0.30.1
+          objectStorageConfig:
+            name: thanos
+            key: object-store.yaml
+        podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: {}
-        serviceMonitorNamespaceSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelector: {}
-        podMonitorNamespaceSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        retention: 6h
+        probeSelectorNilUsesHelmValues: false
+        retention: 2d
         enableAdminAPI: true
         walCompression: true
         storageSpec:
@@ -184,14 +245,37 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-        thanos:
-          image: quay.io/thanos/thanos:v0.32.4@sha256:f020de546269b62d3b7f2b0fe5cd815d632d1e11878708bd0d83a5c3f10747ad
-          version: v0.17.0
-          objectStorageConfig:
-            name: thanos
-            key: object-store.yaml
+        resources:
+          requests:
+            memory: 2000Mi
+            cpu: 250m
+          limits:
+            memory: 5000Mi
+
         additionalScrapeConfigs:
         - job_name: 'node'
           static_configs:
           - targets:
             - destiny.${SECRET_DOMAIN}:9100
+
+    nodeExporter:
+      enabled: true
+
+    prometheus-node-exporter:
+      prometheus:
+        monitor:
+          enabled: true
+          # relabelings:
+          #   - action: replace
+          #     regex: (.*)
+          #     replacement: $1
+          #     sourceLabels:
+          #       - __meta_kubernetes_pod_node_name
+          #     targetLabel: instance
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
+      - key: "armhf"
+        operator: "Exists"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
