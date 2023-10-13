@@ -195,9 +195,6 @@ spec:
       osdsPerDevice: "1" # this value can be overridden at the node or device level
       # encryptedDevice: "true" # the default value for this option is "false"
     nodes:
-      - name: "k3s-amd64-a"
-        devices:
-          - name: "sdb"
       - name: "k3s-amd64-b"
         devices:
           - name: "sdb"
