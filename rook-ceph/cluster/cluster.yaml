@@ -195,9 +195,6 @@ spec:
       osdsPerDevice: "1" # this value can be overridden at the node or device level
       # encryptedDevice: "true" # the default value for this option is "false"
     nodes:
-      - name: "k3s-amd64-c"
-        devices:
-          - name: "sdb"
       - name: "nk3s-amd64-a"
         devices:
           - name: "/dev/disk/by-id/ata-MK000960GWCFA_S3EANX0JA06984"
