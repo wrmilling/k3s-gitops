@@ -40,8 +40,8 @@ spec:
       service:
         type: LoadBalancer
         exernalIPs:
-        - 10.10.40.70
-        loadBalancerIP: 10.10.40.70
+        - ${SVC_NGINX_EXTERNAL_IP}
+        loadBalancerIP: ${SVC_NGINX_EXTERNAL_IP}
         externalTrafficPolicy: Local
       metrics:
         enabled: true
