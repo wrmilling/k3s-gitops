@@ -68,11 +68,12 @@ spec:
               TZ: "America/Chicago"
               HASS_SERVER: http://localhost:8123
               HASS_TOKEN: ${SECRET_HASS_TOKEN}
+              PASSWORD: ${SECRET_HASS_PASSWORD}
             args:
                 - --user-data-dir
                 - "/config/.vscode"
                 - --auth
-                - "none"
+                - "password"
                 - --port
                 - "12321"
                 - "/config"
