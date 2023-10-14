@@ -252,12 +252,6 @@ spec:
           limits:
             memory: 5000Mi
 
-        additionalScrapeConfigs:
-        - job_name: 'node'
-          static_configs:
-          - targets:
-            - destiny.${SECRET_DOMAIN}:9100
-
     nodeExporter:
       enabled: true
 
