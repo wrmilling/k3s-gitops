@@ -26,6 +26,7 @@ spec:
       enableCSIHostNetwork: true
       enableCephfsDriver: false
       enableCephfsSnapshotter: false
+      enableLiveness: true
       pluginTolerations:
         - key: "arm"
           operator: "Exists"
