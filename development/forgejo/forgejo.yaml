@@ -70,6 +70,11 @@ spec:
               FORGEJO__server__APP_DATA_PATH: "/data/gitea"
               FORGEJO__service__DISABLE_REGISTRATION: "true"
               FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
+              FORGEJO__storage__STORAGE_TYPE: "minio"
+              FORGEJO__storage__MINIO_ENDPOINT: "minio.kube-system.svc:9000"
+              FORGEJO__storage__MINIO_ACCESS_KEY_ID: "${SECRET_FORGEJO_MINIO_ACCESS_KEY}"
+              FORGEJO__storage__MINIO_SECRET_ACCESS_KEY: "${SECRET_FORGEJO_MINIO_SECRET_KEY}"
+              FORGEJO__storage__MINIO_BUCKET: "forgejo"
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
@@ -100,24 +105,6 @@ spec:
           - secretName: forgejo-cert
             hosts:
               - git.${SECRET_DOMAIN}
-      internal:
-        enabled: false
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: git-internal.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: http
-        className: nginx-internal
-        tls:
-          - secretName: forgejo-internal-cert
-            hosts:
-              - git-internal.${SECRET_DOMAIN}
     persistence:
       config:
         enabled: true
