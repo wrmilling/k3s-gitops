@@ -83,7 +83,7 @@ spec:
             port: 2222
     ingress:
       main:
-        enabled: false
+        enabled: true
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -101,7 +101,7 @@ spec:
             hosts:
               - git.${SECRET_DOMAIN}
       internal:
-        enabled: true
+        enabled: false
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
