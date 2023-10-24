@@ -87,6 +87,7 @@ spec:
       ssh:
         type: LoadBalancer
         loadBalancerIP: ${SVC_FORGEJO_IP}
+        controller: main
         ports:
           ssh:
             enabled: true
