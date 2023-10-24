@@ -38,6 +38,9 @@ spec:
     - accessKey: ${SECRET_CNPG_MINIO_ACCESS_KEY}
       secretKey: ${SECRET_CNPG_MINIO_SECRET_KEY}
       policy: readWrite
+    - accessKey: ${SECRET_FORGEJO_MINIO_ACCESS_KEY}
+      secretKey: ${SECRET_FORGEJO_MINIO_SECRET_KEY}
+      policy: readWrite
     persistence:
       enabled: true
       existingClaim: "nfs-minio-pvc"
