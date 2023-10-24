@@ -27,15 +27,15 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-initdb
-              tag: 14.8
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
               imagePullPolicy: IfNotPresent
             env:
-              POSTGRES_DB: home_assistant
-              POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-              POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-              POSTGRES_USER: home-assistant
-              POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
+              INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              INIT_POSTGRES_DBNAME: home_assistant
+              INIT_POSTGRES_USER: home-assistant
+              INIT_POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
         containers:
           main:
             image:
