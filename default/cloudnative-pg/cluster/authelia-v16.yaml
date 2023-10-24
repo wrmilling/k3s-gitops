@@ -1,69 +1,69 @@
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: authelia-psql-v16
-  namespace: default
-  annotations:
-    kyverno.io/ignore: "true"
-spec:
-  # using only 1 replica: very difficult to drain the node where postgres is running
-  # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
-  instances: 2
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
-  primaryUpdateStrategy: unsupervised
-  storage:
-    size: 2Gi
-    storageClass: rook-ceph-block
-  superuserSecret:
-    name: cloudnative-pg
-  postgresql:
-    parameters:
-      max_connections: "300"
-      shared_buffers: 512MB
-  monitoring:
-    enablePodMonitor: true
-  resources:
-    requests:
-      memory: "512Mi"
-    limits:
-      memory: "1Gi"
-  affinity:
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 4
-      destinationPath: s3://postgresql/
-      endpointURL: http://minio.kube-system.svc:9000
-      serverName: authelia-psql-v16
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg
-          key: MINIO_ACCESS_KEY
-        secretAccessKey:
-          name: cloudnative-pg
-          key: MINIO_SECRET_KEY
-  # bootstrap:
-  #   recovery:
-  #     source: authelia-psql-backup
-  # externalClusters:
-  #   - name: authelia-psql-backup
-  #     barmanObjectStore:
-  #       wal:
-  #         compression: bzip2
-  #         maxParallel: 4
-  #       destinationPath: s3://postgresql/
-  #       endpointURL: http://minio.kube-system.svc:9000
-  #       serverName: authelia-psql-v16
-  #       s3Credentials:
-  #         accessKeyId:
-  #           name: cloudnative-pg
-  #           key: MINIO_ACCESS_KEY
-  #         secretAccessKey:
-  #           name: cloudnative-pg
-  #           key: MINIO_SECRET_KEY
+# ---
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: authelia-psql-v16
+#   namespace: default
+#   annotations:
+#     kyverno.io/ignore: "true"
+# spec:
+#   # using only 1 replica: very difficult to drain the node where postgres is running
+#   # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
+#   instances: 2
+#   imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+#   primaryUpdateStrategy: unsupervised
+#   storage:
+#     size: 2Gi
+#     storageClass: rook-ceph-block
+#   superuserSecret:
+#     name: cloudnative-pg
+#   postgresql:
+#     parameters:
+#       max_connections: "300"
+#       shared_buffers: 512MB
+#   monitoring:
+#     enablePodMonitor: true
+#   resources:
+#     requests:
+#       memory: "512Mi"
+#     limits:
+#       memory: "1Gi"
+#   affinity:
+#     tolerations:
+#     - key: "arm"
+#       operator: "Exists"
+#   backup:
+#     retentionPolicy: 30d
+#     barmanObjectStore:
+#       wal:
+#         compression: bzip2
+#         maxParallel: 4
+#       destinationPath: s3://postgresql/
+#       endpointURL: http://minio.kube-system.svc:9000
+#       serverName: authelia-psql-v16
+#       s3Credentials:
+#         accessKeyId:
+#           name: cloudnative-pg
+#           key: MINIO_ACCESS_KEY
+#         secretAccessKey:
+#           name: cloudnative-pg
+#           key: MINIO_SECRET_KEY
+#   # bootstrap:
+#   #   recovery:
+#   #     source: authelia-psql-backup
+#   # externalClusters:
+#   #   - name: authelia-psql-backup
+#   #     barmanObjectStore:
+#   #       wal:
+#   #         compression: bzip2
+#   #         maxParallel: 4
+#   #       destinationPath: s3://postgresql/
+#   #       endpointURL: http://minio.kube-system.svc:9000
+#   #       serverName: authelia-psql-v16
+#   #       s3Credentials:
+#   #         accessKeyId:
+#   #           name: cloudnative-pg
+#   #           key: MINIO_ACCESS_KEY
+#   #         secretAccessKey:
+#   #           name: cloudnative-pg
+#   #           key: MINIO_SECRET_KEY
