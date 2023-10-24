@@ -32,7 +32,7 @@ spec:
               imagePullPolicy: IfNotPresent
             env:
               POSTGRES_DB: home_assistant
-              POSTGRES_HOST: home-assistant-psql-v16-rw.default.svc.cluster.local
+              POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
               POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
               POSTGRES_USER: home-assistant
               POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
@@ -45,7 +45,7 @@ spec:
             env:
               TZ: "America/Chicago"
               HASS_TOKEN: ${SECRET_HASS_TOKEN}
-              HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@home-assistant-psql-v16-rw.default.svc.cluster.local/home_assistant"
+              HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@shared-psql-v16-rw.default.svc.cluster.local/home_assistant"
             probes:
               liveness:
                 enabled: false
