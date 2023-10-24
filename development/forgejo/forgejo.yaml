@@ -25,11 +25,11 @@ spec:
           tag: 14.9
           imagePullPolicy: IfNotPresent
         env:
-        - INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-        - INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-        - INIT_POSTGRES_DBNAME: forgejo
-        - INIT_POSTGRES_USER: forgejo
-        - INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
+          INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+          INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+          INIT_POSTGRES_DBNAME: forgejo
+          INIT_POSTGRES_USER: forgejo
+          INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
     controllers:
       main:
         strategy: Recreate
@@ -40,35 +40,35 @@ spec:
               pullPolicy: IfNotPresent
               tag: 1.20.5-0-rootless@sha256:5dac3c3211aff22b27f89f6d2c16b9a3a7305d8bf39bd1b219dfaa06298453b9
             env:
-            - TZ: America/Chicago
-            - USER_UID: 1000
-            - USER_GID: 1000
-            - FORGEJO__APP_NAME: "The Homelab Git"
-            - FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
-            - FORGEJO__cache__ENABLED: "true"
-            - FORGEJO__cache__ADAPTER: "redis"
-            - FORGEJO__cache__HOST: "redis://:${SECRET_FORGEJO_REDIS_PASSWORD}@forgejo-redis.development.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s"
-            - FORGEJO__database__DB_TYPE: "postgres"
-            - FORGEJO__database__HOST: "shared-psql-v16-rw.default.svc.cluster.local:5432"
-            - FORGEJO__database__NAME: "forgejo"
-            - FORGEJO__database__USER: "forgejo"
-            - FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
-            - FORGEJO__git.timeout__MIGRATE: "1000"
-            - FORGEJO__git.timeout__MIRROR: "1000"
-            - FORGEJO__mailer__ENABLED: "true"
-            - FORGEJO__mailer__PROTOCOL: "smtp+starttls"
-            - FORGEJO__mailer__SMTP_ADDR: "SECRET_SMTP_DOMAIN"
-            - FORGEJO__mailer__SMTP_PORT: "587"
-            - FORGEJO__mailer__FROM: "${SECRET_FORGEJO_SMTP_USER}"
-            - FORGEJO__mailer__USER: "${SECRET_FORGEJO_SMTP_USER}"
-            - FORGEJO__mailer__PASSWD: "${SECRET_FORGEJO_SMTP_PASSWORD}"
-            - FORGEJO__repository__DEFAULT_PRIVATE: "true"
-            - FORGEJO__security__PASSWORD_COMPLEXITY: "lower,upper"
-            - FORGEJO__security__MIN_PASSWORD_LENGTH: "12"
-            - FORGEJO__security__SECRET_KEY: "${SECRET_FORGEJO_SECRET_KEY}"
-            - FORGEJO__server__ROOT_URL: "https://git.${SECRET_DOMAIN}"
-            - FORGEJO__service__DISABLE_REGISTRATION: "true"
-            - FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
+              TZ: America/Chicago
+              USER_UID: 1000
+              USER_GID: 1000
+              FORGEJO__APP_NAME: "The Homelab Git"
+              FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
+              FORGEJO__cache__ENABLED: "true"
+              FORGEJO__cache__ADAPTER: "redis"
+              FORGEJO__cache__HOST: "redis://:${SECRET_FORGEJO_REDIS_PASSWORD}@forgejo-redis.development.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s"
+              FORGEJO__database__DB_TYPE: "postgres"
+              FORGEJO__database__HOST: "shared-psql-v16-rw.default.svc.cluster.local:5432"
+              FORGEJO__database__NAME: "forgejo"
+              FORGEJO__database__USER: "forgejo"
+              FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
+              FORGEJO__git.timeout__MIGRATE: "1000"
+              FORGEJO__git.timeout__MIRROR: "1000"
+              FORGEJO__mailer__ENABLED: "true"
+              FORGEJO__mailer__PROTOCOL: "smtp+starttls"
+              FORGEJO__mailer__SMTP_ADDR: "SECRET_SMTP_DOMAIN"
+              FORGEJO__mailer__SMTP_PORT: "587"
+              FORGEJO__mailer__FROM: "${SECRET_FORGEJO_SMTP_USER}"
+              FORGEJO__mailer__USER: "${SECRET_FORGEJO_SMTP_USER}"
+              FORGEJO__mailer__PASSWD: "${SECRET_FORGEJO_SMTP_PASSWORD}"
+              FORGEJO__repository__DEFAULT_PRIVATE: "true"
+              FORGEJO__security__PASSWORD_COMPLEXITY: "lower,upper"
+              FORGEJO__security__MIN_PASSWORD_LENGTH: "12"
+              FORGEJO__security__SECRET_KEY: "${SECRET_FORGEJO_SECRET_KEY}"
+              FORGEJO__server__ROOT_URL: "https://git.${SECRET_DOMAIN}"
+              FORGEJO__service__DISABLE_REGISTRATION: "true"
+              FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
