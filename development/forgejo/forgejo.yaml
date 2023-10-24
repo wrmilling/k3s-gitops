@@ -84,8 +84,15 @@ spec:
         ports:
           http:
             port: 3000
+      ssh:
+        type: LoadBalancer
+        loadBalancerIP: ${SVC_FORGEJO_IP}
+        ports:
           ssh:
+            enabled: true
             port: 2222
+            protocol: TCP
+            targetPort: 2222
     ingress:
       main:
         enabled: true
