@@ -121,6 +121,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: forgejo-pvc
+        existingClaim: forgejo-config-pvc
+        globalMounts:
+          - path: /etc/gitea
+      data:
+        enabled: true
+        existingClaim: forgejo-data-pvc
         globalMounts:
           - path: /data
