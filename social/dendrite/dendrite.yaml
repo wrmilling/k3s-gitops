@@ -30,15 +30,15 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-initdb
-              tag: 14.8
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
               imagePullPolicy: IfNotPresent
             env:
-              POSTGRES_DB: dendrite
-              POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
-              POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-              POSTGRES_USER: dendrite
-              POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
+              INIT_POSTGRES_DBNAME: dendrite
+              INIT_POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
+              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              INIT_POSTGRES_USER: dendrite
+              INIT_POSTGRES_PASS: ${SECRET_DENDRITE_POSTGRES_PASSWORD}
         containers:
           main:
             image:
