@@ -24,18 +24,18 @@ spec:
         pod:
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
-              imagePullPolicy: IfNotPresent
-            env:
-              INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-              INIT_POSTGRES_DBNAME: home_assistant
-              INIT_POSTGRES_USER: home-assistant
-              INIT_POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/onedr0p/postgres-init
+        #       tag: 14.9
+        #       imagePullPolicy: IfNotPresent
+        #     env:
+        #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+        #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+        #       INIT_POSTGRES_DBNAME: home_assistant
+        #       INIT_POSTGRES_USER: home-assistant
+        #       INIT_POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
         containers:
           main:
             image:
