@@ -21,18 +21,18 @@ spec:
     controllers:
       main:
         strategy: Recreate
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
-              imagePullPolicy: IfNotPresent
-            env:
-              INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-              INIT_POSTGRES_DBNAME: forgejo
-              INIT_POSTGRES_USER: forgejo
-              INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/onedr0p/postgres-init
+        #       tag: 14.9
+        #       imagePullPolicy: IfNotPresent
+        #     env:
+        #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+        #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+        #       INIT_POSTGRES_DBNAME: forgejo
+        #       INIT_POSTGRES_USER: forgejo
+        #       INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
         containers:
           main:
             image:
