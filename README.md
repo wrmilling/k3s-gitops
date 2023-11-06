@@ -22,13 +22,15 @@ Using GitOps principals and workflow to manage a lightweight <a href="https://k3
 
 ## Overview
 
-![k3s Nodes](https://i.imgur.com/8Zgf3jS.png)
+![k3s Nodes](https://i.imgur.com/fVztTt3.png)
 
 This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps principals and define the state of my cluster using code.
 
 ## Infrastructure
 
-Setup for the individual nodes OS and base k3s install can be found in [WRMilling/homelab-infrastructure](https://github.com/WRMilling/homelab-infrastructure/) repository.
+Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [Overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
+
+The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C PCs which are both compute and storage, and three (3) Raspberry Pi 4B 8GB which provide more compute capacity.
 
 ## Setup
 
