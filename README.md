@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.27.5-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml?"><img src="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml.svg" alt="builds.sr.ht status"></a> <a href="https://discord.gg/k8s-at-home"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
+  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.27.6-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml?"><img src="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml.svg" alt="builds.sr.ht status"></a> <a href="https://discord.gg/k8s-at-home"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -28,7 +28,7 @@ This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps princip
 
 ## Infrastructure
 
-Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [Overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
+Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
 
 The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C PCs which are both compute and storage, and three (3) Raspberry Pi 4B 8GB which provide more compute capacity.
 
