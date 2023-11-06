@@ -80,6 +80,10 @@ spec:
             volumeMounts:
             - name: config
               mountPath: /config
+    defaultPodOptions:
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
     service:
       main:
         type: LoadBalancer

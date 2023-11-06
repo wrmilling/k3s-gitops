@@ -18,6 +18,10 @@ spec:
         name: bjw-s-helm-charts
         namespace: flux-system
   values:
+    defaultPodOptions:
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
     controllers:
       main:
         strategy: Recreate

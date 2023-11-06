@@ -60,6 +60,9 @@ spec:
       securityContext:
         fsGroup: 421
         fsGroupChangePolicy: "Always"
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
     service:
       main:
         ports:
