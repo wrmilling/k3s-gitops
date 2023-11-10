@@ -28,7 +28,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    volumeSnapshotClasses:
+    controller:
+      volumeSnapshotClasses:
       - name: csi-rbdplugin-snapclass
         driver: rook-ceph.rbd.csi.ceph.com
         annotations:
