@@ -2,6 +2,10 @@
 
 Default namespace for applications.
 
+## CloundNativePG
+
+Docs in Progress.
+
 ## Dedrite
 
 [Dendrite](https://matrix-org.github.io/dendrite/) is a second-generation Matrix homeserver written in Go! Following the microservice architecture model, Dendrite is designed to be efficient, reliable and scalable.
@@ -17,6 +21,10 @@ Default namespace for applications.
 
 * [emqx/emqx.yaml](emqx/emqx.yaml) - HelmRelease for emqx using their official chart.
 
+## Foundry VTT
+
+Docs in Progress.
+
 ## Home Assistant
 
 [Home Assistant](https://www.home-assistant.io/) is an open source home automation solution that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts.
@@ -24,6 +32,10 @@ Default namespace for applications.
 * [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
 * [home-assistant/postgres.yaml](home-assistant/postgres.yaml) - PostgreSQL deployment utilizing the Bitnami helm chart.
 * [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistant volume claims for the Home Assistant and PostgreSQL deployments.
+
+## Minecraft
+
+Docs in Progress. 
 
 ## OneDrive
 
