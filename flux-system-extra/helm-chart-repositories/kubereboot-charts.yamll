@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: weaveworks-kured-charts
+  name: kubereboot-charts
   namespace: flux-system
 spec:
-  interval: 1h
+  interval: 10m
   url: https://kubereboot.github.io/charts
   timeout: 3m
