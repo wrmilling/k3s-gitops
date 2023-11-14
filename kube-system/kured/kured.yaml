@@ -45,6 +45,7 @@ spec:
       endTime: "23:59"
       timeZone: "America/Chicago"
       rebootCommand: "/run/current-system/sw/bin/systemctl reboot" # This assumes a NixOS Node
+      rebootSentinelCommand: "/run/current-system/sw/bin/test -f /var/run/reboot-required" # This assumes a NixOS Node
       notifyUrl: "${SECRET_KURED_NOTIFY_URL}"
       blockingPodSelector:
         app.kubernetes.io/created-by: "volsync"
