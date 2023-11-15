@@ -42,7 +42,7 @@ spec:
   values:
     configuration:
       startTime: "0:00"
-      endTime: "23:59"
+      endTime: "4:00"
       timeZone: "America/Chicago"
       rebootCommand: "/run/current-system/sw/bin/systemctl reboot" # This assumes a NixOS Node
       rebootSentinelCommand: "/run/current-system/sw/bin/test -f /var/run/reboot-required" # This assumes a NixOS Node
