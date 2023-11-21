@@ -29,7 +29,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
+              tag: 15.5
               imagePullPolicy: IfNotPresent
             env:
               INIT_POSTGRES_DBNAME: syncv3
