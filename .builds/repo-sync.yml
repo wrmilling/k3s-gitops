@@ -26,14 +26,3 @@ tasks:
         git push gitlab $BRANCH
         git push homelab $BRANCH
     fi
-- push-main: |
-    BRANCH=main
-
-    cd $REPO
-    if git diff -s --exit-code origin/${BRANCH}; then
-        git checkout ${BRANCH}
-        git push github $BRANCH
-        git push codeberg $BRANCH
-        git push gitlab $BRANCH
-        git push homelab $BRANCH
-    fi
