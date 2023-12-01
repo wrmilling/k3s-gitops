@@ -22,7 +22,7 @@ Using GitOps principals and workflow to manage a lightweight <a href="https://k3
 
 ## Overview
 
-![k3s Nodes](https://i.imgur.com/fVztTt3.png)
+![k3s Nodes](https://i.imgur.com/2hBUBi1.png)
 
 This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps principals and define the state of my cluster using code.
 
