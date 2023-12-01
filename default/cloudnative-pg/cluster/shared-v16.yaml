@@ -32,38 +32,38 @@ spec:
     tolerations:
     - key: "arm"
       operator: "Exists"
-  # backup:
-  #   retentionPolicy: 30d
-  #   barmanObjectStore:
-  #     wal:
-  #       compression: bzip2
-  #       maxParallel: 4
-  #     destinationPath: s3://postgresql/
-  #     endpointURL: http://minio.kube-system.svc:9000
-  #     serverName: shared-v16
-  #     s3Credentials:
-  #       accessKeyId:
-  #         name: cloudnative-pg
-  #         key: MINIO_ACCESS_KEY
-  #       secretAccessKey:
-  #         name: cloudnative-pg
-  #         key: MINIO_SECRET_KEY
-  bootstrap:
-    recovery:
-      source: shared-psql-backup
-  externalClusters:
-    - name: shared-psql-backup
-      barmanObjectStore:
-        wal:
-          compression: bzip2
-          maxParallel: 4
-        destinationPath: s3://postgresql/
-        endpointURL: http://minio.kube-system.svc:9000
-        serverName: shared-psql-v16
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg
-            key: MINIO_SECRET_KEY
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      destinationPath: s3://postgresql/
+      endpointURL: http://minio.kube-system.svc:9000
+      serverName: shared-v16
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg
+          key: MINIO_SECRET_KEY
+  # bootstrap:
+  #   recovery:
+  #     source: shared-psql-backup
+  # externalClusters:
+  #   - name: shared-psql-backup
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 4
+  #       destinationPath: s3://postgresql/
+  #       endpointURL: http://minio.kube-system.svc:9000
+  #       serverName: shared-psql-v16
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg
+  #           key: MINIO_ACCESS_KEY
+  #         secretAccessKey:
+  #           name: cloudnative-pg
+  #           key: MINIO_SECRET_KEY
