@@ -1,138 +1,138 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: forgejo
-#   namespace: development
-# spec:
-#   releaseName: forgejo
-#   interval: 15m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-#       chart: app-template
-#       version: 2.3.0
-#       interval: 15m
-#       sourceRef:
-#         kind: HelmRepository
-#         name: bjw-s-helm-charts
-#         namespace: flux-system
-#   values:
-#     controllers:
-#       main:
-#         strategy: Recreate
-#         # initContainers:
-#         #   init-db:
-#         #     image:
-#         #       repository: ghcr.io/onedr0p/postgres-init
-#         #       tag: 14.9
-#         #       imagePullPolicy: IfNotPresent
-#         #     env:
-#         #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-#         #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-#         #       INIT_POSTGRES_DBNAME: forgejo
-#         #       INIT_POSTGRES_USER: forgejo
-#         #       INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
-#         containers:
-#           main:
-#             image:
-#               repository: codeberg.org/forgejo/forgejo
-#               pullPolicy: IfNotPresent
-#               tag: 1.21.1-0-rootless@sha256:165eeb412cc38a9f9caae1fa833231091601e5c70f4c0752d3020fe124002bd8
-#             env:
-#               TZ: America/Chicago
-#               USER_UID: 1000
-#               USER_GID: 1000
-#               FORGEJO__APP_NAME: "The Homelab Git"
-#               FORGEJO__actions__ENABLED: "false"
-#               FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
-#               FORGEJO__cache__ENABLED: "true"
-#               FORGEJO__cache__ADAPTER: "redis"
-#               FORGEJO__cache__HOST: "redis://:${SECRET_FORGEJO_REDIS_PASSWORD}@forgejo-redis-master.development.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s"
-#               FORGEJO__database__DB_TYPE: "postgres"
-#               FORGEJO__database__HOST: "shared-psql-v16-rw.default.svc.cluster.local:5432"
-#               FORGEJO__database__NAME: "forgejo"
-#               FORGEJO__database__USER: "forgejo"
-#               FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
-#               FORGEJO__federation__ENABLED: "false"
-#               FORGEJO__git.timeout__MIGRATE: "1000"
-#               FORGEJO__git.timeout__MIRROR: "1000"
-#               FORGEJO__mailer__ENABLED: "true"
-#               FORGEJO__mailer__PROTOCOL: "smtp+starttls"
-#               FORGEJO__mailer__SMTP_ADDR: "SECRET_SMTP_DOMAIN"
-#               FORGEJO__mailer__SMTP_PORT: "587"
-#               FORGEJO__mailer__FROM: "${SECRET_FORGEJO_SMTP_USER}"
-#               FORGEJO__mailer__USER: "${SECRET_FORGEJO_SMTP_USER}"
-#               FORGEJO__mailer__PASSWD: "${SECRET_FORGEJO_SMTP_PASSWORD}"
-#               FORGEJO__repository__DEFAULT_PRIVATE: "true"
-#               FORGEJO__security__PASSWORD_COMPLEXITY: "lower,upper"
-#               FORGEJO__security__MIN_PASSWORD_LENGTH: "12"
-#               FORGEJO__security__SECRET_KEY: "${SECRET_FORGEJO_SECRET_KEY}"
-#               FORGEJO__server__ROOT_URL: "https://git.${SECRET_DOMAIN}"
-#               FORGEJO__server__APP_DATA_PATH: "/data/gitea"
-#               FORGEJO__service__DISABLE_REGISTRATION: "true"
-#               FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
-#               FORGEJO__storage__STORAGE_TYPE: "minio"
-#               FORGEJO__storage__MINIO_ENDPOINT: "minio.kube-system.svc:9000"
-#               FORGEJO__storage__MINIO_ACCESS_KEY_ID: "${SECRET_FORGEJO_MINIO_ACCESS_KEY}"
-#               FORGEJO__storage__MINIO_SECRET_ACCESS_KEY: "${SECRET_FORGEJO_MINIO_SECRET_KEY}"
-#               FORGEJO__storage__MINIO_BUCKET: "forgejo"
-#               FORGEJO__ui__DEFAULT_THEME: "arc-green"
-#             resources:
-#               requests:
-#                 cpu: 100m
-#                 memory: 512Mi
-#               limits:
-#                 memory: 1024Mi
-#     defaultPodOptions:
-#       securityContext:
-#         fsGroup: 1000
-#         fsGroupChangePolicy: "Always"
-#       tolerations:
-#       - key: "arm"
-#         operator: "Exists"
-#     service:
-#       main:
-#         ports:
-#           http:
-#             port: 3000
-#       ssh:
-#         type: LoadBalancer
-#         loadBalancerIP: ${SVC_FORGEJO_IP}
-#         controller: main
-#         ports:
-#           ssh:
-#             enabled: true
-#             port: 2222
-#             protocol: TCP
-#             targetPort: 2222
-#     ingress:
-#       main:
-#         enabled: true
-#         annotations:
-#           kubernetes.io/tls-acme: "true"
-#           cert-manager.io/cluster-issuer: letsencrypt-prod
-#         hosts:
-#           - host: git.${SECRET_DOMAIN}
-#             paths:
-#               - path: /
-#                 pathType: Prefix
-#                 service:
-#                   name: main
-#                   port: http
-#         className: nginx-external
-#         tls:
-#           - secretName: forgejo-cert
-#             hosts:
-#               - git.${SECRET_DOMAIN}
-#     persistence:
-#       config:
-#         enabled: true
-#         existingClaim: forgejo-config-pvc
-#         globalMounts:
-#           - path: /etc/gitea
-#       data:
-#         enabled: true
-#         existingClaim: forgejo-data-pvc
-#         globalMounts:
-#           - path: /data
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: forgejo
+  namespace: development
+spec:
+  releaseName: forgejo
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 2.3.0
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/onedr0p/postgres-init
+        #       tag: 14.9
+        #       imagePullPolicy: IfNotPresent
+        #     env:
+        #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+        #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+        #       INIT_POSTGRES_DBNAME: forgejo
+        #       INIT_POSTGRES_USER: forgejo
+        #       INIT_POSTGRES_PASS: ${SECRET_FORGEJO_DB_PASSWORD}
+        containers:
+          main:
+            image:
+              repository: codeberg.org/forgejo/forgejo
+              pullPolicy: IfNotPresent
+              tag: 1.21.1-0-rootless@sha256:165eeb412cc38a9f9caae1fa833231091601e5c70f4c0752d3020fe124002bd8
+            env:
+              TZ: America/Chicago
+              USER_UID: 1000
+              USER_GID: 1000
+              FORGEJO__APP_NAME: "The Homelab Git"
+              FORGEJO__actions__ENABLED: "false"
+              FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
+              FORGEJO__cache__ENABLED: "true"
+              FORGEJO__cache__ADAPTER: "redis"
+              FORGEJO__cache__HOST: "redis://:${SECRET_FORGEJO_REDIS_PASSWORD}@forgejo-redis-master.development.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s"
+              FORGEJO__database__DB_TYPE: "postgres"
+              FORGEJO__database__HOST: "shared-psql-v16-rw.default.svc.cluster.local:5432"
+              FORGEJO__database__NAME: "forgejo"
+              FORGEJO__database__USER: "forgejo"
+              FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
+              FORGEJO__federation__ENABLED: "false"
+              FORGEJO__git.timeout__MIGRATE: "1000"
+              FORGEJO__git.timeout__MIRROR: "1000"
+              FORGEJO__mailer__ENABLED: "true"
+              FORGEJO__mailer__PROTOCOL: "smtp+starttls"
+              FORGEJO__mailer__SMTP_ADDR: "SECRET_SMTP_DOMAIN"
+              FORGEJO__mailer__SMTP_PORT: "587"
+              FORGEJO__mailer__FROM: "${SECRET_FORGEJO_SMTP_USER}"
+              FORGEJO__mailer__USER: "${SECRET_FORGEJO_SMTP_USER}"
+              FORGEJO__mailer__PASSWD: "${SECRET_FORGEJO_SMTP_PASSWORD}"
+              FORGEJO__repository__DEFAULT_PRIVATE: "true"
+              FORGEJO__security__PASSWORD_COMPLEXITY: "lower,upper"
+              FORGEJO__security__MIN_PASSWORD_LENGTH: "12"
+              FORGEJO__security__SECRET_KEY: "${SECRET_FORGEJO_SECRET_KEY}"
+              FORGEJO__server__ROOT_URL: "https://git.${SECRET_DOMAIN}"
+              FORGEJO__server__APP_DATA_PATH: "/data/gitea"
+              FORGEJO__service__DISABLE_REGISTRATION: "true"
+              FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
+              FORGEJO__storage__STORAGE_TYPE: "minio"
+              FORGEJO__storage__MINIO_ENDPOINT: "minio.kube-system.svc:9000"
+              FORGEJO__storage__MINIO_ACCESS_KEY_ID: "${SECRET_FORGEJO_MINIO_ACCESS_KEY}"
+              FORGEJO__storage__MINIO_SECRET_ACCESS_KEY: "${SECRET_FORGEJO_MINIO_SECRET_KEY}"
+              FORGEJO__storage__MINIO_BUCKET: "forgejo"
+              FORGEJO__ui__DEFAULT_THEME: "arc-green"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
+    service:
+      main:
+        ports:
+          http:
+            port: 3000
+      ssh:
+        type: LoadBalancer
+        loadBalancerIP: ${SVC_FORGEJO_IP}
+        controller: main
+        ports:
+          ssh:
+            enabled: true
+            port: 2222
+            protocol: TCP
+            targetPort: 2222
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: git.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        className: nginx-external
+        tls:
+          - secretName: forgejo-cert
+            hosts:
+              - git.${SECRET_DOMAIN}
+    persistence:
+      config:
+        enabled: true
+        existingClaim: forgejo-config-pvc
+        globalMounts:
+          - path: /etc/gitea
+      data:
+        enabled: true
+        existingClaim: forgejo-data-pvc
+        globalMounts:
+          - path: /data
