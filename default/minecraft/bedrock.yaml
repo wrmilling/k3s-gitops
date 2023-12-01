@@ -1,46 +1,46 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: mcbr
-  namespace: default
-spec:
-  suspend: true
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
-      chart: minecraft-bedrock
-      version: 2.4.0
-      sourceRef:
-        kind: HelmRepository
-        name: minecraft-server-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    persistence:
-      dataDir:
-        enabled: true
-        existingClaim: minecraft-bedrock-data
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      runAsNonRoot: true
-      fsGroup: 1000
-    resources:
-      requests:
-        memory: 250Mi
-        cpu: 100m
-      limits:
-        memory: 250Mi
-    minecraftServer:
-      eula: "TRUE"
-      version: "LATEST"
-      difficulty: normal
-      gameMode: survival
-      ops: "2535466065146563"
-      levelName: mmmmmonster
-      serverName: "\u00a79Homelab \u00a7c\u00a7lSMP\u00a7c\u00a7l\u00a7k!"
-      cheats: true
-      serviceType: LoadBalancer
-      loadBalancerIP: ${SVC_BEDROCK_IP}
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: mcbr
+#   namespace: default
+# spec:
+#   suspend: true
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://itzg.github.io/minecraft-server-charts/
+#       chart: minecraft-bedrock
+#       version: 2.4.0
+#       sourceRef:
+#         kind: HelmRepository
+#         name: minecraft-server-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     persistence:
+#       dataDir:
+#         enabled: true
+#         existingClaim: minecraft-bedrock-data
+#     podSecurityContext:
+#       runAsUser: 1000
+#       runAsGroup: 1000
+#       runAsNonRoot: true
+#       fsGroup: 1000
+#     resources:
+#       requests:
+#         memory: 250Mi
+#         cpu: 100m
+#       limits:
+#         memory: 250Mi
+#     minecraftServer:
+#       eula: "TRUE"
+#       version: "LATEST"
+#       difficulty: normal
+#       gameMode: survival
+#       ops: "2535466065146563"
+#       levelName: mmmmmonster
+#       serverName: "\u00a79Homelab \u00a7c\u00a7lSMP\u00a7c\u00a7l\u00a7k!"
+#       cheats: true
+#       serviceType: LoadBalancer
+#       loadBalancerIP: ${SVC_BEDROCK_IP}
