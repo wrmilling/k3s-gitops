@@ -1,90 +1,93 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: authelia
-#   namespace: kube-system
-# spec:
-#   interval: 5m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://charts.authelia.com
-#       chart: authelia
-#       version: 0.8.58
-#       sourceRef:
-#         kind: HelmRepository
-#         name: authelia-charts
-#         namespace: flux-system
-#       interval: 5m
-#   values:
-#     domain: "${SECRET_DOMAIN}"
-#     ingress:
-#       enabled: true
-#       className: nginx-external
-#       tls:
-#         enabled: true
-#         secret: authelia-cert
-#       annotations:
-#         kubernetes.io/tls-acme: "true"
-#         cert-manager.io/cluster-issuer: letsencrypt-prod
-#       subdomain: auth
-#     pod:
-#       tolerations:
-#       - key: "arm"
-#         operator: "Exists"
-#     configMap:
-#       enabled: true
-#       access_control:
-#         default_policy: one_factor
-#       storage:
-#         postgres:
-#           enabled: true
-#           host: shared-psql-v16-rw.default.svc
-#           port: 5432
-#           database: authelia
-#           username: authelia
-#           sslmode: disable
-#       session:
-#         redis:
-#           enabled: true
-#           enabledSecret: true
-#           username: ""
-#           host: authelia-redis-master
-#           port: 6379
-#           database_index: 0
-#       authentication_backend:
-#         disable_reset_password: true
-#         ldap:
-#           implementation: custom
-#           url: "ldap://openldap:1389"
-#           username_attribute: uid
-#           additional_users_dn: ""
-#           additional_groups_dn: ""
-#           base_dn: ${SECRET_LDAP_BASE_DN}
-#           user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
-#           users_filter: "(&({username_attribute}={input})(objectClass=person))"
-#           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
-#       notifier:
-#         smtp:
-#           enabled: true
-#           enabledSecret: true
-#           username: ${SECRET_AUTH_SMTP_USER}
-#           host: ${SECRET_SMTP_DOMAIN}
-#           port: 587
-#           sender: ${SECRET_AUTH_SMTP_USER}
-#           identifier: localhost
-#           subject: "[Authelia] {title}"
-#           startup_check_address: ${SECRET_AUTH_SMTP_USER}
-#     secret:
-#       ldap:
-#         key: LDAP_PASSWORD
-#         value: ${SECRET_LDAP_ADMIN_PASSWORD}
-#       smtp:
-#         key: SMTP_PASSWORD
-#         value: ${SECRET_AUTH_SMTP_PASSWORD}
-#       storage:
-#         key: STORAGE_PASSWORD
-#         value: ${SECRET_AUTH_STORAGE_PASSWORD}
-#       redis:
-#         key: REDIS_PASSWORD
-#         value: ${SECRET_AUTH_REDIS_PASSWORD}
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.authelia.com
+      chart: authelia
+      version: 0.8.58
+      sourceRef:
+        kind: HelmRepository
+        name: authelia-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    domain: "${SECRET_DOMAIN}"
+    ingress:
+      enabled: true
+      className: nginx-external
+      tls:
+        enabled: true
+        secret: authelia-cert
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      subdomain: auth
+    pod:
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
+    configMap:
+      enabled: true
+      access_control:
+        default_policy: one_factor
+      storage:
+        postgres:
+          enabled: true
+          host: shared-psql-v16-rw.default.svc
+          port: 5432
+          database: authelia
+          username: authelia
+          sslmode: disable
+      session:
+        redis:
+          enabled: true
+          enabledSecret: true
+          username: ""
+          host: authelia-redis-master
+          port: 6379
+          database_index: 0
+      authentication_backend:
+        disable_reset_password: true
+        ldap:
+          implementation: custom
+          url: "ldap://openldap:1389"
+          username_attribute: uid
+          additional_users_dn: ""
+          additional_groups_dn: ""
+          base_dn: ${SECRET_LDAP_BASE_DN}
+          user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
+          users_filter: "(&({username_attribute}={input})(objectClass=person))"
+          groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
+      notifier:
+        smtp:
+          enabled: true
+          enabledSecret: true
+          username: ${SECRET_AUTH_SMTP_USER}
+          host: ${SECRET_SMTP_DOMAIN}
+          port: 587
+          sender: ${SECRET_AUTH_SMTP_USER}
+          identifier: localhost
+          subject: "[Authelia] {title}"
+          startup_check_address: ${SECRET_AUTH_SMTP_USER}
+    secret:
+      ldap:
+        key: LDAP_PASSWORD
+        value: ${SECRET_LDAP_ADMIN_PASSWORD}
+      smtp:
+        key: SMTP_PASSWORD
+        value: ${SECRET_AUTH_SMTP_PASSWORD}
+      storage:
+        key: STORAGE_PASSWORD
+        value: ${SECRET_AUTH_STORAGE_PASSWORD}
+      storageEncryptionKey:
+        key: STORAGE_ENCRYPTION_KEY
+        value: ${SECRET_AUTH_STORAGE_ENC_KEY}
+      redis:
+        key: REDIS_PASSWORD
+        value: ${SECRET_AUTH_REDIS_PASSWORD}
