@@ -73,6 +73,9 @@ spec:
         login: "${SECRET_MASTODON_SMTP_USER}"
         password: "${SECRET_MASTODON_SMTP_PASS}"
       streaming:
+        image:
+          repository: ghcr.io/glitch-soc/mastodon-streaming
+          tag: latest@sha256:ce8f37ef077917694fb3fde82f81df702204976dcd2a4b77ff11f5837fd7c0bb
         port: 4000
       web:
         port: 3000
