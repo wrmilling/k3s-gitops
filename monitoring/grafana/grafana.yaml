@@ -147,7 +147,7 @@ spec:
         - name: Prometheus
           type: prometheus
           access: proxy
-          url: http://thanos-query-http:10902/
+          url: http://thanos-query.monitoring.svc.cluster.local:9090
           isDefault: true
     grafana.ini:
       server:
