@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.28.3-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml?"><img src="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml.svg" alt="builds.sr.ht status"></a> <a href="https://discord.gg/k8s-at-home"><img alt="K8s-at-home Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
+  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.28.3-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml?"><img src="https://builds.sr.ht/~wrmilling/k3s-gitops/commits/master/repo-sync.yml.svg" alt="builds.sr.ht status"></a> <a href="https://discord.gg/home-operations"><img alt="Home Operations Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -49,4 +49,4 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 
 ## Credits + Community
 
-A huge thanks to the community at k8s-at-home via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/k8s-at-home). K8s-at-home Logo image used with permission, check out the community for some awesome and helpful people.
+A huge thanks to the community at Home Operations via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/home-operations). Home Operations Logo image used with permission, check out the community for some awesome and helpful people.
