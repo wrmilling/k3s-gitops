@@ -35,5 +35,12 @@
       separateMinorPatch: false,
       stabilityDays: 2,
     },
+    {
+      description: "Mastodon + Mastodon Streaming",
+      groupName: "Mastodon",
+      matchPackagePatterns: ["mastodon", "mastodon-streaming"],
+      matchDatasources: ["docker", "github-releases"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+    },
   ],
 }
