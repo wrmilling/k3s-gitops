@@ -51,7 +51,7 @@ spec:
               tag: latest@sha256:1ecee589b339adf85995eca1a262436dd79d7d27314e7f9e3ab9386147893d1e
             env:
               INVIDIOUS_CONFIG: |
-                database_url: postgres://${SECRET_INVIDIOUS_DB_PASSWORD}:invidious@postgres-v15-rw.default.svc.cluster.local.:5432/invidious
+                database_url: postgres://${SECRET_INVIDIOUS_DB_PASSWORD}:invidious@shared-psql-v16-rw.default.svc.cluster.local.:5432/invidious
                 check_tables: true
                 domain: invidious.${SECRET_DOMAIN}
                 external_port: 443
