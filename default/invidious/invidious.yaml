@@ -32,18 +32,18 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/auricom/postgres-init
-              tag: 15.5@sha256:9b1b80d8101d3f1c73ef13b90dff2ab3bc855bd79ebcd334cba57db391ce6db0
-              pullPolicy: IfNotPresent
-            env:
-              INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-              INIT_POSTGRES_DBNAME: invidious
-              INIT_POSTGRES_USER: invidious
-              INIT_POSTGRES_PASS: ${SECRET_INVIDIOUS_DB_PASSWORD}
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/auricom/postgres-init
+        #       tag: 15.5@sha256:9b1b80d8101d3f1c73ef13b90dff2ab3bc855bd79ebcd334cba57db391ce6db0
+        #       pullPolicy: IfNotPresent
+        #     env:
+        #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+        #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+        #       INIT_POSTGRES_DBNAME: invidious
+        #       INIT_POSTGRES_USER: invidious
+        #       INIT_POSTGRES_PASS: ${SECRET_INVIDIOUS_DB_PASSWORD}
         containers:
           main:
             image:
