@@ -4,16 +4,15 @@ Default namespace for applications.
 
 ## CloundNativePG
 
-Docs in Progress.
+[CloudNativePG](https://cloudnative-pg.io/) is the Kubernetes operator that covers the full lifecycle of a highly available PostgreSQL database cluster with a primary/standby architecture, using native streaming replication.
 
-## Dedrite
-
-[Dendrite](https://matrix-org.github.io/dendrite/) is a second-generation Matrix homeserver written in Go! Following the microservice architecture model, Dendrite is designed to be efficient, reliable and scalable.
-
-* [dendrite/dendrite.sops.yaml](dendrite/dendrite.sops.yaml) - Matrix secret for for dendrite server
-* [dendrite/dendrite.yaml](dendrite/dendrite.yaml) - HelmRelease for Dendrite using app-template
-* [dendrite/postgres.yaml](dendrite/postgres.yaml) - PostgreSQL deployment for dendrite
-* [dendrite/pvc.yaml](dendrite/pvc.yaml) - PVCs for dendrite, postgres, and jetstream
+* [cloudnative-pg/cloudnative-pg.secret.yaml](cloudnative-pg/cloudnative-pg.secret.yaml) - Secrets for the CloudNative-PG Helm Release.
+* [cloudnative-pg/cloudnative-pg.yaml](cloudnative-pg/cloudnative-pg.yaml) - CloudNativePG Helm Release.
+* [cloudnative-pg/cluster/dendrite-v16.yaml](cloudnative-pg/cluster/dendrite-v16.yaml) - Postgres v16 Cluster for Dendrite deployment.
+* [cloudnative-pg/cluster/mastodon-v16.yaml](cloudnative-pg/cluster/mastodon-v16.yaml) - Postgres v16 Cluster for Mastodon deployment.
+* [cloudnative-pg/cluster/prometheus-rules.yaml](cloudnative-pg/cluster/prometheus-rules.yaml) - Monitoring rules for CloudNativePG to Prometheus.
+* [cloudnative-pg/cluster/scheduled-backups.yaml](cloudnative-pg/cluster/scheduled-backups.yaml) - Backup Schedule for Postgres using native backup method.
+* [cloudnative-pg/cluster/shared-v16.yaml](cloudnative-pg/cluster/shared-v16.yaml) - Postgres v16 Cluster for all other use cases.
 
 ## emqx
 
@@ -23,7 +22,12 @@ Docs in Progress.
 
 ## Foundry VTT
 
-Docs in Progress.
+[Foundry VTT](https://foundryvtt.com/) is a self-hosted and modern roleplaying platform.
+
+* [foundry/foundry-vtt-test.yaml](foundry/foundry-vtt-test.yaml) - Test deployment of Foundry VTT for testing out features as a GM.
+* [foundry/foundry-vtt.yaml](foundry/foundry-vtt.yaml) - Proper deployment of Foundry VTT for use in active games.
+* [foundry/pvc.yaml](foundry/pvc.yaml) - Rook-ceph persistent volumes for the FoundryVTT instances.
+* [foundry/volsync.yaml](foundry/volsync.yaml) - Restic backup definition for use with Volsync.
 
 ## Home Assistant
 
@@ -31,18 +35,25 @@ Docs in Progress.
 
 * [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
 * [home-assistant/postgres.yaml](home-assistant/postgres.yaml) - PostgreSQL deployment utilizing the Bitnami helm chart.
-* [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistant volume claims for the Home Assistant and PostgreSQL deployments.
+* [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistent volume claims for the Home Assistant and PostgreSQL deployments.
+
+## Invidious
+
+[Invidious](https://invidious.io/) is an open source alternative front-end to YouTube.
+
+* [invidious/invidious.yaml](invidious/invidious.yaml) - Simple [app-template](https://bjw-s.github.io/helm-charts/docs/app-template/) deployment of the Invidious docker image.
 
 ## Minecraft
 
-Docs in Progress. 
+Not currently in use due to limitations of the Minecraft package for the Nintendo Switch. Kept for potential future use.
 
 ## OneDrive
 
 Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup.
 
-* [onedrive/onedrive-pvc.yaml](onedrive/onedrive-pvc.yaml) - Config PVC for OneDrive
-* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive using app-template
+* [onedrive/onedrive-pvc.yaml](onedrive/onedrive-pvc.yaml) - Config PVC for OneDrive.
+* [onedrive/onedrive-secret.sops.yaml](onedrive/onedrive-secret.sops.yaml) - Secrets for OneDrive Auth.
+* [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive using app-template.
 
 ## PiHole
 
@@ -50,12 +61,13 @@ Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to 
 
 [Pi-hole](https://pi-hole.net/) is a DNS resolver that likes to help you block ads as well. This implementation uses MetalLB to expose the DNS server on its own dedicated IP, allows authenticated and secure ingress through nginx-ingress and authelia, and has implemented DNS-over-HTTPS (DoH) for secure querying. I also use it to do DNS resolution on internal domains.
 
-* [pihole/pihole-helm-values.sops.yaml](pihole/pihole-helm-values.sops.yaml) - Encrypted helm values for Pi-hole
-* [pihole/pihole.yaml](pihole/pihole.yaml) - HelmRelease for Pi-hole from mojo2600 on GitHub
+* [pihole/pihole-helm-values.sops.yaml](pihole/pihole-helm-values.sops.yaml) - Encrypted helm values for Pi-hole.
+* [pihole/pihole.yaml](pihole/pihole.yaml) - HelmRelease for Pi-hole from mojo2600 on GitHub.
 
 ## Valheim
 
 A battle-slain warrior, the Valkyries have ferried your soul to [Valheim](https://www.valheimgame.com/), the tenth Norse world. Besieged by creatures of chaos and ancient enemies of the gods, you are the newest custodian of the primordial purgatory, tasked with slaying Odin’s ancient rivals and bringing order to Valheim. Dedicated server deployment.
 
-* [valheim/valheim-pvc.yaml](valheim/valheim-pvc.yaml) - PVC for valheim game data and configuration
-* [valheim/valheim.yaml](valheim/valheim.yaml) - HelmRelease for Valheim dedicated game server
+* [valheim/valheim-pvc.yaml](valheim/valheim-pvc.yaml) - PVC for valheim game data and configuration.
+* [valheim/valheim.yaml](valheim/valheim.yaml) - HelmRelease for Valheim dedicated game server.
+* [valheim/volsync.yaml](valheim/volsync.yaml) - Restic backup definition for Valheim via Volsync.
