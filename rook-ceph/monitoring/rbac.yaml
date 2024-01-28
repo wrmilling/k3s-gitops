@@ -76,8 +76,8 @@ roleRef:
   name: rook-ceph-metrics
 subjects:
   - kind: ServiceAccount
-    name: prometheus-k8s
-    namespace: rook-ceph
+    name: kube-prometheus-stack-prometheus
+    namespace: monitoring
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
