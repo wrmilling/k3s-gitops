@@ -1,96 +1,96 @@
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-monitoring
-  namespace: rook-ceph
-rules:
-  - apiGroups:
-      - "monitoring.coreos.com"
-    resources:
-      - servicemonitors
-      - prometheusrules
-    verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - delete
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-metrics
-  namespace: rook-ceph
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - services
-      - endpoints
-      - pods
-    verbs:
-      - get
-      - list
-      - watch
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-monitoring-mgr
-  namespace: rook-ceph
-rules:
-  - apiGroups:
-      - monitoring.coreos.com
-    resources:
-      - servicemonitors
-    verbs:
-      - get
-      - list
-      - create
-      - update
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-monitoring
-  namespace: rook-ceph
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: rook-ceph-monitoring
-subjects:
-  - kind: ServiceAccount
-    name: rook-ceph-system
-    namespace: rook-ceph
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-metrics
-  namespace: rook-ceph
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: rook-ceph-metrics
-subjects:
-  - kind: ServiceAccount
-    name: kube-prometheus-stack-prometheus
-    namespace: monitoring
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: rook-ceph-monitoring-mgr
-  namespace: rook-ceph
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: rook-ceph-monitoring-mgr
-subjects:
-  - kind: ServiceAccount
-    name: rook-ceph-mgr
-    namespace: rook-ceph
+# ---
+# kind: Role
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-monitoring
+#   namespace: rook-ceph
+# rules:
+#   - apiGroups:
+#       - "monitoring.coreos.com"
+#     resources:
+#       - servicemonitors
+#       - prometheusrules
+#     verbs:
+#       - get
+#       - list
+#       - watch
+#       - create
+#       - update
+#       - delete
+# ---
+# kind: Role
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-metrics
+#   namespace: rook-ceph
+# rules:
+#   - apiGroups:
+#       - ""
+#     resources:
+#       - services
+#       - endpoints
+#       - pods
+#     verbs:
+#       - get
+#       - list
+#       - watch
+# ---
+# kind: Role
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-monitoring-mgr
+#   namespace: rook-ceph
+# rules:
+#   - apiGroups:
+#       - monitoring.coreos.com
+#     resources:
+#       - servicemonitors
+#     verbs:
+#       - get
+#       - list
+#       - create
+#       - update
+# ---
+# kind: RoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-monitoring
+#   namespace: rook-ceph
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: Role
+#   name: rook-ceph-monitoring
+# subjects:
+#   - kind: ServiceAccount
+#     name: rook-ceph-system
+#     namespace: rook-ceph
+# ---
+# kind: RoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-metrics
+#   namespace: rook-ceph
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: Role
+#   name: rook-ceph-metrics
+# subjects:
+#   - kind: ServiceAccount
+#     name: kube-prometheus-stack-prometheus
+#     namespace: monitoring
+# ---
+# kind: RoleBinding
+# apiVersion: rbac.authorization.k8s.io/v1
+# metadata:
+#   name: rook-ceph-monitoring-mgr
+#   namespace: rook-ceph
+# roleRef:
+#   apiGroup: rbac.authorization.k8s.io
+#   kind: Role
+#   name: rook-ceph-monitoring-mgr
+# subjects:
+#   - kind: ServiceAccount
+#     name: rook-ceph-mgr
+#     namespace: rook-ceph
 
----
+# ---
