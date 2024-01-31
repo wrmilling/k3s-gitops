@@ -43,10 +43,6 @@ Default namespace for applications.
 
 * [invidious/invidious.yaml](invidious/invidious.yaml) - Simple [app-template](https://bjw-s.github.io/helm-charts/docs/app-template/) deployment of the Invidious docker image.
 
-## Minecraft
-
-Not currently in use due to limitations of the Minecraft package for the Nintendo Switch. Kept for potential future use.
-
 ## OneDrive
 
 Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to sync my personal OneDrive for backup.
