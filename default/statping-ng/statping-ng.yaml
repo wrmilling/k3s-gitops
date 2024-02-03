@@ -35,8 +35,8 @@ spec:
         containers:
           main:
             image:
-              repository: REPOSITORY
-              tag: TAG
+              repository: ghcr.io/statping-ng/statping-ng
+              tag: 0.91.0@sha256:50ba35d79ebac36ead6bb1473f59ee5718b16dc80328d8052edb139f57f823e9
             env:
               DOMAIN: status.${SECRET_DOMAIN}
               VIRTUAL_HOST: status.${SECRET_DOMAIN}
