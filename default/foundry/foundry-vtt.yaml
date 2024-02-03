@@ -39,9 +39,9 @@ spec:
             - name: FOUNDRY_LICENSE_KEY
               value: ${SECRET_FVTT_LICENSE_KEY}
             - name: FOUNDRY_ADMIN_KEY
-              value: ${SECRET_FVTT_TEST_ADMIN_KEY}
+              value: ${SECRET_FVTT_ADMIN_KEY}
             - name: FOUNDRY_PASSWORD_SALT
-              value: ${SECRET_FVTT_TEST_PASSWORD_SALT}
+              value: ${SECRET_FVTT_PASSWORD_SALT}
             - name: FOUNDRY_MINIFY_STATIC_FILES
               value: true
             - name: FOUNDRY_PROTOCOL
