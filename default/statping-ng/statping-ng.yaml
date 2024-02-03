@@ -75,6 +75,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: "statping-ng-cert"
     persistence:
       config:
         existingClaim: statping-ng-pvc
