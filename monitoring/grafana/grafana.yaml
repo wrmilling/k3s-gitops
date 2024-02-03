@@ -57,17 +57,17 @@ spec:
         email =  "mail"
     ingress:
       enabled: true
-      ingressClassName: nginx-internal
+      ingressClassName: nginx-external
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-areaspline"
         hajimari.io/instance: "internal"
         hajimari.io/appName: "Grafana"
         hajimari.io/group: "Cluster Ops"
-      hosts: ["grafana.k.${SECRET_DOMAIN}"]
+      hosts: ["grafana.${SECRET_DOMAIN}"]
       tls:
       - hosts:
-        - "grafana.k.${SECRET_DOMAIN}"
+        - "grafana.${SECRET_DOMAIN}"
         secretName: grafana-cert
     plugins:
     - natel-discrete-panel
