@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [ opened, synchronize ]
     branches:
-      - master
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -14,7 +14,7 @@ concurrency:
 jobs:
   components:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Check Out Code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:

@@ -15,8 +15,8 @@ tasks:
     git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
     git remote add gitlab git@gitlab.com:wrmilling/${REPO}.git
     git remote add homelab git@git.homelab.tokyo:wrmilling/${REPO}.git
-- push-master: |
-    BRANCH=master
+- push: |
+    BRANCH=main
 
     cd $REPO
     if git diff -s --exit-code origin/${BRANCH}; then

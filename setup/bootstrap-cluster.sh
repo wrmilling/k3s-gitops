@@ -33,7 +33,7 @@ installFlux() {
   flux bootstrap github \
     --owner=wrmilling \
     --repository=k3s-gitops \
-    --branch master \
+    --branch main \
     --personal
 
   FLUX_INSTALLED=$?
