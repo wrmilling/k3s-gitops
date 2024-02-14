@@ -48,7 +48,7 @@ spec:
           main:
             image:
               repository: quay.io/invidious/invidious
-              tag: latest@sha256:fc25ef270edb96a4fc10c26073dca2dec231a9bdd804a35a84c44666f0f414ed
+              tag: latest@sha256:1bf14f71e5f0c28cafbed5ce4fac34b793ef1452365daa59976cbbd2db426894
             env:
               INVIDIOUS_CONFIG: |
                 database_url: postgres://invidious:${SECRET_INVIDIOUS_DB_PASSWORD}@shared-psql-v16-rw.default.svc.cluster.local.:5432/invidious
