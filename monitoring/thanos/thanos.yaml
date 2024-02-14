@@ -44,6 +44,9 @@ spec:
       podAntiAffinityPreset: hard
       replicaLabels:
         - replica
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: monitoring
@@ -60,6 +63,9 @@ spec:
       enabled: true
       replicaCount: 3
       podAntiAffinityPreset: hard
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
     compactor:
       enabled: true
       extraFlags: ["--compact.concurrency", "4"]
@@ -83,6 +89,9 @@ spec:
       enabled: true
       replicaCount: 3
       podAntiAffinityPreset: hard
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
       persistence:
         enabled: true
         storageClass: rook-ceph-block
@@ -91,6 +100,9 @@ spec:
       enabled: true
       replicaCount: 3
       podAntiAffinityPreset: hard
+      tolerations:
+      - key: "arm"
+        operator: "Exists"
       dnsDiscovery:
         enabled: true
       alertmanagers: ["http://kube-prometheus-stack-alertmanager.monitoring:9093"]
