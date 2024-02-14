@@ -63,7 +63,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.21.0@sha256:7ea6980fd6302ef0bd30adea5699d7710db520eda2c9c9f383cd99e164d1b220
+              tag: 4.21.1@sha256:c9f78fb7e8ac5fdd3bea856142dd5c5dda0f5183131254516af74135dc97c773
               pullPolicy: IfNotPresent
             env:
               TZ: "America/Chicago"
