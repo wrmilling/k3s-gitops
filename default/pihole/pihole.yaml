@@ -90,7 +90,7 @@ spec:
 #            release: pihole
     adminPassword: ${SECRET_PIHOLE_ADMIN_PASSWORD}
     extraEnvVars:
-      RATE_LIMIT: "0/0'
+      RATE_LIMIT: "0/0"
   valuesFrom:
     - kind: Secret
       name: pihole-helm-values
