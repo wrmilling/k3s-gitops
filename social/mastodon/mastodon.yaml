@@ -11,8 +11,8 @@ spec:
       chart: ./
       version: 4.1.1
       sourceRef:
-        kind: GitRepository
-        name: mastodon-charts
+        kind: HelmRepository
+        name: wrmilling-charts
         namespace: flux-system
   values:
     image:
