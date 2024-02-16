@@ -6,7 +6,6 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":enablePreCommit",
-    ":automergeDigest",
     ":automergeBranchPush",
     "github>wrmilling/k3s-gitops//.github/renovate/allowedVersions.json5",
     "github>wrmilling/k3s-gitops//.github/renovate/autoMerge.json5",
