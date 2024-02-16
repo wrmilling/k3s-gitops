@@ -8,7 +8,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./
+      chart: mastodon
       version: 4.1.1
       sourceRef:
         kind: HelmRepository
