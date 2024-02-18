@@ -44,6 +44,8 @@ spec:
               value: ${SECRET_FVTT_PASSWORD_SALT}
             - name: FOUNDRY_MINIFY_STATIC_FILES
               value: true
+            - name: CONTAINER_PATCHES
+              value: /data/container_patches
             - name: FOUNDRY_PROTOCOL
               value: 4
             - name: FOUNDRY_PROXY_PORT
@@ -93,8 +95,3 @@ spec:
         existingClaim: fvtt-pvc
         globalMounts:
           - path: /data
-      app:
-        enabled: true
-        existingClaim: fvtt-app-pvc
-        globalMounts:
-          - path: /opt/foundryvtt/resources/app
