@@ -89,6 +89,7 @@ spec:
               - fvtt.${SECRET_DOMAIN}
     persistence:
       config:
+        enabled: true
         existingClaim: fvtt-pvc
         globalMounts:
           - path: /data
