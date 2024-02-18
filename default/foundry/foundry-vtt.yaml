@@ -93,3 +93,8 @@ spec:
         existingClaim: fvtt-pvc
         globalMounts:
           - path: /data
+      app:
+        enabled: true
+        existingClaim: fvtt-app-pvc
+        globalMounts:
+          - path: /opt/foundryvtt/resources/app
