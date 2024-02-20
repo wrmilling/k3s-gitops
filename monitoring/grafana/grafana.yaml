@@ -58,12 +58,6 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx-external
-      annotations:
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "chart-areaspline"
-        hajimari.io/instance: "internal"
-        hajimari.io/appName: "Grafana"
-        hajimari.io/group: "Cluster Ops"
       hosts: ["grafana.${SECRET_DOMAIN}"]
       tls:
       - hosts:
