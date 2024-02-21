@@ -64,8 +64,11 @@ spec:
     defaultBackend:
       enabled: true
       image:
-        repository: billimek/custom-error-pages
-        tag: 0.4.4
+        repository: ghcr.io/tarampampam/error-pages
+        tag: 2.26.0
+      extraEnvs:
+        - { name: TEMPLATE_NAME, value: l7-dark }
+        - { name: SHOW_DETAILS, value: "false" }
       resources:
         requests:
           memory: 250Mi
