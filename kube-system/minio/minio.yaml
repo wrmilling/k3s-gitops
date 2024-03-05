@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2024-03-03T17-50-39Z@sha256:78eba29be5c2539b0961dee68b44334d4eda4c9bd7cb1f43f4e07c2ffb609cff
+      tag: RELEASE.2024-03-05T04-48-44Z@sha256:ab5551aa2f7d8a950f83bf64c2bb53b7eae9e0b7ea906a5288d3bbf37fc3d320
       pullPolicy: IfNotPresent
     mcImage:
       repository: quay.io/minio/mc
