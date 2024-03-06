@@ -33,10 +33,10 @@ jobs:
           BRANCH=main
           cd ${{ github.workspace }}
 
-          if git diff -s --exit-code origin/${BRANCH}; then
-              git checkout ${BRANCH}
-              git push github ${BRANCH}
-              git push codeberg ${BRANCH}
-              git push gitlab ${BRANCH}
-              git push sourcehut ${BRANCH}
-          fi
+          GIT_SSH_COMMAND='ssh -i /root/.ssh/id_deploy -o IdentitiesOnly=yes'
+          git push github ${BRANCH}
+          git push codeberg ${BRANCH}
+          git push gitlab ${BRANCH}
+
+          GIT_SSH_COMMAND='ssh -i /root/.ssh/id_sourcehut -o IdentitiesOnly=yes'
+          git push sourcehut ${BRANCH}
