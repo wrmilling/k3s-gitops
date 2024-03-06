@@ -1,0 +1,38 @@
+name: Sync Repository
+run-name: Sync Repository at commit ${{ github.ref }}
+on: [push]
+jobs:
+  Deploy-Website:
+    runs-on: alpine
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Prep Remotes
+        run: |
+          REPO=k3s-gitops
+          cd ${{ github.workspace }}
+
+          # Ignore hosts keys, since we accept them as-is, add remotes
+          git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+          git remote add github git@github.com:wrmilling/${REPO}.git
+          git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
+          git remote add gitlab git@gitlab.com:wrmilling/${REPO}.git
+          git remote add sourcehut git@git.sr.ht:~wrmilling/${REPO}
+      - name: Setup SSH
+        run: |
+          mkdir -p /root/.ssh/
+          echo "${{ secrets.DEPLOY_KEY }}" > /root/.ssh/id_deploy
+          echo "${{ secrets.SRHT_DEPLOY_KEY }}" > /root/.ssh/id_sourcehut
+          chmod 0600 /root/.ssh/id_*
+      - name: Push Code
+        run: |
+          BRANCH=main
+          cd ${{ github.workspace }}
+
+          if git diff -s --exit-code origin/${BRANCH}; then
+              git checkout ${BRANCH}
+              git push github ${BRANCH}
+              git push codeberg ${BRANCH}
+              git push gitlab ${BRANCH}
+              git push sourcehut ${BRANCH}
+          fi
