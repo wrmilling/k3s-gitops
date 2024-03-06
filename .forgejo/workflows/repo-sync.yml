@@ -2,10 +2,11 @@ name: Sync Repository
 run-name: Sync Repository at commit ${{ github.ref }}
 on: [push]
 jobs:
-  Deploy-Website:
+  Sync-Repository:
     runs-on: alpine
     steps:
-      - name: Install dependencies
+      - name: Install Dependencies
+        shell: sh
         run: |
           apk add --update nodejs bash git openssh-client
       - name: Checkout Repository
