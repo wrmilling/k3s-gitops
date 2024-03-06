@@ -17,8 +17,8 @@ jobs:
         uses: https://github.com/webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: |
-            ${{ secrets.DEPLOY_KEY }}
-            ${{ secrets.SRHT_DEPLOY_KEY }}
+            ${{ secrets.SYNC_KEY }}
+            ${{ secrets.SRHT_SYNC_KEY }}
       - name: Prep Remotes
         run: |
           cd ${{ github.workspace }}
