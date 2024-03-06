@@ -21,21 +21,19 @@ jobs:
             ${{ secrets.SRHT_DEPLOY_KEY }}
       - name: Prep Remotes
         run: |
-          REPO=k3s-gitops
           cd ${{ github.workspace }}
 
           # Ignore hosts keys, since we accept them as-is, add remotes
           git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-          git remote add github git@github.com:wrmilling/${REPO}.git
-          git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
-          git remote add gitlab git@gitlab.com:wrmilling/${REPO}.git
-          git remote add sourcehut git@git.sr.ht:~wrmilling/${REPO}
+          git remote add github git@github.com:${{ github.repository }}.git
+          git remote add codeberg git@codeberg.org:${{ github.repository }}.git
+          git remote add gitlab git@gitlab.com:${{ github.repository }}.git
+          git remote add sourcehut git@git.sr.ht:~${{ github.repository }}
       - name: Push Code
         run: |
-          BRANCH=main
           cd ${{ github.workspace }}
 
-          git push github ${BRANCH}
-          git push codeberg ${BRANCH}
-          git push gitlab ${BRANCH}
-          git push sourcehut ${BRANCH}
+          git push github ${{ github.ref_name }}
+          git push codeberg ${{ github.ref_name }}
+          git push gitlab ${{ github.ref_name }}
+          git push sourcehut ${{ github.ref_name }}
