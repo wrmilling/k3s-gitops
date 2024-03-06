@@ -35,14 +35,7 @@ jobs:
           BRANCH=main
           cd ${{ github.workspace }}
 
-          git fetch github
           git push github ${BRANCH}
-
-          git fetch codeberg
           git push codeberg ${BRANCH}
-
-          git fetch gitlab
           git push gitlab ${BRANCH}
-
-          git fetch sourcehut
           git push sourcehut ${BRANCH}
