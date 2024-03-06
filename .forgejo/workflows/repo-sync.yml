@@ -5,6 +5,9 @@ jobs:
   Deploy-Website:
     runs-on: alpine
     steps:
+      - name: Install dependencies
+        run: |
+          apk add --update nodejs bash git openssh-client
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Prep Remotes
