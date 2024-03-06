@@ -1,4 +1,5 @@
 .github/
+.forgejo
 .builds
 .sops.yaml
 .pre-commit-config.yaml
