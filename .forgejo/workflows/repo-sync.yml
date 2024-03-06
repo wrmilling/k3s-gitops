@@ -10,7 +10,7 @@ jobs:
         run: |
           apk add --update nodejs bash git openssh-client
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: https://github.com/actions/checkout@v4
       - name: Setup SSH
         uses: https://github.com/webfactory/ssh-agent@v0.9.0
         with:
