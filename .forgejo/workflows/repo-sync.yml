@@ -11,6 +11,12 @@ jobs:
           apk add --update nodejs bash git openssh-client
       - name: Checkout Repository
         uses: actions/checkout@v3
+      - name: Setup SSH
+        uses: https://github.com/webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.DEPLOY_KEY }}
+            ${{ secrets.SRHT_DEPLOY_KEY }}
       - name: Prep Remotes
         run: |
           REPO=k3s-gitops
@@ -22,21 +28,12 @@ jobs:
           git remote add codeberg git@codeberg.org:wrmilling/${REPO}.git
           git remote add gitlab git@gitlab.com:wrmilling/${REPO}.git
           git remote add sourcehut git@git.sr.ht:~wrmilling/${REPO}
-      - name: Setup SSH
-        run: |
-          mkdir -p /root/.ssh/
-          echo "${{ secrets.DEPLOY_KEY }}" > /root/.ssh/id_deploy
-          echo "${{ secrets.SRHT_DEPLOY_KEY }}" > /root/.ssh/id_sourcehut
-          chmod 0600 /root/.ssh/id_*
       - name: Push Code
         run: |
           BRANCH=main
           cd ${{ github.workspace }}
 
-          GIT_SSH_COMMAND='ssh -i /root/.ssh/id_deploy -o IdentitiesOnly=yes'
           git push github ${BRANCH}
           git push codeberg ${BRANCH}
           git push gitlab ${BRANCH}
-
-          GIT_SSH_COMMAND='ssh -i /root/.ssh/id_sourcehut -o IdentitiesOnly=yes'
           git push sourcehut ${BRANCH}
