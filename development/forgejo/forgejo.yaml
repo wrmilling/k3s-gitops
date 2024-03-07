@@ -117,7 +117,7 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/proxy-body-size: 1024m
           nginx.org/client-max-body-size: 1024m
-          nginx.ingress.kubernetes.io/custom-http-errors: "404"
+          nginx.ingress.kubernetes.io/custom-http-errors: "401,403,404"
         hosts:
           - host: git.${SECRET_DOMAIN}
             paths:
