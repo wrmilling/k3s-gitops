@@ -3,12 +3,8 @@ run-name: Sync Repository at commit ${{ github.ref }}
 on: [push]
 jobs:
   Sync-Repository:
-    runs-on: alpine
+    runs-on: alpine-tokyo
     steps:
-      - name: Install Dependencies
-        shell: sh
-        run: |
-          apk add --update nodejs bash git openssh-client
       - name: Checkout Repository
         uses: https://github.com/actions/checkout@v4
         with:
