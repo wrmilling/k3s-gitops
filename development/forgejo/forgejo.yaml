@@ -115,6 +115,8 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/proxy-body-size: 128m
+          nginx.org/client-max-body-size: 128m
         hosts:
           - host: git.${SECRET_DOMAIN}
             paths:
