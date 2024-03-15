@@ -147,6 +147,8 @@ spec:
         existingClaim: hass-pvc
         advancedMounts:
           main:
+            main:
+              - path: /config
             codeserver:
               - path: /config
 
