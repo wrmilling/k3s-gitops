@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -67,12 +68,14 @@ spec:
         operator: "Exists"
     service:
       main:
+        controller: main
         ports:
           http:
             port: 30000
     ingress:
       main:
         enabled: true
+        className: nginx-external
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -82,13 +85,8 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
-        className: nginx-external
-        tls:
-          - secretName: fvtt-cert
-            hosts:
-              - fvtt.${SECRET_DOMAIN}
     persistence:
       config:
         enabled: true
