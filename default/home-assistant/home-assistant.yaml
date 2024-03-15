@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -88,6 +89,7 @@ spec:
     service:
       main:
         type: LoadBalancer
+        controller: main
         loadBalancerIP: ${SVC_HASS_IP}
         ports:
           http:
@@ -124,12 +126,8 @@ spec:
           - path: /
             pathType: Prefix
             service:
-              name: main
+              identifier: main
               port: http
-        tls:
-        - hosts:
-          - "hass.${SECRET_DOMAIN}"
-          secretName: hass-cert
       codeserver:
         enabled: true
         className: nginx-external
@@ -144,15 +142,8 @@ spec:
           - path: /
             pathType: Prefix
             service:
-              name: codeserver
+              identifier: codeserver
               port: http
-        tls:
-        - hosts:
-          - "hass-vscode.${SECRET_DOMAIN}"
-          secretName: hass-vscode-cert
-    serviceMonitor:
-      main:
-        enabled: false
     persistence:
       config:
         enabled: true
