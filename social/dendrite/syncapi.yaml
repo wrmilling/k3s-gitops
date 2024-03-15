@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -30,7 +31,6 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.2
-              imagePullPolicy: IfNotPresent
             env:
               INIT_POSTGRES_DBNAME: syncv3
               INIT_POSTGRES_HOST: dendrite-psql-v16-rw.default.svc.cluster.local
@@ -50,6 +50,7 @@ spec:
               SYNCV3_SECRET: ${SECRET_SYNCV3_SECRET}
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8008
@@ -65,10 +66,6 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: main
                   port: http
         className: nginx-external
-        tls:
-          - secretName: conduit-cert
-            hosts:
-              - syncv3.${SECRET_DOMAIN}
