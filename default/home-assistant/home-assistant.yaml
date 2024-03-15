@@ -79,9 +79,6 @@ spec:
                 - --port
                 - "12321"
                 - "/config"
-            volumeMounts:
-            - name: config
-              mountPath: /config
     defaultPodOptions:
       tolerations:
       - key: "arm"
@@ -148,4 +145,8 @@ spec:
       config:
         enabled: true
         existingClaim: hass-pvc
+        advancedMounts:
+          main:
+            codeserver:
+              - path: /config
 
