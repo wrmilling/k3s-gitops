@@ -61,7 +61,7 @@ spec:
               FORGEJO__git.timeout__MIRROR: "1000"
               FORGEJO__mailer__ENABLED: "true"
               FORGEJO__mailer__PROTOCOL: "smtp+starttls"
-              FORGEJO__mailer__SMTP_ADDR: "SECRET_SMTP_DOMAIN"
+              FORGEJO__mailer__SMTP_ADDR: "${SECRET_SMTP_DOMAIN}"
               FORGEJO__mailer__SMTP_PORT: "587"
               FORGEJO__mailer__FROM: "${SECRET_FORGEJO_SMTP_USER}"
               FORGEJO__mailer__USER: "${SECRET_FORGEJO_SMTP_USER}"
