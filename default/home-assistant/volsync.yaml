@@ -34,3 +34,4 @@ spec:
     retain:
       daily: 10
       within: 3d
+    unlock: "true"
