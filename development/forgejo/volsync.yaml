@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: forgejo-config-restic-config
-  namespace: default
+  namespace: development
 type: Opaque
 stringData:
   RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/forgejo-config"
@@ -15,7 +15,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: forgejo-config
-  namespace: default
+  namespace: development
 spec:
   sourcePVC: forgejo-config-pvc
   trigger:
@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: forgejo-data-restic-config
-  namespace: default
+  namespace: development
 type: Opaque
 stringData:
   RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/forgejo-data"
@@ -52,7 +52,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: forgejo-data
-  namespace: default
+  namespace: development
 spec:
   sourcePVC: forgejo-data-pvc
   trigger:
