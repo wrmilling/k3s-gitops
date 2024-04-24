@@ -29,10 +29,6 @@ spec:
       cpu: "1"
     limits:
       memory: "2Gi"
-  affinity:
-    tolerations:
-    - key: "arm"
-      operator: "Exists"
   backup:
     retentionPolicy: 14d
     barmanObjectStore:
