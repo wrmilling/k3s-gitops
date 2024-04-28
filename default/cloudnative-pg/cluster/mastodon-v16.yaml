@@ -37,7 +37,7 @@ spec:
         maxParallel: 4
       destinationPath: s3://postgresql/
       endpointURL: http://minio.kube-system.svc:9000
-      serverName: mastodon-psql2-v16
+      serverName: mastodon-v16
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg
@@ -45,22 +45,22 @@ spec:
         secretAccessKey:
           name: cloudnative-pg
           key: MINIO_SECRET_KEY
-  bootstrap:
-    recovery:
-      source: mastodon-psql-backup
-  externalClusters:
-    - name: mastodon-psql-backup
-      barmanObjectStore:
-        wal:
-          compression: bzip2
-          maxParallel: 4
-        destinationPath: s3://postgresql/
-        endpointURL: http://minio.kube-system.svc:9000
-        serverName: mastodon-psql-v16
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg
-            key: MINIO_ACCESS_KEY
-          secretAccessKey:
-            name: cloudnative-pg
-            key: MINIO_SECRET_KEY
+  # bootstrap:
+  #   recovery:
+  #     source: mastodon-psql-backup
+  # externalClusters:
+  #   - name: mastodon-psql-backup
+  #     barmanObjectStore:
+  #       wal:
+  #         compression: bzip2
+  #         maxParallel: 4
+  #       destinationPath: s3://postgresql/
+  #       endpointURL: http://minio.kube-system.svc:9000
+  #       serverName: mastodon-psql-v16
+  #       s3Credentials:
+  #         accessKeyId:
+  #           name: cloudnative-pg
+  #           key: MINIO_ACCESS_KEY
+  #         secretAccessKey:
+  #           name: cloudnative-pg
+  #           key: MINIO_SECRET_KEY
