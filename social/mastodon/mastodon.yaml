@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mastodon
-      version: 4.1.1
+      version: 5.1.1
       sourceRef:
         kind: HelmRepository
         name: wrmilling-charts
@@ -44,6 +44,10 @@ spec:
         vapid:
           private_key: "${SECRET_MASTODON_VAPID_PRIVATE_KEY}"
           public_key: "${SECRET_MASTODON_VAPID_PUBLIC_KEY}"
+        activeRecordEncryption:
+          primaryKey: "${SECRET_MASTODON_AR_PRIMARY_KEY}"
+          deterministicKey: "${SECRET_MASTODON_AR_DETERMINISTIC_KEY}"
+          keyDerivationSalt: "${SECRET_MASTODON_AR_KEY_DERIVATION_SALT}"
       sidekiq:
         workers:
           - name: all-queues
