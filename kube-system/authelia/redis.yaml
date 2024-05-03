@@ -21,6 +21,7 @@ spec:
       persistence:
         enabled: true
         existingClaim: "authelia-redis-data"
+      resourcesPreset: "micro"
     replica:
       replicaCount: 0
     metrics:

@@ -21,6 +21,7 @@ spec:
       persistence:
         enabled: true
         existingClaim: forgejo-redis-pvc
+      resourcesPreset: "small"
     replica:
       replicaCount: 0
     metrics:
