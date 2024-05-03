@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mastodon
-      version: 4.1.1
+      version: 5.1.1
       sourceRef:
         kind: HelmRepository
         name: wrmilling-charts
