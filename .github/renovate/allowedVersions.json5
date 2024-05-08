@@ -1,5 +1,13 @@
 {
   packageRules: [
     // pin package versions
+    // {
+    //   "matchDatasources": ["docker"],
+    //   "allowedVersions": "<13",
+    //   "matchPackageNames": [
+    //     "postgres",
+    //     "docker.io/library/postgres"
+    //   ]
+    // },
   ],
 }

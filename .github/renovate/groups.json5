@@ -8,22 +8,24 @@
       "separateMinorPatch": true
     },
     {
-      description: "Rook-Ceph image and chart",
-      groupName: "Rook Ceph",
-      matchPackagePatterns: ["rook.ceph"],
-      matchDatasources: ["docker", "helm"],
-      group: { commitMessageTopic: "{{{groupName}}} group" },
-      separateMinorPatch: true,
-      stabilityDays: 2,
+      "description": "Rook-Ceph Group",
+      "groupName": "Rook-Ceph",
+      "matchPackagePatterns": ["rook.ceph"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
     },
     {
-      description: "External Snapshotter image and kustomization",
-      groupName: "External Snapshotter",
-      matchPackagePatterns: ["external-snapshotter", "snapshot-controller"],
-      matchDatasources: ["docker", "github-releases"],
-      group: { commitMessageTopic: "{{{groupName}}} group" },
-      separateMinorPatch: true,
-      stabilityDays: 2,
+      "description": "External Snapshotter Group",
+      "groupName": "External Snapshotter",
+      "matchPackageNames": ["snapshot-controller", "snapshot-validation-webhook"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
     },
     {
       description: "Thanos image and chart - versions do not match",
@@ -41,6 +43,17 @@
       matchPackagePatterns: ["mastodon", "mastodon-streaming"],
       matchDatasources: ["docker", "github-releases"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
+    },
+    {
+      description: "Flux Group",
+      groupName: "Flux",
+      matchPackagePatterns: ["^flux", "^ghcr.io/fluxcd/"],
+      matchDatasources: ["docker", "github-tags"],
+      versioning: "semver",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      separateMinorPatch: true,
     },
   ],
 }

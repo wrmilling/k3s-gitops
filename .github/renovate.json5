@@ -1,42 +1,49 @@
 {
   "extends": [
-    "config:base",
+    "config:recommended",
     "docker:enableMajor",
     ":disableRateLimiting",
     ":dependencyDashboard",
-    ":semanticCommits",
     ":enablePreCommit",
+
+    ":semanticCommits",
     ":automergeBranchPush",
+    "github>wrmilling/k3s-gitops//.github/renovate/automerge-github-actions.json",
+    "github>wrmilling/k3s-gitops//.github/renovate/commit-message.json",
+    "github>wrmilling/k3s-gitops//.github/renovate/pr-labels.json",
+    "github>wrmilling/k3s-gitops//.github/renovate/semantic-commits.json",
+    "github>wrmilling/k3s-gitops//.github/renovate/custom-managers.json5",
     "github>wrmilling/k3s-gitops//.github/renovate/allowedVersions.json5",
+    "github>wrmilling/k3s-gitops//.github/renovate/versioning.json5",
+    "github>wrmilling/k3s-gitops//.github/renovate/groups.json5",
+    "github>wrmilling/k3s-gitops//.github/renovate/grafanaDashboards.json5",
     "github>wrmilling/k3s-gitops//.github/renovate/autoMerge.json5",
     "github>wrmilling/k3s-gitops//.github/renovate/disabledDatasources.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/groups.json5",
   ],
   "enabled": true,
   "timezone": "America/Chicago",
-  "semanticCommits": "enabled",
-  // "platform": "github",
-  // "username": "wrmilling",
-  "gitAuthor": "Winston Milling <wrmilling@users.noreply.github.com>",
-  // "repositories": ["wrmilling/k3s-gitops"],
-  // "onboarding": false,
-  // "requireConfig": "optional",
-  "commitBodyTable": true,
   "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate Dashboard",
-  "commitBody": "Signed-off-by: Winston Milling <wrmilling@users.noreply.github.com>",
+  "dependencyDashboardTitle": "Renovate (Mend) Dashboard",
   // Do not notify on closed unmerged PRs
   "suppressNotifications": ["prIgnoreNotification"],
   // Do not rebase PRs
   "rebaseWhen": "conflicted",
-  "commitMessageTopic": "{{depName}}",
-  "commitMessageExtra": "to {{newVersion}}",
-  "commitMessageSuffix": "",
+  "commitBodyTable": true,
+  "platformCommit": true,
+  "gitAuthor": "Winston R. Milling <wrmilling@users.noreply.github.com>",
+  "commitBody": "Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>",
+  ignorePaths: [
+    "setup/**",
+    ".taskfiles/**",
+  ],
   "helm-values": {
     "fileMatch": ["./.+\\.yaml$"]
   },
   "flux": {
-    "fileMatch": ["./.+\\.yaml$"]
+    "fileMatch": ["./.+\\.yaml$"],
+    "ignorePaths": [
+      ".github"
+    ],
   },
   "kubernetes": {
     "fileMatch": ["\\.yaml$"],
@@ -45,99 +52,4 @@
       ".github"
     ],
   },
-  "regexManagers": [
-    {
-      "fileMatch": ["./.+\\.yaml$"],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    }
-  ],
-  // "regexManagers": [
-  //   {
-  //     "description": ["Process various dependencies in YAML files"],
-  //     "fileMatch": [".+\\.ya?ml$"],
-  //     "matchStrings": [
-  //       "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*=?))?( versionTemplate=(?<versionTemplate>.*=?))?\\n.*: ?(\"?(?<currentValue>[^\"\\n]+=?)\"?)"
-  //     ],
-  //     "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
-  //     "extractVersionTemplate": "{{#if versionTemplate}}{{{versionTemplate}}}{{else}}{{/if}}"
-  //   }
-  // ],
-  "packageRules": [
-    // Setup datasources
-    {
-      "datasources": ["helm"],
-      "commitMessageTopic": "Helm chart {{depName}}",
-      "semanticCommitScope": "charts",
-      "separateMinorPatch": true,
-      "ignoreDeprecated": true
-    },
-    {
-      "datasources": ["docker"],
-      "commitMessageTopic": "Docker image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "updateTypes": ["major", "minor", "patch"],
-      "enabled": true
-    },
-    {
-      "matchDatasources": ["docker"],
-      "semanticCommitScope": "images",
-      "separateMinorPatch": true
-    },
-    // add labels according to package and update types
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(images)!: ",
-      "labels": ["renovate/image", "dep/major"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "labels": ["renovate/image", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "labels": ["renovate/image", "dep/patch"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(charts)!: ",
-      "labels": ["renovate/helm", "dep/major"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "labels": ["renovate/helm", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "labels": ["renovate/helm", "dep/patch"]
-    },
-    // Custom versions
-    {
-      "matchDatasources": ["docker"],
-      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
-      "matchPackageNames": ["quay.io/minio/minio"]
-    },
-    {
-      "datasources": ["docker"],
-      "versionScheme": "regex:^nightly-0\\.(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-      "packageNames": ["hotio/readarr"]
-    },
-    {
-      "datasources": ["docker"],
-      "versioning": "loose",
-      "packageNames": ["plexinc/pms-docker"]
-    },
-  ],
 }

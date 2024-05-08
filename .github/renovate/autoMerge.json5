@@ -1,22 +1,3 @@
 {
-  packageRules: [
-    // auto-updates - daily
-    {
-      "matchManagers": ["github-actions"],
-      "automerge": false,
-      "automergeType": "branch",
-      "requiredStatusChecks": null,
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      description: "Auto merge container digests",
-      matchDatasources: ["docker"],
-      automerge: false,
-      automergeType: "branch",
-      requiredStatusChecks: null,
-      matchUpdateTypes: ["digest"],
-      matchPackagePattern: ["ghcr.io/k8s-at-home", "ghcr.io/onedr0p"],
-    },
-  ],
+  "packageRules": [ ]
 }
-
