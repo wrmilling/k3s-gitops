@@ -34,7 +34,7 @@ spec:
     retain:
       daily: 30
       within: 3d
-    unlock: "true"
+    unlock: "why"
 ---
 apiVersion: v1
 kind: Secret
