@@ -20,23 +20,23 @@
 Using GitOps principals and workflow to manage a lightweight <a href="https://k3s.io">k3s</a> cluster.
 </p>
 
-## Overview
+## :book:&nbsp; Overview
 
 ![k3s Nodes](https://i.imgur.com/2hBUBi1.png)
 
 This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps principals and define the state of my cluster using code.
 
-## Infrastructure
+## :computer:&nbsp; Infrastructure
 
 Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
 
 The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C PCs which are both compute and storage, and three (3) Raspberry Pi 4B 8GB which provide more compute capacity.
 
-## Setup
+## :gear:&nbsp; Setup
 
 Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here under the [setup](setup/README.md) directory.
 
-## Namespaces
+## :wrench:&nbsp; Namespaces
 
 * [cert-manager](cert-manager/README.md)
 * [default](default/README.md)
@@ -47,6 +47,6 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 * [rook-ceph](rook-ceph/README.md)
 * [social](social/README.md)
 
-## Credits + Community
+## :handshake:&nbsp; Credits + Community
 
 A huge thanks to the community at Home Operations via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/home-operations). Home Operations Logo image used with permission, check out the community for some awesome and helpful people.
