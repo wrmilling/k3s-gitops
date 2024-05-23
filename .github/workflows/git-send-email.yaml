@@ -1,54 +1,54 @@
----
-name: "Send PRs via git send-email"
+# ---
+# name: "Send PRs via git send-email"
 
-on:
-  pull_request:
-    types: [ opened, synchronize ]
-    branches:
-      - main
+# on:
+#   pull_request:
+#     types: [ opened, synchronize ]
+#     branches:
+#       - main
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+#   cancel-in-progress: true
 
-jobs:
-  components:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Out Code
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
+# jobs:
+#   components:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check Out Code
+#         uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
+#         with:
+#           fetch-depth: 0
+#           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup Alpine
-        uses: jirutka/setup-alpine@v1
-        with:
-          packages: >
-            git
-            git-email
+#       - name: Setup Alpine
+#         uses: jirutka/setup-alpine@v1
+#         with:
+#           packages: >
+#             git
+#             git-email
 
-      - name: Send Patch
-        env:
-          GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-        run: |
-          sleep 60
-          git config --global user.name "GitOps Integration"
-          git config --global user.email ${GITOPS_EMAIL}
-          git send-email \
-            --no-thread \
-            --quiet \
-            --confirm=never \
-            --suppress-cc=all \
-            --to="${GITOPS_EMAIL}" \
-            --from="${SMTP_USER}" \
-            --smtp-server="${SMTP_SERVER}" \
-            --smtp-server-port=587 \
-            --smtp-encryption="tls" \
-            --smtp-user="${SMTP_USER}" \
-            --smtp-pass="${SMTP_PASS}" \
-            HEAD~1
-        shell: alpine.sh {0}
+#       - name: Send Patch
+#         env:
+#           GITOPS_EMAIL: ${{ secrets.GITOPS_EMAIL }}
+#           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+#           SMTP_USER: ${{ secrets.SMTP_USER }}
+#           SMTP_PASS: ${{ secrets.SMTP_PASS }}
+#         run: |
+#           sleep 60
+#           git config --global user.name "GitOps Integration"
+#           git config --global user.email ${GITOPS_EMAIL}
+#           git send-email \
+#             --no-thread \
+#             --quiet \
+#             --confirm=never \
+#             --suppress-cc=all \
+#             --to="${GITOPS_EMAIL}" \
+#             --from="${SMTP_USER}" \
+#             --smtp-server="${SMTP_SERVER}" \
+#             --smtp-server-port=587 \
+#             --smtp-encryption="tls" \
+#             --smtp-user="${SMTP_USER}" \
+#             --smtp-pass="${SMTP_PASS}" \
+#             HEAD~1
+#         shell: alpine.sh {0}
