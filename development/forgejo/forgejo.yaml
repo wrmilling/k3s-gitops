@@ -46,7 +46,7 @@ spec:
               USER_GID: 1000
               FORGEJO__APP_NAME: "The Homelab Git"
               FORGEJO__actions__ENABLED: "true"
-              FORGEJO__actions__DEFAULT_ACTIONS_URL: "https://code.forgejo.org"
+              FORGEJO__actions__DEFAULT_ACTIONS_URL: "https://github.com"
               FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
               FORGEJO__cache__ENABLED: "true"
               FORGEJO__cache__ADAPTER: "redis"
