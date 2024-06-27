@@ -5,6 +5,10 @@ jobs:
   Sync-Repository:
     runs-on: ubuntu-latest
     steps:
+      - name: Debounce 2 minute
+        uses: zachary95/github-actions-debounce
+        with:
+          wait: 120
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
