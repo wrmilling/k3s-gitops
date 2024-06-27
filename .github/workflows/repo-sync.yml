@@ -1,0 +1,28 @@
+name: Sync Repository
+run-name: Sync Repository at commit ${{ github.ref }}
+on: [push]
+jobs:
+  Sync-Repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: |
+            ${{ secrets.FORGE_DEPLOY_KEY }}
+      - name: Prep Remotes
+        run: |
+          cd ${{ github.workspace }}
+
+          # Ignore hosts keys, since we accept them as-is, add remotes
+          git config --global core.sshCommand 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
+          git remote add forge git@${{ secrets.FORGE_DOMAIN }}:${{ github.repository }}.git &> /dev/null
+      - name: Push Code
+        run: |
+          cd ${{ github.workspace }}
+
+          git push forge ${{ github.ref_name }} &> /dev/null
