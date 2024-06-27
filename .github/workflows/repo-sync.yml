@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debounce 2 minute
-        uses: zachary95/github-actions-debounce
+        uses: zachary95/github-actions-debounce@v0.1.0
         with:
           wait: 120
       - name: Checkout Repository
