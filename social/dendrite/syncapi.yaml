@@ -42,7 +42,7 @@ spec:
             image:
               repository: ghcr.io/matrix-org/sliding-sync
               pullPolicy: IfNotPresent
-              tag: v0.99.18@sha256:1789abdfa80c5486903aec0d0b9e9db1d3673cfdeb8f8d0cf02074534a2ef492
+              tag: v0.99.19@sha256:b940cab564355b15a604d5522d9db3615f889d8e9870989d8f17e189aecb4c18
             env:
               TZ: America/Chicago
               SYNCV3_SERVER: "https://dendrite.${SECRET_DOMAIN}"
