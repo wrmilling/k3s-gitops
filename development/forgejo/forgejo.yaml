@@ -57,8 +57,8 @@ spec:
               FORGEJO__database__USER: "forgejo"
               FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
               FORGEJO__federation__ENABLED: "false"
-              FORGEJO__git.timeout__MIGRATE: "1000"
-              FORGEJO__git.timeout__MIRROR: "1000"
+              FORGEJO__git.timeout__MIGRATE: "2000"
+              FORGEJO__git.timeout__MIRROR: "2000"
               FORGEJO__mailer__ENABLED: "true"
               FORGEJO__mailer__PROTOCOL: "smtp+starttls"
               FORGEJO__mailer__SMTP_ADDR: "${SECRET_SMTP_DOMAIN}"
