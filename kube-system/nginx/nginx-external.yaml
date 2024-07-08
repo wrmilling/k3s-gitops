@@ -67,7 +67,7 @@ spec:
         repository: ghcr.io/tarampampam/error-pages
         tag: 3.2.0
       extraEnvs:
-        - { name: TEMPLATE_NAME, value: l7-dark }
+        - { name: TEMPLATE_NAME, value: l7 }
         - { name: SHOW_DETAILS, value: "false" }
       resources:
         requests:
