@@ -28,7 +28,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: forgejo-redis-pvc
+  name: forgejo-valkey-pvc
   namespace: development
 spec:
   accessModes:
