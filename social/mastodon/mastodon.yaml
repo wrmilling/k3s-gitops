@@ -124,12 +124,7 @@ spec:
         existingSecret: mastodon-postgresql
 
     redis:
-      master:
-        persistence:
-          storageClass: rook-ceph-block
-          size: 1Gi
-      password: "${SECRET_MASTODON_REDIS_PASSWORD}"
+      enabled: false
+      hostname: mastodon-valkey-master.social.svc
       auth:
         password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-      replica:
-        replicaCount: 0
