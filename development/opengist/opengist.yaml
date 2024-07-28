@@ -32,6 +32,7 @@ spec:
               TZ: America/Chicago
               UID: 1000
               GID: 1000
+              OG_CUSTOM_LOGO: "logo.png"
               OG_EXTERNAL_URL: "https://gist.${SECRET_DOMAIN}"
               OG_GITEA_CLIENT_KEY: "${SECRET_OPENGIST_GITEA_CLIENT_KEY}"
               OG_GITEA_SECRET: "${SECRET_OPENGIST_GITEA_SECRET}"
