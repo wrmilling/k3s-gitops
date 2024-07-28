@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: opengist
+  namespace: development
+spec:
+  releaseName: opengist
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 3.2.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/thomiceli/opengist
+              pullPolicy: IfNotPresent
+              tag: 1.7.3@sha256:85b0b8a6792db1e2fb12684dfb08bd45b738f41b835e39cf7794768e7e7cc219
+            env:
+              TZ: America/Chicago
+              UID: 1000
+              GID: 1000
+              OG_EXTERNAL_URL: "https://gists.${SECRET_DOMAIN}"
+              OG_GITEA_CLIENT_KEY: "${SECRET_OPENGIST_GITEA_CLIENT_KEY}"
+              OG_GITEA_SECRET: "${SECRET_OPENGIST_GITEA_SECRET}"
+              OG_GITEA_URL: "https://git.${SECRET_DOMAIN}/"
+              OG_GITEA_NAME: "The Homelab Git"
+              OG_SSH_GIT_ENABLED: "false"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 6157
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: gists.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        className: nginx-external
+    persistence:
+      data:
+        enabled: true
+        existingClaim: opengist-data-pvc
+        globalMounts:
+          - path: /opengist
