@@ -32,7 +32,7 @@ spec:
               TZ: America/Chicago
               UID: 1000
               GID: 1000
-              OG_EXTERNAL_URL: "https://gists.${SECRET_DOMAIN}"
+              OG_EXTERNAL_URL: "https://gist.${SECRET_DOMAIN}"
               OG_GITEA_CLIENT_KEY: "${SECRET_OPENGIST_GITEA_CLIENT_KEY}"
               OG_GITEA_SECRET: "${SECRET_OPENGIST_GITEA_SECRET}"
               OG_GITEA_URL: "https://git.${SECRET_DOMAIN}/"
@@ -62,7 +62,7 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/custom-http-errors: "418"
         hosts:
-          - host: gists.${SECRET_DOMAIN}
+          - host: gist.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
