@@ -47,7 +47,7 @@ spec:
         cookies:
           - domain: "${SECRET_DOMAIN}"
             subdomain: "auth"
-            default_redirection_url: "https://auth.${SECRET_DOMAIN}"
+            default_redirection_url: "https://${SECRET_DOMAIN}"
         redis:
           enabled: true
           enabledSecret: true
