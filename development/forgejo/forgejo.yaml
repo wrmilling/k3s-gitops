@@ -39,7 +39,7 @@ spec:
             image:
               repository: codeberg.org/forgejo/forgejo
               pullPolicy: IfNotPresent
-              tag: 7.0.5-rootless@sha256:dcb1a67b14ed3bfd84d53b9a64676debb3589914636400cb20b01c73cd2a8a93
+              tag: 8.0.0-rootless@sha256:474c9ca0635f1f5a806dd360d0308a88faf3e386f79659cc58a74632e6d29c03
             env:
               TZ: America/Chicago
               USER_UID: 1000
