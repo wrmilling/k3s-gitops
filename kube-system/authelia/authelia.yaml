@@ -17,7 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    domain: "${SECRET_DOMAIN}"
     ingress:
       enabled: true
       className: nginx-external
@@ -45,6 +44,10 @@ spec:
           username: authelia
           sslmode: disable
       session:
+        cookies:
+          - domain: "${SECRET_DOMAIN}"
+            subdomain: "auth"
+            default_redirection_url: "https://auth.${SECRET_DOMAIN}"
         redis:
           enabled: true
           enabledSecret: true
@@ -55,6 +58,7 @@ spec:
       authentication_backend:
         disable_reset_password: true
         ldap:
+          enabled: true
           implementation: custom
           url: "ldap://openldap:1389"
           username_attribute: uid
