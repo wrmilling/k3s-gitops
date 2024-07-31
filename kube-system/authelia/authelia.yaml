@@ -10,13 +10,14 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.authelia.com
       chart: authelia
-      version: 0.9.0
+      version: 0.8.58
       sourceRef:
         kind: HelmRepository
         name: authelia-charts
         namespace: flux-system
       interval: 5m
   values:
+    domain: "${SECRET_DOMAIN}"
     ingress:
       enabled: true
       className: nginx-external
@@ -36,8 +37,6 @@ spec:
       access_control:
         default_policy: one_factor
       storage:
-        encryption_key:
-          value: ${SECRET_AUTH_STORAGE_ENC_KEY}
         postgres:
           enabled: true
           host: shared-psql-v16-rw.default.svc
@@ -45,18 +44,10 @@ spec:
           database: authelia
           username: authelia
           sslmode: disable
-          password:
-            value: ${SECRET_AUTH_STORAGE_PASSWORD}
       session:
-        cookies:
-          - domain: "${SECRET_DOMAIN}"
-            subdomain: "auth"
-            default_redirection_url: "https://${SECRET_DOMAIN}"
         redis:
           enabled: true
           enabledSecret: true
-          secret:
-            value: ${SECRET_AUTH_REDIS_PASSWORD}
           username: ""
           host: authelia-valkey-master
           port: 6379
@@ -64,7 +55,6 @@ spec:
       authentication_backend:
         disable_reset_password: true
         ldap:
-          enabled: true
           implementation: custom
           url: "ldap://openldap:1389"
           username_attribute: uid
@@ -74,14 +64,10 @@ spec:
           user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
           users_filter: "(&({username_attribute}={input})(objectClass=person))"
           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
-          password:
-            value: ${SECRET_LDAP_ADMIN_PASSWORD}
       notifier:
         smtp:
           enabled: true
           enabledSecret: true
-          password:
-            value: ${SECRET_AUTH_SMTP_PASSWORD}
           username: ${SECRET_AUTH_SMTP_USER}
           host: ${SECRET_SMTP_DOMAIN}
           port: 587
@@ -89,3 +75,19 @@ spec:
           identifier: localhost
           subject: "[Authelia] {title}"
           startup_check_address: ${SECRET_AUTH_SMTP_USER}
+    secret:
+      ldap:
+        key: LDAP_PASSWORD
+        value: ${SECRET_LDAP_ADMIN_PASSWORD}
+      smtp:
+        key: SMTP_PASSWORD
+        value: ${SECRET_AUTH_SMTP_PASSWORD}
+      storage:
+        key: STORAGE_PASSWORD
+        value: ${SECRET_AUTH_STORAGE_PASSWORD}
+      storageEncryptionKey:
+        key: STORAGE_ENCRYPTION_KEY
+        value: ${SECRET_AUTH_STORAGE_ENC_KEY}
+      redis:
+        key: REDIS_PASSWORD
+        value: ${SECRET_AUTH_REDIS_PASSWORD}
