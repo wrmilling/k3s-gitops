@@ -80,7 +80,7 @@ spec:
         smtp:
           enabled: true
           enabledSecret: true
-          passowrd:
+          password:
             value: ${SECRET_AUTH_SMTP_PASSWORD}
           username: ${SECRET_AUTH_SMTP_USER}
           host: ${SECRET_SMTP_DOMAIN}
