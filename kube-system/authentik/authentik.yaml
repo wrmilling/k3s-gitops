@@ -42,10 +42,10 @@ spec:
     server:
       ingress:
         enabled: true
-        ingressClassName: nginx-internal
+        ingressClassName: nginx-external
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
         hosts:
-          - auth-internal.${SECRET_DOMAIN}
+          - auth.${SECRET_DOMAIN}
 
