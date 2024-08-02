@@ -32,7 +32,7 @@ spec:
         user: authentik
         password: "${SECRET_AUTH_POSTGRES_PASSWORD}"
       redis:
-        host: authelia-valkey-master.kube-system.svc
+        host: authentik-valkey-master.kube-system.svc
         password: ${SECRET_AUTH_REDIS_PASSWORD}
       secret_key: ${SECRET_AUTH_STORAGE_ENC_KEY}
       error_reporting:
