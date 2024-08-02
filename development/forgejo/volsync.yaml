@@ -34,7 +34,7 @@ spec:
     retain:
       daily: 30
       within: 3d
-    unlock: "OhEmGee"
+    unlock: "StopLocking"
 ---
 apiVersion: v1
 kind: Secret
@@ -71,4 +71,4 @@ spec:
     retain:
       daily: 14
       within: 3d
-    unlock: "StopBreaking"
+    unlock: "YourselfDangit"
