@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authentik-valkey
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: valkey
+      version: 0.3.12
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    master:
+      persistence:
+        enabled: true
+        existingClaim: "authentik-valkey-data"
+      resourcesPreset: "micro"
+    replica:
+      replicaCount: 0
+    metrics:
+      enabled: true
+    auth:
+      password: ${SECRET_AUTH_REDIS_PASSWORD}
