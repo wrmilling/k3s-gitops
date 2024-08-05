@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.goauthentik.io
       chart: authentik
-      version: 2024.6.2
+      version: 2024.6.3
       sourceRef:
         kind: HelmRepository
         name: authentik-charts
