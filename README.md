@@ -30,7 +30,7 @@ This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps princip
 
 Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
 
-The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C PCs which are both compute and storage, and three (3) Raspberry Pi 4B 8GB which provide more compute capacity.
+The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C mini-PCs, and one (1) BMax B4 Plus mini-PC. The mini-PCs double as both compute and ceph nodes. 
 
 ## :gear:&nbsp; Setup
 
