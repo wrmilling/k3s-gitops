@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/glitch-soc/mastodon
-      tag: latest@sha256:4011a4197c86d938f360373d9ff9b990f0b431e4d663a3e6defe6b228803cfd9
+      tag: latest@sha256:bf6da25cd8e9f8d8fb3c1690c4c83d5ca18e73fa5e2bc1529bb73674b617a662
       pullPolicy: IfNotPresent
 
     mastodon:
@@ -80,7 +80,7 @@ spec:
       streaming:
         image:
           repository: ghcr.io/glitch-soc/mastodon-streaming
-          tag: latest@sha256:8253ebd61e072960f15f11f5247f4083d7413b4aefbb0e3c1a95090fb5218681
+          tag: latest@sha256:0caff6cd6cedf485f67961d423f9bb6c4b672bdd68ad5af04b4e195d56af1fa3
         port: 4000
       web:
         port: 3000
