@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.30.2-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://discord.gg/home-operations"><img alt="Home Operations Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
+  <a href="https://k3s.io/"><img alt="k3s" src="https://img.shields.io/badge/k3s-v1.30.3-orange?logo=kubernetes&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/WRMilling/k3s-gitops?logo=github&color=green&logoColor=white&style=flat-square"></a> <a href="https://github.com/WRMilling/k3s-gitops/commits/master"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/WRMilling/k3s-gitops?logo=git&logoColor=white&color=purple&style=flat-square"></a> <a href="https://discord.gg/home-operations"><img alt="Home Operations Discord" src="https://img.shields.io/badge/discord-chat-7289DA.svg?logo=discord&logoColor=white&maxAge=60&style=flat-square"></a>
 </p>
 
 <p align="center">
@@ -30,7 +30,7 @@ This repository utilizes [Flux2](https://fluxcd.io/) to implement GitOps princip
 
 Setup for the individual nodes is now via NixOS and my [nixos-configuration](https://github.com/wrmilling/nixos-configuration) repository. Individual node names from the screenshot in [overview](#overview) can be searched for under the `hosts` directory of the aforementioned repo.
 
-The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C mini-PCs, and one (1) BMax B4 Plus mini-PC. The mini-PCs double as both compute and ceph nodes. 
+The current cluster consists of one (1) virtual master node, hosted on my TrueNAS Scale NAS, three (3) Minisforum UN100C mini-PCs, and one (1) BMax B4 Plus mini-PC. The mini-PCs double as both compute and ceph nodes.
 
 ## :gear:&nbsp; Setup
 
