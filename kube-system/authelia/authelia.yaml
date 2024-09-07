@@ -36,12 +36,16 @@ spec:
       access_control:
         default_policy: one_factor
       storage:
+        encryption_key:
+          value: ${SECRET_AUTH_STORAGE_ENC_KEY}
         postgres:
           enabled: true
           host: shared-psql-v16-rw.default.svc
           port: 5432
           database: authelia
           username: authelia
+          password:
+            value: ${SECRET_AUTH_STORAGE_PASSWORD}
           sslmode: disable
       session:
         cookies:
@@ -51,6 +55,8 @@ spec:
           enabled: true
           enabledSecret: true
           username: ""
+          password:
+            value: ${SECRET_AUTH_REDIS_PASSWORD}
           host: authelia-valkey-master
           port: 6379
           database_index: 0
@@ -60,6 +66,8 @@ spec:
           enabled: true
           implementation: custom
           url: "ldap://openldap:1389"
+          password:
+            value: ${SECRET_LDAP_ADMIN_PASSWORD}
           username_attribute: uid
           additional_users_dn: ""
           additional_groups_dn: ""
@@ -72,25 +80,11 @@ spec:
           enabled: true
           enabledSecret: true
           username: ${SECRET_AUTH_SMTP_USER}
+          password:
+            value: ${SECRET_AUTH_SMTP_PASSWORD}
           host: ${SECRET_SMTP_DOMAIN}
           port: 587
           sender: ${SECRET_AUTH_SMTP_USER}
           identifier: localhost
           subject: "[Authelia] {title}"
           startup_check_address: ${SECRET_AUTH_SMTP_USER}
-    secret:
-      ldap:
-        key: LDAP_PASSWORD
-        value: ${SECRET_LDAP_ADMIN_PASSWORD}
-      smtp:
-        key: SMTP_PASSWORD
-        value: ${SECRET_AUTH_SMTP_PASSWORD}
-      storage:
-        key: STORAGE_PASSWORD
-        value: ${SECRET_AUTH_STORAGE_PASSWORD}
-      storageEncryptionKey:
-        key: STORAGE_ENCRYPTION_KEY
-        value: ${SECRET_AUTH_STORAGE_ENC_KEY}
-      redis:
-        key: REDIS_PASSWORD
-        value: ${SECRET_AUTH_REDIS_PASSWORD}
