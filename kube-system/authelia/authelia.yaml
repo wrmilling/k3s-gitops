@@ -40,13 +40,11 @@ spec:
           value: ${SECRET_AUTH_STORAGE_ENC_KEY}
         postgres:
           enabled: true
-          host: shared-psql-v16-rw.default.svc
-          port: 5432
+          address: 'tcp://shared-psql-v16-rw.default.svc:5432'
           database: authelia
           username: authelia
           password:
             value: ${SECRET_AUTH_STORAGE_PASSWORD}
-          sslmode: disable
       session:
         cookies:
           - domain: "${SECRET_DOMAIN}"
@@ -57,7 +55,7 @@ spec:
           username: ""
           password:
             value: ${SECRET_AUTH_REDIS_PASSWORD}
-          host: authelia-valkey-master
+          host: 'authelia-valkey-master.kube-system.svc'
           port: 6379
           database_index: 0
       authentication_backend:
@@ -65,7 +63,7 @@ spec:
         ldap:
           enabled: true
           implementation: custom
-          url: "ldap://openldap:1389"
+          address: "ldap://openldap.kube-system.svc:1389"
           password:
             value: ${SECRET_LDAP_ADMIN_PASSWORD}
           username_attribute: uid
@@ -82,8 +80,7 @@ spec:
           username: ${SECRET_AUTH_SMTP_USER}
           password:
             value: ${SECRET_AUTH_SMTP_PASSWORD}
-          host: ${SECRET_SMTP_DOMAIN}
-          port: 587
+          address: "submission://${SECRET_SMTP_DOMAIN}:587"
           sender: ${SECRET_AUTH_SMTP_USER}
           identifier: localhost
           subject: "[Authelia] {title}"
