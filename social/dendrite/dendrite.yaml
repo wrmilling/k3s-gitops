@@ -48,7 +48,7 @@ spec:
             image:
               repository: ghcr.io/matrix-org/dendrite-monolith
               pullPolicy: IfNotPresent
-              tag: v0.13.7@sha256:66f95abae64632a7731c920ff6d370094bcbce91566d6b185acee62b18f63576
+              tag: v0.13.8@sha256:d5306ddc5e233480bddb56d922fd7593abf5ee0b279ba642faf39cc3b748caed
             env:
               TZ: America/Chicago
             probes:
