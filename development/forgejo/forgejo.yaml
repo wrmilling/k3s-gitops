@@ -87,7 +87,7 @@ spec:
                 cpu: 100m
                 memory: 512Mi
               limits:
-                memory: 3072Mi
+                memory: 2048Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 1000
