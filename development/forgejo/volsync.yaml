@@ -39,6 +39,43 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
+  name: forgejo-custom-restic-config
+  namespace: development
+type: Opaque
+stringData:
+  RESTIC_REPOSITORY: "s3:http://minio.kube-system.svc:9000/restic/forgejo-custom"
+  RESTIC_PASSWORD: ${SECRET_VOLSYNC_RESTIC_PASSWORD}
+  AWS_ACCESS_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+  AWS_SECRET_ACCESS_KEY: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: forgejo-custom
+  namespace: development
+spec:
+  sourcePVC: forgejo-custom-pvc
+  trigger:
+    schedule: "0 3 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: forgejo-custom-restic-config
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-rbdplugin-snapclass
+    storageClassName: rook-ceph-block
+    moverSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+    retain:
+      daily: 14
+      within: 3d
+    unlock: "YourselfDangit"
+---
+apiVersion: v1
+kind: Secret
+metadata:
   name: forgejo-data-restic-config
   namespace: development
 type: Opaque

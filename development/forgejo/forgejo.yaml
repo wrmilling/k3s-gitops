@@ -139,6 +139,11 @@ spec:
         existingClaim: forgejo-config-pvc
         globalMounts:
           - path: /etc/gitea
+      custom:
+        enabled: true
+        existingClaim: forgejo-custom-pvc
+        globalMounts:
+          - path: /var/lib/gitea/custom
       data:
         enabled: true
         existingClaim: forgejo-data-pvc
