@@ -45,9 +45,6 @@ spec:
       podAntiAffinityPreset: hard
       replicaLabels:
         - replica
-      tolerations:
-      - key: "arm"
-        operator: "Exists"
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: monitoring
