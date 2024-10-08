@@ -23,7 +23,6 @@ spec:
   values:
     installCRDs: true
     webhook:
-      enabled: true
       tolerations:
       - key: "arm"
         operator: "Exists"
