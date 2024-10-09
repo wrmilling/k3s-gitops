@@ -26,7 +26,7 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 
 ## metallb
 
-[MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below.
+[MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below. There is a bit of chicken and egg with this chart right now as I have not solved the CRDs needing to be installed before you can have an IPAddressPool object. Either remove the IPAddressPool definition before chart install or manually install the CRDs before install. 
 
 * [metallb/metallb.yaml](metallb/metallb.yaml) - HelmRelease for metallb, including values configuration.
 
