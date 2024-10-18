@@ -23,6 +23,9 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
     controllers:
       main:
         strategy: Recreate
@@ -50,10 +53,6 @@ spec:
                 enabled: false
               startup:
                 enabled: false
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: "Always"
     persistence:
       config:
         enabled: true
