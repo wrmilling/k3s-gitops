@@ -10,7 +10,7 @@ spec:
   # using only 1 replica: very difficult to drain the node where postgres is running
   # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
   instances: 2
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
   primaryUpdateStrategy: unsupervised
   storage:
     size: 50Gi
