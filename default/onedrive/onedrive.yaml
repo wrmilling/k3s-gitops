@@ -99,6 +99,10 @@ spec:
     #         # sync_dir_permissions = "700"
     #         # sync_file_permissions = "600"
     #         # rate_limit = "131072"
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
     persistence:
       config:
         enabled: true
