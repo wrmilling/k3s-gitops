@@ -125,6 +125,6 @@ spec:
 
     redis:
       enabled: false
-      hostname: mastodon-valkey-master.social.svc
+      hostname: mastodon-valkey-primary.social.svc
       auth:
         password: "${SECRET_MASTODON_REDIS_PASSWORD}"

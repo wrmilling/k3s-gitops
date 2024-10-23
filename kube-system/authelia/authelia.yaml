@@ -55,7 +55,7 @@ spec:
           username: ""
           password:
             value: ${SECRET_AUTH_REDIS_PASSWORD}
-          host: 'authelia-valkey-master.kube-system.svc'
+          host: 'authelia-valkey-primary.kube-system.svc'
           port: 6379
           database_index: 0
       authentication_backend:
