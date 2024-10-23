@@ -10,14 +10,14 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: valkey
-      version: 1.0.3
+      version: 2.0.0
       sourceRef:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
       interval: 5m
   values:
-    master:
+    primary:
       persistence:
         enabled: true
         existingClaim: "mastodon-valkey-data"
