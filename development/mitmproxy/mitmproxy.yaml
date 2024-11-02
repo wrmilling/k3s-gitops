@@ -50,8 +50,12 @@ spec:
         type: LoadBalancer
         loadBalancerIP: ${SVC_MITM_IP}
         ports:
+          proxy:
+           port: 18080
+           targetPort: 8080
           http:
-           port: 8080
+            port: 18081
+            targetPort: 8081
       main:
         controller: main
         ports:
