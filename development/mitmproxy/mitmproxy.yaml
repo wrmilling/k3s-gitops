@@ -33,7 +33,11 @@ spec:
             ]
             args: [
               "--web-host",
-              "0.0.0.0"
+              "0.0.0.0",
+              "--listen-port",
+              "18080",
+              "--web-port",
+              "18081"
             ]
             env:
               TZ: America/Chicago
@@ -52,15 +56,13 @@ spec:
         ports:
           proxy:
            port: 18080
-           targetPort: 8080
           http:
             port: 18081
-            targetPort: 8081
       main:
         controller: main
         ports:
           http:
-            port: 8081
+            port: 18081
     ingress:
       main:
         enabled: true
