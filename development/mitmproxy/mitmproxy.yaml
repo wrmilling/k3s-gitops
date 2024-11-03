@@ -55,9 +55,11 @@ spec:
         loadBalancerIP: ${SVC_MITM_IP}
         ports:
           proxy:
-           port: 18080
+            port: 18080
           http:
             port: 18081
+          wireguard:
+            port: 18082
       main:
         controller: main
         ports:
