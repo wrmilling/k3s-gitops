@@ -60,6 +60,15 @@ spec:
             port: 18081
           wireguard:
             port: 18082
+          proxy-udp:
+            protocol: UDP
+            port: 18080
+          http-udp:
+            protocol: UDP
+            port: 18081
+          wireguard-udp:
+            protocol: UDP
+            port: 18082
       main:
         controller: main
         ports:
