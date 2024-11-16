@@ -37,7 +37,7 @@ spec:
             image:
               repository: driveone/onedrive
               pullPolicy: IfNotPresent
-              tag: 2.5.2
+              tag: 2.5.3
             env:
               TZ: America/Chicago
               ONEDRIVE_UID: 1000
