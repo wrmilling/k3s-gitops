@@ -1,98 +1,98 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: mitmproxy
-  namespace: development
-spec:
-  releaseName: mitmproxy
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 3.5.1
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    controllers:
-      main:
-        strategy: Recreate
-        containers:
-          main:
-            image:
-              repository: mitmproxy/mitmproxy
-              pullPolicy: IfNotPresent
-              tag: 11.0.0@sha256:ba52f9c5c5e372eb92a5454b8ab27b49a024728d2cc4e6c9848e0e46f633f10f
-            command: [
-              "mitmweb"
-            ]
-            args: [
-              "--web-host",
-              "0.0.0.0",
-              "--listen-port",
-              "18080",
-              "--web-port",
-              "18081"
-            ]
-            env:
-              TZ: America/Chicago
-            resources:
-              requests:
-                cpu: 100m
-                memory: 128Mi
-              limits:
-                memory: 1024Mi
-    service:
-      proxy:
-        enabled: true
-        controller: main
-        type: LoadBalancer
-        loadBalancerIP: ${SVC_MITM_IP}
-        ports:
-          proxy:
-            port: 18080
-          http:
-            port: 18081
-          wireguard:
-            port: 18082
-          proxy-udp:
-            protocol: UDP
-            port: 18080
-          http-udp:
-            protocol: UDP
-            port: 18081
-          wireguard-udp:
-            protocol: UDP
-            port: 18082
-      main:
-        controller: main
-        ports:
-          http:
-            port: 18081
-    ingress:
-      main:
-        enabled: true
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-        hosts:
-          - host: mitm.k.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        className: nginx-internal
-    persistence:
-      data:
-        enabled: true
-        existingClaim: mitmproxy-data-pvc
-        globalMounts:
-          - path: /home/mitmproxy/.mitmproxy
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: mitmproxy
+#   namespace: development
+# spec:
+#   releaseName: mitmproxy
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 3.5.1
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     controllers:
+#       main:
+#         strategy: Recreate
+#         containers:
+#           main:
+#             image:
+#               repository: mitmproxy/mitmproxy
+#               pullPolicy: IfNotPresent
+#               tag: 11.0.0@sha256:ba52f9c5c5e372eb92a5454b8ab27b49a024728d2cc4e6c9848e0e46f633f10f
+#             command: [
+#               "mitmweb"
+#             ]
+#             args: [
+#               "--web-host",
+#               "0.0.0.0",
+#               "--listen-port",
+#               "18080",
+#               "--web-port",
+#               "18081"
+#             ]
+#             env:
+#               TZ: America/Chicago
+#             resources:
+#               requests:
+#                 cpu: 100m
+#                 memory: 128Mi
+#               limits:
+#                 memory: 1024Mi
+#     service:
+#       proxy:
+#         enabled: true
+#         controller: main
+#         type: LoadBalancer
+#         loadBalancerIP: ${SVC_MITM_IP}
+#         ports:
+#           proxy:
+#             port: 18080
+#           http:
+#             port: 18081
+#           wireguard:
+#             port: 18082
+#           proxy-udp:
+#             protocol: UDP
+#             port: 18080
+#           http-udp:
+#             protocol: UDP
+#             port: 18081
+#           wireguard-udp:
+#             protocol: UDP
+#             port: 18082
+#       main:
+#         controller: main
+#         ports:
+#           http:
+#             port: 18081
+#     ingress:
+#       main:
+#         enabled: true
+#         annotations:
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#           nginx.ingress.kubernetes.io/custom-http-errors: "418"
+#         hosts:
+#           - host: mitm.k.${SECRET_DOMAIN}
+#             paths:
+#               - path: /
+#                 pathType: Prefix
+#                 service:
+#                   identifier: main
+#                   port: http
+#         className: nginx-internal
+#     persistence:
+#       data:
+#         enabled: true
+#         existingClaim: mitmproxy-data-pvc
+#         globalMounts:
+#           - path: /home/mitmproxy/.mitmproxy
