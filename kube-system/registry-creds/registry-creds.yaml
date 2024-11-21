@@ -170,7 +170,7 @@ spec:
         - --enable-leader-election
         command:
         - /controller
-        image: ghcr.io/alexellis/registry-creds:0.3.3@sha256:645e6f52ea9101c7c577571f97679ce2a190bc0ba61fd374c944f2c55d64ac64
+        image: ghcr.io/alexellis/registry-creds:0.3.6@sha256:cafd92a727e2b3442eb13f1c52c89fdef13efe5bf873902768f743d1bb60b3c4
         imagePullPolicy: IfNotPresent
         name: controller
         resources:
