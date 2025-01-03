@@ -28,8 +28,7 @@ spec:
               repository: alpine
               tag: 3.21.0
               pullPolicy: IfNotPresent
-            command:
-              - "rm -f /data/gitea/home/.gnupg/public-keys.d/pubring.db.lock"
+            command: ['sh', '-c', "rm -f /data/gitea/home/.gnupg/public-keys.d/pubring.db.lock"]
         #   init-db:
         #     image:
         #       repository: ghcr.io/onedr0p/postgres-init
