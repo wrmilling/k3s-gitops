@@ -49,4 +49,4 @@ Setup for Flux2, secrets, and the rest of the GitOps workflow can be found here 
 
 ## :handshake:&nbsp; Credits + Community
 
-A huge thanks to the community at Home Operations via [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes) and the [discord chat](https://discord.gg/home-operations). Home Operations Logo image used with permission, check out the community for some awesome and helpful people.
+A huge thanks to the community at Home Operations via [discord chat](https://discord.gg/home-operations). Home Operations Logo image used with permission, check out the community for some awesome and helpful people.
