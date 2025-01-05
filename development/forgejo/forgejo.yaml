@@ -94,6 +94,7 @@ spec:
               FORGEJO__storage__MINIO_ACCESS_KEY_ID: "${SECRET_FORGEJO_MINIO_ACCESS_KEY}"
               FORGEJO__storage__MINIO_SECRET_ACCESS_KEY: "${SECRET_FORGEJO_MINIO_SECRET_KEY}"
               FORGEJO__storage__MINIO_BUCKET: "forgejo"
+              FORGEJO__ui__DEFAULT_SHOW_FULL_NAME: "true"
               FORGEJO__ui__DEFAULT_THEME: "gitea-dark"
             resources:
               requests:
