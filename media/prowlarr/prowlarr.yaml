@@ -3,10 +3,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: nzbget
+  name: prowlarr
   namespace: media
 spec:
-  releaseName: nzbget
+  releaseName: prowlarr
   interval: 15m
   chart:
     spec:
@@ -25,20 +25,21 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/linuxserver/nzbget
+              repository: ghcr.io/onedr0p/prowlarr-develop
               pullPolicy: IfNotPresent
-              tag: version-v24.5
+              tag: 1.30.0.4920
             env:
               TZ: America/Chicago
-              PUID: 1000
-              PGID: 1000
+              PROWLARR__INSTANCE_NAME: Prowlarr
+              PROWLARR__PORT: 9696
+              PROWLARR__LOG_LEVEL: info
 
     service:
       main:
         controller: main
         ports:
           http:
-            port: 6789
+            port: 9696
 
     ingress:
       main:
@@ -48,7 +49,7 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
         hosts:
-          - host: nzbget.k.${SECRET_DOMAIN}
+          - host: prowlarr.k.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
@@ -59,17 +60,17 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
         fsGroupChangePolicy: "Always"
 
     persistence:
       config:
         enabled: true
-        existingClaim: nzbget-config-pvc
+        existingClaim: prowlarr-config-pvc
       media:
         enabled: true
         existingClaim: nfs-media-pvc
         globalMounts:
-          - path: /downloads
+          - path: /media
