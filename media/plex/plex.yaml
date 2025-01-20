@@ -31,6 +31,8 @@ spec:
             env:
               TZ: America/Chicago
               PLEX_CLAIM: ${SECRET_PLEX_CLAIM}
+              PLEX_ADVERTISE_URL: https://${SVC_PLEX_IP}:32400,https://plex.${SECRET_DOMAIN}:443
+              PLEX_NO_AUTH_NETWORKS: "10.10.10.0/24"
             resources:
               requests:
                 gpu.intel.com/i915: 1
