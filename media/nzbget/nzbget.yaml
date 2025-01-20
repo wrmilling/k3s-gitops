@@ -25,9 +25,9 @@ spec:
         containers:
           main:
             image:
-              repository: nzbgetcom/nzbget
+              repository: ghcr.io/linuxserver/nzbget
               pullPolicy: IfNotPresent
-              tag: v24.5
+              tag: version-v24.5
             env:
               TZ: America/Chicago
               PUID: 1000
