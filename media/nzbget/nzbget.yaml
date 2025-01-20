@@ -73,3 +73,8 @@ spec:
         existingClaim: nfs-media-pvc
         globalMounts:
           - path: /downloads
+      incomplete:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /incomplete
