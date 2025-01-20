@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: development
+spec:
+  releaseName: qbittorrent
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 3.6.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/qbittorrent
+              pullPolicy: IfNotPresent
+              tag: 5.0.3
+            env:
+              TZ: America/Chicago
+              QBITTORRENT__PORT: &port 80
+              QBITTORRENT__BT_PORT: &port-bt 50413
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups: [568]
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+      bittorrent:
+        type: LoadBalancer
+        loadBalancerIP: ${SVC_QBIT_IP}
+        controller: main
+        externalTrafficPolicy: Local
+        ports:
+          bittorrent:
+            enabled: true
+            port: *port-bt
+            protocol: TCP
+            targetPort: *port-bt
+    ingress:
+      main:
+        enabled: true
+        className: nginx-internal
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/custom-http-errors: "418"
+        hosts:
+          - host: qbit.k.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbit-config-pvc
+      media:
+        enabled: true
+        existingClaim: nfs-media-pvc
+        globalMounts:
+          - path: /media
+      incomplete:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /incomplete
