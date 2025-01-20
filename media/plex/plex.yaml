@@ -1,0 +1,110 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: media
+spec:
+  releaseName: plex
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 3.6.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              pullPolicy: IfNotPresent
+              tag: 1.41.3.9314-a0bfb8370
+            env:
+              TZ: America/Chicago
+              PLEX_CLAIM: ${SECRET_PLEX_CLAIM}
+            resources:
+              requests:
+                gpu.intel.com/i915: 1
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 5Gi
+
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${SVC_PLEX_IP}
+        controller: main
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+        ports:
+          http:
+            enabled: true
+            port: 32400
+            protocol: TCP
+            targetPort: 32400
+
+    ingress:
+      main:
+        enabled: true
+        className: nginx-external
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: plex.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups: [44, 109, 303, 10000]
+      nodeSelector:
+        intel.feature.node.kubernetes.io/gpu: "true"
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: plex-config-pvc
+      cache:
+        enabled: true
+        existingClaim: plex-cache-pvc
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      transcode:
+        enabled: true
+        type: emptyDir
+      tmp:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+      logs:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      media:
+        enabled: true
+        existingClaim: nfs-media-pvc
+        globalMounts:
+          - path: /data
