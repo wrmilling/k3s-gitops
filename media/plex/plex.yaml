@@ -77,7 +77,7 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
-        fsGroupChangePolicy: "Always"
+        fsGroupChangePolicy: "OnRootMismatch"
         supplementalGroups: [44, 109, 303, 10000]
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
