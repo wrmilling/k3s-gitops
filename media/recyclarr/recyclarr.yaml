@@ -1,0 +1,79 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: recyclarr
+  namespace: media
+spec:
+  releaseName: recyclarr
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 3.6.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      recyclarr:
+        type: cronjob
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        cronjob:
+          schedule: "@daily"
+
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1001
+            runAsGroup: 1001
+            fsGroup: 1001
+            fsGroupChangePolicy: OnRootMismatch
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: 7.4.0
+            args:
+              - sync
+            env:
+              TZ: America/Chicago
+              COMPlus_EnableDiagnostics: "0"
+              SONARR_API_KEY: ${SECRET_SONARR_API_KEY}
+              RADARR_API_KEY: ${SECRET_RADARR_API_KEY}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 36M
+              limits:
+                memory: 128M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: recyclarr-config-pvc
+        advancedMounts:
+          recyclarr:
+            app:
+              - path: /config
+      config-file:
+        type: configMap
+        name: recyclarr-configmap
+        globalMounts:
+          - path: /config/recyclarr.yml
+            subPath: recyclarr.yml
+            readOnly: true
