@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/sct/overseerr
               pullPolicy: IfNotPresent
-              tag: 1.32.5
+              tag: 1.33.2
             env:
               TZ: America/Chicago
               LOG_LEVEL: info
@@ -46,6 +46,7 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/custom-http-errors: "400,404,500,502,503,504"  # Using a smaller set than the default to fix javascript issues with overseer
         hosts:
           - host: requests.${SECRET_DOMAIN}
             paths:
