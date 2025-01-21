@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/sct/overseerr
               pullPolicy: IfNotPresent
-              tag: 1.33.0
+              tag: 1.32.5
             env:
               TZ: America/Chicago
               LOG_LEVEL: info
