@@ -74,6 +74,8 @@ spec:
             args:
                 - --user-data-dir
                 - "/config/.vscode"
+                - --extensions-dir
+                - "/config/.vscode"
                 - --auth
                 - "password"
                 - --port
@@ -83,6 +85,11 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         type: LoadBalancer
