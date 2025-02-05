@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/thomiceli/opengist
               pullPolicy: IfNotPresent
-              tag: 1.8.4@sha256:c385001a3efdebe03f075a38145890d234412bd5a879ff04f5f39a033bdd8eac
+              tag: 1.9.1@sha256:75fc200bde38459be4e3aed5e40ef2e3076fddcca5eb6bd08ebd0c7d7a939d85
             env:
               TZ: America/Chicago
               UID: 1000
