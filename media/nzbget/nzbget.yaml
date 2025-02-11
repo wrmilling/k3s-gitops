@@ -47,6 +47,8 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/proxy-body-size: 64m
+          nginx.org/client-max-body-size: 64m
         hosts:
           - host: nzbget.k.${SECRET_DOMAIN}
             paths:
