@@ -51,6 +51,9 @@ spec:
   bootstrap:
     recovery:
       source: dendrite-psql-backup
+      recoveryTarget:
+        # Time base target for the recovery
+        backupID: "20250212T213757"
   externalClusters:
     - name: dendrite-psql-backup
       barmanObjectStore:
