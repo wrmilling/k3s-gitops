@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/sonarr
               pullPolicy: IfNotPresent
-              tag: 4.0.12.2823
+              tag: 4.0.13.2932
             env:
               TZ: America/Chicago
               SONARR__INSTANCE_NAME: Sonarr-Anime
