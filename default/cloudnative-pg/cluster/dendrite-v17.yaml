@@ -81,7 +81,7 @@ spec:
     # Represents the previous cluster to migrate from
     - name: dendrite-psql-v16
       connectionParameters:
-        host: dendrite-psql-v16.default.svc
+        host: dendrite-psql-v16-rw.default.svc
         user: postgres
         dbname: postgres
         sslmode: require
