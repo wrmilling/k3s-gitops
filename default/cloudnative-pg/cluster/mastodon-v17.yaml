@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: dendrite-psql-v17
+  name: mastodon-psql-v17
   namespace: default
   annotations:
     kyverno.io/ignore: "true"
@@ -13,7 +13,7 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:17.2
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 25Gi
+    size: 50Gi
     storageClass: rook-ceph-block
   enableSuperuserAccess: true
   superuserSecret:
@@ -37,7 +37,7 @@ spec:
         maxParallel: 4
       destinationPath: s3://postgresql/
       endpointURL: http://minio.kube-system.svc:9000
-      serverName: dendrite-v17
+      serverName: mastodon-v17
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg
@@ -48,7 +48,7 @@ spec:
   bootstrap:
     # Used to recover a net-new cluster from backups
     # recovery:
-    #   source: dendrite-psql-backup
+    #   source: mastodon-psql-backup
 
     # use to migrate from an existing cnpg cluster to a new cluster
     initdb:
@@ -59,18 +59,18 @@ spec:
         roles:
           - "*"
         source:
-          externalCluster: dendrite-psql-v16
+          externalCluster: mastodon-psql-v16
 
   externalClusters:
     # Represents the backups stored in minio which can be restored from.
-    # - name: dendrite-psql-backup
+    # - name: mastodon-psql-backup
     #   barmanObjectStore:
     #     wal:
     #       compression: bzip2
     #       maxParallel: 4
     #     destinationPath: s3://postgresql/
     #     endpointURL: http://minio.kube-system.svc:9000
-    #     serverName: dendrite-v17
+    #     serverName: mastodon-v17
     #     s3Credentials:
     #       accessKeyId:
     #         name: cloudnative-pg
@@ -80,9 +80,9 @@ spec:
     #         key: MINIO_SECRET_KEY
 
     # Represents the previous cluster to migrate from
-    - name: dendrite-psql-v16
+    - name: mastodon-psql-v16
       connectionParameters:
-        host: dendrite-psql-v16-rw.default.svc
+        host: mastodon-psql-v16-rw.default.svc
         user: postgres
         dbname: postgres
         sslmode: require
