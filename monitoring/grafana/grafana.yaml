@@ -31,10 +31,23 @@ spec:
       accessModes:
       - ReadWriteOnce
     env:
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: false
+      GF_ANALYTICS_REPORTING_ENABLED: false
+      GF_AUTH_ANONYMOUS_ENABLED: false
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
-      GF_DISABLE_SANITIZE_HTML: true
-      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_GRAFANA_NET_URL: https://grafana.net
       GF_LOG_FILTERS: rendering:debug
+      GF_LOG_MODE: console
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
+      GF_NEWS_NEWS_FEED_ENABLED: false
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      # GF_SECURITY_DISABLE_INITIAL_ADMIN_CREATION: true
+      GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN}
+      GF_SECURITY_COOKIE_SAMESITE: grafana
       TZ: America/Chicago
     ldap:
       enabled: true
@@ -64,26 +77,62 @@ spec:
         - "grafana.${SECRET_DOMAIN}"
         secretName: grafana-cert
     plugins:
-    - natel-discrete-panel
     - pr0ps-trackmap-panel
-    - grafana-piechart-panel
-    - grafana-clock-panel
+    - natel-plotly-panel
     - vonage-status-panel
+    - grafana-piechart-panel
+    - https://github.com/panodata/panodata-map-panel/releases/download/0.16.0/panodata-map-panel-0.16.0.zip;grafana-worldmap-panel-ng
+    - grafana-clock-panel
     - grafana-worldmap-panel
+    - natel-discrete-panel
     serviceMonitor:
       enabled: true
+    serviceAccount:
+      autoMount: true
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-        - name: 'default'
-          orgId: 1
-          folder: ''
-          type: file
-          disableDeletion: false
-          allowUiUpdates: true
-          options:
-            path: /var/lib/grafana/dashboards/default
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+          - name: ceph
+            orgId: 1
+            folder: Ceph
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/ceph
+          - name: flux
+            orgId: 1
+            folder: Flux
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/flux
+          - name: kubernetes
+            orgId: 1
+            folder: Kubernetes
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+          - name: nginx
+            orgId: 1
+            folder: Nginx
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/nginx
     dashboards:
       default:
         # Ref: https://grafana.com/grafana/dashboards/11074-node-exporter-for-prometheus-dashboard-en-v20201010/
@@ -96,14 +145,37 @@ spec:
         cloudnative-pg:
           url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
           datasource: Prometheus
+        home-assistant:
+          url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/home_assistant.json
+          datasource: home_assistant
         # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
         node-exporter-full:
           gnetId: 1860
           revision: 36
           datasource: Prometheus
+        node-feature-discovery:
+          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+          datasource: Prometheus
         prometheus-exporter-summary:
           url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
           datasource: Prometheus
+        zfs:
+          gnetId: 3170
+          revision: 3
+          datasource: Prometheus
+        zfs-new:
+          # renovate: dashboardName="ZFS"
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
+        volsync:
+          # removate: dashboardName="VolSync Dashboard"
+          gnetId: 21356
+          revision: 2
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+
+      ceph:
         ceph-cluster:
           # renovate: dashboardName="Ceph Cluster"
           gnetId: 2842
@@ -119,6 +191,8 @@ spec:
           gnetId: 5342
           revision: 9
           datasource: Prometheus
+
+      flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
           datasource: Prometheus
@@ -128,6 +202,8 @@ spec:
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
           datasource: Prometheus
+
+      kubernetes:
         k8s-system-api-server:
           # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
@@ -158,45 +234,13 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
+      nginx:
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
-        thanos-bucket-replicate:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
-          datasource: Prometheus
-        thanos-compact:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/compact.json
-          datasource: Prometheus
-        thanos-overview:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/overview.json
-          datasource: Prometheus
-        thanos-query:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query.json
-          datasource: Prometheus
-        thanos-query-frontend:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/query-frontend.json
-          datasource: Prometheus
-        thanos-receieve:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/receive.json
-          datasource: Prometheus
-        thanos-rule:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/rule.json
-          datasource: Prometheus
-        thanos-sidecar:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/sidecar.json
-          datasource: Prometheus
-        thanos-store:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
-          datasource: Prometheus
-        volsync:
-          # removate: dashboardName="VolSync Dashboard"
-          gnetId: 21356
-          revision: 2
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
     sidecar:
       datasources:
         enabled: true
@@ -220,7 +264,7 @@ spec:
               httpMethod: POST
     grafana.ini:
       server:
-        root_url: "https://grafana.k.${SECRET_DOMAIN}"
+        root_url: "https://grafana.${SECRET_DOMAIN}"
       auth.ldap:
         enabled: true
         allow_sign_up: true
