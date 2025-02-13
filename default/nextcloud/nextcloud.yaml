@@ -130,7 +130,7 @@ spec:
         repository: nginxinc/nginx-unprivileged
         tag: alpine
       securityContext:
-        runAsUser: 101
+        runAsUser: 82
         runAsGroup: 33
         runAsNonRoot: true
     extraEnv:
