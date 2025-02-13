@@ -95,6 +95,12 @@ spec:
             secretKey: objSecretKey
             bucket: objBucket
             sse_c_key: objEncKey
+      podSecurityContext: {}
+        runAsUser: 33
+        runAsGroup: 33
+        fsGroup: 33
+        fsGroupChangePolicy: "OnRootMismatch"
+        runAsNonRoot: true
       extraInitContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.6
@@ -112,7 +118,7 @@ spec:
     nginx:
       enabled: true
       image:
-        repository: nginx
+        repository: nginxinc/nginx-unprivileged
         tag: alpine
     redis:
       enabled: true
