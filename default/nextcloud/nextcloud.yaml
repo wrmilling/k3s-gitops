@@ -7,8 +7,8 @@ metadata:
   namespace: default
 spec:
   releaseName: nextcloud
-  interval: 15m
-  timeout: 15m
+  interval: 5m
+  timeout: 5m
   chart:
     spec:
       # renovate: registryUrl=https://nextcloud.github.io/helm/
