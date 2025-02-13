@@ -95,7 +95,7 @@ spec:
             secretKey: objSecretKey
             bucket: objBucket
             sse_c_key: objEncKey
-      podSecurityContext: {}
+      podSecurityContext:
         runAsUser: 33
         runAsGroup: 33
         fsGroup: 33
