@@ -1,161 +1,161 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: home-assistant
-  namespace: default
-spec:
-  releaseName: home-assistant
-  interval: 15m
-  timeout: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
-      chart: app-template
-      version: 3.7.1
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s-helm-charts
-        namespace: flux-system
-  values:
-    controllers:
-      main:
-        strategy: Recreate
-        pod:
-          hostNetwork: true
-          dnsPolicy: ClusterFirstWithHostNet
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/onedr0p/postgres-init
-        #       tag: 14.9
-        #       imagePullPolicy: IfNotPresent
-        #     env:
-        #       INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
-        #       INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-        #       INIT_POSTGRES_DBNAME: home_assistant
-        #       INIT_POSTGRES_USER: home-assistant
-        #       INIT_POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
-        containers:
-          main:
-            image:
-              repository: homeassistant/home-assistant
-              tag: 2025.2.2@sha256:a9fab1c5cb63a7c721d38b2ba40cdcac3acb9cd70be3fe3838336f71e73d9443
-              pullPolicy: IfNotPresent
-            env:
-              TZ: "America/Chicago"
-              HASS_TOKEN: ${SECRET_HASS_TOKEN}
-              HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@shared-psql-v16-rw.default.svc.cluster.local/home_assistant"
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              startup:
-                enabled: true
-            resources:
-              limits:
-                memory: 3000Mi
-              requests:
-                cpu: 100m
-                memory: 1000Mi
-          codeserver:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
-              pullPolicy: IfNotPresent
-            env:
-              TZ: "America/Chicago"
-              HASS_SERVER: http://localhost:8123
-              HASS_TOKEN: ${SECRET_HASS_TOKEN}
-              PASSWORD: ${SECRET_HASS_PASSWORD}
-            args:
-                - --user-data-dir
-                - "/config/.vscode"
-                - --extensions-dir
-                - "/config/.vscode"
-                - --auth
-                - "password"
-                - --port
-                - "12321"
-                - "/config"
-    defaultPodOptions:
-      tolerations:
-      - key: "arm"
-        operator: "Exists"
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
-    service:
-      main:
-        type: LoadBalancer
-        controller: main
-        loadBalancerIP: ${SVC_HASS_IP}
-        ports:
-          http:
-            port: 8123
-          mdns-tcp:
-            enabled: true
-            port: 5353
-            protocol: TCP
-            targetPort: 5353
-          mdns-udp:
-            enabled: true
-            port: 5353
-            protocol: UDP
-            targetPort: 5353
-      codeserver:
-        type: ClusterIP
-        controller: main
-        ports:
-          http:
-            enabled: true
-            port: 12321
-            protocol: TCP
-            targetPort: 12321
-    ingress:
-      main:
-        enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-        - host: "hass.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
-              port: http
-      codeserver:
-        enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/authz/auth-request"
-        hosts:
-        - host: "hass-vscode.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: codeserver
-              port: http
-    persistence:
-      config:
-        enabled: true
-        existingClaim: hass-pvc
-        advancedMounts:
-          main:
-            main:
-              - path: /config
-            codeserver:
-              - path: /config
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: home-assistant
+#   namespace: default
+# spec:
+#   releaseName: home-assistant
+#   interval: 15m
+#   timeout: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+#       chart: app-template
+#       version: 3.7.1
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: bjw-s-helm-charts
+#         namespace: flux-system
+#   values:
+#     controllers:
+#       main:
+#         strategy: Recreate
+#         pod:
+#           hostNetwork: true
+#           dnsPolicy: ClusterFirstWithHostNet
+#         initContainers:
+#           init-db:
+#             image:
+#               repository: ghcr.io/onedr0p/postgres-init
+#               tag: 16.6
+#               imagePullPolicy: IfNotPresent
+#             env:
+#               INIT_POSTGRES_HOST: shared-psql-v16-rw.default.svc.cluster.local
+#               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+#               INIT_POSTGRES_DBNAME: home_assistant
+#               INIT_POSTGRES_USER: home-assistant
+#               INIT_POSTGRES_PASS: ${SECRET_HASS_DB_PASSWORD}
+#         containers:
+#           main:
+#             image:
+#               repository: homeassistant/home-assistant
+#               tag: 2025.2.2@sha256:a9fab1c5cb63a7c721d38b2ba40cdcac3acb9cd70be3fe3838336f71e73d9443
+#               pullPolicy: IfNotPresent
+#             env:
+#               TZ: "America/Chicago"
+#               HASS_TOKEN: ${SECRET_HASS_TOKEN}
+#               HASS_POSTGRES_URL: "postgresql://home-assistant:${SECRET_HASS_DB_PASSWORD}@shared-psql-v16-rw.default.svc.cluster.local/home_assistant"
+#             probes:
+#               liveness:
+#                 enabled: false
+#               readiness:
+#                 enabled: false
+#               startup:
+#                 enabled: true
+#             resources:
+#               limits:
+#                 memory: 3000Mi
+#               requests:
+#                 cpu: 100m
+#                 memory: 1000Mi
+#           codeserver:
+#             image:
+#               repository: ghcr.io/coder/code-server
+#               tag: 4.96.4@sha256:f93810f7f6636b3af3b1a750faf612349cddb89fbb6d28d69123a214fc75ee9e
+#               pullPolicy: IfNotPresent
+#             env:
+#               TZ: "America/Chicago"
+#               HASS_SERVER: http://localhost:8123
+#               HASS_TOKEN: ${SECRET_HASS_TOKEN}
+#               PASSWORD: ${SECRET_HASS_PASSWORD}
+#             args:
+#                 - --user-data-dir
+#                 - "/config/.vscode"
+#                 - --extensions-dir
+#                 - "/config/.vscode"
+#                 - --auth
+#                 - "password"
+#                 - --port
+#                 - "12321"
+#                 - "/config"
+#     defaultPodOptions:
+#       tolerations:
+#       - key: "arm"
+#         operator: "Exists"
+#       securityContext:
+#         runAsUser: 1000
+#         runAsGroup: 1000
+#         fsGroup: 1000
+#         fsGroupChangePolicy: "OnRootMismatch"
+#     service:
+#       main:
+#         type: LoadBalancer
+#         controller: main
+#         loadBalancerIP: ${SVC_HASS_IP}
+#         ports:
+#           http:
+#             port: 8123
+#           mdns-tcp:
+#             enabled: true
+#             port: 5353
+#             protocol: TCP
+#             targetPort: 5353
+#           mdns-udp:
+#             enabled: true
+#             port: 5353
+#             protocol: UDP
+#             targetPort: 5353
+#       codeserver:
+#         type: ClusterIP
+#         controller: main
+#         ports:
+#           http:
+#             enabled: true
+#             port: 12321
+#             protocol: TCP
+#             targetPort: 12321
+#     ingress:
+#       main:
+#         enabled: true
+#         className: nginx-external
+#         annotations:
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#         hosts:
+#         - host: "hass.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#             service:
+#               identifier: main
+#               port: http
+#       codeserver:
+#         enabled: true
+#         className: nginx-external
+#         annotations:
+#           kubernetes.io/tls-acme: "true"
+#           cert-manager.io/cluster-issuer: letsencrypt-prod
+#           nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+#           nginx.ingress.kubernetes.io/auth-url: "https://auth.${SECRET_DOMAIN}/api/authz/auth-request"
+#         hosts:
+#         - host: "hass-vscode.${SECRET_DOMAIN}"
+#           paths:
+#           - path: /
+#             pathType: Prefix
+#             service:
+#               identifier: codeserver
+#               port: http
+#     persistence:
+#       config:
+#         enabled: true
+#         existingClaim: hass-pvc
+#         advancedMounts:
+#           main:
+#             main:
+#               - path: /config
+#             codeserver:
+#               - path: /config
 
