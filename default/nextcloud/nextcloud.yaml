@@ -22,8 +22,8 @@ spec:
   values:
     image:
       repository: nextcloud
-      flavor: fpm
-      tag: 30.0.5-fpm
+      # flavor: fpm
+      tag: 30.0.5-apache
     ingress:
       enabled: true
       className: nginx-internal
@@ -95,12 +95,12 @@ spec:
             secretKey: objSecretKey
             bucket: objBucket
             sse_c_key: objEncKey
-      podSecurityContext:
-        runAsUser: 33
-        runAsGroup: 33
-        fsGroup: 33
-        fsGroupChangePolicy: "OnRootMismatch"
-        runAsNonRoot: true
+      # podSecurityContext:
+      #   runAsUser: 33
+      #   runAsGroup: 33
+      #   fsGroup: 33
+      #   fsGroupChangePolicy: "OnRootMismatch"
+      #   runAsNonRoot: true
       extraInitContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16.6
@@ -115,11 +115,11 @@ spec:
               value: nextcloud
             - name: INIT_POSTGRES_PASS
               value: ${SECRET_NEXTCLOUD_DB_PASS}
-    nginx:
-      enabled: true
-      image:
-        repository: nginxinc/nginx-unprivileged
-        tag: alpine
+    # nginx:
+    #   enabled: true
+    #   image:
+    #     repository: nginxinc/nginx-unprivileged
+    #     tag: alpine
     redis:
       enabled: true
       auth:
@@ -154,7 +154,3 @@ spec:
       image:
         repository: h2non/imaginary
         tag: 1.2.4
-
-
-
-
