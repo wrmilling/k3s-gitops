@@ -137,12 +137,12 @@ spec:
     - name: "TZ"
       value: "America/Chicago"
     redis:
-      enabled: true
-      auth:
-        existingSecret: nextcloud
-        existingSecretPasswordKey: redisPassword
-      global:
-        storageClass: rook-ceph-block
+      enabled: false
+      # auth:
+      #   existingSecret: nextcloud
+      #   existingSecretPasswordKey: redisPassword
+      # global:
+      #   storageClass: rook-ceph-block
     cronjob:
       enabled: true
       securityContext:
