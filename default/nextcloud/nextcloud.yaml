@@ -101,13 +101,13 @@ spec:
           env:
             - name: INIT_POSTGRES_HOST
               value: shared-psql-v17-rw.default.svc.cluster.local
-            - name: INIT_POSTGRES_SUPER_PASS:
+            - name: INIT_POSTGRES_SUPER_PASS
               value: ${SECRET_CNPG_SUPER_PASS}
-            - name: INIT_POSTGRES_DBNAME:
+            - name: INIT_POSTGRES_DBNAME
               value: nextcloud
-            - name: INIT_POSTGRES_USER:
+            - name: INIT_POSTGRES_USER
               value: nextcloud
-            - name: INIT_POSTGRES_PASS:
+            - name: INIT_POSTGRES_PASS
               value: ${SECRET_NEXTCLOUD_DB_PASS}
     nginx:
       enabled: true
