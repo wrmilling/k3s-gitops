@@ -1,156 +1,156 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: nextcloud
-  namespace: default
-spec:
-  releaseName: nextcloud
-  interval: 15m
-  timeout: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=https://nextcloud.github.io/helm/
-      chart: nextcloud
-      version: 6.6.3
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: nextcloud-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: nextcloud
-      # flavor: fpm
-      tag: 30.0.5-apache
-    ingress:
-      enabled: true
-      className: nginx-internal
-      annotations:
-        nginx.ingress.kubernetes.io/enable-cors: "true"
-        nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
-        nginx.ingress.kubernetes.io/affinity: cookie
-        nginx.ingress.kubernetes.io/server-snippet: |-
-          server_tokens off;
-          proxy_hide_header X-Powered-By;
-          rewrite ^/.well-known/webfinger /index.php/.well-known/webfinger last;
-          rewrite ^/.well-known/nodeinfo /index.php/.well-known/nodeinfo last;
-          rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
-          rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
-          location = /.well-known/carddav {
-            return 301 $scheme://$host/remote.php/dav;
-          }
-          location = /.well-known/caldav {
-            return 301 $scheme://$host/remote.php/dav;
-          }
-          location = /robots.txt {
-            allow all;
-            log_not_found off;
-            access_log off;
-          }
-          location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
-            deny all;
-          }
-          location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
-            deny all;
-          }
-    nextcloud:
-      host: cloud.${SECRET_DOMAIN}
-      existingSecret:
-        enabled: true
-        secretName: nextcloud
-        usernameKey: username
-        passwordKey: password
-        smtpHostKey: smtpHost
-        smtpUsernameKey: smtpUsername
-        smtpPasswordKey: smtpPassword
-        tokenKey: metricsTokenKey
-      defaultConfigs:
-        imaginary.config.php: true
-      configs:
-        proxy.config.php: |-
-          <?php
-          $CONFIG = array (
-            'trusted_proxies' => array(
-              0 => '127.0.0.1',
-              1 => '10.0.0.0/8',
-            ),
-            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
-          );
-      mail:
-        enabled: true
-        fromAddress: cloud@${SECRET_DOMAIN}
-        domain: ${SECRET_DOMAIN}
-        smtp:
-          secure: ssl
-          port: 587
-      objectStore:
-        s3:
-          enabled: true
-          existingSecret: nextcloud
-          secretKeys:
-            host: objHost
-            accessKey: objAccessKey
-            secretKey: objSecretKey
-            bucket: objBucket
-            sse_c_key: objEncKey
-      # podSecurityContext:
-      #   runAsUser: 33
-      #   runAsGroup: 33
-      #   fsGroup: 33
-      #   fsGroupChangePolicy: "OnRootMismatch"
-      #   runAsNonRoot: true
-      extraInitContainers:
-        - name: init-db
-          image: ghcr.io/onedr0p/postgres-init:16.6
-          env:
-            - name: INIT_POSTGRES_HOST
-              value: shared-psql-v17-rw.default.svc.cluster.local
-            - name: INIT_POSTGRES_SUPER_PASS
-              value: ${SECRET_CNPG_SUPER_PASS}
-            - name: INIT_POSTGRES_DBNAME
-              value: nextcloud
-            - name: INIT_POSTGRES_USER
-              value: nextcloud
-            - name: INIT_POSTGRES_PASS
-              value: ${SECRET_NEXTCLOUD_DB_PASS}
-    # nginx:
-    #   enabled: true
-    #   image:
-    #     repository: nginxinc/nginx-unprivileged
-    #     tag: alpine
-    redis:
-      enabled: true
-      auth:
-        existingSecret: nextcloud
-        existingSecretPasswordKey: redisPassword
-      global:
-        storageClass: rook-ceph-block
-    cronjob:
-      enabled: true
-    internalDatabase:
-      enabled: false
-    externalDatabase:
-      enabled: true
-      type: postgresql
-      existingSecret:
-        enabled: true
-        secretName: nextcloud
-        usernameKey: dbUsername
-        passwordKey: dbPassword
-        hostKey: dbHost
-        databaseKey: dbDatabaseName
-    persistence:
-      enabled: true
-      existingClaim: nextcloud-pvc
-    metrics:
-      enabled: true
-      image:
-        repository: xperimental/nextcloud-exporter
-        tag: 0.6.2
-    imaginary:
-      enabled: true
-      image:
-        repository: h2non/imaginary
-        tag: 1.2.4
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: nextcloud
+#   namespace: default
+# spec:
+#   releaseName: nextcloud
+#   interval: 15m
+#   timeout: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://nextcloud.github.io/helm/
+#       chart: nextcloud
+#       version: 6.6.3
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: nextcloud-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: nextcloud
+#       # flavor: fpm
+#       tag: 30.0.5-apache
+#     ingress:
+#       enabled: true
+#       className: nginx-internal
+#       annotations:
+#         nginx.ingress.kubernetes.io/enable-cors: "true"
+#         nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For"
+#         nginx.ingress.kubernetes.io/affinity: cookie
+#         nginx.ingress.kubernetes.io/server-snippet: |-
+#           server_tokens off;
+#           proxy_hide_header X-Powered-By;
+#           rewrite ^/.well-known/webfinger /index.php/.well-known/webfinger last;
+#           rewrite ^/.well-known/nodeinfo /index.php/.well-known/nodeinfo last;
+#           rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+#           rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+#           location = /.well-known/carddav {
+#             return 301 $scheme://$host/remote.php/dav;
+#           }
+#           location = /.well-known/caldav {
+#             return 301 $scheme://$host/remote.php/dav;
+#           }
+#           location = /robots.txt {
+#             allow all;
+#             log_not_found off;
+#             access_log off;
+#           }
+#           location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+#             deny all;
+#           }
+#           location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+#             deny all;
+#           }
+#     nextcloud:
+#       host: cloud.${SECRET_DOMAIN}
+#       existingSecret:
+#         enabled: true
+#         secretName: nextcloud
+#         usernameKey: username
+#         passwordKey: password
+#         smtpHostKey: smtpHost
+#         smtpUsernameKey: smtpUsername
+#         smtpPasswordKey: smtpPassword
+#         tokenKey: metricsTokenKey
+#       defaultConfigs:
+#         imaginary.config.php: true
+#       configs:
+#         proxy.config.php: |-
+#           <?php
+#           $CONFIG = array (
+#             'trusted_proxies' => array(
+#               0 => '127.0.0.1',
+#               1 => '10.0.0.0/8',
+#             ),
+#             'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+#           );
+#       mail:
+#         enabled: true
+#         fromAddress: cloud@${SECRET_DOMAIN}
+#         domain: ${SECRET_DOMAIN}
+#         smtp:
+#           secure: ssl
+#           port: 587
+#       objectStore:
+#         s3:
+#           enabled: true
+#           existingSecret: nextcloud
+#           secretKeys:
+#             host: objHost
+#             accessKey: objAccessKey
+#             secretKey: objSecretKey
+#             bucket: objBucket
+#             sse_c_key: objEncKey
+#       # podSecurityContext:
+#       #   runAsUser: 33
+#       #   runAsGroup: 33
+#       #   fsGroup: 33
+#       #   fsGroupChangePolicy: "OnRootMismatch"
+#       #   runAsNonRoot: true
+#       extraInitContainers:
+#         - name: init-db
+#           image: ghcr.io/onedr0p/postgres-init:16.6
+#           env:
+#             - name: INIT_POSTGRES_HOST
+#               value: shared-psql-v17-rw.default.svc.cluster.local
+#             - name: INIT_POSTGRES_SUPER_PASS
+#               value: ${SECRET_CNPG_SUPER_PASS}
+#             - name: INIT_POSTGRES_DBNAME
+#               value: nextcloud
+#             - name: INIT_POSTGRES_USER
+#               value: nextcloud
+#             - name: INIT_POSTGRES_PASS
+#               value: ${SECRET_NEXTCLOUD_DB_PASS}
+#     # nginx:
+#     #   enabled: true
+#     #   image:
+#     #     repository: nginxinc/nginx-unprivileged
+#     #     tag: alpine
+#     redis:
+#       enabled: true
+#       auth:
+#         existingSecret: nextcloud
+#         existingSecretPasswordKey: redisPassword
+#       global:
+#         storageClass: rook-ceph-block
+#     cronjob:
+#       enabled: true
+#     internalDatabase:
+#       enabled: false
+#     externalDatabase:
+#       enabled: true
+#       type: postgresql
+#       existingSecret:
+#         enabled: true
+#         secretName: nextcloud
+#         usernameKey: dbUsername
+#         passwordKey: dbPassword
+#         hostKey: dbHost
+#         databaseKey: dbDatabaseName
+#     persistence:
+#       enabled: true
+#       existingClaim: nextcloud-pvc
+#     metrics:
+#       enabled: true
+#       image:
+#         repository: xperimental/nextcloud-exporter
+#         tag: 0.6.2
+#     imaginary:
+#       enabled: true
+#       image:
+#         repository: h2non/imaginary
+#         tag: 1.2.4
