@@ -45,23 +45,23 @@ spec:
         secretAccessKey:
           name: cloudnative-pg
           key: MINIO_SECRET_KEY
-  bootstrap:
+  # bootstrap:
     # Used to recover a net-new cluster from backups
     # recovery:
     #   source: dendrite-psql-backup
 
     # use to migrate from an existing cnpg cluster to a new cluster
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - "*"
-        roles:
-          - "*"
-        source:
-          externalCluster: dendrite-psql-v16
+    # initdb:
+    #   import:
+    #     type: monolith
+    #     databases:
+    #       - "*"
+    #     roles:
+    #       - "*"
+    #     source:
+    #       externalCluster: dendrite-psql-v16
 
-  externalClusters:
+  # externalClusters:
     # Represents the backups stored in minio which can be restored from.
     # - name: dendrite-psql-backup
     #   barmanObjectStore:
@@ -80,12 +80,12 @@ spec:
     #         key: MINIO_SECRET_KEY
 
     # Represents the previous cluster to migrate from
-    - name: dendrite-psql-v16
-      connectionParameters:
-        host: dendrite-psql-v16-rw.default.svc
-        user: postgres
-        dbname: postgres
-        sslmode: require
-      password:
-        name: cloudnative-pg
-        key: password
+    # - name: dendrite-psql-v16
+    #   connectionParameters:
+    #     host: dendrite-psql-v16-rw.default.svc
+    #     user: postgres
+    #     dbname: postgres
+    #     sslmode: require
+    #   password:
+    #     name: cloudnative-pg
+    #     key: password

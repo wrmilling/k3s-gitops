@@ -70,15 +70,3 @@ spec:
   #         secretAccessKey:
   #           name: cloudnative-pg
   #           key: MINIO_SECRET_KEY
-# ---
-# apiVersion: postgresql.cnpg.io/v1
-# kind: Publication
-# metadata:
-#   name: dendrite-publisher
-# spec:
-#   cluster:
-#     name: dendrite-psql-v16
-#   dbname: app
-#   name: publisher
-#   target:
-#     allTables: true
