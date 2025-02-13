@@ -6,15 +6,15 @@ metadata:
     namespace: flux-system
 type: Opaque
 stringData:
-    token: ENC[AES256_GCM,data:Ei+Nb/oBN6jcTgZjzKKh+tCeu66Qn3XvOh7I/lLWYQUg0OB2s8EdIA==,iv:JG0hIDcEbzMuvoe/owo0ntV3PUsOyLyaFOvs4FhZ4gg=,tag:2hQhtVF5fJFHChynEZysDw==,type:str]
+    token: ENC[AES256_GCM,data:zT8wLZ4eq733iPhvvBLehp7b/KTk2BCKBhGBy55aGkrsrO61CrdyfQ==,iv:O5OaYLvr+gyGXOb5BovDA0iMF9g9/J369nisNlAhF0U=,tag:VPFe4OG5hWv8N4QH5mglUg==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-08-21T22:06:37Z"
-    mac: ENC[AES256_GCM,data:Lc6Na6OSz3es9Tf7ew4whpTMOQqE51ubcXSbO8X0ket2cvS0fNhdjgeUQipKXNKsFWRa7wg1mzSZrGwUwwSF98xq9QqM4cnj3XiFKjft0kK9jUC35k/+T/DWz0ugy9CqUWF8eHtAcMF6zWvFvn/DUOSA4ranPutQQDMrR3ttF8w=,iv:jIas5IXmK1/mDfvK9ToKL5IztPcO8pV/UBIvsMXZUvI=,tag:f4CrKhHVH4oEGsrXdUzw/w==,type:str]
+    lastmodified: "2025-02-13T14:44:08Z"
+    mac: ENC[AES256_GCM,data:TBsOmzIfPLV8VJOxgEBkXYtbTTlJjgzTx0eJBqMx6/DlLIHPh6i48ddRN3F4l0kZZRCezFX/lioyZvKRpxg99fKZOe7cGSOsJyNVqzwm+HUZ/hNwWHe2J86gkaBaVZp0mlE5uO3t1ZLG0b3dK0QWP1EuZmLmGYVJCHIzLJkIpjU=,iv:jjFHd2FpSBI6jB0GKZZPmZc65BsCEjo3KQi3Ztlzuik=,tag:T8bH75UIWuOaVr5ruOP7RQ==,type:str]
     pgp:
         - created_at: "2024-02-14T18:16:43Z"
           enc: |-
@@ -58,4 +58,4 @@ sops:
             -----END PGP MESSAGE-----
           fp: 21E16B8D2EE875306A6C9968D83077B99F8C6643
     encrypted_regex: ^(data|stringData)$
-    version: 3.7.1
+    version: 3.9.4
