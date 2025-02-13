@@ -112,7 +112,7 @@ spec:
     nginx:
       enabled: true
       image:
-        repository: nginxinc/nginx-unprivileged
+        repository: nginx
         tag: alpine
     redis:
       enabled: true
