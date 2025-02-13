@@ -37,7 +37,7 @@ spec:
     replicaCount: 1
     ingress:
       enabled: true
-      className: nginx-internal
+      className: nginx-external
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/enable-cors: "true"
