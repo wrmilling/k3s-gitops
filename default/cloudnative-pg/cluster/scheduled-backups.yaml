@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: mastodon-psql-v16
+  name: mastodon-psql-v17
   namespace: default
 spec:
   # daily, 2am UCT
@@ -10,12 +10,12 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: mastodon-psql-v16
+    name: mastodon-psql-v17
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: dendrite-psql-v16
+  name: dendrite-psql-v17
   namespace: default
 spec:
   # daily, 3am UCT
@@ -23,12 +23,12 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: dendrite-psql-v16
+    name: dendrite-psql-v17
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: shared-psql-v16
+  name: shared-psql-v17
   namespace: default
 spec:
   # daily, 4am UCT
@@ -36,4 +36,4 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: shared-psql-v16
+    name: shared-psql-v17
