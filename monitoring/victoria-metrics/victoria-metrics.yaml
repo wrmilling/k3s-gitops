@@ -78,7 +78,7 @@ spec:
         externalURL: "https://vm-alert.k.${SECRET_DOMAIN}"
       ingress:
         enabled: true
-        ingressClassName: nginx-tailscale
+        ingressClassName: nginx-internal
         hosts:
         - vm-alert.k.${SECRET_DOMAIN}
         tls:
