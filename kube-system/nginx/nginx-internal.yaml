@@ -25,6 +25,7 @@ spec:
         enabled: true
         default: true
         controllerValue: "k8s.io/ingress-nginx-internal"
+      allowSnippetAnnotations: true
       admissionWebhooks:
         objectSelector:
           matchExpressions:
@@ -34,6 +35,7 @@ spec:
                 - nginx-internal
       replicaCount: 2
       config:
+        annotations-risk-level: Critical
         custom-http-errors: 404,401,403,500,503
         hsts-max-age: "31449600"
       use-forwarded-headers: "true"
