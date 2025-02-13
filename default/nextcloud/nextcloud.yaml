@@ -133,7 +133,7 @@ spec:
             'memcache.distributed' => '\OC\Memcache\Redis',
             'memcache.locking' => '\OC\Memcache\Redis',
             'redis' => array(
-              'host' => 'nextcloud-valkey.default.svc.cluster.local',
+              'host' => 'nextcloud-valkey-primary.default.svc.cluster.local',
               'port' => 6379,
               'password' => '${SECRET_NEXTCLOUD_REDIS_PASS}',
               'timeout' => 1,
