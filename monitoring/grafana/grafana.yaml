@@ -209,11 +209,15 @@ spec:
       datasources.yaml:
         apiVersion: 1
         datasources:
-        - name: Prometheus
-          type: prometheus
-          access: proxy
-          url: http://thanos-query.monitoring.svc.cluster.local:9090
-          isDefault: true
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://vmsingle-stack.monitoring.svc.cluster.local:8429
+            isDefault: true
+            jsonData:
+              timeInterval: "15s"
+              queryTimeout: "60s"
+              httpMethod: POST
     grafana.ini:
       server:
         root_url: "https://grafana.k.${SECRET_DOMAIN}"
