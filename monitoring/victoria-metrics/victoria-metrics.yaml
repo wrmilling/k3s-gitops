@@ -265,8 +265,3 @@ spec:
 
     prometheus-operator-crds:
       enabled: true
-
-  valuesFrom:
-  - kind: Secret
-    name: "victoria-metrics-k8s-stack-helm-values"
-    optional: false
