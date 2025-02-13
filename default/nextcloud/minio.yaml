@@ -41,7 +41,7 @@ spec:
       hosts:
         - nc-minio.k.${SECRET_DOMAIN}
       tls:
-        - secretName: minio-cert
+        - secretName: nc-minio-cert
           hosts:
             - nc-minio.k.${SECRET_DOMAIN}
     consoleIngress:
@@ -49,7 +49,7 @@ spec:
       hosts:
         - ncmc.k.${SECRET_DOMAIN}
       tls:
-        - secretName: minio-console-cert
+        - secretName: nc-minio-console-cert
           hosts:
             - ncmc.k.${SECRET_DOMAIN}
     securityContext:
