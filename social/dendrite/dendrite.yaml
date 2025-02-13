@@ -37,7 +37,6 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16.6
-              imagePullPolicy: IfNotPresent
             env:
               INIT_POSTGRES_DBNAME: dendrite
               INIT_POSTGRES_HOST: dendrite-psql-v17-rw.default.svc.cluster.local
