@@ -13,7 +13,7 @@ spec:
     spec:
       # renovate: registryUrl=https://nextcloud.github.io/helm/
       chart: nextcloud
-      version: 3.7.1
+      version: 6.6.3
       interval: 15m
       sourceRef:
         kind: HelmRepository
