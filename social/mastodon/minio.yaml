@@ -72,3 +72,6 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
+    serviceAccount:
+      create: true
+      name: "mastodon-minio-sa"

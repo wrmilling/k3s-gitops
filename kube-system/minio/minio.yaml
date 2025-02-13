@@ -75,3 +75,6 @@ spec:
     metrics:
       serviceMonitor:
         enabled: true
+    serviceAccount:
+      create: true
+      name: "minio-sa"
