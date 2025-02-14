@@ -30,7 +30,7 @@ spec:
     rootPassword: ${SECRET_MINIO_SECRET_KEY}
     users:
     - accessKey: ${SECRET_OCIS_S3_ACCESS_KEY}
-      secretKey: ${SECRET_TOCIS_S3_SECRET_KEY}
+      secretKey: ${SECRET_OCIS_S3_SECRET_KEY}
       policy: readWrite
     persistence:
       enabled: true
