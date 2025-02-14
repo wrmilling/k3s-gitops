@@ -2,14 +2,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: minio
+  name: ocis-minio
   namespace: default
 spec:
   interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://charts.min.io/
-      chart: ocis-minio
+      chart: minio
       version: 5.4.0
       sourceRef:
         kind: HelmRepository
