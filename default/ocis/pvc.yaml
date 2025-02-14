@@ -1,116 +1,116 @@
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-idm-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-nats-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-ocm-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-search-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-storage-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-users-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-thumbnails-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: rook-ceph-block
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ocis-web-pvc
-  namespace: default
-  finalizers:
-    - kubernetes.io/pvc-protection
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-idm-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-nats-pvc
+#   namespace: default
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-ocm-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-search-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-storage-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 5Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-users-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 50Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-thumbnails-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Gi
+#   storageClassName: rook-ceph-block
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ocis-web-pvc
+#   namespace: default
+#   finalizers:
+#     - kubernetes.io/pvc-protection
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+#   storageClassName: rook-ceph-block
