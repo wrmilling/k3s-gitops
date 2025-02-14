@@ -140,7 +140,7 @@ spec:
           driverConfig:
             s3ng:
               maxConcurrency: 100
-              endpoint: ocis-minio.default.svc
+              endpoint: http://minio.kube-system.svc:9000
               bucket: ocis
 
         maintenance:
