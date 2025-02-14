@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-nextcloud-pv
+  name: nfs-ocis-pv
   namespace: default
 spec:
-  storageClassName: nextcloud
+  storageClassName: ocis
   capacity:
     storage: 1Mi
   accessModes:
@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 10.10.10.30
-    path: "/mnt/tardisk/nextcloud"
+    path: "/mnt/tardisk/ocis"
   mountOptions:
     - nfsvers=4.1
     - tcp
@@ -25,12 +25,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-nextcloud-pvc
+  name: nfs-ocis-pvc
   namespace: default
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: nextcloud
+  storageClassName: ocis
   resources:
     requests:
       storage: 1Mi
