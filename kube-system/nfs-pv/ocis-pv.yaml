@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: nfs-ocis-pv
-  namespace: default
+  namespace: owncloud
 spec:
   storageClassName: ocis
   capacity:
@@ -26,7 +26,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs-ocis-pvc
-  namespace: default
+  namespace: owncloud
 spec:
   accessModes:
     - ReadWriteMany

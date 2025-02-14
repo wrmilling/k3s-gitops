@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ocis-minio
+  namespace: owncloud
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.min.io/
+      chart: minio
+      version: 5.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: minio-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: quay.io/minio/minio
+      tag: RELEASE.2025-02-07T23-21-09Z@sha256:640c22768ed5dbc92eacc14502a1b06a1c708fa60431345c78dfc22917062e93
+      pullPolicy: IfNotPresent
+    mcImage:
+      repository: quay.io/minio/mc
+      tag: RELEASE.2023-01-11T03-14-16Z
+      pullPolicy: IfNotPresent
+    mode: standalone
+    rootUser: ${SECRET_MINIO_ACCESS_KEY}
+    rootPassword: ${SECRET_MINIO_SECRET_KEY}
+    users:
+    - accessKey: ${SECRET_OCIS_S3_ACCESS_KEY}
+      secretKey: ${SECRET_OCIS_S3_SECRET_KEY}
+      policy: readWrite
+    persistence:
+      enabled: true
+      existingClaim: "nfs-ocis-pvc"
+    ingress:
+      enabled: true
+      ingressClassName: nginx-internal
+      hosts:
+        - ocisminio.k.${SECRET_DOMAIN}
+      tls:
+        - secretName: ocis-minio-cert
+          hosts:
+            - ocisminio.k.${SECRET_DOMAIN}
+    consoleIngress:
+      enabled: true
+      hosts:
+        - ocismc.k.${SECRET_DOMAIN}
+      tls:
+        - secretName: ocis-minio-console-cert
+          hosts:
+            - ocismc.k.${SECRET_DOMAIN}
+    securityContext:
+      enabled: false
+    resources:
+      requests:
+        memory: 350Mi
+        cpu: 25m
+      limits:
+        memory: 1500Mi
+    metrics:
+      serviceMonitor:
+        enabled: true
+    serviceAccount:
+      create: true
+      name: "ocis-minio-sa"
