@@ -1,0 +1,212 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ocis
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: ocis
+      version: 0.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: wrmilling-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: owncloud/ocis
+      tag: 7.0.1
+      pullPolicy: IfNotPresent
+
+    http:
+      cors:
+        allow_origins: []
+
+    cache:
+      type: nats-js-kv
+      nodes:
+        - "{{ .appNameNats }}:9233"
+
+    store:
+      type: nats-js-kv
+      nodes:
+        - "{{ .appNameNats }}:9233"
+
+    registry:
+      type: nats-js-kv
+      nodes:
+        - "{{ .appNameNats }}:9233"
+
+    features:
+      demoUsers: false
+      language:
+        default: en
+
+      appsIntegration:
+        enabled: false
+
+      emailNotifications:
+        enabled: true
+        smtp:
+          host: ${SECRET_SMTP_DOMAIN}
+          port: 587
+          sender: "HomeLab Cloud <cloud@${SECRET_DOMAIN}>"
+          authentication: auto
+          encryption: ssltls
+
+      sharing:
+        autoAcceptShares: false
+        passwordPolicies:
+          minCharacters: 8
+          minLowerCharacters: 1
+          minUpperCharacters: 1
+          minSpecialCharacters: 1
+          minDigits: 1
+
+      virusscan:
+        enabled: true
+        infectedFileHandling: delete
+
+      edition: Community
+
+      ocm:
+        enabled: true
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx-external
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+
+    securityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsUser: 1000
+      runAsGroup: 1000
+
+    replicas: 1
+
+    resources:
+      limits:
+        memory: 2048Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+    jobResources:
+      limits:
+        memory: 256Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+
+    services:
+      idm:
+        persistence:
+          enabled: true
+          existingClaim: ocis-idm-pvc
+
+      nats:
+        persistence:
+          enabled: true
+          existingClaim: ocis-nats-pvc
+
+      ocm:
+        persistence:
+          enabled: true
+          existingClaim: ocis-ocm-pvc
+
+      search:
+        persistence:
+          enabled: true
+          existingClaim: ocis-search-pvc
+
+      storagesystem:
+        persistence:
+          enabled: true
+          existingClaim: ocis-storage-pvc
+
+      storageusers:
+        storageBackend:
+          # -- Configures the storage driver. Possible values are "ocis" and "s3ng".
+          # The oCIS driver stores all data in the persistent volume if persistence is enabled.
+          # The S3NG driver stores all metadata in the persistent volume and uploads blobs to s3 if persistence is enabled.
+          driver: s3ng
+          driverConfig:
+            s3ng:
+              maxConcurrency: 100
+              endpoint: ocis-minio.default.svc
+              bucket: ocis
+
+        maintenance:
+          cleanUpExpiredUploads:
+            enabled: true
+          purgeExpiredTrashBinItems:
+            enabled: true
+          restartPostprocessing:
+            enabled: true
+
+        persistence:
+          enabled: true
+          existingClaim: ocis-users-pvc
+
+      thumbnails:
+        persistence:
+          enabled: true
+          existingClaim: ocis-thumbnails-pvc
+        maintenance:
+          cleanUpOldThumbnails:
+            enabled: true
+
+      web:
+        persistence:
+          enabled: true
+          existingClaim: ocis-web-pvc
+
+    monitoring:
+      enabled: true
+
+    # Leaving secrets until I figure out which all ones I need
+    secretRefs:
+      # -- Reference to an existing admin user secret (see ref:Secrets#secrets). Not used if `features.externalUserManagement.enabled` equals `true`.
+      adminUserSecretRef: ocis-secrets
+      # -- Reference to an existing collaboration service WOPI secret (see ref:Secrets#secrets). Not used if `features.appsIntegration.enabled` equals `false`.
+      collaborationWopiSecret:
+      # -- Reference to an existing IDP secret (see ref:Secrets#secrets). Not used if `features.externalUserManagement.enabled` equals `true`.
+      idpSecretRef:
+      # -- Reference to an existing JWT secret (see ref:Secrets#secrets).
+      jwtSecretRef:
+      # -- Reference to an existing keycloak client secret, used for the GDPR export. Only used if features.externalUserManagement.gdprExport.enabled equals true.
+      gdprExportClientSecretRef:
+      # -- Reference to an existing LDAP certificate authority secret (see ref:Secrets#secrets)
+      ldapCaRef:
+      # -- Reference to an existing LDAP cert secret (see ref:Secrets#secrets). Not used if `features.externalUserManagement.enabled` equals `true`.
+      ldapCertRef:
+      # -- Reference to an existing LDAP bind secret (see ref:Secrets#secrets).
+      ldapSecretRef:
+      # -- Reference to an existing machine auth api key secret (see ref:Secrets#secrets)
+      machineAuthApiKeySecretRef:
+      # -- Reference to an existing messaging system certificate authority secret (see ref:Secrets#secrets)
+      messagingSystemCaRef:
+      # -- Reference to an existing SMTP email server settings secret (see ref:Secrets#secrets).
+      # Not used if `features.emailNotifications.enabled` equals `false`.
+      # Not used if `features.emailNotifications.smtp.authentication` equals `none`.
+      notificationsSmtpSecretRef: ocis-secrets
+      # -- Reference to an existing storage-system JWT secret (see ref:Secrets#secrets)
+      storagesystemJwtSecretRef:
+      # -- Reference to an existing storage-system secret (see ref:Secrets#secrets)
+      storagesystemSecretRef:
+      # -- Reference to an existing thumbnails transfer secret (see ref:Secrets#secrets)
+      thumbnailsSecretRef:
+      # -- Reference to an existing transfer secret (see ref:Secrets#secrets)
+      transferSecretSecretRef:
+      # -- Reference to an existing s3 secret (see ref:Secrets#secrets)
+      # If not filled in, will attempt to use values in `.storageusers.storageBackend.s3.driverConfig.s3ng` instead.
+      s3CredentialsSecretRef: ocis-secrets
+      # -- Reference to an existing service account secret (see ref:Secrets#secrets)
+      serviceAccountSecretRef:
+      # -- The secret to secure the global notifications endpoint. Only system admins and users knowing that secret can call the global notifications POST/DELETE endpoints.
+      globalNotificationsSecretRef:
