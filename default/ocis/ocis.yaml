@@ -24,6 +24,8 @@ spec:
       cors:
         allow_origins: []
 
+    externalDomain: cloud.${SECRET_DOMAIN}
+
     cache:
       type: nats-js-kv
       nodes:
