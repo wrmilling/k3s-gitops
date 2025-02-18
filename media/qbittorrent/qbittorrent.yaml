@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/qbittorrent
               pullPolicy: IfNotPresent
-              tag: 5.0.3
+              tag: 5.0.4
             env:
               TZ: America/Chicago
               QBITTORRENT__PORT: &port 80
