@@ -1,88 +1,84 @@
-# ---
-# apiVersion: helm.toolkit.fluxcd.io/v2beta1
-# kind: HelmRelease
-# metadata:
-#   name: authelia
-#   namespace: kube-system
-# spec:
-#   interval: 5m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://charts.authelia.com
-#       chart: authelia
-#       version: 0.9.15
-#       sourceRef:
-#         kind: HelmRepository
-#         name: authelia-charts
-#         namespace: flux-system
-#       interval: 5m
-#   values:
-#     ingress:
-#       enabled: true
-#       className: nginx-external
-#       tls:
-#         enabled: true
-#         secret: authelia-cert
-#       annotations:
-#         kubernetes.io/tls-acme: "true"
-#         cert-manager.io/cluster-issuer: letsencrypt-prod
-#         nginx.ingress.kubernetes.io/custom-http-errors: "418"
-#       subdomain: auth
-#     pod:
-#       tolerations:
-#       - key: "arm"
-#         operator: "Exists"
-#     configMap:
-#       enabled: true
-#       access_control:
-#         default_policy: one_factor
-#       storage:
-#         encryption_key:
-#           value: ${SECRET_AUTH_STORAGE_ENC_KEY}
-#         postgres:
-#           enabled: true
-#           address: 'tcp://shared-psql-v16-rw.default.svc:5432'
-#           database: authelia
-#           username: authelia
-#           password:
-#             value: ${SECRET_AUTH_STORAGE_PASSWORD}
-#       session:
-#         cookies:
-#           - domain: "${SECRET_DOMAIN}"
-#             subdomain: 'auth'
-#         redis:
-#           enabled: true
-#           enabledSecret: true
-#           username: ""
-#           password:
-#             value: ${SECRET_AUTH_REDIS_PASSWORD}
-#           host: 'authelia-valkey-primary.kube-system.svc'
-#           port: 6379
-#           database_index: 0
-#       authentication_backend:
-#         disable_reset_password: true
-#         ldap:
-#           enabled: true
-#           implementation: custom
-#           address: "ldap://openldap.kube-system.svc:1389"
-#           password:
-#             value: ${SECRET_LDAP_ADMIN_PASSWORD}
-#           username_attribute: uid
-#           additional_users_dn: ""
-#           additional_groups_dn: ""
-#           base_dn: ${SECRET_LDAP_BASE_DN}
-#           user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
-#           users_filter: "(&({username_attribute}={input})(objectClass=person))"
-#           groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
-#       notifier:
-#         smtp:
-#           enabled: true
-#           enabledSecret: true
-#           username: ${SECRET_AUTH_SMTP_USER}
-#           password:
-#             value: ${SECRET_AUTH_SMTP_PASSWORD}
-#           address: "submission://${SECRET_SMTP_DOMAIN}:587"
-#           sender: ${SECRET_AUTH_SMTP_USER}
-#           identifier: localhost
-#           subject: "[Authelia] {title}"
-#           startup_check_address: ${SECRET_AUTH_SMTP_USER}
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authelia
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.authelia.com
+      chart: authelia
+      version: 0.9.15
+      sourceRef:
+        kind: HelmRepository
+        name: authelia-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    ingress:
+      enabled: true
+      className: nginx-external
+      tls:
+        enabled: true
+        secret: authelia-cert
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/custom-http-errors: "418"
+      subdomain: auth
+    configMap:
+      enabled: true
+      access_control:
+        default_policy: one_factor
+      storage:
+        encryption_key:
+          value: ${SECRET_AUTH_STORAGE_ENC_KEY}
+        postgres:
+          enabled: true
+          address: 'tcp://shared-psql-v16-rw.default.svc:5432'
+          database: authelia
+          username: authelia
+          password:
+            value: ${SECRET_AUTH_STORAGE_PASSWORD}
+      session:
+        cookies:
+          - domain: "${SECRET_DOMAIN}"
+            subdomain: 'auth'
+        redis:
+          enabled: true
+          enabledSecret: true
+          username: ""
+          password:
+            value: ${SECRET_AUTH_REDIS_PASSWORD}
+          host: 'authelia-valkey-primary.kube-system.svc'
+          port: 6379
+          database_index: 0
+      authentication_backend:
+        disable_reset_password: true
+        ldap:
+          enabled: true
+          implementation: custom
+          address: "ldap://openldap.kube-system.svc:1389"
+          password:
+            value: ${SECRET_LDAP_ADMIN_PASSWORD}
+          username_attribute: uid
+          additional_users_dn: ""
+          additional_groups_dn: ""
+          base_dn: ${SECRET_LDAP_BASE_DN}
+          user: CN=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
+          users_filter: "(&({username_attribute}={input})(objectClass=person))"
+          groups_filter: "(&(member={dn})(objectclass=groupOfNames))"
+      notifier:
+        smtp:
+          enabled: true
+          enabledSecret: true
+          username: ${SECRET_AUTH_SMTP_USER}
+          password:
+            value: ${SECRET_AUTH_SMTP_PASSWORD}
+          address: "submission://${SECRET_SMTP_DOMAIN}:587"
+          sender: ${SECRET_AUTH_SMTP_USER}
+          identifier: localhost
+          subject: "[Authelia] {title}"
+          startup_check_address: ${SECRET_AUTH_SMTP_USER}
