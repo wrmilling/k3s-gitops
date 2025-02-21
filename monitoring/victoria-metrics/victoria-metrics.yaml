@@ -194,6 +194,10 @@ spec:
     grafana:
       enabled: false
 
+    external:
+      grafana:
+        host: grafana.monitoring.svc
+
     prometheus-node-exporter:
       enabled: true
 
