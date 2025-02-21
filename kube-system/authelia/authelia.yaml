@@ -37,7 +37,7 @@ spec:
           value: ${SECRET_AUTH_STORAGE_ENC_KEY}
         postgres:
           enabled: true
-          address: 'tcp://shared-psql-v16-rw.default.svc:5432'
+          address: 'tcp://shared-psql-v17-rw.default.svc:5432'
           database: authelia
           username: authelia
           password:
