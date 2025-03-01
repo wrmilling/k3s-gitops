@@ -37,7 +37,7 @@ spec:
             image:
               repository: driveone/onedrive
               pullPolicy: IfNotPresent
-              tag: 2.5.4
+              tag: edge-debian@sha256:4b918ee66a4e47fdd633e3bc61bbaa20c90160e337e972ea2363f2d31c45201d
             env:
               TZ: America/Chicago
               ONEDRIVE_UID: 1000
