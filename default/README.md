@@ -8,11 +8,11 @@ Default namespace for applications.
 
 * [cloudnative-pg/cloudnative-pg.secret.yaml](cloudnative-pg/cloudnative-pg.secret.yaml) - Secrets for the CloudNative-PG Helm Release.
 * [cloudnative-pg/cloudnative-pg.yaml](cloudnative-pg/cloudnative-pg.yaml) - CloudNativePG Helm Release.
-* [cloudnative-pg/cluster/dendrite-v16.yaml](cloudnative-pg/cluster/dendrite-v16.yaml) - Postgres v16 Cluster for Dendrite deployment.
-* [cloudnative-pg/cluster/mastodon-v16.yaml](cloudnative-pg/cluster/mastodon-v16.yaml) - Postgres v16 Cluster for Mastodon deployment.
+* [cloudnative-pg/cluster/dendrite-v17.yaml](cloudnative-pg/cluster/dendrite-v17.yaml) - Postgres v17 Cluster for Dendrite deployment.
+* [cloudnative-pg/cluster/mastodon-v17.yaml](cloudnative-pg/cluster/mastodon-v17.yaml) - Postgres v17 Cluster for Mastodon deployment.
 * [cloudnative-pg/cluster/prometheus-rules.yaml](cloudnative-pg/cluster/prometheus-rules.yaml) - Monitoring rules for CloudNativePG to Prometheus.
 * [cloudnative-pg/cluster/scheduled-backups.yaml](cloudnative-pg/cluster/scheduled-backups.yaml) - Backup Schedule for Postgres using native backup method.
-* [cloudnative-pg/cluster/shared-v16.yaml](cloudnative-pg/cluster/shared-v16.yaml) - Postgres v16 Cluster for all other use cases.
+* [cloudnative-pg/cluster/shared-v17.yaml](cloudnative-pg/cluster/shared-v17.yaml) - Postgres v17 Cluster for all other use cases.
 
 ## emqx
 

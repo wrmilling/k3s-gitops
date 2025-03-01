@@ -19,20 +19,8 @@ Provides configuration for all the monitoring applications used on the cluster.
 * [grafana/dashboards/](grafana/dashboards/) - Dashboard definitions for Grafana
 * [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
 
-## kube-prometheus-stack
+## victoria-metrics
 
-![](https://i.imgur.com/EeOVfQA.png)
+Fast, cost-effective monitoring solution and time series database.
 
-[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) installs Prometheus Operator, required CRDs, and a default altering ruleset.
-
-* [kube-prometheus-stack/crds/](kube-prometheus-stack/crds/) - CRDs required for kube-prometheus-stack to function
-* [kube-prometheus-stack/prometheus-rules/](kube-prometheus-stack/prometheus-rules/) - Custom rule sets for Prometheus
-* [kube-prometheus-stack/kube-prometheus-stack.yaml](kube-prometheus-stack/kube-prometheus-stack.yaml) - HelmRelease for kube-prometheus-stack
-
-## thanos
-
-![](https://i.imgur.com/4foNI2f.png)
-
-[Thanos](https://github.com/thanos-io/thanos) is a highly available Prometheus setup with long term storage capabilities (backed by [minio](../default/minio/) in this case).
-
-* [thanos/thanos.yaml](thanos/thanos.yaml) - HelmRelease for thanos
+* [victoria-metrics/victoria-metrics.yaml](victoria-metrics/victoria-metrics.yaml) - HelmRelease for Victoria Metrics
