@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
+        uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: |
             ${{ secrets.FORGE_DEPLOY_KEY }}
