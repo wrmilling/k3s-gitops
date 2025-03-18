@@ -1,6 +1,9 @@
 name: Sync Repository
 run-name: Sync Repository at commit ${{ github.ref }}
-on: [push]
+on:
+  push:
+    branches:
+    - main
 jobs:
   Sync-Repository:
     runs-on: alpine-tokyo
