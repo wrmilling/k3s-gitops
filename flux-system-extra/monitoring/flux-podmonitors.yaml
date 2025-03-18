@@ -1,6 +1,6 @@
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
 metadata:
   name: kustomize-controller
   namespace: flux-system
@@ -17,8 +17,8 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
 metadata:
   name: source-controller
   namespace: flux-system
@@ -35,8 +35,8 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
 metadata:
   name: helm-controller
   namespace: flux-system
@@ -53,8 +53,8 @@ spec:
   podMetricsEndpoints:
     - port: http-prom
 ---
-apiVersion: monitoring.coreos.com/v1
-kind: PodMonitor
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMPodScrape
 metadata:
   name: notification-controller
   namespace: flux-system
