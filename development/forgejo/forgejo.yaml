@@ -32,7 +32,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 16.8
+              tag: 17.4
             env:
               INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
