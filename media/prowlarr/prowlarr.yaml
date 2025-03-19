@@ -25,7 +25,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-develop
+              repository: ghcr.io/home-operations/prowlarr
               pullPolicy: IfNotPresent
               tag: 1.32.2.4987
             env:

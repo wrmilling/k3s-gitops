@@ -31,7 +31,7 @@ spec:
             command: ['sh', '-c', "rm -f /data/gitea/home/.gnupg/public-keys.d/pubring.db.lock"]
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
+              repository: ghcr.io/home-operations/postgres-init
               tag: 17.4
             env:
               INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
