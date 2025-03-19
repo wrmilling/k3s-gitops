@@ -9,11 +9,11 @@ jobs:
     runs-on: alpine-tokyo
     steps:
       - name: Checkout Repository
-        uses: ${{ github.server_url }}/actions/checkout@v4
+        uses: ${{ github.server_url }}/actions/checkout@v4.2.2
         with:
           fetch-depth: 0
       - name: Setup SSH
-        uses: ${{ github.server_url }}/actions/ssh-agent@v0.9.0
+        uses: ${{ github.server_url }}/actions/ssh-agent@v0.9.1
         with:
           ssh-private-key: |
             ${{ secrets.SYNC_KEY }}
