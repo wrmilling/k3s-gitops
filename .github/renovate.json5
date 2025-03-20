@@ -1,55 +1,60 @@
 {
-  "extends": [
-    "config:recommended",
-    "docker:enableMajor",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
-    ":enablePreCommit",
-
-    ":semanticCommits",
-    ":automergeBranchPush",
-    "github>wrmilling/k3s-gitops//.github/renovate/automerge-github-actions.json",
-    "github>wrmilling/k3s-gitops//.github/renovate/commit-message.json",
-    "github>wrmilling/k3s-gitops//.github/renovate/pr-labels.json",
-    "github>wrmilling/k3s-gitops//.github/renovate/semantic-commits.json",
-    "github>wrmilling/k3s-gitops//.github/renovate/custom-managers.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/allowedVersions.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/versioning.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/groups.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/grafanaDashboards.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/autoMerge.json5",
-    "github>wrmilling/k3s-gitops//.github/renovate/disabledDatasources.json5",
+  extends: [
+    'config:recommended',
+    'docker:enableMajor',
+    ':disableRateLimiting',
+    ':dependencyDashboard',
+    ':enablePreCommit',
+    ':semanticCommits',
+    ':automergeBranch',
+    'github>wrmilling/k3s-gitops//.github/renovate/automerge-github-actions.json',
+    'github>wrmilling/k3s-gitops//.github/renovate/commit-message.json',
+    'github>wrmilling/k3s-gitops//.github/renovate/pr-labels.json',
+    'github>wrmilling/k3s-gitops//.github/renovate/semantic-commits.json',
+    'github>wrmilling/k3s-gitops//.github/renovate/custom-managers.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/allowedVersions.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/versioning.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/groups.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/grafanaDashboards.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/autoMerge.json5',
+    'github>wrmilling/k3s-gitops//.github/renovate/disabledDatasources.json5',
   ],
-  "enabled": true,
-  "timezone": "America/Chicago",
-  "dependencyDashboard": true,
-  "dependencyDashboardTitle": "Renovate (Mend) Dashboard",
-  // Do not notify on closed unmerged PRs
-  "suppressNotifications": ["prIgnoreNotification"],
-  // Do not rebase PRs
-  "rebaseWhen": "conflicted",
-  "commitBodyTable": true,
-  "platformCommit": true,
-  "gitAuthor": "Winston R. Milling <wrmilling@users.noreply.github.com>",
-  "commitBody": "Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>",
+  enabled: true,
+  timezone: 'America/Chicago',
+  dependencyDashboard: true,
+  dependencyDashboardTitle: 'Renovate (Mend) Dashboard',
+  suppressNotifications: [
+    'prIgnoreNotification',
+  ],
+  rebaseWhen: 'conflicted',
+  commitBodyTable: true,
+  platformCommit: 'enabled',
+  gitAuthor: 'Winston R. Milling <wrmilling@users.noreply.github.com>',
+  commitBody: 'Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>',
   ignorePaths: [
-    "setup/**",
-    ".taskfiles/**",
+    'setup/**',
+    '.taskfiles/**',
   ],
-  "helm-values": {
-    "fileMatch": ["./.+\\.yaml$"]
-  },
-  "flux": {
-    "fileMatch": ["./.+\\.yaml$"],
-    "ignorePaths": [
-      ".github"
+  'helm-values': {
+    fileMatch: [
+      './.+\\.yaml$',
     ],
   },
-  "kubernetes": {
-    "fileMatch": ["\\.yaml$"],
-    "ignorePaths": [
-      "flux-system/",
-      ".github"
+  flux: {
+    fileMatch: [
+      './.+\\.yaml$',
+    ],
+    ignorePaths: [
+      '.github',
+    ],
+  },
+  kubernetes: {
+    fileMatch: [
+      '\\.yaml$',
+    ],
+    ignorePaths: [
+      'flux-system/',
+      '.github',
     ],
   },
 }
