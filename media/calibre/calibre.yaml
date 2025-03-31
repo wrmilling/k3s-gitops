@@ -30,7 +30,7 @@ spec:
               tag: V3.0.4
             env:
               TZ: America/Chicago
-              PUID: 911
+              PUID: 1000
               PGID: 1000
 
     service:
@@ -61,8 +61,8 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: false
-        runAsUser: 911
-        runAsGroup: 1000
+        # runAsUser: 911
+        # runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: "Always"
 
