@@ -63,6 +63,13 @@ spec:
             cpu: 530m
             memory: 1.2Gi
 
+      probes:
+        startup:
+          failureThreshold: 30
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 5
+
       ingress:
         enabled: true
         ingressClassName: nginx-internal
