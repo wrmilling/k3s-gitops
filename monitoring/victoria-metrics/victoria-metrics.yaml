@@ -57,8 +57,8 @@ spec:
             requests:
               storage: 60Gi
         resources:
-          limits:
-            memory: 1.2Gi
+          # limits:
+            # memory: 1.2Gi
           requests:
             cpu: 530m
             memory: 1.2Gi
