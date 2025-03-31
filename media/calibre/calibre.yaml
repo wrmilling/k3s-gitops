@@ -1,0 +1,84 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calibre
+  namespace: media
+spec:
+  releaseName: calibre
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 3.7.3
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: crocodilestick/calibre-web-automated
+              pullPolicy: IfNotPresent
+              tag: V3.0.4
+            env:
+              TZ: America/Chicago
+              PUID: 1000
+              PGID: 1000
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8083
+
+    ingress:
+      main:
+        enabled: true
+        className: nginx-external
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/proxy-body-size: 64m
+          nginx.org/client-max-body-size: 64m
+        hosts:
+          - host: lib.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: calibre-config-pvc
+        globalMounts:
+          - path: /config
+      ingest:
+        enabled: true
+        existingClaim: nfs-calibre-ingest-pvc
+        globalMounts:
+          - path: /cwa-book-ingest
+      library:
+        enabled: true
+        existingClaim: calibre-library-pvc
+        globalMounts:
+          - path: /calibre-library
