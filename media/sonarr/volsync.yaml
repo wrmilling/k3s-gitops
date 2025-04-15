@@ -34,7 +34,7 @@ spec:
     retain:
       daily: 10
       within: 3d
-    unlock: "true"
+    unlock: "CanYouNot"
 ---
 apiVersion: v1
 kind: Secret
@@ -71,4 +71,4 @@ spec:
     retain:
       daily: 10
       within: 3d
-    unlock: "true"
+    unlock: "LockUpOnMe"
