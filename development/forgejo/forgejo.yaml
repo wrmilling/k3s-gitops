@@ -42,7 +42,7 @@ spec:
         containers:
           main:
             image:
-              repository: codeberg.org/forgejo/forgejo
+              repository: code.forgejo.org/forgejo/forgejo
               pullPolicy: IfNotPresent
               tag: 10.0.3-rootless@sha256:5658d26e908b9acb533f86616000dd3d9619085e6979aa394d89142ed69f19b2
             env:
