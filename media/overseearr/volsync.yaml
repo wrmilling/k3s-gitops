@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: overseearr-config-pvc
   trigger:
-    schedule: "10 1 * * *"
+    schedule: "10 4 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

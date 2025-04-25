@@ -31,7 +31,7 @@ metadata:
 spec:
   sourcePVC: fvtt-test-pvc
   trigger:
-    schedule: "0 6 * * *"
+    schedule: "0 9 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -55,7 +55,7 @@ metadata:
 spec:
   sourcePVC: fvtt-pvc
   trigger:
-    schedule: "0 6 * * *"
+    schedule: "0 9 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

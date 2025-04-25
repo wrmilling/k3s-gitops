@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: hass-pvc
   trigger:
-    schedule: "0 6 * * *"
+    schedule: "0 9 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

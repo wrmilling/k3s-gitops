@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: forgejo-config-pvc
   trigger:
-    schedule: "0 3 * * *"
+    schedule: "0 6 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -56,7 +56,7 @@ metadata:
 spec:
   sourcePVC: forgejo-custom-pvc
   trigger:
-    schedule: "0 3 * * *"
+    schedule: "0 6 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -93,7 +93,7 @@ metadata:
 spec:
   sourcePVC: forgejo-data-pvc
   trigger:
-    schedule: "0 3 * * *"
+    schedule: "0 6 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

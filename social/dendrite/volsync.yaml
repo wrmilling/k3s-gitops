@@ -43,7 +43,7 @@ metadata:
 spec:
   sourcePVC: dendrite-media-pvc
   trigger:
-    schedule: "0 5 * * *"
+    schedule: "0 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -65,7 +65,7 @@ metadata:
 spec:
   sourcePVC: dendrite-search-pvc
   trigger:
-    schedule: "0 5 * * *"
+    schedule: "0 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -87,7 +87,7 @@ metadata:
 spec:
   sourcePVC: dendrite-jetstream-pvc
   trigger:
-    schedule: "0 5 * * *"
+    schedule: "0 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
