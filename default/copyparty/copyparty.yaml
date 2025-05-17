@@ -67,7 +67,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: calibre-config-pvc
+        existingClaim: copyparty-config-pvc
         globalMounts:
           - path: /cfg
       media:
