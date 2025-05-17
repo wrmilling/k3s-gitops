@@ -36,21 +36,21 @@
     '.taskfiles/**',
   ],
   'helm-values': {
-    fileMatch: [
-      './.+\\.yaml$',
+    managerFilePatterns: [
+      '/./.+\\.yaml$/',
     ],
   },
   flux: {
-    fileMatch: [
-      './.+\\.yaml$',
+    managerFilePatterns: [
+      '/./.+\\.yaml$/',
     ],
     ignorePaths: [
       '.github',
     ],
   },
   kubernetes: {
-    fileMatch: [
-      '\\.yaml$',
+    managerFilePatterns: [
+      '/\\.yaml$/',
     ],
     ignorePaths: [
       'flux-system/',
