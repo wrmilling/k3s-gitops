@@ -48,6 +48,7 @@ spec:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/backend-protocol: https
           nginx.ingress.kubernetes.io/proxy-body-size: 256m
           nginx.org/client-max-body-size: 256m
         hosts:
