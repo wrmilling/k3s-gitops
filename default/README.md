@@ -41,7 +41,7 @@ Default namespace for applications.
 
 [Invidious](https://invidious.io/) is an open source alternative front-end to YouTube.
 
-* [invidious/invidious.yaml](invidious/invidious.yaml) - Simple [app-template](https://bjw-s.github.io/helm-charts/docs/app-template/) deployment of the Invidious docker image.
+* [invidious/invidious.yaml](invidious/invidious.yaml) - Simple [app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/) deployment of the Invidious docker image.
 
 ## OneDrive
 

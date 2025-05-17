@@ -11,7 +11,7 @@ spec:
   timeout: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
       chart: app-template
       version: 3.7.3
       interval: 15m
