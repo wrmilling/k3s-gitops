@@ -39,7 +39,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 7878
+            port: 8686
 
     ingress:
       main:
