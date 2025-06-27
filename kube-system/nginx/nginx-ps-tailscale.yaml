@@ -1,125 +1,125 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
-metadata:
-  name: ingress-nginx-ps-tailscale
-  namespace: kube-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      # renovate: registryUrl=https://kubernetes.github.io/ingress-nginx
-      chart: ingress-nginx
-      version: 4.12.3
-      sourceRef:
-        kind: HelmRepository
-        name: ingress-nginx-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    controller:
-      ingressClass: nginx-ps-tailscale
-      ingressClassByName: true
-      ingressClassResource:
-        name: nginx-ps-tailscale
-        enabled: true
-        default: true
-        controllerValue: "k8s.io/ingress-nginx-ps-tailscale"
-      allowSnippetAnnotations: true
-      admissionWebhooks:
-        objectSelector:
-          matchExpressions:
-            - key: ingress-class
-              operator: In
-              values:
-                - nginx-ps-tailscale
-      replicaCount: 1
-      config:
-        annotations-risk-level: Critical
-        custom-http-errors: 404,500,503
-        hsts-max-age: "31449600"
-      use-forwarded-headers: "true"
-      service:
-        type: ClusterIP
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-          namespace: kube-system
-        prometheusRule:
-          enabled: false
-      tolerations:
-        - key: "arm"
-          operator: "Exists"
-      # extraArgs:
-      #   default-ssl-certificate: "cert-manager/acme-crt-secret"
-      resources:
-        requests:
-          memory: 500Mi
-          cpu: 25m
-        limits:
-          memory: 600Mi
-      extraContainers:
-        - name: tailscaled
-          image: ghcr.io/tailscale/tailscale:v1.84.3
-          imagePullPolicy: Always
-          env:
-          - name: TS_KUBE_SECRET
-            value: tailscale
-          - name: TS_USERSPACE
-            value: "false"
-          - name: TS_AUTH_KEY
-            value: ${SECRET_TAILSCALE_AUTH_KEY}
-          securityContext:
-            capabilities:
-              add:
-              - NET_ADMIN
-    defaultBackend:
-      enabled: true
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 3.3.2
-      extraEnvs:
-        - { name: TEMPLATE_NAME, value: shuffle }
-        - { name: SHOW_DETAILS, value: "false" }
-      resources:
-        requests:
-          memory: 250Mi
-          cpu: 25m
-        limits:
-          memory: 350Mi
----
-# Copyright (c) Tailscale Inc & AUTHORS
-# SPDX-License-Identifier: BSD-3-Clause
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: tailscale
-  namespace: kube-system
-rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["secrets"]
-  # Create can not be restricted to a resource name.
-  verbs: ["create"]
-- apiGroups: [""] # "" indicates the core API group
-  resourceNames: ["{{TS_KUBE_SECRET}}"]
-  resources: ["secrets"]
-  verbs: ["get", "update", "patch"]
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["events"]
-  verbs: ["get", "create", "patch"]
----
-# Copyright (c) Tailscale Inc & AUTHORS
-# SPDX-License-Identifier: BSD-3-Clause
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: tailscale
-  namespace: kube-system
-subjects:
-- kind: ServiceAccount
-  name: "ingress-nginx-ps-tailscale"
-roleRef:
-  kind: Role
-  name: tailscale
-  apiGroup: rbac.authorization.k8s.io
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# kind: HelmRelease
+# metadata:
+#   name: ingress-nginx-ps-tailscale
+#   namespace: kube-system
+# spec:
+#   interval: 5m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=https://kubernetes.github.io/ingress-nginx
+#       chart: ingress-nginx
+#       version: 4.12.3
+#       sourceRef:
+#         kind: HelmRepository
+#         name: ingress-nginx-charts
+#         namespace: flux-system
+#       interval: 5m
+#   values:
+#     controller:
+#       ingressClass: nginx-ps-tailscale
+#       ingressClassByName: true
+#       ingressClassResource:
+#         name: nginx-ps-tailscale
+#         enabled: true
+#         default: true
+#         controllerValue: "k8s.io/ingress-nginx-ps-tailscale"
+#       allowSnippetAnnotations: true
+#       admissionWebhooks:
+#         objectSelector:
+#           matchExpressions:
+#             - key: ingress-class
+#               operator: In
+#               values:
+#                 - nginx-ps-tailscale
+#       replicaCount: 1
+#       config:
+#         annotations-risk-level: Critical
+#         custom-http-errors: 404,500,503
+#         hsts-max-age: "31449600"
+#       use-forwarded-headers: "true"
+#       service:
+#         type: ClusterIP
+#       metrics:
+#         enabled: true
+#         serviceMonitor:
+#           enabled: true
+#           namespace: kube-system
+#         prometheusRule:
+#           enabled: false
+#       tolerations:
+#         - key: "arm"
+#           operator: "Exists"
+#       # extraArgs:
+#       #   default-ssl-certificate: "cert-manager/acme-crt-secret"
+#       resources:
+#         requests:
+#           memory: 500Mi
+#           cpu: 25m
+#         limits:
+#           memory: 600Mi
+#       extraContainers:
+#         - name: tailscaled
+#           image: ghcr.io/tailscale/tailscale:v1.84.3
+#           imagePullPolicy: Always
+#           env:
+#           - name: TS_KUBE_SECRET
+#             value: tailscale
+#           - name: TS_USERSPACE
+#             value: "false"
+#           - name: TS_AUTH_KEY
+#             value: ${SECRET_TAILSCALE_AUTH_KEY}
+#           securityContext:
+#             capabilities:
+#               add:
+#               - NET_ADMIN
+#     defaultBackend:
+#       enabled: true
+#       image:
+#         repository: ghcr.io/tarampampam/error-pages
+#         tag: 3.3.2
+#       extraEnvs:
+#         - { name: TEMPLATE_NAME, value: shuffle }
+#         - { name: SHOW_DETAILS, value: "false" }
+#       resources:
+#         requests:
+#           memory: 250Mi
+#           cpu: 25m
+#         limits:
+#           memory: 350Mi
+# ---
+# # Copyright (c) Tailscale Inc & AUTHORS
+# # SPDX-License-Identifier: BSD-3-Clause
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: Role
+# metadata:
+#   name: tailscale
+#   namespace: kube-system
+# rules:
+# - apiGroups: [""] # "" indicates the core API group
+#   resources: ["secrets"]
+#   # Create can not be restricted to a resource name.
+#   verbs: ["create"]
+# - apiGroups: [""] # "" indicates the core API group
+#   resourceNames: ["{{TS_KUBE_SECRET}}"]
+#   resources: ["secrets"]
+#   verbs: ["get", "update", "patch"]
+# - apiGroups: [""] # "" indicates the core API group
+#   resources: ["events"]
+#   verbs: ["get", "create", "patch"]
+# ---
+# # Copyright (c) Tailscale Inc & AUTHORS
+# # SPDX-License-Identifier: BSD-3-Clause
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: RoleBinding
+# metadata:
+#   name: tailscale
+#   namespace: kube-system
+# subjects:
+# - kind: ServiceAccount
+#   name: "ingress-nginx-ps-tailscale"
+# roleRef:
+#   kind: Role
+#   name: tailscale
+#   apiGroup: rbac.authorization.k8s.io
