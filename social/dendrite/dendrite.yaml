@@ -103,6 +103,8 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/custom-http-errors: "418"
           nginx.ingress.kubernetes.io/default-backend: "dendrite"
+          nginx.ingress.kubernetes.io/proxy-body-size: 64m
+          nginx.org/client-max-body-size: 64m
         hosts:
           - host: dendrite.${SECRET_DOMAIN}
             paths:
