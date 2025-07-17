@@ -34,7 +34,7 @@ spec:
     retain:
       daily: 30
       within: 3d
-    unlock: "StopLocking"
+    unlock: "UnlockYourself"
 ---
 apiVersion: v1
 kind: Secret
@@ -71,7 +71,7 @@ spec:
     retain:
       daily: 14
       within: 3d
-    unlock: "YourselfDangit"
+    unlock: "YouLazyBum"
 ---
 apiVersion: v1
 kind: Secret
@@ -108,4 +108,4 @@ spec:
     retain:
       daily: 14
       within: 3d
-    unlock: "ComeOnComeOnComeOnNowUnlockMeBaby"
+    unlock: "AndBackupMyStuff"
