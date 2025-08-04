@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/home-operations/radarr
               pullPolicy: IfNotPresent
-              tag: 5.27.2.10142
+              tag: 5.27.3.10153
             env:
               TZ: America/Chicago
               RADARR__INSTANCE_NAME: Radarr
