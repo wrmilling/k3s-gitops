@@ -28,7 +28,6 @@ spec:
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/custom-http-errors: "418"
     configMap:
-      enabled: true
       access_control:
         default_policy: one_factor
       storage:
