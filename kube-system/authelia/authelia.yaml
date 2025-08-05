@@ -27,7 +27,6 @@ spec:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/custom-http-errors: "418"
-      subdomain: auth
     configMap:
       enabled: true
       access_control:
@@ -48,7 +47,6 @@ spec:
             subdomain: 'auth'
         redis:
           enabled: true
-          enabledSecret: true
           username: ""
           password:
             value: ${SECRET_AUTH_REDIS_PASSWORD}
@@ -56,14 +54,16 @@ spec:
           port: 6379
           database_index: 0
       authentication_backend:
-        disable_reset_password: true
+        password_reset:
+          disable: true
+        password_change:
+          disable: true
         ldap:
           enabled: true
           implementation: custom
           address: "ldap://openldap.kube-system.svc:1389"
           password:
             value: ${SECRET_LDAP_ADMIN_PASSWORD}
-          username_attribute: uid
           additional_users_dn: ""
           additional_groups_dn: ""
           base_dn: ${SECRET_LDAP_BASE_DN}
@@ -73,7 +73,6 @@ spec:
       notifier:
         smtp:
           enabled: true
-          enabledSecret: true
           username: ${SECRET_AUTH_SMTP_USER}
           password:
             value: ${SECRET_AUTH_SMTP_PASSWORD}
