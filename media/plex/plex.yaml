@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/home-operations/plex
               pullPolicy: IfNotPresent
-              tag: 1.41.9.9961
+              tag: 1.42.1.10054
             env:
               TZ: America/Chicago
               PLEX_CLAIM: ${SECRET_PLEX_CLAIM}
