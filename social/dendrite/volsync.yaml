@@ -56,7 +56,7 @@ spec:
     retain:
       daily: 10
       within: 3d
-    unlock: "UnlockYourself"
+    unlock: "CanYouPleaseNotLokYourself"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
