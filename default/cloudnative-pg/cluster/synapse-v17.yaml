@@ -1,0 +1,93 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: synapse-psql-v17
+  namespace: default
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  # using only 1 replica: very difficult to drain the node where postgres is running
+  # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 10Gi
+    storageClass: rook-ceph-block
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cloudnative-pg
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+  monitoring:
+    enablePodMonitor: true
+  # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
+  enablePDB: false
+  resources:
+    requests:
+      memory: "512Mi"
+    limits:
+      memory: "2Gi"
+  # backup:
+  #   retentionPolicy: 30d
+  #   barmanObjectStore:
+  #     wal:
+  #       compression: bzip2
+  #       maxParallel: 4
+  #     destinationPath: s3://postgresql/
+  #     endpointURL: http://minio.kube-system.svc:9000
+  #     serverName: synapse-v17
+  #     s3Credentials:
+  #       accessKeyId:
+  #         name: cloudnative-pg
+  #         key: MINIO_ACCESS_KEY
+  #       secretAccessKey:
+  #         name: cloudnative-pg
+  #         key: MINIO_SECRET_KEY
+  # bootstrap:
+    # Used to recover a net-new cluster from backups
+    # recovery:
+    #   source: synapse-psql-backup
+
+    # use to migrate from an existing cnpg cluster to a new cluster
+    # initdb:
+    #   import:
+    #     type: monolith
+    #     databases:
+    #       - "*"
+    #     roles:
+    #       - "*"
+    #     source:
+    #       externalCluster: synapse-psql-v16
+
+  # externalClusters:
+    # Represents the backups stored in minio which can be restored from.
+    # - name: synapse-psql-backup
+    #   barmanObjectStore:
+    #     wal:
+    #       compression: bzip2
+    #       maxParallel: 4
+    #     destinationPath: s3://postgresql/
+    #     endpointURL: http://minio.kube-system.svc:9000
+    #     serverName: synapse-v17
+    #     s3Credentials:
+    #       accessKeyId:
+    #         name: cloudnative-pg
+    #         key: MINIO_ACCESS_KEY
+    #       secretAccessKey:
+    #         name: cloudnative-pg
+    #         key: MINIO_SECRET_KEY
+
+    # Represents the previous cluster to migrate from
+    # - name: synapse-psql-v16
+    #   connectionParameters:
+    #     host: synapse-psql-v16-rw.default.svc
+    #     user: postgres
+    #     dbname: postgres
+    #     sslmode: require
+    #   password:
+    #     name: cloudnative-pg
+    #     key: password
