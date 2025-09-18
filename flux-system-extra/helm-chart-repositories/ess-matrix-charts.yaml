@@ -7,4 +7,4 @@ metadata:
 spec:
   type: oci
   interval: 2h
-  url: oci://ghcr.io/element-hq/ess-helm/matrix-stack
+  url: oci://ghcr.io/element-hq/ess-helm
