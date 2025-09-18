@@ -15,7 +15,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: dendrite-psql-v17
+  name: synapse-psql-v17
   namespace: default
 spec:
   # daily, 3am UCT
@@ -23,7 +23,7 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: dendrite-psql-v17
+    name: synapse-psql-v17
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
@@ -37,3 +37,16 @@ spec:
   backupOwnerReference: self
   cluster:
     name: shared-psql-v17
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: synapse-st-psql-v17
+  namespace: default
+spec:
+  # daily, 3am UCT
+  schedule: "0 0 5 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: synapse-st-psql-v17
