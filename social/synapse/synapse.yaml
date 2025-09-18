@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: synapse
+  namespace: social
+spec:
+  releaseName: synapse
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=oci://ghcr.io/element-hq/ess-helm/matrix-stack
+      chart: matrix-stack
+      version: 25.9.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: ess-matrix-charts
+        namespace: flux-system
+  values:
+    serverName: ${SECRET_DOMAIN_SECONDARY}
+
+    ingress:
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/custom-http-errors: "418"
+        nginx.ingress.kubernetes.io/default-backend: "synapse"
+        nginx.ingress.kubernetes.io/proxy-body-size: 64m
+        nginx.org/client-max-body-size: 64m
+      className: nginx-external
+
+    matrixRTC:
+      enabled: false # Disable for first test of chart
+      ingress:
+        host: mrtc.${SECRET_DOMAIN}
+
+    elementWeb:
+      enabled: false # Disable for first test of chart
+      ingress:
+        host: chat.${SECRET_DOMAIN}
+
+    postgres:
+      enabled: false # Will use my own CNPG instance
+
+    wellKnownDelegation:
+      enabled: false # Will be set on root websetver elsewhere
+
+    matrixAuthenticationService:
+      ingress:
+        host: mas.${SECRET_DOMAIN}
+      postgres:
+        host: synapse-psql-v17-rw.default.svc
+        port: 5432
+        user: synapse-mas
+        password:
+          value: ${SECRET_SYNAPSE_PSQL_MAS_PASS}
+        database: synapse-mas
+        sslMode: prefer
+
+    synapse:
+      ingress:
+        host: synapse.${SECRET_DOMAIN}
+      media:
+        storage:
+          existingClaim: synapse-media-pvc
+      postgres:
+        host: synapse-psql-v17-rw.default.svc
+        port: 5432
+        user: synapse
+        password:
+          value: ${SECRET_SYNAPSE_PSQL_PASS}
+        database: synapse
+        sslMode: prefer
