@@ -73,3 +73,11 @@ spec:
           value: ${SECRET_SYNAPSE_PSQL_PASS}
         database: synapse
         sslMode: prefer
+      workers:
+        initial-synchrotron:
+          enabled: true
+        synchrotron:
+          enabled: true
+        federation-sender:
+          enabled: true
+          replicas: 2
