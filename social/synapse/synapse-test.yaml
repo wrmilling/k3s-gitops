@@ -53,10 +53,10 @@ spec:
       postgres:
         host: synapse-st-psql-v17-rw.default.svc
         port: 5432
-        user: synapse-mas
+        user: synapse-st-mas
         password:
           value: ${SECRET_SYNAPSE_ST_PSQL_MAS_PASS}
-        database: synapse-st-mas
+        database: synapse-mas
         sslMode: prefer
 
     synapse:
