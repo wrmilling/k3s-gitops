@@ -45,7 +45,9 @@ spec:
       enabled: false # Will use my own CNPG instance
 
     wellKnownDelegation:
-      enabled: false # Will be set on root websetver elsewhere
+      enabled: true
+      baseDomainRedirect:
+        enabled: false
 
     elementAdmin:
       enabled: true
