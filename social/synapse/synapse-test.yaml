@@ -51,6 +51,8 @@ spec:
       enabled: true
       ingress:
         host: madmin-test.k.${SECRET_DOMAIN}
+        className: nginx-internal
+
 
     matrixAuthenticationService:
       ingress:
