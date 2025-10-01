@@ -47,6 +47,11 @@ spec:
     wellKnownDelegation:
       enabled: false # Will be set on root websetver elsewhere
 
+    elementAdmin:
+      enabled: true
+      ingress:
+        host: madmin-test.k.${SECRET_DOMAIN}
+
     matrixAuthenticationService:
       ingress:
         host: mas-st.${SECRET_DOMAIN}
