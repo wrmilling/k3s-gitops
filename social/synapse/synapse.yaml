@@ -37,7 +37,7 @@ spec:
         host: mrtc.${SECRET_DOMAIN}
 
     elementWeb:
-      enabled: false # Disable for first test of chart
+      enabled: true # Disable for first test of chart
       ingress:
         host: chat.${SECRET_DOMAIN}
 

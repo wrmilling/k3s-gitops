@@ -37,7 +37,7 @@ spec:
         host: mrtc-st.${SECRET_DOMAIN}
 
     elementWeb:
-      enabled: false # Disable for first test of chart
+      enabled: true # Disable for first test of chart
       ingress:
         host: chat-st.${SECRET_DOMAIN}
 
@@ -50,7 +50,7 @@ spec:
     elementAdmin:
       enabled: true
       ingress:
-        host: madmin-test.k.${SECRET_DOMAIN}
+        host: madmin-st.k.${SECRET_DOMAIN}
         className: nginx-internal
 
 
