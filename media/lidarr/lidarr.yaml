@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/home-operations/lidarr
               pullPolicy: IfNotPresent
-              tag: 2.14.3.4791@sha256:46d1b3ac8687c8d5a621b3f5a2d83f08952afa00474113434c6ad3e320ea9e5a
+              tag: 2.14.5.4824@sha256:e135e1730e193126d16be26c8ca0827142e282a7e72b76d1d713bf67f7cefcea
             env:
               TZ: America/Chicago
               RADARR__INSTANCE_NAME: Radarr
