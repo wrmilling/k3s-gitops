@@ -37,7 +37,7 @@ spec:
         host: mrtc-st.${SECRET_DOMAIN}
 
     elementWeb:
-      enabled: true # Disable for first test of chart
+      enabled: false # Disable for first test of chart
       ingress:
         host: chat-st.${SECRET_DOMAIN}
 
@@ -45,7 +45,7 @@ spec:
       enabled: false # Will use my own CNPG instance
 
     wellKnownDelegation:
-      enabled: true
+      enabled: false
       baseDomainRedirect:
         enabled: false
 
