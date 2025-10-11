@@ -21,12 +21,10 @@ spec:
       persistence:
         enabled: true
         existingClaim: forgejo-valkey-pvc
-      resourcesPreset: "medium"
+      resourcesPreset: "large"
     replica:
       replicaCount: 0
     metrics:
       enabled: true
     auth:
       password: ${SECRET_FORGEJO_REDIS_PASSWORD}
-    readinessProbe:
-      initialDelaySeconds: 30
