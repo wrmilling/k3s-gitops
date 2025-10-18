@@ -21,7 +21,9 @@ spec:
   values:
     controllers:
       main:
-        strategy: Recreate
+        type: StatefulSet
+        strategy: RollingUpdate
+        replicas: 1
         initContainers:
           init-db:
             image:
@@ -35,7 +37,6 @@ spec:
               INIT_POSTGRES_PASS: ${SECRET_MAUTRIX_SLACK_DB_PASSWORD}
         containers:
           main:
-            type: StatefulSet
             image:
               repository: dock.mau.dev/mautrix/slack
               pullPolicy: IfNotPresent
