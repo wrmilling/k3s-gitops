@@ -79,7 +79,7 @@ spec:
     secrets:
       mautrix-slack-config:
         enabled: true
-        data:
+        stringData:
           config.yaml: |-
             # Network-specific config options
             network:
