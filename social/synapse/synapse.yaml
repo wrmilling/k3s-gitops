@@ -89,6 +89,12 @@ spec:
         federation-sender:
           enabled: true
           replicas: 2
+      additional:
+        1-experimental-features:
+          config: |
+            experimental_features:
+              msc4190_enabled: true
+              msc3202_device_masquerading: true
       appservices:
       - secret: appservices-secrets
         secretKey: mautrix-slack.yaml
