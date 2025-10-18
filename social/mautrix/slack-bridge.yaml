@@ -24,6 +24,8 @@ spec:
         type: statefulset
         strategy: RollingUpdate
         replicas: 1
+        annotations:
+          secret.reloader.stakater.com/reload: "slack-bridge-secrets"
         initContainers:
           init-db:
             image:
