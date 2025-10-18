@@ -34,7 +34,7 @@ spec:
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
               INIT_POSTGRES_DBNAME: mautrix-slack
               INIT_POSTGRES_USER: mautrix-slack
-              INIT_POSTGRES_PASS: ${SECRET_MAUTRIX_SLACK_DB_PASSWORD}
+              INIT_POSTGRES_PASS: ${SECRET_MAUTRIX_SLACK_DB_PASS}
         containers:
           main:
             image:
