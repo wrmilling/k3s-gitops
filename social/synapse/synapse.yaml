@@ -48,7 +48,7 @@ spec:
       enabled: true
       baseDomainRedirect:
         enabled: false
-    
+
     elementAdmin:
       enabled: true
       ingress:
@@ -89,3 +89,8 @@ spec:
         federation-sender:
           enabled: true
           replicas: 2
+      appservices:
+      - secret: appservices-secrets
+        secretKey: mautrix-slack.yaml
+      - secret: appservices-secrets
+        secretKey: doublepuppet.yaml
