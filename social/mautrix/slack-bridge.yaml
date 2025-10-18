@@ -70,7 +70,7 @@ spec:
         existingClaim: mautrix-slack-data-pvc
         globalMounts:
           - path: /data
-      config.yaml:
+      configyaml:
         type: secret
         name: slack-bridge-secrets
         globalMounts:
