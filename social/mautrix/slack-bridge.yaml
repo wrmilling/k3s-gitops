@@ -21,7 +21,7 @@ spec:
   values:
     controllers:
       main:
-        type: StatefulSet
+        type: statefulset
         strategy: RollingUpdate
         replicas: 1
         initContainers:
