@@ -198,9 +198,9 @@ spec:
       - name: "nk3s-amd64-a"
         devices:
           - name: "/dev/disk/by-id/ata-MK000960GWCFA_S3EANX0JA06984"
-      # - name: "nk3s-amd64-b"
-      #   devices:
-      #     - name: "/dev/disk/by-id/ata-MK000960GWCFA_S3EANX0JB04432"
+      - name: "nk3s-amd64-b"
+        devices:
+          - name: "/dev/disk/by-id/ata-MK000960GWCFA_S3EANX0JB04432"
       - name: "nk3s-amd64-c"
         devices:
           - name: "/dev/disk/by-id/ata-MK000960GWCFA_S3EANX0JA06974"
