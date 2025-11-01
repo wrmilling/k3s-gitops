@@ -30,6 +30,7 @@ spec:
               tag: 1.19.19@sha256:0799b3a495e4ba97304d8eeb052aafec744d871bdcbb0ad996a04c573d3ba696
             env:
               TZ: America/Chicago
+              PRTY_NO_TLS: 1
 
     service:
       main:
