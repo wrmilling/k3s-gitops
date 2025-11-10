@@ -7,4 +7,4 @@ metadata:
 spec:
   type: oci
   interval: 2h
-  url: oci://ghcr.io/immich-app/immich-charts/immich
+  url: oci://ghcr.io/immich-app/immich-charts
