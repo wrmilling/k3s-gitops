@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: default
+spec:
+  releaseName: immich
+  interval: 15m
+  chart:
+    spec:
+      chart: 
+      version: 0.10.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: immich-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 17.6
+            env:
+              INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
+              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              INIT_POSTGRES_DBNAME: immich
+              INIT_POSTGRES_USER: immich
+              INIT_POSTGRES_PASS: ${SECRET_IMMICH_DB_PASSWORD}
+        containers:
+          main:
+            image:
+              tag: v2.2.3
+            env:
+              DB_HOSTNAME: shared-psql-v17-rw.default.svc.cluster.local
+              DB_USERNAME: immich
+              DB_DATABASE_NAME: immich
+              DB_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-library
+    valkey:
+      enabled: true
+      persistence:
+        data:
+          existingClaim: immich-valkey
+    server:
+      ingress:
+        main:
+          enabled: true
+          className: nginx-internal
+          annotations:
+            kubernetes.io/tls-acme: "true"
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+            nginx.ingress.kubernetes.io/custom-http-errors: "418"
+            nginx.ingress.kubernetes.io/proxy-body-size: 128m
+            nginx.org/client-max-body-size: 128m
+          hosts:
+            - host: immich.${SECRET_DOMAIN}
+              paths:
+                - path: /
+          tls:
+            - secretName: immich-tls
+              hosts:
+                - immich.${SECRET_DOMAIN}
+      controllers:
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 350Mi
+    machine-learning:
+      controllers:
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 300Mi
