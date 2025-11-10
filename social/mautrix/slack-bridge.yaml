@@ -63,6 +63,8 @@ spec:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/custom-http-errors: "418"
+          nginx.ingress.kubernetes.io/proxy-body-size: 100m
+          nginx.org/client-max-body-size: 100m
         hosts:
           - host: mbridge-slack.${SECRET_DOMAIN}
             paths:
