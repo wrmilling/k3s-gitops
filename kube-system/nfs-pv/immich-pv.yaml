@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-tube-archive-pv
-  namespace: kube-system
+  name: nfs-immich-pv
+  namespace: default
 spec:
-  storageClassName: tube-archive
+  storageClassName: immich
   capacity:
     storage: 1Mi
   accessModes:
@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 10.10.10.30
-    path: "/mnt/tardisk/tube-archive"
+    path: "/mnt/tardisk/immich"
   mountOptions:
     - nfsvers=4.1
     - tcp
@@ -25,12 +25,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-tube-archive-pvc
-  namespace: kube-system
+  name: nfs-immich-pvc
+  namespace: default
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: tube-archive
+  storageClassName: immich
   resources:
     requests:
       storage: 1Mi
