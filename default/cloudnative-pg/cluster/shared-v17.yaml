@@ -22,6 +22,8 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vchord.so"
   monitoring:
     enablePodMonitor: true
   # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
@@ -62,6 +64,10 @@ spec:
     #       - "*"
     #     source:
     #       externalCluster: shared-psql-v16
+    #   postInitApplicationSQL:
+    #     # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+    #     - CREATE EXTENSION vchord CASCADE;
+    #     - CREATE EXTENSION earthdistance CASCADE;
 
   # externalClusters:
     # Represents the backups stored in minio which can be restored from.
