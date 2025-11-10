@@ -61,13 +61,13 @@ spec:
             nginx.ingress.kubernetes.io/proxy-body-size: 1024m
             nginx.org/client-max-body-size: 1024m
           hosts:
-            - host: immich.${SECRET_DOMAIN}
+            - host: photos.${SECRET_DOMAIN}
               paths:
                 - path: /
           tls:
             - secretName: immich-tls
               hosts:
-                - immich.${SECRET_DOMAIN}
+                - photos.${SECRET_DOMAIN}
       controllers:
         main:
           containers:
