@@ -10,7 +10,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: 
+      chart: immich
       version: 0.10.1
       interval: 15m
       sourceRef:
