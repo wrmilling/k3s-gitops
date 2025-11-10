@@ -44,11 +44,6 @@ spec:
       persistence:
         library:
           existingClaim: immich-library
-        library-temp: 
-          enabled: true
-          existingClaim: nfs-immich-pvc
-          globalMounts:
-          - path: /data-new
     valkey:
       enabled: true
       persistence:
@@ -90,3 +85,9 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 300Mi
+    persistence:
+      library-temp: 
+          enabled: true
+          existingClaim: nfs-immich-pvc
+          globalMounts:
+          - path: /data-new
