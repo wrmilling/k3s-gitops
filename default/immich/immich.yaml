@@ -85,9 +85,3 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 300Mi
-    # persistence:
-    #   library-temp: 
-    #       enabled: true
-    #       existingClaim: 
-    #       globalMounts:
-    #       - path: /data-new
