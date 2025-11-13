@@ -2,7 +2,7 @@
 # apiVersion: helm.toolkit.fluxcd.io/v2
 # kind: HelmRelease
 # metadata:
-#   name: hl-mastodon
+#   name: mastodon
 #   namespace: social
 # spec:
 #   interval: 15m
