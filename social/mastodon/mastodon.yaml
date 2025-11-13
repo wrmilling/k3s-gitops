@@ -23,10 +23,11 @@ spec:
     mastodon:
       createAdmin:
         enabled: false
-      dbPrepare:
-        enabled: false # Existing Database
-      dbMigrate:
-        enabled: true # Allow for upgrades though
+      hooks:
+        dbPrepare:
+          enabled: false # Existing Database
+        dbMigrate:
+          enabled: true # Allow for upgrades though
       deploySearch:
         enabled: false # Will enable later when I re-add elasticsearch
       localDomain: "${SECRET_DOMAIN_SECONDARY}"
