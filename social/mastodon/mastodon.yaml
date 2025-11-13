@@ -27,7 +27,7 @@ spec:
         dbPrepare:
           enabled: false # Existing Database
         dbMigrate:
-          enabled: true # Allow for upgrades though
+          enabled: false # TODO: Re-enable later
       deploySearch:
         enabled: false # Will enable later when I re-add elasticsearch
       localDomain: "${SECRET_DOMAIN_SECONDARY}"
