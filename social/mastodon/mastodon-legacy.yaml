@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mastodon
-      version: 6.2.4
+      version: 6.6.0
       sourceRef:
         kind: HelmRepository
         name: wrmilling-charts
@@ -110,16 +110,12 @@ spec:
       enabled: false
       postgresqlHostname: mastodon-psql-v17-rw.default.svc
       postgresqlPort: 5432
-      primary:
-        persistence:
-          enabled: false
-          existingClaim: "mastodon-postgres-pvc"
       auth:
         database: mastodon
         username: mastodon
         password: "${SECRET_MASTODON_DB_PASS}"
         postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
-        existingSecret: mastodon-postgresql
+        # existingSecret: mastodon-postgresql
 
     redis:
       enabled: false
