@@ -19,10 +19,6 @@ spec:
       repository: ghcr.io/glitch-soc/mastodon
       tag: nightly.2025-11-10
       pullPolicy: IfNotPresent
-    
-    serviceAccount:
-      create: true
-      name: "mastodon-sa"
 
     mastodon:
       createAdmin:
