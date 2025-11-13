@@ -1,19 +1,17 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: mastodon
+    name: mastodon-postgresql
     namespace: social
 type: Opaque
 stringData:
-    secret-key-base: ENC[AES256_GCM,data:r/SL7Dr0y/f8+QXxHUvMXkU/YytlEbdd9eN0NIrMerrydBwtnNCqj9Cndmt+aD/mGaGQhvejW0bihWk9kKQ+bgQX2V5AiCqtwXF1laEy6zp2LuLneuMBkuJ2t9IDgElQv9b+ubFJ/lUBOWesOSx0psFI3fT6UPvHpebEXuJhBnU=,iv:Zi5wwQZ7dsBH2cVB05SuWQjxjZ8DoFz1fNAGdHVT9l0=,tag:UEiO3T45zPKzllAis4CD6w==,type:str]
-    vapid-private-key: ENC[AES256_GCM,data:+XlQIPzRCjAvt2nmP1uKs/fcKeQtTsj1eRYULpJvrBXlitX7n2XisrLwuec=,iv:XSUZBZeqLFW7TdWElIqHEtzh3dp9SJnDG3QM8bi7Aqs=,tag:O72Sn+jWdcgkYnGvUTKhaA==,type:str]
-    vapid-public-key: ENC[AES256_GCM,data:dLRyTQ5xT6IAVwYAs33B2D8qIIysiMH17WI/54cOTq+26962kmMCNoocIeKfu/N08zrqm7qa9/Nypc7cHDwa3yQqrE5d4K/s/5RbkCHpcpu7RFKWIQAH3Q==,iv:TNegdrKqWt+F5d8YgAjA9ni2yJdTh2Dp/3bNJ/1/WzM=,tag:IWn39VtfxkVls0c4tM+ctw==,type:str]
-    are-primary-key: ENC[AES256_GCM,data:ptsvh/hQBvUMsVCmD4Z1XLTw3MauabfWt6a2WGdYlu4=,iv:Lew5vLCrg+KGerXaQRx+5nzRvwSg2Ckswtw2p+m3mSI=,tag:smpc7vZndHEQcmSJ0c/g6g==,type:str]
-    are-deterministic-key: ENC[AES256_GCM,data:wHUhBjUKYtJyBCjbGwd/RsdM6GQ9XoLX3jqsQbNPGMo=,iv:d+Al5TIqqf4KQRMBqYzQnVyoBCddbTZOoaEIwNseWFU=,tag:EaNOtVlmFRPH9PtHED2IXw==,type:str]
-    are-derivation-salt: ENC[AES256_GCM,data:q3SSARBpa3mRcoPG7MyTra/GJgPUiivQRhLoIMmmp+I=,iv:KCNvCsXCS19IMW0xBselrecOw5FADbGv1ojwQdkxTtc=,tag:YGIN9M3qOs8sin/ZZ4hdJw==,type:str]
+    database: ENC[AES256_GCM,data:bgdtRzRFyXE=,iv:oNq14Fw+ooqLR5QMlA1J3kzQkJ81dgRdcZ7b4iVVGzg=,tag:TY0QwxjCLNPOapSw9A/uFw==,type:str]
+    username: ENC[AES256_GCM,data:p1XZjh03y6Y=,iv:9EyTvSPmeWD6FdWS72jxEu5+D+IqHgSfMd3PpBvIO/U=,tag:2CJXYN552bgxkdZDmzISbQ==,type:str]
+    password: ENC[AES256_GCM,data:BJc9WFGQCcJ1Yiu8mU0cs1sS9B85BdXOSycGtwmhZg==,iv:Bm+W/d6dQVe6uQ3mgDZ6tLn9PufgiYWPCuwjuU18JfI=,tag:C0Y48uBNqSrgdXgihG64xg==,type:str]
+    postgresPassword: ENC[AES256_GCM,data:QR8sDZt8Pzz6FdGUSKts3hxjrPif418C,iv:BlS4MPpa6qEouL/0L1Rbhn1Omly68ifVlFifqVp4dhE=,tag:q0b+TWMqqtrHNnzBmY+qbg==,type:str]
 sops:
-    lastmodified: "2025-11-13T21:26:02Z"
-    mac: ENC[AES256_GCM,data:7xXpWC005F4Za3w+1laa6c6e1h9Mnfwxo8WLkRfDi8Xxg3RnLk+0fTtIe73ElaUkDu9ig+laTA6jHfgb399ugQP+/V9zrFXLwh9fS97KkX2wigjsbWDDlE+TR/3OkD03NjtSYqoNeCogFDZX1a7Pj3S+bIr6QFNuLWkIDAHW0gc=,iv:y5IUwoTXEuFgGvAzjC3MERcuzuSQmjCnKBf7qpUtIHo=,tag:xHOSDOOXACVEkxYH9v3elQ==,type:str]
+    lastmodified: "2025-11-13T21:13:58Z"
+    mac: ENC[AES256_GCM,data:J/ejzo0v0NE4BFSdN7rTAtZpCZfImnwxJYZs4ctu/iuWygQGPdeLD4DAf4lUR+5DhFQtK/stECIN4ynGnMqU7VUf7TV9Q6KEBKkXjIU8CIC8/Ubjt7drWZAbMXEHeAZJumEH4cFc8F1Hs2JagQ/o2i4c8J+f8bR+ILVjW7BdAdM=,iv:laffjYRattx3Oy5CPIVe49c/VETNg9CknabLzOk9HZk=,tag:WpZlZlRs8RFnFLVKZo5lyg==,type:str]
     pgp:
         - created_at: "2024-02-14T18:16:59Z"
           enc: |-
