@@ -2,6 +2,7 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
   name: mastodon
+  namespace: default
 spec:
   version: 9.2.1
   nodeSets:
