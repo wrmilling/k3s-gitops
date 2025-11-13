@@ -1,116 +1,117 @@
----
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: hl-mastodon
-  namespace: social
-spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: mastodon
-      version: 0.2.0
-      sourceRef:
-        kind: HelmRepository
-        name: mastodon-charts
-        namespace: flux-system
-  values:
-    image:
-      repository: ghcr.io/glitch-soc/mastodon
-      tag: nightly.2025-11-10
-      pullPolicy: IfNotPresent
+# ---
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: hl-mastodon
+#   namespace: social
+# spec:
+#   interval: 15m
+#   chart:
+#     spec:
+#       chart: mastodon
+#       version: 0.2.0
+#       sourceRef:
+#         kind: HelmRepository
+#         name: mastodon-charts
+#         namespace: flux-system
+#   values:
+#     image:
+#       repository: ghcr.io/glitch-soc/mastodon
+#       tag: nightly.2025-11-10
+#       pullPolicy: IfNotPresent
 
-    mastodon:
-      createAdmin:
-        enabled: false
-      hooks:
-        dbPrepare:
-          enabled: false # Existing Database
-        dbMigrate:
-          enabled: false # TODO: Re-enable later
-      deploySearch:
-        enabled: false # Will enable later when I re-add elasticsearch
-      localDomain: "${SECRET_DOMAIN_SECONDARY}"
-      webDomain: "mastodon.${SECRET_DOMAIN}"
-      singleUserMode: true
-      extraEnvVars:
-        MAX_TOOT_CHARS: 2048
-      s3:
-        bucket: "mastodon"
-        endpoint: "https://mfile.${SECRET_DOMAIN}"
-        hostname: "mfile.${SECRET_DOMAIN}"
-        aliasHost: "mcdn.${SECRET_DOMAIN}"
-        existingSecret: mastodon-s3
-      secrets:
-        existingSecret: mastodon
-      sidekiq:
-        workers:
-          - name: all-queues
-            concurrency: 25
-            replicas: 1
-            resources: {}
-            affinity: {}
-            queues:
-              - default,8
-              - push,6
-              - ingress,4
-              - mailers,2
-              - pull
-              - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
-          - name: pull-ingress
-            concurrency: 50
-            replicas: 1
-            resources: {}
-            affinity: {}
-            queues:
-              - pull
-              - ingress
-      smtp:
-        domain: "${SECRET_DOMAIN}"
-        fromAddress: "${SECRET_MASTODON_SMTP_USER}"
-        server: "${SECRET_SMTP_DOMAIN}"
-        port: 587
-        existingSecret: mastodon-smtp
-      streaming:
-        image:
-          repository: ghcr.io/glitch-soc/mastodon-streaming
-          tag: nightly.2025-11-10
-        port: 4000
-      web:
-        port: 3000
+#     mastodon:
+#       createAdmin:
+#         enabled: false
+#       hooks:
+#         dbPrepare:
+#           enabled: false # Existing Database
+#         dbMigrate:
+#           enabled: false # TODO: Re-enable later
+#       deploySearch:
+#         enabled: false # Will enable later when I re-add elasticsearch
+#       localDomain: "${SECRET_DOMAIN_SECONDARY}"
+#       webDomain: "mastodon.${SECRET_DOMAIN}"
+#       singleUserMode: true
+#       extraEnvVars:
+#         MAX_TOOT_CHARS: 2048
+#       s3:
+#         bucket: "mastodon"
+#         endpoint: "https://mfile.${SECRET_DOMAIN}"
+#         hostname: "mfile.${SECRET_DOMAIN}"
+#         aliasHost: "mcdn.${SECRET_DOMAIN}"
+#         existingSecret: mastodon-s3
+#       secrets:
+#         existingSecret: mastodon
+#       sidekiq:
+#         workers:
+#           - name: all-queues
+#             concurrency: 25
+#             replicas: 1
+#             resources: {}
+#             affinity: {}
+#             queues:
+#               - default,8
+#               - push,6
+#               - ingress,4
+#               - mailers,2
+#               - pull
+#               - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
+#           - name: pull-ingress
+#             concurrency: 50
+#             replicas: 1
+#             resources: {}
+#             affinity: {}
+#             queues:
+#               - pull
+#               - ingress
+#       smtp:
+#         domain: "${SECRET_DOMAIN}"
+#         fromAddress: "${SECRET_MASTODON_SMTP_USER}"
+#         server: "${SECRET_SMTP_DOMAIN}"
+#         port: 587
+#         existingSecret: mastodon-smtp
+#       streaming:
+#         image:
+#           repository: ghcr.io/glitch-soc/mastodon-streaming
+#           tag: nightly.2025-11-10
+#         port: 4000
+#       web:
+#         port: 3000
 
-    ingress:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 40m
-        nginx.org/client-max-body-size: 40m
-      className: nginx-external
-      hosts:
-        - host: mastodon.${SECRET_DOMAIN}
-          paths:
-            - path: '/'
-      tls:
-        - secretName: mastodon-tls
-          hosts:
-            - mastodon.${SECRET_DOMAIN}
+#     ingress:
+#       enabled: true
+#       annotations:
+#         nginx.ingress.kubernetes.io/proxy-body-size: 40m
+#         nginx.org/client-max-body-size: 40m
+#       className: nginx-external
+#       hosts:
+#         - host: mastodon.${SECRET_DOMAIN}
+#           paths:
+#             - path: '/'
+#               pathType: Prefix
+#       tls:
+#         - secretName: mastodon-tls
+#           hosts:
+#             - mastodon.${SECRET_DOMAIN}
 
-    postgresql:
-      hostname: mastodon-psql-v17-rw.default.svc
-      port: 5432
-      database: mastodon
-      existingSecret: mastodon-postgresql
+#     postgresql:
+#       hostname: mastodon-psql-v17-rw.default.svc
+#       port: 5432
+#       database: mastodon
+#       existingSecret: mastodon-postgresql
 
-    redis:
-      hostname: mastodon-valkey-primary.social.svc
-      existingSecret: mastodon-redis
+#     redis:
+#       hostname: mastodon-valkey-primary.social.svc
+#       existingSecret: mastodon-redis
 
-    elasticsearch:
-      enabled: false # Will enable later
+#     elasticsearch:
+#       enabled: false # Will enable later
 
-    serviceAccount:
-      create: true # Just being explicit
+#     serviceAccount:
+#       create: true # Just being explicit
 
-    externalAuth:
-      ldap:
-        enabled: false
-        existingSecret: mastodon-redis # It seems to be expecting a secret even when ldap is not used
+#     externalAuth:
+#       ldap:
+#         enabled: false
+#         existingSecret: mastodon-redis # It seems to be expecting a secret even when ldap is not used
