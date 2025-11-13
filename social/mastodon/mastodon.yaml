@@ -73,7 +73,7 @@ spec:
         fromAddress: "${SECRET_MASTODON_SMTP_USER}"
         server: "${SECRET_SMTP_DOMAIN}"
         port: 587
-        login: "${SECRET_MASTODON_SMTP_USER}"
+        username: "${SECRET_MASTODON_SMTP_USER}"
         password: "${SECRET_MASTODON_SMTP_PASS}"
       streaming:
         image:
