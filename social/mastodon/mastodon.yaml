@@ -104,12 +104,9 @@ spec:
     # elasticsearch:
 
     postgresql:
-      postgresqlHostname: mastodon-psql-v17-rw.default.svc
-      postgresqlPort: 5432
+      hostname: mastodon-psql-v17-rw.default.svc
+      port: 5432
       database: mastodon
-      username: mastodon
-      password: "${SECRET_MASTODON_DB_PASS}"
-      postgresPassword: "${SECRET_MASTODON_POSTGRES_POSTGRES_PASSWORD}"
       existingSecret: mastodon-postgresql
 
     redis:
