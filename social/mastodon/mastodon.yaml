@@ -109,3 +109,8 @@ spec:
 
     serviceAccount:
       create: true # Just being explicit
+
+    externalAuth:
+      ldap:
+        enabled: false
+        existingSecret: mastodon-redis # It seems to be expecting a secret even when ldap is not used
