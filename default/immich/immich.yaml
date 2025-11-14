@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: immich
-      version: 0.10.2
+      version: 0.10.3
       interval: 15m
       sourceRef:
         kind: HelmRepository
