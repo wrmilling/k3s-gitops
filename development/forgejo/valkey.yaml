@@ -21,7 +21,7 @@ spec:
       persistence:
         enabled: true
         existingClaim: forgejo-valkey-pvc
-      resourcesPreset: "large"
+      resourcesPreset: "xlarge"
     replica:
       replicaCount: 0
     metrics:
