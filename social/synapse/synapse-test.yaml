@@ -1,84 +1,84 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: synapse-test
-  namespace: social
-spec:
-  releaseName: synapse-test
-  interval: 15m
-  chart:
-    spec:
-      # renovate: registryUrl=oci://ghcr.io/element-hq/ess-helm/matrix-stack
-      chart: matrix-stack
-      version: 25.11.1
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: ess-matrix-charts
-        namespace: flux-system
-  values:
-    serverName: ${SECRET_DOMAIN}
+# ---
+# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# apiVersion: helm.toolkit.fluxcd.io/v2
+# kind: HelmRelease
+# metadata:
+#   name: synapse-test
+#   namespace: social
+# spec:
+#   releaseName: synapse-test
+#   interval: 15m
+#   chart:
+#     spec:
+#       # renovate: registryUrl=oci://ghcr.io/element-hq/ess-helm/matrix-stack
+#       chart: matrix-stack
+#       version: 25.11.1
+#       interval: 15m
+#       sourceRef:
+#         kind: HelmRepository
+#         name: ess-matrix-charts
+#         namespace: flux-system
+#   values:
+#     serverName: ${SECRET_DOMAIN}
 
-    ingress:
-      annotations:
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/custom-http-errors: "418"
-        nginx.ingress.kubernetes.io/default-backend: "synapse-test"
-        nginx.ingress.kubernetes.io/proxy-body-size: 64m
-        nginx.org/client-max-body-size: 64m
-      className: nginx-external
+#     ingress:
+#       annotations:
+#         kubernetes.io/tls-acme: "true"
+#         cert-manager.io/cluster-issuer: letsencrypt-prod
+#         nginx.ingress.kubernetes.io/custom-http-errors: "418"
+#         nginx.ingress.kubernetes.io/default-backend: "synapse-test"
+#         nginx.ingress.kubernetes.io/proxy-body-size: 64m
+#         nginx.org/client-max-body-size: 64m
+#       className: nginx-external
 
-    matrixRTC:
-      enabled: false # Disable for first test of chart
-      ingress:
-        host: mrtc-st.${SECRET_DOMAIN}
+#     matrixRTC:
+#       enabled: false # Disable for first test of chart
+#       ingress:
+#         host: mrtc-st.${SECRET_DOMAIN}
 
-    elementWeb:
-      enabled: false # Disable for first test of chart
-      ingress:
-        host: chat-st.${SECRET_DOMAIN}
+#     elementWeb:
+#       enabled: false # Disable for first test of chart
+#       ingress:
+#         host: chat-st.${SECRET_DOMAIN}
 
-    postgres:
-      enabled: false # Will use my own CNPG instance
+#     postgres:
+#       enabled: false # Will use my own CNPG instance
 
-    wellKnownDelegation:
-      enabled: false
-      baseDomainRedirect:
-        enabled: false
+#     wellKnownDelegation:
+#       enabled: false
+#       baseDomainRedirect:
+#         enabled: false
 
-    elementAdmin:
-      enabled: true
-      ingress:
-        host: madmin-st.k.${SECRET_DOMAIN}
-        className: nginx-internal
+#     elementAdmin:
+#       enabled: true
+#       ingress:
+#         host: madmin-st.k.${SECRET_DOMAIN}
+#         className: nginx-internal
 
 
-    matrixAuthenticationService:
-      ingress:
-        host: mas-st.${SECRET_DOMAIN}
-      postgres:
-        host: synapse-st-psql-v17-rw.default.svc
-        port: 5432
-        user: synapse-st-mas
-        password:
-          value: ${SECRET_SYNAPSE_ST_PSQL_MAS_PASS}
-        database: synapse-mas
-        sslMode: prefer
+#     matrixAuthenticationService:
+#       ingress:
+#         host: mas-st.${SECRET_DOMAIN}
+#       postgres:
+#         host: synapse-st-psql-v17-rw.default.svc
+#         port: 5432
+#         user: synapse-st-mas
+#         password:
+#           value: ${SECRET_SYNAPSE_ST_PSQL_MAS_PASS}
+#         database: synapse-mas
+#         sslMode: prefer
 
-    synapse:
-      ingress:
-        host: synapse-st.${SECRET_DOMAIN}
-      media:
-        storage:
-          existingClaim: synapse-test-media-pvc
-      postgres:
-        host: synapse-st-psql-v17-rw.default.svc
-        port: 5432
-        user: synapse-st
-        password:
-          value: ${SECRET_SYNAPSE_ST_PSQL_PASS}
-        database: synapse
-        sslMode: prefer
+#     synapse:
+#       ingress:
+#         host: synapse-st.${SECRET_DOMAIN}
+#       media:
+#         storage:
+#           existingClaim: synapse-test-media-pvc
+#       postgres:
+#         host: synapse-st-psql-v17-rw.default.svc
+#         port: 5432
+#         user: synapse-st
+#         password:
+#           value: ${SECRET_SYNAPSE_ST_PSQL_PASS}
+#         database: synapse
+#         sslMode: prefer
