@@ -79,11 +79,11 @@ spec:
               - ingress
       smtp:
         domain: "${SECRET_DOMAIN}"
-        from_address: "${SECRET_MASTODON_SMTP_USER}"
+        from_address: "${SECRET_MASTODON_SMTP_FROM_ADDRESS}"
         server: "${SECRET_SMTP_DOMAIN}"
         port: 587
-        login: "${SECRET_MASTODON_SMTP_USER}"
-        password: "${SECRET_MASTODON_SMTP_PASS}"
+        login: "${SECRET_SMTP_USERNAME}"
+        password: "${SECRET_SMTP_PASSWORD}"
       streaming:
         image:
           repository: ghcr.io/glitch-soc/mastodon-streaming

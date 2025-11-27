@@ -72,11 +72,11 @@ spec:
       notifier:
         smtp:
           enabled: true
-          username: ${SECRET_AUTH_SMTP_USER}
+          username: ${SECRET_SMTP_USERNAME}
           password:
-            value: ${SECRET_AUTH_SMTP_PASSWORD}
+            value: ${SECRET_SMTP_PASSWORD}
           address: "submission://${SECRET_SMTP_DOMAIN}:587"
-          sender: ${SECRET_AUTH_SMTP_USER}
+          sender: ${SECRET_AUTH_SMTP_FROM_ADDRESS}
           identifier: localhost
           subject: "[Authelia] {title}"
-          startup_check_address: ${SECRET_AUTH_SMTP_USER}
+          startup_check_address: ${SECRET_SMTP_USERNAME}
