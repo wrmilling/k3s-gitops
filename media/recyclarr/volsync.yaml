@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: recyclarr-config-pvc
   trigger:
-    schedule: "50 4 * * *"
+    schedule: "50 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

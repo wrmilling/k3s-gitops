@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: sonarr-config-pvc
   trigger:
-    schedule: "50 4 * * *"
+    schedule: "50 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
@@ -56,7 +56,7 @@ metadata:
 spec:
   sourcePVC: sonarr-anime-config-pvc
   trigger:
-    schedule: "50 4 * * *"
+    schedule: "50 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

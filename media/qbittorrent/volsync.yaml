@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: qbit-config-pvc
   trigger:
-    schedule: "40 1 * * *"
+    schedule: "40 9 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10

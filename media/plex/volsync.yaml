@@ -19,7 +19,7 @@ metadata:
 spec:
   sourcePVC: plex-config-pvc
   trigger:
-    schedule: "20 4 * * *"
+    schedule: "20 8 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
