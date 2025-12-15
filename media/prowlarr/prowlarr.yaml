@@ -27,7 +27,7 @@ spec:
             image:
               repository: ghcr.io/home-operations/prowlarr
               pullPolicy: IfNotPresent
-              tag: 2.3.0.5236
+              tag: 2.3.1.5238
             env:
               TZ: America/Chicago
               PROWLARR__INSTANCE_NAME: Prowlarr
