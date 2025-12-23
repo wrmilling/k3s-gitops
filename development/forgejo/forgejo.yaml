@@ -104,8 +104,34 @@ spec:
                 memory: 2048Mi
               limits:
                 memory: 6144Mi
+          anubis:
+            image:
+              repository: ghcr.io/techarohq/anubis
+              pullPolicy: IfNotPresent
+              tag: v1.24.0-pre1@sha256:170d30f7de14f6b19e5d7647a1ea8ff58740828a08a6a364e08210df2955639b
+            env:
+              BIND: ":8080"
+              COOKIE_DOMAIN: "${SECRET_DOMAIN}"
+              DIFFICULTY: "4"
+              ED25519_PRIVATE_KEY_HEX: "${SECRET_FORGEJO_ANUBIS_ED25519}"
+              METRICS_BIND: ":9090"
+              SERVE_ROBOTS_TXT: "false"
+              TARGET: "http://localhost:3000"
+              OG_PASSTHROUGH: "true"
+              OG_EXPIRY_TIME: "24h"
+            resources:
+              limits:
+                cpu: 750m
+                memory: 256Mi
+              requests:
+                cpu: 250m
+                memory: 256Mi
     defaultPodOptions:
       securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
         fsGroup: 1000
         fsGroupChangePolicy: "Always"
       # tolerations:
@@ -117,6 +143,11 @@ spec:
         ports:
           http:
             port: 3000
+      anubis:
+        controller: main
+        ports:
+          http:
+            port: 8080
       ssh:
         type: LoadBalancer
         loadBalancerIP: ${SVC_FORGEJO_IP}
@@ -143,7 +174,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-                  port: http
+                  port: anubis
         className: nginx-external
     persistence:
       config:
