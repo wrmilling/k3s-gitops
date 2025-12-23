@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: anubis-configmap
+  namespace: development
+data:
+  botPolicy.yaml: |
+    bots:
+    - name: cloudflare-workers
+      headers_regex:
+        CF-Worker: .*
+      action: DENY
+    - name: well-known
+      path_regex: ^/.well-known/.*$
+      action: ALLOW
+    - name: favicon
+      path_regex: ^/favicon.ico$
+      action: ALLOW
+    - name: robots-txt
+      path_regex: ^/robots.txt$
+      action: ALLOW
+    - name: actions-api
+      path_regex: ^/api/.*$
+      action: ALLOW
+    - name: generic-browser
+      user_agent_regex: Mozilla
+      action: CHALLENGE
+    

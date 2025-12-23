@@ -115,6 +115,7 @@ spec:
               DIFFICULTY: "4"
               ED25519_PRIVATE_KEY_HEX: "${SECRET_FORGEJO_ANUBIS_ED25519}"
               METRICS_BIND: ":9090"
+              POLICY_FNAME: "/data/cfg/botPolicy.yaml"
               SERVE_ROBOTS_TXT: "false"
               TARGET: "http://localhost:3000"
               OG_PASSTHROUGH: "true"
@@ -195,3 +196,11 @@ spec:
         existingClaim: forgejo-data-pvc
         globalMounts:
           - path: /data
+      anubis-botconfig:
+        enabled: true
+        type: configMap
+        name: anubis-configmap
+        globalMounts:
+          - path: /data/cfg/botPolicy.yaml
+            subPath: botPolicy.yaml
+            readOnly: true
