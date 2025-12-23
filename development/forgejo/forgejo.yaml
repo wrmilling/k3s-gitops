@@ -143,10 +143,14 @@ spec:
           http:
             port: 3000
       anubis:
+        type: ClusterIP
         controller: main
         ports:
           http:
+            enabled: true
             port: 8080
+            protocol: TCP
+            targetPort: 8080
       ssh:
         type: LoadBalancer
         loadBalancerIP: ${SVC_FORGEJO_IP}
@@ -172,8 +176,8 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
-                  port: anubis
+                  identifier: anubis
+                  port: http
         className: nginx-external
     persistence:
       config:
