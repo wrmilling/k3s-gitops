@@ -7,10 +7,6 @@
 This is probably overly-complicated for what I actually need and I will probably simplify it in the future. Authelia provides SSO capabilities for the cluster and is integrated with nginx-ingress.
 
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
-* [authelia/postgres-pvc.yaml](authelia/postgres-pvc.yaml) - PVC to store config and data for Postgres
-* [authelia/postgres.yaml](authelia/postgres.yaml) - Postgres deployment for use by Authelia for registering user second-factor
-* [authelia/redis-pvc.yaml](authelia/redis-pvc.yaml) - PVC to store config for Redis
-* [authelia/redis.yaml](authelia/redis.yaml) - Redis deployment for use by Authelia for sessions
 
 ## dynamic-dns
 
@@ -49,7 +45,6 @@ Persistent Volume configuration for shared NFS storage.
 * [nfs-pv/media-pv.yaml](nfs-pv/media-pv.yaml) - Storage for Bulk Media backed by TrueNAS NFS share.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
-* [nfs-pv/tube-archive-pv.yaml](nfs-pv/tube-archive-pv.yaml) - Storage for YouTube Backups backed by TrueNAS NFS share.
 
 ## nginx
 

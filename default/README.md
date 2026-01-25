@@ -8,7 +8,6 @@ Default namespace for applications.
 
 * [cloudnative-pg/cloudnative-pg.secret.yaml](cloudnative-pg/cloudnative-pg.secret.yaml) - Secrets for the CloudNative-PG Helm Release.
 * [cloudnative-pg/cloudnative-pg.yaml](cloudnative-pg/cloudnative-pg.yaml) - CloudNativePG Helm Release.
-* [cloudnative-pg/cluster/dendrite-v17.yaml](cloudnative-pg/cluster/dendrite-v17.yaml) - Postgres v17 Cluster for Dendrite deployment.
 * [cloudnative-pg/cluster/mastodon-v17.yaml](cloudnative-pg/cluster/mastodon-v17.yaml) - Postgres v17 Cluster for Mastodon deployment.
 * [cloudnative-pg/cluster/prometheus-rules.yaml](cloudnative-pg/cluster/prometheus-rules.yaml) - Monitoring rules for CloudNativePG to Prometheus.
 * [cloudnative-pg/cluster/scheduled-backups.yaml](cloudnative-pg/cluster/scheduled-backups.yaml) - Backup Schedule for Postgres using native backup method.
@@ -34,7 +33,6 @@ Default namespace for applications.
 [Home Assistant](https://www.home-assistant.io/) is an open source home automation solution that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts.
 
 * [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
-* [home-assistant/postgres.yaml](home-assistant/postgres.yaml) - PostgreSQL deployment utilizing the Bitnami helm chart.
 * [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistent volume claims for the Home Assistant and PostgreSQL deployments.
 
 ## Invidious
@@ -50,15 +48,6 @@ Using the [onedrive](https://github.com/abraunegg/onedrive) client for linux to 
 * [onedrive/onedrive-pvc.yaml](onedrive/onedrive-pvc.yaml) - Config PVC for OneDrive.
 * [onedrive/onedrive-secret.sops.yaml](onedrive/onedrive-secret.sops.yaml) - Secrets for OneDrive Auth.
 * [onedrive/onedrive.yaml](onedrive/onedrive.yaml) - HelmRelease for OneDrive using app-template.
-
-## PiHole
-
-![](https://i.imgur.com/o2X1qU0.png)
-
-[Pi-hole](https://pi-hole.net/) is a DNS resolver that likes to help you block ads as well. This implementation uses MetalLB to expose the DNS server on its own dedicated IP, allows authenticated and secure ingress through nginx-ingress and authelia, and has implemented DNS-over-HTTPS (DoH) for secure querying. I also use it to do DNS resolution on internal domains.
-
-* [pihole/pihole-helm-values.sops.yaml](pihole/pihole-helm-values.sops.yaml) - Encrypted helm values for Pi-hole.
-* [pihole/pihole.yaml](pihole/pihole.yaml) - HelmRelease for Pi-hole from mojo2600 on GitHub.
 
 ## Valheim
 
