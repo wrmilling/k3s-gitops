@@ -2,20 +2,30 @@
 
 Provides configuration for all my social media focused applications.
 
-## Dendrite
-
-[Dendrite](https://matrix-org.github.io/dendrite/) is a second-generation Matrix homeserver written in Go! Following the microservice architecture model, Dendrite is designed to be efficient, reliable and scalable.
-
-* [dendrite/dendrite.sops.yaml](dendrite/dendrite.sops.yaml) - Matrix secret for for dendrite server
-* [dendrite/dendrite.yaml](dendrite/dendrite.yaml) - HelmRelease for Dendrite using app-template
-* [dendrite/pvc.yaml](dendrite/pvc.yaml) - PVCs for dendrite, postgres, and jetstream
-* [dendrite/syncapi.yaml](dendrite/syncapi.yaml) - Sliding sync API for Dendrite, faster updates
-* [dendrite/volsync.yaml](dendrite/volsync.yaml) - Restic backup definition using Volsync
-
 ## Mastodon
 
 [Mastodon](https://joinmastodon.org/) is decentralized social media. Currently using the [Glitch-soc](https://github.com/glitch-soc/mastodon) fork of the official mastodon.
 
-* [mastodon/mastodon.sops.yaml](mastodon/mastodon.sops.yaml) - Secrets for the Mastodon Helm Release
-* [mastodon/mastodon.yaml](mastodon/mastodon.yaml) - Official HelmRelease for Mastodon with minor changes
-* [mastodon/minio.yaml](mastodon/minio.yaml) - S3 Compatible storage for Mastodon via Minio
+* [mastodon/mastodon.yaml](mastodon/mastodon.yaml) - HelmRelease for Mastodon
+* [mastodon/mastodon.sops.yaml](mastodon/mastodon.sops.yaml) - Core secrets for Mastodon
+* [mastodon/mastodon-legacy.yaml](mastodon/mastodon-legacy.yaml) - Legacy deployment configuration
+* [mastodon/mastodon-postgresql.sops.yaml](mastodon/mastodon-postgresql.sops.yaml) - PostgreSQL credentials
+* [mastodon/mastodon-redis.sops.yaml](mastodon/mastodon-redis.sops.yaml) - Redis credentials
+* [mastodon/mastodon-s3.sops.yaml](mastodon/mastodon-s3.sops.yaml) - S3 credentials
+* [mastodon/mastodon-smtp.sops.yaml](mastodon/mastodon-smtp.sops.yaml) - SMTP credentials
+* [mastodon/minio.yaml](mastodon/minio.yaml) - S3-compatible storage via Minio
+* [mastodon/valkey.yaml](mastodon/valkey.yaml) - Valkey deployment for caching
+* [mastodon/valkey-pvc.yaml](mastodon/valkey-pvc.yaml) - PVC for Valkey data
+
+## Mautrix Slack
+
+* [mautrix/slack-bridge.yaml](mautrix/slack-bridge.yaml) - Slack bridge deployment
+* [mautrix/slack-bridge.secret.yaml](mautrix/slack-bridge.secret.yaml) - Slack bridge secret
+* [mautrix/pvc.yaml](mautrix/pvc.yaml) - PVC for Mautrix data
+
+## Synapse
+
+* [synapse/synapse.yaml](synapse/synapse.yaml) - HelmRelease for Synapse
+* [synapse/synapse-test.yaml](synapse/synapse-test.yaml) - Test Synapse deployment
+* [synapse/pvc.yaml](synapse/pvc.yaml) - PVC for Synapse
+* [synapse/appservices.secret.yaml](synapse/appservices.secret.yaml) - Appservice secrets

@@ -8,4 +8,4 @@ Provides configuration for all the monitoring applications used on the cluster.
 
 [botkube](https://www.botkube.io/) provides richer integration with multiple chat clients for alerts and cluster management if desired. This configuration is using discord for the alerting.
 
-* [botkube/botkube.yaml] - HelmRelease and configuration for which events need to notify the supplied discord configuration
+* [botkube/botkube.yaml](botkube/botkube.yaml) - HelmRelease and configuration for notification events
