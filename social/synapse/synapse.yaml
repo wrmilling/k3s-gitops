@@ -12,7 +12,7 @@ spec:
     spec:
       # renovate: registryUrl=oci://ghcr.io/element-hq/ess-helm/matrix-stack
       chart: matrix-stack
-      version: 26.1.1
+      version: 26.1.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
