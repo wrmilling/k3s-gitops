@@ -31,7 +31,7 @@ data:
       challenge:
         # https://anubis.techaro.lol/docs/admin/configuration/challenges/proof-of-work
         algorithm: fast
-        difficulty: 6
+        difficulty: 2
 
     dnsbl: false
 
@@ -163,4 +163,4 @@ data:
         challenge:
           # https://anubis.techaro.lol/docs/admin/configuration/challenges/proof-of-work
           algorithm: fast
-          difficulty: 2
+          difficulty: 6
