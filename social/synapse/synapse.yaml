@@ -67,10 +67,10 @@ spec:
         database: synapse-mas
         sslMode: prefer
 
-    hookshot:
-      enabled: true
-      storage:
-        existingClaim: synapse-hookshot-pvc
+    # hookshot:
+    #   enabled: true
+    #   storage:
+    #     existingClaim: synapse-hookshot-pvc
 
     synapse:
       ingress:
