@@ -26,7 +26,7 @@ spec:
           clean-gpg-lock:
             image:
               repository: alpine
-              tag: 3.23.2
+              tag: 3.23.3
               pullPolicy: IfNotPresent
             command: ['sh', '-c', "rm -f /data/gitea/home/.gnupg/public-keys.d/pubring.db.lock"]
           init-db:
