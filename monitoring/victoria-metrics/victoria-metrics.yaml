@@ -217,6 +217,23 @@ spec:
 
     grafana:
       enabled: true
+      dashboards:
+        default:
+          ceph-cluster:
+            gnetId: 2842
+            revision: 18
+            datasource: VictoriaMetrics
+          ceph-osd-single:
+            gnetId: 5336
+            revision: 9
+            datasource: VictoriaMetrics
+          ceph-pool:
+            gnetId: 5342
+            revision: 9
+            datasource: VictoriaMetrics
+          node-feature-discovery:
+            url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+            datasource: VictoriaMetrics
       ingress:
         enabled: true
         ingressClassName: nginx-external
