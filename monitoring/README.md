@@ -9,3 +9,9 @@ Provides configuration for all the monitoring applications used on the cluster.
 [botkube](https://www.botkube.io/) provides richer integration with multiple chat clients for alerts and cluster management if desired. This configuration is using discord for the alerting.
 
 * [botkube/botkube.yaml](botkube/botkube.yaml) - HelmRelease and configuration for notification events
+
+## victoria-metrics
+
+[VictoriaMetrics k8s stack](https://docs.victoriametrics.com/helm/victoria-metrics-k8s-stack/) provides cluster-wide monitoring, alerting, and dashboards.
+
+* [victoria-metrics/victoria-metrics.yaml](victoria-metrics/victoria-metrics.yaml) - OCIRepository and HelmRelease for the stack
