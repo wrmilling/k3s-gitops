@@ -21,3 +21,9 @@ Provides configuration for all the monitoring applications used on the cluster.
 [Grafana](https://grafana.com/) provides dashboards and visualization for cluster metrics.
 
 * [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
+
+## victoria-logs
+
+[VictoriaLogs](https://docs.victoriametrics.com/victorialogs/) provides log storage and querying.
+
+* [victoria-logs/victoria-logs.yaml](victoria-logs/victoria-logs.yaml) - HelmRelease for VictoriaLogs

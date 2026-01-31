@@ -252,16 +252,34 @@ spec:
     datasources:
       datasources.yaml:
         apiVersion: 1
+        deleteDatasources:
+          - name: Alertmanager
+            orgId: 1
+          - name: Prometheus
+            orgId: 1
+          - name: VictoriaLogs
+            orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://vmsingle-stack.monitoring.svc.cluster.local:8429
+            url: http://vmsingle-stack.monitoring.svc.cluster.local:8428
             isDefault: true
             jsonData:
               timeInterval: "15s"
               queryTimeout: "60s"
               httpMethod: POST
+          - name: VictoriaLogs
+            type: victoriametrics-logs-datasource
+            access: proxy
+            url: http://victoria-logs-server.monitoring.svc.cluster.local:9428
+          - name: Alertmanager
+            type: alertmanager
+            access: proxy
+            url: http://vmalertmanager-stack.monitoring.svc.cluster.local:9093
+            jsonData:
+              implementation: prometheus
+              handleGrafanaManagedAlerts: true
     grafana.ini:
       server:
         root_url: "https://grafana.${SECRET_DOMAIN}"
