@@ -15,3 +15,9 @@ Provides configuration for all the monitoring applications used on the cluster.
 [VictoriaMetrics k8s stack](https://docs.victoriametrics.com/helm/victoria-metrics-k8s-stack/) provides cluster-wide monitoring, alerting, and dashboards.
 
 * [victoria-metrics/victoria-metrics.yaml](victoria-metrics/victoria-metrics.yaml) - OCIRepository and HelmRelease for the stack
+
+## grafana
+
+[Grafana](https://grafana.com/) provides dashboards and visualization for cluster metrics.
+
+* [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
