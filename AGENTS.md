@@ -6,6 +6,7 @@ Guidance for AI agents working in this repository.
 
 - **GitOps**: Flux2 manages all cluster state from this repo (`flux-system/gotk-sync.yaml`).
 - **Namespaces**: Organized by function (`default/`, `media/`, `social/`, `kube-system/`, etc.) with per-namespace README indexes.
+- **Chart Repositories**: Stored in the `flux-system-extra/helm-chart-repositories` directory.
 - **Core stack**:
   - Ingress: `ingress-nginx` (internal + external)
   - Storage: Rook-Ceph (`rook-ceph-block` for PVCs)
