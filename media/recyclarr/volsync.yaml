@@ -24,7 +24,7 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: recyclarr-restic-config
-    cacheCapacity: 2Gi
+    cacheCapacity: 4Gi
     volumeSnapshotClassName: csi-rbdplugin-snapclass
     storageClassName: rook-ceph-block
     moverSecurityContext:
