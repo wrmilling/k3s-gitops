@@ -125,6 +125,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes
+          - name: networking
+            orgId: 1
+            folder: Networking
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/networking
           - name: nginx
             orgId: 1
             folder: Nginx
