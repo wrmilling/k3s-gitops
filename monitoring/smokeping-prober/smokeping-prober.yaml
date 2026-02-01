@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app smokeping-prober
+  namespace: monitoring
+spec:
+  interval: 1h
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 4.6.2
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      smokeping-prober:
+        containers:
+          app:
+            image:
+              repository: quay.io/superq/smokeping-prober
+              tag: v0.10.0
+            env:
+              GOMAXPROCS: "1"
+            args:
+              - --config.file=/config/smokeping.yaml
+              - --web.listen-address=:9374
+            securityContext:
+              # ICMP requires CAP_NET_RAW capability
+              # Must run as root for raw socket access
+              runAsUser: 0
+              runAsNonRoot: false
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                add: ["NET_RAW"]
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+
+    service:
+      app:
+        controller: smokeping-prober
+        ipFamilyPolicy: SingleStack
+        ports:
+          metrics:
+            port: 9374
+
+    configMaps:
+      config:
+        data:
+          smokeping.yaml: |
+            targets:
+              # Public DNS Servers (IPv4)
+              - hosts:
+                  - 1.1.1.1              # Cloudflare Primary
+                  - 1.0.0.1              # Cloudflare Secondary
+                  - 8.8.8.8              # Google Primary
+                  - 8.8.4.4              # Google Secondary
+                  - 9.9.9.9              # Quad9 Primary
+                  # 149.112.112.112 is used for WAN2 gateway monitoring in OPNsense
+                interval: 1s
+                network: ip4
+                protocol: icmp
+                size: 56
+
+              # Internet Services
+              - hosts:
+                  - google.com
+                  - github.com
+                  - cnn.com
+                  - ghcr.io
+                interval: 1s
+                network: ip4
+                protocol: icmp
+                size: 56
+
+    persistence:
+      config:
+        type: configMap
+        name: smokeping-prober
+        globalMounts:
+          - path: /config
+            readOnly: true
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

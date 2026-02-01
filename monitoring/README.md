@@ -27,3 +27,11 @@ Provides configuration for all the monitoring applications used on the cluster.
 [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/) provides log storage and querying.
 
 * [victoria-logs/victoria-logs.yaml](victoria-logs/victoria-logs.yaml) - HelmRelease for VictoriaLogs
+
+## smokeping-prober
+
+[smokeping-prober](https://github.com/SuperQ/smokeping_prober) provides ICMP latency and packet loss probing for Prometheus.
+
+* [smokeping-prober/smokeping-prober.yaml](smokeping-prober/smokeping-prober.yaml) - HelmRelease and configuration
+* [smokeping-prober/servicemonitor.yaml](smokeping-prober/servicemonitor.yaml) - ServiceMonitor for metrics scraping
+* [smokeping-prober/prometheusrule.yaml](smokeping-prober/prometheusrule.yaml) - Prometheus alert rules
