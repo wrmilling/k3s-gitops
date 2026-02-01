@@ -234,6 +234,18 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
+
+      networking:
+        smokeping:
+          # renovate: dashboardName="SmokePing"
+          gnetId: 22471
+          revision: 1
+          datasource:
+            - name: DATASOURCE
+              value: Prometheus
+            - name: VAR_JOB
+              value: smokeping-prober
+
       nginx:
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
