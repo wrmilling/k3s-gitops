@@ -42,21 +42,27 @@ spec:
 
     ingress:
       main:
+        enabled: false
+    route:
+      main:
         enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/proxy-body-size: 256m
-          nginx.org/client-max-body-size: 256m
-        hosts:
-          - host: lib.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        kind: HTTPRoute
+        parentRefs:
+          - group: gateway.networking.k8s.io
+            kind: Gateway
+            name: external-gateway
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - lib.${SECRET_DOMAIN}
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
 
     defaultPodOptions:
       securityContext:

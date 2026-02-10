@@ -46,14 +46,14 @@ Persistent Volume configuration for shared NFS storage.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
 
-## nginx
+## envoy-gateway
 
 ![](https://i.imgur.com/W5roLT7.png)
 
-[Nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) for the cluster, works with cert-manager to secure and route traffic to specific pods/applications.
+[Envoy Gateway](https://gateway.envoyproxy.io/) for the cluster, using Gateway API resources to secure and route traffic to specific pods/applications.
 
-* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - HelmRelease for nginx-ingress serving internal traffic, including custom 404 pages from billimek/custom-error-pages.
-* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - HelmRelease for nginx-ingress serving external traffic, including custom 404 pages from billimek/custom-error-pages.
+* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - Envoy Gateway controller HelmRelease plus internal Gateway/GatewayClass/EnvoyProxy policies.
+* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - External Gateway/GatewayClass/EnvoyProxy policies and bot-blocking patch.
 
 ## node-feature-discovery
 

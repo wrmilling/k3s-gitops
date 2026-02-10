@@ -1,0 +1,53 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: rook-ceph-mgr-dashboard
+  namespace: rook-ceph
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - rook.k.${SECRET_DOMAIN}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: rook-ceph-mgr-dashboard
+          port: 7000
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: rook-ceph-mgr-dashboard-auth
+  namespace: rook-ceph
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: rook-ceph-mgr-dashboard
+  extAuth:
+    http:
+      backendRefs:
+        - name: authelia
+          namespace: kube-system
+          port: 80
+      path: /api/authz/auth-request
+      headersToExtAuth:
+        - Host
+        - Path
+        - X-Forwarded-For
+        - X-Forwarded-Proto
+        - X-Forwarded-Host
+      headersToBackend:
+        - Remote-User
+        - Remote-Groups
+        - Remote-Name
+        - Remote-Email
+      timeout: 3s
