@@ -1,34 +1,4 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
-  name: envoy-gateway
-  namespace: kube-system
-spec:
-  interval: 5m
-  chart:
-    spec:
-      chart: gateway-helm
-      version: v1.7.0
-      sourceRef:
-        kind: HelmRepository
-        name: envoy-gateway-charts
-        namespace: flux-system
-      interval: 5m
-  values:
-    config:
-      envoyGateway:
-        extensionApis:
-          enableEnvoyPatchPolicy: true
-    deployment:
-      replicas: 2
-      pod:
-        tolerations:
-          - key: "arm"
-            operator: "Exists"
-    service:
-      type: ClusterIP
----
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
