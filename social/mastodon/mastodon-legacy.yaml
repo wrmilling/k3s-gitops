@@ -95,6 +95,29 @@ spec:
     ingress:
       enabled: false
 
+    httproute:
+      enabled: true
+      parentRefs:
+        - group: gateway.networking.k8s.io
+          kind: Gateway
+          name: external-gateway
+          namespace: kube-system
+          sectionName: https
+      hostnames:
+        - mastodon.${SECRET_DOMAIN}
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
+      streamingHostnames:
+        - mastodon.${SECRET_DOMAIN}
+      streamingRules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /api/v1/streaming
+
     elasticsearch:
       enabled: false
 
@@ -114,4 +137,3 @@ spec:
       hostname: mastodon-valkey-primary.social.svc
       auth:
         password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-
