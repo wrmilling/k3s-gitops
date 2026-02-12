@@ -44,19 +44,27 @@ spec:
 
     ingress:
       main:
+        enabled: false
+    route:
+      main:
         enabled: true
-        className: nginx-internal
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: anime.k.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        kind: HTTPRoute
+        parentRefs:
+          - group: gateway.networking.k8s.io
+            kind: Gateway
+            name: internal-gateway
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - anime.k.${SECRET_DOMAIN}
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
 
     defaultPodOptions:
       securityContext:

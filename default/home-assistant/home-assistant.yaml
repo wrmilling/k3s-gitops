@@ -118,35 +118,48 @@ spec:
             targetPort: 12321
     ingress:
       main:
+        enabled: false
+      codeserver:
+        enabled: false
+    route:
+      main:
         enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-        - host: "hass.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
-              port: http
+        kind: HTTPRoute
+        parentRefs:
+          - group: gateway.networking.k8s.io
+            kind: Gateway
+            name: external-gateway
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - hass.${SECRET_DOMAIN}
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
       codeserver:
         enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/auth-url: "http://authelia.kube-system.svc.cluster.local/api/authz/auth-request"
-        hosts:
-        - host: "hass-vscode.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: codeserver
-              port: http
+        kind: HTTPRoute
+        parentRefs:
+          - group: gateway.networking.k8s.io
+            kind: Gateway
+            name: external-gateway
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - hass-vscode.${SECRET_DOMAIN}
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: codeserver
+                port: http
     persistence:
       config:
         enabled: true
@@ -157,4 +170,3 @@ spec:
               - path: /config
             codeserver:
               - path: /config
-

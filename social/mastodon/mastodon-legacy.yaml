@@ -93,22 +93,30 @@ spec:
         port: 3000
 
     ingress:
+      enabled: false
+
+    httproute:
       enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/proxy-body-size: 40m
-        nginx.org/client-max-body-size: 40m
-          #nginx.ingress.kubernetes.io/configuration-snippet: |
-          #  more_set_headers "Content-Security-Policy: \"default-src 'none'; form-action 'none'\"";
-          #  more_set_headers "X-Content-Type-Options: nosniff";
-      ingressClassName: nginx-external
-      hosts:
-        - host: mastodon.${SECRET_DOMAIN}
-          paths:
-            - path: '/'
-      tls:
-        - secretName: mastodon-cert
-          hosts:
-            - mastodon.${SECRET_DOMAIN}
+      parentRefs:
+        - group: gateway.networking.k8s.io
+          kind: Gateway
+          name: external-gateway
+          namespace: kube-system
+          sectionName: https
+      hostnames:
+        - mastodon.${SECRET_DOMAIN}
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
+      streamingHostnames:
+        - mastodon.${SECRET_DOMAIN}
+      streamingRules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /api/v1/streaming
 
     elasticsearch:
       enabled: false
@@ -129,4 +137,3 @@ spec:
       hostname: mastodon-valkey-primary.social.svc
       auth:
         password: "${SECRET_MASTODON_REDIS_PASSWORD}"
-

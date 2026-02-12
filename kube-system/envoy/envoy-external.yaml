@@ -1,0 +1,148 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  name: envoy-external
+spec:
+  controllerName: gateway.envoyproxy.io/gatewayclass-controller
+  parametersRef:
+    group: gateway.envoyproxy.io
+    kind: EnvoyProxy
+    name: envoy-external
+    namespace: kube-system
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: envoy-external
+  namespace: kube-system
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 2
+      envoyService:
+        type: LoadBalancer
+        loadBalancerIP: ${SVC_NGINX_EXTERNAL_IP}
+        externalTrafficPolicy: Local
+        annotations: {}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external-gateway
+  namespace: kube-system
+spec:
+  gatewayClassName: envoy-external
+  addresses:
+    - type: IPAddress
+      value: ${SVC_NGINX_EXTERNAL_IP}
+  listeners:
+    - name: https
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: acme-crt-secret
+            namespace: cert-manager
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: external-hsts
+  namespace: kube-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external-gateway
+  headers:
+    lateResponseHeaders:
+      set:
+        - name: Strict-Transport-Security
+          value: "max-age=31449600"
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: external-error-responses
+  namespace: kube-system
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: external-gateway
+  type: JSONPatch
+  jsonPatches:
+    - type: "type.googleapis.com/envoy.config.listener.v3.Listener"
+      name: kube-system/external-gateway/https
+      operation:
+        op: add
+        path: "/default_filter_chain/filters/0/typed_config/local_reply_config"
+        value:
+          mappers:
+            - filter:
+                status_code_filter:
+                  comparison:
+                    op: EQ
+                    value:
+                      default_value: 404
+              status_code: 404
+              body:
+                inline_string: "Not Found"
+            - filter:
+                status_code_filter:
+                  comparison:
+                    op: EQ
+                    value:
+                      default_value: 500
+              status_code: 500
+              body:
+                inline_string: "Internal Server Error"
+            - filter:
+                status_code_filter:
+                  comparison:
+                    op: EQ
+                    value:
+                      default_value: 503
+              status_code: 503
+              body:
+                inline_string: "Service Unavailable"
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: external-bot-block
+  namespace: kube-system
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: external-gateway
+  type: JSONPatch
+  jsonPatches:
+    - type: "type.googleapis.com/envoy.config.listener.v3.Listener"
+      name: kube-system/external-gateway/https
+      operation:
+        op: add
+        path: "/default_filter_chain/filters/0"
+        value:
+          name: envoy.filters.http.rbac
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.http.rbac.v3.RBAC
+            rules:
+              action: DENY
+              policies:
+                block-bot-user-agents:
+                  permissions:
+                    - any: true
+                  principals:
+                    - header:
+                        name: user-agent
+                        regex_match: "(?i).*(AdsBot-Google|Amazonbot|anthropic-ai|Applebot-Extended|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|omgili|omgilibot|peer39_crawler|peer39_crawler/1.0|PerplexityBot|YouBot).*"

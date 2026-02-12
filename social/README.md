@@ -14,6 +14,7 @@ Provides configuration for all my social media focused applications.
 * [mastodon/mastodon-s3.sops.yaml](mastodon/mastodon-s3.sops.yaml) - S3 credentials
 * [mastodon/mastodon-smtp.sops.yaml](mastodon/mastodon-smtp.sops.yaml) - SMTP credentials
 * [mastodon/minio.yaml](mastodon/minio.yaml) - S3-compatible storage via Minio
+* [mastodon/httproutes.yaml](mastodon/httproutes.yaml) - HTTPRoutes for Minio and console
 * [mastodon/valkey.yaml](mastodon/valkey.yaml) - Valkey deployment for caching
 * [mastodon/valkey-pvc.yaml](mastodon/valkey-pvc.yaml) - PVC for Valkey data
 

@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: envoy-gateway-charts
+  namespace: flux-system
+spec:
+  interval: 1h
+  type: oci
+  url: oci://docker.io/envoyproxy/gateway-helm
+  timeout: 3m
