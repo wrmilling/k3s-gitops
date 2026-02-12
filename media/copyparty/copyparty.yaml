@@ -39,21 +39,22 @@ spec:
           http:
             port: 3923
 
-    ingress:
+    route:
       main:
-        enabled: true
-        className: nginx-internal
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-          - host: copyparty.k.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        hostnames:
+          - copyparty.k.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: internal
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
 
     defaultPodOptions:
       securityContext:

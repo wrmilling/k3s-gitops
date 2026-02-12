@@ -56,24 +56,22 @@ spec:
         ports:
           http:
             port: 29335
-    ingress:
+    route:
       main:
-        enabled: true
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-          nginx.ingress.kubernetes.io/proxy-body-size: 100m
-          nginx.org/client-max-body-size: 100m
-        hosts:
-          - host: mbridge-slack.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        className: nginx-external
+        hostnames:
+          - mbridge-slack.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

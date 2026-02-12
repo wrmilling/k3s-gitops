@@ -116,37 +116,37 @@ spec:
             port: 12321
             protocol: TCP
             targetPort: 12321
-    ingress:
+    route:
       main:
-        enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-        hosts:
-        - host: "hass.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
-              port: http
+        hostnames:
+          - hass.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
       codeserver:
-        enabled: true
-        className: nginx-external
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
-          nginx.ingress.kubernetes.io/auth-url: "http://authelia.kube-system.svc.cluster.local/api/authz/auth-request"
-        hosts:
-        - host: "hass-vscode.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: codeserver
-              port: http
+        hostnames:
+          - hass-vscode.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: codeserver
+                port: http
     persistence:
       config:
         enabled: true
@@ -157,4 +157,3 @@ spec:
               - path: /config
             codeserver:
               - path: /config
-

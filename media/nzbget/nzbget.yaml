@@ -40,23 +40,22 @@ spec:
           http:
             port: 6789
 
-    ingress:
+    route:
       main:
-        enabled: true
-        className: nginx-internal
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/proxy-body-size: 64m
-          nginx.org/client-max-body-size: 64m
-        hosts:
-          - host: nzbget.k.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        hostnames:
+          - nzbget.k.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: internal
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
 
     defaultPodOptions:
       securityContext:

@@ -18,15 +18,7 @@ spec:
       interval: 5m
   values:
     ingress:
-      enabled: true
-      className: nginx-external
-      tls:
-        enabled: true
-        secret: authelia-cert
-      annotations:
-        kubernetes.io/tls-acme: "true"
-        cert-manager.io/cluster-issuer: letsencrypt-prod
-        nginx.ingress.kubernetes.io/custom-http-errors: "418"
+      enabled: false
     configMap:
       access_control:
         default_policy: one_factor
