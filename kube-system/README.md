@@ -17,7 +17,7 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 ## intel-devices-plugins
 
 * [intel-device-plugins/gpu-plugin.yaml](intel-device-plugins/gpu-plugin.yaml)
-* [intel-device-plugins/operator.yaml](intel-device-plugins/operator.yaml)
+* [intel-device-plugins/operator..yaml](intel-device-plugins/operator..yaml)
 
 ## kured
 
@@ -52,8 +52,8 @@ Persistent Volume configuration for shared NFS storage.
 
 [Envoy Gateway](https://gateway.envoyproxy.io/) for the cluster, using Gateway API resources to secure and route traffic to specific pods/applications.
 
-* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - Envoy Gateway controller HelmRelease plus internal Gateway/GatewayClass/EnvoyProxy policies.
-* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - External Gateway/GatewayClass/EnvoyProxy policies and bot-blocking patch.
+* [envoy/envoy-internal.yaml](envoy/envoy-internal.yaml) - Envoy Gateway controller HelmRelease plus internal Gateway/GatewayClass/EnvoyProxy policies.
+* [envoy/envoy-external.yaml](envoy/envoy-external.yaml) - External Gateway/GatewayClass/EnvoyProxy policies and bot-blocking patch.
 
 ## node-feature-discovery
 
