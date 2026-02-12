@@ -28,18 +28,22 @@ spec:
         size: 20Gi
       serviceMonitor:
         enabled: true
-    ingress:
-      enabled: false
-    route:
-      enabled: true
-      parentRefs:
-        - group: gateway.networking.k8s.io
-          kind: Gateway
-          name: internal-gateway
-          namespace: kube-system
-          sectionName: https
-      hostnames:
-        - victoria-logs.k.${SECRET_DOMAIN}
+      ingress:
+        enabled: true
+        ingressClassName: nginx-internal
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "http://authelia.kube-system.svc.cluster.local/api/authz/auth-request"
+        hosts:
+          - name: victoria-logs.k.${SECRET_DOMAIN}
+            path:
+              - /
+            port: http
+        tls:
+          - hosts:
+              - victoria-logs.k.${SECRET_DOMAIN}
     dashboards:
       enabled: true
       annotations:

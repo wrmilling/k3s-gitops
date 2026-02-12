@@ -59,27 +59,19 @@ spec:
 
     ingress:
       main:
-        enabled: false
-    route:
-      main:
         enabled: true
-        kind: HTTPRoute
-        parentRefs:
-          - group: gateway.networking.k8s.io
-            kind: Gateway
-            name: external-gateway
-            namespace: kube-system
-            sectionName: https
-        hostnames:
-          - plex.${SECRET_DOMAIN}
-        rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-            backendRefs:
-              - identifier: main
-                port: http
+        className: nginx-external
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+        hosts:
+          - host: plex.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
 
     defaultPodOptions:
       securityContext:

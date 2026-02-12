@@ -17,7 +17,7 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 ## intel-devices-plugins
 
 * [intel-device-plugins/gpu-plugin.yaml](intel-device-plugins/gpu-plugin.yaml)
-* [intel-device-plugins/operator..yaml](intel-device-plugins/operator..yaml)
+* [intel-device-plugins/operator.yaml](intel-device-plugins/operator.yaml)
 
 ## kured
 
@@ -46,15 +46,14 @@ Persistent Volume configuration for shared NFS storage.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
 
-## envoy-gateway
+## nginx
 
 ![](https://i.imgur.com/W5roLT7.png)
 
-[Envoy Gateway](https://gateway.envoyproxy.io/) for the cluster, using Gateway API resources to secure and route traffic to specific pods/applications.
+[Nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) for the cluster, works with cert-manager to secure and route traffic to specific pods/applications.
 
-* [envoy/envoy-internal.yaml](envoy/envoy-internal.yaml) - Envoy Gateway controller HelmRelease plus internal Gateway/GatewayClass/EnvoyProxy policies.
-* [envoy/envoy-external.yaml](envoy/envoy-external.yaml) - External Gateway/GatewayClass/EnvoyProxy policies and bot-blocking patch.
-* [envoy/envoy-crds.yaml](envoy/envoy-crds.yaml) - HelmRelease for Gateway API and Envoy Gateway CRDs.
+* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - HelmRelease for nginx-ingress serving internal traffic, including custom 404 pages from billimek/custom-error-pages.
+* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - HelmRelease for nginx-ingress serving external traffic, including custom 404 pages from billimek/custom-error-pages.
 
 ## node-feature-discovery
 

@@ -22,18 +22,23 @@ spec:
     serverName: ${SECRET_DOMAIN_SECONDARY}
 
     ingress:
-      enabled: false
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/custom-http-errors: "418"
+        nginx.ingress.kubernetes.io/default-backend: "synapse"
+        nginx.ingress.kubernetes.io/proxy-body-size: 100m
+        nginx.org/client-max-body-size: 100m
+      className: nginx-external
 
     matrixRTC:
       enabled: false # Disable for first test of chart
       ingress:
-        enabled: false
         host: mrtc.${SECRET_DOMAIN}
 
     elementWeb:
       enabled: true
       ingress:
-        enabled: false
         host: chat.${SECRET_DOMAIN}
 
     postgres:
@@ -47,12 +52,11 @@ spec:
     elementAdmin:
       enabled: true
       ingress:
-        enabled: false
         host: madmin.k.${SECRET_DOMAIN}
+        className: nginx-internal
 
     matrixAuthenticationService:
       ingress:
-        enabled: false
         host: mas.${SECRET_DOMAIN}
       postgres:
         host: synapse-psql-v17-rw.default.svc
@@ -70,7 +74,6 @@ spec:
 
     synapse:
       ingress:
-        enabled: false
         host: synapse.${SECRET_DOMAIN}
       media:
         storage:

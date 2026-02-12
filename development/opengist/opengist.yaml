@@ -58,27 +58,20 @@ spec:
             port: 6157
     ingress:
       main:
-        enabled: false
-    route:
-      main:
         enabled: true
-        kind: HTTPRoute
-        parentRefs:
-          - group: gateway.networking.k8s.io
-            kind: Gateway
-            name: external-gateway
-            namespace: kube-system
-            sectionName: https
-        hostnames:
-          - gist.${SECRET_DOMAIN}
-        rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-            backendRefs:
-              - identifier: main
-                port: http
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/custom-http-errors: "418"
+        hosts:
+          - host: gist.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: main
+                  port: http
+        className: nginx-external
     persistence:
       data:
         enabled: true

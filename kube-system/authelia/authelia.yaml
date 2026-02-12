@@ -18,17 +18,15 @@ spec:
       interval: 5m
   values:
     ingress:
-      enabled: false
-      gatewayAPI:
+      enabled: true
+      className: nginx-external
+      tls:
         enabled: true
-        hostnamesOverride:
-          - auth.${SECRET_DOMAIN}
-        parentRefs:
-          - group: gateway.networking.k8s.io
-            kind: Gateway
-            name: external-gateway
-            namespace: kube-system
-            sectionName: https
+        secret: authelia-cert
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/custom-http-errors: "418"
     configMap:
       access_control:
         default_policy: one_factor

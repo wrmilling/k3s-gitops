@@ -69,4 +69,16 @@ spec:
 
     ingress:
       dashboard:
-        enabled: false
+        enabled: true
+        ingressClassName: nginx-internal
+        annotations:
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/cluster-issuer: letsencrypt-prod
+          nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_DOMAIN}"
+          nginx.ingress.kubernetes.io/auth-url: "http://authelia.kube-system.svc.cluster.local/api/authz/auth-request"
+        path: /
+        hosts:
+        - emqx.${SECRET_DOMAIN}
+        tls:
+        - hosts:
+          - emqx.${SECRET_DOMAIN}

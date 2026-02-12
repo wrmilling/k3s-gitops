@@ -69,7 +69,13 @@ spec:
         member_of = "memberOf"
         email =  "mail"
     ingress:
-      enabled: false
+      enabled: true
+      ingressClassName: nginx-external
+      hosts: ["grafana.${SECRET_DOMAIN}"]
+      tls:
+      - hosts:
+        - "grafana.${SECRET_DOMAIN}"
+        secretName: grafana-cert
     plugins:
     - pr0ps-trackmap-panel
     - natel-plotly-panel

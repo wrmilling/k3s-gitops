@@ -52,7 +52,22 @@ spec:
     server:
       ingress:
         main:
-          enabled: false
+          enabled: true
+          className: nginx-external
+          annotations:
+            kubernetes.io/tls-acme: "true"
+            cert-manager.io/cluster-issuer: letsencrypt-prod
+            nginx.ingress.kubernetes.io/custom-http-errors: "418"
+            nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+            nginx.org/client-max-body-size: 1024m
+          hosts:
+            - host: photos.${SECRET_DOMAIN}
+              paths:
+                - path: /
+          tls:
+            - secretName: immich-tls
+              hosts:
+                - photos.${SECRET_DOMAIN}
       controllers:
         main:
           containers:

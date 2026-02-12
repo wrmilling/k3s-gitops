@@ -45,9 +45,22 @@ spec:
       enabled: true
       existingClaim: "nfs-minio-pvc"
     ingress:
-      enabled: false
+      enabled: true
+      ingressClassName: nginx-internal
+      hosts:
+        - minio.k.${SECRET_DOMAIN}
+      tls:
+        - secretName: minio-cert
+          hosts:
+            - minio.k.${SECRET_DOMAIN}
     consoleIngress:
-      enabled: false
+      enabled: true
+      hosts:
+        - mc.k.${SECRET_DOMAIN}
+      tls:
+        - secretName: minio-console-cert
+          hosts:
+            - mc.k.${SECRET_DOMAIN}
     securityContext:
       enabled: false
     resources:
