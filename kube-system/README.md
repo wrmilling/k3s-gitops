@@ -54,6 +54,7 @@ Persistent Volume configuration for shared NFS storage.
 
 * [envoy/envoy-internal.yaml](envoy/envoy-internal.yaml) - Envoy Gateway controller HelmRelease plus internal Gateway/GatewayClass/EnvoyProxy policies.
 * [envoy/envoy-external.yaml](envoy/envoy-external.yaml) - External Gateway/GatewayClass/EnvoyProxy policies and bot-blocking patch.
+* [envoy/envoy-crds.yaml](envoy/envoy-crds.yaml) - HelmRelease for Gateway API and Envoy Gateway CRDs.
 
 ## node-feature-discovery
 

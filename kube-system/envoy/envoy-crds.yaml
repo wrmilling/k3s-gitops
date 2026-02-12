@@ -2,13 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: envoy-gateway
+  name: envoy-gateway-crds
   namespace: kube-system
 spec:
   interval: 5m
   chart:
     spec:
-      chart: gateway-helm
+      chart: gateway-crds-helm
       version: v1.7.0
       sourceRef:
         kind: HelmRepository
@@ -16,15 +16,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    config:
+    crds:
+      gatewayAPI:
+        enabled: true
+        channel: standard
       envoyGateway:
-        extensionApis:
-          enableEnvoyPatchPolicy: true
-    deployment:
-      replicas: 2
-      pod:
-        tolerations:
-          - key: "arm"
-            operator: "Exists"
-    service:
-      type: ClusterIP
+        enabled: true
