@@ -21,9 +21,6 @@ spec:
   values:
     serverName: ${SECRET_DOMAIN_SECONDARY}
 
-    ingress:
-      enabled: false
-
     matrixRTC:
       enabled: false # Disable for first test of chart
       ingress:
@@ -45,12 +42,10 @@ spec:
     elementAdmin:
       enabled: true
       ingress:
-        enabled: false
         host: madmin.k.${SECRET_DOMAIN}
 
     matrixAuthenticationService:
       ingress:
-        enabled: false
         host: mas.${SECRET_DOMAIN}
       postgres:
         host: synapse-psql-v17-rw.default.svc
@@ -68,7 +63,6 @@ spec:
 
     synapse:
       ingress:
-        enabled: false
         host: synapse.${SECRET_DOMAIN}
       media:
         storage:
