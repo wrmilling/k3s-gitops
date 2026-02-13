@@ -127,6 +127,14 @@ spec:
           - namespace: kube-system
             name: external
             sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: home-assistant-main
+                port: http
       codeserver:
         labels:
           error-pages: enabled
@@ -137,6 +145,14 @@ spec:
           - namespace: kube-system
             name: external
             sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: home-assistant-codeserver
+                port: http
     persistence:
       config:
         enabled: true

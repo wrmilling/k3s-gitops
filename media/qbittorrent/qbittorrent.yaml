@@ -70,6 +70,14 @@ spec:
           - namespace: kube-system
             name: internal
             sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: qbittorrent-main
+                port: http
 
     persistence:
       config:
