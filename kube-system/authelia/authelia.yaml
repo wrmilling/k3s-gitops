@@ -19,6 +19,16 @@ spec:
   values:
     ingress:
       enabled: false
+      labels:
+        error-pages: enabled
+      gatewayAPI:
+        enabled: true
+        hostnamesOverride:
+          - auth.${SECRET_DOMAIN}
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     configMap:
       access_control:
         default_policy: one_factor

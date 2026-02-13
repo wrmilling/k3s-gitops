@@ -70,6 +70,18 @@ spec:
         email =  "mail"
     ingress:
       enabled: false
+    route:
+      main:
+        enabled: true
+        kind: HTTPRoute
+        labels:
+          error-pages: enabled
+        hostnames:
+          - grafana.${SECRET_DOMAIN}
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     plugins:
     - pr0ps-trackmap-panel
     - natel-plotly-panel

@@ -53,6 +53,16 @@ spec:
       ingress:
         main:
           enabled: false
+      route:
+        main:
+          enabled: true
+          kind: HTTPRoute
+          hostnames:
+            - photos.${SECRET_DOMAIN}
+          parentRefs:
+            - name: external
+              namespace: kube-system
+              sectionName: https
       controllers:
         main:
           containers:

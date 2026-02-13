@@ -30,6 +30,16 @@ spec:
         enabled: true
       ingress:
         enabled: false
+      route:
+        enabled: true
+        labels:
+          error-pages: enabled
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - victoria-logs.k.${SECRET_DOMAIN}
     dashboards:
       enabled: true
       annotations:

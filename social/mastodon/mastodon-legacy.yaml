@@ -94,6 +94,16 @@ spec:
 
     ingress:
       enabled: false
+    httproute:
+      enabled: true
+      labels:
+        error-pages: enabled
+      parentRefs:
+        - name: external
+          namespace: kube-system
+          sectionName: https
+      hostnames:
+        - mastodon.${SECRET_DOMAIN}
 
     elasticsearch:
       enabled: false

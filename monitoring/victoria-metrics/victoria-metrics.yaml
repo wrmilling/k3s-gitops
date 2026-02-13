@@ -42,6 +42,16 @@ spec:
             memory: 1.2Gi
       ingress:
         enabled: false
+      route:
+        enabled: true
+        labels:
+          error-pages: enabled
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - vm.k.${SECRET_DOMAIN}
 
     alertmanager:
       enabled: true
@@ -50,6 +60,16 @@ spec:
         routePrefix: /
       ingress:
         enabled: false
+      route:
+        enabled: true
+        labels:
+          error-pages: enabled
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - vm-alert.k.${SECRET_DOMAIN}
       config:
         route:
           receiver: "blackhole"
@@ -157,6 +177,16 @@ spec:
         evaluationInterval: 15s
       ingress:
         enabled: false
+      route:
+        enabled: true
+        labels:
+          error-pages: enabled
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - vmalert.k.${SECRET_DOMAIN}
 
     vmagent:
       enabled: true
@@ -166,6 +196,16 @@ spec:
           cluster: k3s
       ingress:
         enabled: false
+      route:
+        enabled: true
+        labels:
+          error-pages: enabled
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        hostnames:
+          - vmagent.k.${SECRET_DOMAIN}
 
     grafana:
       enabled: false
