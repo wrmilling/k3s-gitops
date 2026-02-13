@@ -1,0 +1,90 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: default
+  namespace: kube-system
+spec:
+  targetSelectors:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+  compression:
+    - type: Zstd
+    - type: Brotli
+    - type: Gzip
+  retry:
+    numRetries: 2
+    retryOn:
+      triggers:
+        - reset
+  tcpKeepalive: {}
+  timeout:
+    http:
+      requestTimeout: 0s
+  responseOverride:
+    - match:
+        statusCodes:
+          - type: Value
+            value: 403
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /403.html
+        statusCode: 302
+    - match:
+        statusCodes:
+          - type: Value
+            value: 404
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /404.html
+        statusCode: 302
+    - match:
+        statusCodes:
+          - type: Value
+            value: 500
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /500.html
+        statusCode: 302
+    - match:
+        statusCodes:
+          - type: Value
+            value: 502
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /502.html
+        statusCode: 302
+    - match:
+        statusCodes:
+          - type: Value
+            value: 503
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /503.html
+        statusCode: 302
+    - match:
+        statusCodes:
+          - type: Value
+            value: 504
+      redirect:
+        scheme: https
+        hostname: error-pages.${SECRET_DOMAIN}
+        path:
+          type: ReplaceFullPath
+          replaceFullPath: /504.html
+        statusCode: 302

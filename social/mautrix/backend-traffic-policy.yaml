@@ -1,0 +1,13 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: mautrix-slack-body-limit
+  namespace: social
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: slack-bridge-main
+  requestBuffer:
+    limit: 100Mi
