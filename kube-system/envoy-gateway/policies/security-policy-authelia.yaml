@@ -11,8 +11,21 @@ spec:
       matchLabels:
         ext-auth: enabled
   extAuth:
+    headersToExtAuth:
+      - 'accept'
+      - 'cookie'
+      - 'authorization'
+      - 'proxy-authorization'
+      - 'x-forwarded-proto'
+    failOpen: false
     http:
       backendRefs:
         - name: authelia
           namespace: kube-system
           port: 9091
+      path: '/api/authz/ext-authz/'
+      headersToBackend:
+        - Remote-User
+        - Remote-Groups
+        - Remote-Name
+        - Remote-Email
