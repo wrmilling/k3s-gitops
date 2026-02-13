@@ -135,14 +135,6 @@ spec:
           - namespace: kube-system
             name: external
             sectionName: https
-        rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /
-            backendRefs:
-              - identifier: codeserver
-                port: http
     persistence:
       config:
         enabled: true
