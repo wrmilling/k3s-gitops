@@ -17,7 +17,7 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: synapse
+        - name: synapse-synapse
           port: 8008
           kind: Service
           group: ""
