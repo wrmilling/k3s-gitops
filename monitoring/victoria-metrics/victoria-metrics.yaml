@@ -46,6 +46,7 @@ spec:
         enabled: true
         labels:
           error-pages: enabled
+          ext-auth: enabled
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -64,6 +65,7 @@ spec:
         enabled: true
         labels:
           error-pages: enabled
+          ext-auth: enabled
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -181,6 +183,7 @@ spec:
         enabled: true
         labels:
           error-pages: enabled
+          ext-auth: enabled
         parentRefs:
           - name: internal
             namespace: kube-system
@@ -200,6 +203,7 @@ spec:
         enabled: true
         labels:
           error-pages: enabled
+          ext-auth: enabled
         parentRefs:
           - name: internal
             namespace: kube-system

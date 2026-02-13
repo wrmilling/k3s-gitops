@@ -175,6 +175,12 @@ spec:
               - path:
                   type: PathPrefix
                   value: /
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  set:
+                    - name: X-Real-IP
+                      value: "%REQ(X-Forwarded-For)%"
             backendRefs:
               - identifier: anubis
                 port: http

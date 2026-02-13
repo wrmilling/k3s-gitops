@@ -5,34 +5,11 @@ metadata:
   name: authelia-ext-auth
   namespace: kube-system
 spec:
-  targetRefs:
+  targetSelectors:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: rook-ceph-dashboard
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: emqx-dashboard
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: home-assistant-codeserver
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: authelia
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: victoria-metrics-vmsingle
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: victoria-metrics-alertmanager
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: victoria-metrics-vmalert
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: victoria-metrics-vmagent
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: victoria-logs
+      matchLabels:
+        ext-auth: enabled
   extAuth:
     http:
       backendRefs:

@@ -120,6 +120,7 @@ spec:
       main:
         labels:
           error-pages: enabled
+          ext-auth: enabled
         hostnames:
           - hass.${SECRET_DOMAIN}
         parentRefs:
@@ -129,6 +130,7 @@ spec:
       codeserver:
         labels:
           error-pages: enabled
+          ext-auth: enabled
         hostnames:
           - hass-vscode.${SECRET_DOMAIN}
         parentRefs:
