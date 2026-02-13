@@ -62,22 +62,22 @@ spec:
             port: *port-bt
             protocol: TCP
             targetPort: *port-bt
-    ingress:
+    route:
       main:
-        enabled: true
-        className: nginx-internal
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-        hosts:
-          - host: qbit.k.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
+        hostnames:
+          - qbit.k.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: internal
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
     persistence:
       config:
         enabled: true

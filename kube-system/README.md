@@ -46,14 +46,17 @@ Persistent Volume configuration for shared NFS storage.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
 
-## nginx
+## envoy-gateway
 
-![](https://i.imgur.com/W5roLT7.png)
+Envoy Gateway provides Gateway API ingress for the cluster, replacing the nginx ingress controllers.
 
-[Nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) for the cluster, works with cert-manager to secure and route traffic to specific pods/applications.
-
-* [nginx/nginx-internal.yaml](nginx/nginx-internal.yaml) - HelmRelease for nginx-ingress serving internal traffic, including custom 404 pages from billimek/custom-error-pages.
-* [nginx/nginx-external.yaml](nginx/nginx-external.yaml) - HelmRelease for nginx-ingress serving external traffic, including custom 404 pages from billimek/custom-error-pages.
+* [envoy-gateway/envoy-gateway.yaml](envoy-gateway/envoy-gateway.yaml) - Envoy Gateway HelmRelease (OCI chart)
+* [envoy-gateway/gateway-classes/](envoy-gateway/gateway-classes/) - GatewayClass resources for internal/external
+* [envoy-gateway/gateways/](envoy-gateway/gateways/) - Gateway resources (internal/external)
+* [envoy-gateway/envoy-proxies/](envoy-gateway/envoy-proxies/) - EnvoyProxy configs (LoadBalancer IPs)
+* [envoy-gateway/error-pages/](envoy-gateway/error-pages/) - Error pages service
+* [envoy-gateway/routes/](envoy-gateway/routes/) - Shared routes (HTTP→HTTPS redirect)
+* [envoy-gateway/policies/](envoy-gateway/policies/) - Auth and request size policies
 
 ## node-feature-discovery
 
@@ -63,7 +66,7 @@ Operator that facilitates the auto tagging of nodes based on feature avalable (e
 
 ## openldap
 
-Trying out creating an LDAP provider for the cluster to do authentication at the nginx-ingress level.
+Trying out creating an LDAP provider for the cluster to do authentication at the ingress level.
 
 * [openldap/openldap.yaml](openldap/openldap.yaml) - Deployment and Service to expose an OpenLDAP instance based on bitnami containers.
 * [openldap/openldap-secrets.sops.yaml](openldap/openldap-secrets.sops.yaml) - My encrypted open ldap secrets.

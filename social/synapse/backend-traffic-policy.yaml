@@ -1,0 +1,13 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: synapse-body-limit
+  namespace: social
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: synapse
+  requestBuffer:
+    limit: 100Mi

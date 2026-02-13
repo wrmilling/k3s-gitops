@@ -56,22 +56,22 @@ spec:
         ports:
           http:
             port: 6157
-    ingress:
+    route:
       main:
-        enabled: true
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-        hosts:
-          - host: gist.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: main
-                  port: http
-        className: nginx-external
+        hostnames:
+          - gist.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
     persistence:
       data:
         enabled: true

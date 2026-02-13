@@ -162,24 +162,22 @@ spec:
             port: 2222
             protocol: TCP
             targetPort: 2222
-    ingress:
+    route:
       main:
-        enabled: true
-        annotations:
-          kubernetes.io/tls-acme: "true"
-          cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/proxy-body-size: 1024m
-          nginx.org/client-max-body-size: 1024m
-          nginx.ingress.kubernetes.io/custom-http-errors: "418"
-        hosts:
-          - host: git.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: anubis
-                  port: http
-        className: nginx-external
+        hostnames:
+          - git.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: Prefix
+                  value: /
+            backendRefs:
+              - identifier: anubis
+                port: http
     persistence:
       config:
         enabled: true
