@@ -1,0 +1,50 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyPatchPolicy
+metadata:
+  name: block-user-agents-external
+  namespace: kube-system
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: external
+    namespace: kube-system
+  type: JSONPatch
+  jsonPatches:
+    - type: "type.googleapis.com/envoy.config.route.v3.RouteConfiguration"
+      name: kube-system/external/http
+      operation:
+        op: add
+      jsonPath: "..virtual_hosts"
+      path: "routes/0"
+      value:
+        match:
+          prefix: /
+          headers:
+            - name: user-agent
+              safe_regex_match:
+                google_re2:
+                  regex: "(?i)(AdsBot-Google|Amazonbot|anthropic-ai|Applebot-Extended|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|omgili|omgilibot|peer39_crawler|peer39_crawler/1\\.0|PerplexityBot|YouBot).*"
+        direct_response:
+          status: 451
+          body:
+            inline_string: "Unavailable for Legal Reasons"
+    - type: "type.googleapis.com/envoy.config.route.v3.RouteConfiguration"
+      name: kube-system/external/https
+      operation:
+        op: add
+      jsonPath: "..virtual_hosts"
+      path: "routes/0"
+      value:
+        match:
+          prefix: /
+          headers:
+            - name: user-agent
+              safe_regex_match:
+                google_re2:
+                  regex: "(?i)(AdsBot-Google|Amazonbot|anthropic-ai|Applebot-Extended|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|omgili|omgilibot|peer39_crawler|peer39_crawler/1\\.0|PerplexityBot|YouBot).*"
+        direct_response:
+          status: 451
+          body:
+            inline_string: "Unavailable for Legal Reasons"
