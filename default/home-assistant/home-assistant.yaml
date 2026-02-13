@@ -133,7 +133,7 @@ spec:
                   type: PathPrefix
                   value: /
             backendRefs:
-              - identifier: home-assistant-main
+              - identifier: main
                 port: http
       codeserver:
         labels:
@@ -151,7 +151,7 @@ spec:
                   type: PathPrefix
                   value: /
             backendRefs:
-              - identifier: home-assistant-codeserver
+              - identifier: codeserver
                 port: http
     persistence:
       config:

@@ -76,7 +76,7 @@ spec:
                   type: PathPrefix
                   value: /
             backendRefs:
-              - identifier: qbittorrent-main
+              - identifier: main
                 port: http
 
     persistence:
