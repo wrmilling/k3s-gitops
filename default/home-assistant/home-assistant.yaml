@@ -118,6 +118,8 @@ spec:
             targetPort: 12321
     route:
       main:
+        labels:
+          error-pages: enabled
         hostnames:
           - hass.${SECRET_DOMAIN}
         parentRefs:
@@ -133,6 +135,8 @@ spec:
               - identifier: main
                 port: http
       codeserver:
+        labels:
+          error-pages: enabled
         hostnames:
           - hass-vscode.${SECRET_DOMAIN}
         parentRefs:

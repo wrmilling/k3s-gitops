@@ -4,6 +4,8 @@ kind: HTTPRoute
 metadata:
   name: mastodon
   namespace: social
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: external
@@ -27,6 +29,8 @@ kind: HTTPRoute
 metadata:
   name: mastodon-minio
   namespace: social
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: external
@@ -50,6 +54,8 @@ kind: HTTPRoute
 metadata:
   name: mastodon-minio-console
   namespace: social
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: external

@@ -7,7 +7,9 @@ metadata:
 spec:
   targetSelectors:
     - group: gateway.networking.k8s.io
-      kind: Gateway
+      kind: HTTPRoute
+      matchLabels:
+        error-pages: enabled
   compression:
     - type: Zstd
     - type: Brotli

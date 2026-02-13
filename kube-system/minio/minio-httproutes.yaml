@@ -4,6 +4,8 @@ kind: HTTPRoute
 metadata:
   name: minio
   namespace: kube-system
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: internal
@@ -27,6 +29,8 @@ kind: HTTPRoute
 metadata:
   name: minio-console
   namespace: kube-system
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: internal

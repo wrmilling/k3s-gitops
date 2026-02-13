@@ -4,6 +4,8 @@ kind: HTTPRoute
 metadata:
   name: authelia
   namespace: kube-system
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: external

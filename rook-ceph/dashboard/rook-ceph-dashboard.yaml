@@ -4,6 +4,8 @@ kind: HTTPRoute
 metadata:
   name: rook-ceph-dashboard
   namespace: rook-ceph
+  labels:
+    error-pages: enabled
 spec:
   parentRefs:
     - name: internal
