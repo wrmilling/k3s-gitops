@@ -41,7 +41,7 @@ spec:
             value: /
       backendRefs:
         - name: synapse-element-admin
-          port: 80
+          port: 8080
           kind: Service
           group: ""
 ---
