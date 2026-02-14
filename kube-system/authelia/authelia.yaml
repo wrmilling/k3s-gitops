@@ -20,7 +20,6 @@ spec:
     ingress:
       enabled: true
       labels:
-        error-pages: enabled
         ext-auth: enabled
       gatewayAPI:
         enabled: true

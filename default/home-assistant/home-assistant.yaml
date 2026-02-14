@@ -137,7 +137,6 @@ spec:
                 port: http
       codeserver:
         labels:
-          error-pages: enabled
           ext-auth: enabled
         hostnames:
           - hass-vscode.${SECRET_DOMAIN}
