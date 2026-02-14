@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     ingress:
-      enabled: false
+      enabled: true
       labels:
         error-pages: enabled
         ext-auth: enabled
