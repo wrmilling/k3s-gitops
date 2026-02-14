@@ -1,92 +1,85 @@
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: foundry-vtt
-#   namespace: default
-# spec:
-#   releaseName: foundry-vtt
-#   interval: 15m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
-#       chart: app-template
-#       version: 4.2.0
-#       interval: 15m
-#       sourceRef:
-#         kind: HelmRepository
-#         name: bjw-s-helm-charts
-#         namespace: flux-system
-#   values:
-#     controllers:
-#       main:
-#         strategy: Recreate
-#         containers:
-#           main:
-#             image:
-#               repository: ghcr.io/felddy/foundryvtt
-#               pullPolicy: IfNotPresent
-#               tag: 13.348.0@sha256:5972fd26c7bb387df9939eb5a6d531e6250ce7855046aa41b82fc8a16f64574a
-#             env:
-#             - name: TZ
-#               value: America/Chicago
-#             - name: FOUNDRY_USERNAME
-#               value: ${SECRET_FVTT_USERNAME}
-#             - name: FOUNDRY_PASSWORD
-#               value: ${SECRET_FVTT_PASSWORD}
-#             - name: FOUNDRY_HOSTNAME
-#               value: fvtt.${SECRET_DOMAIN}
-#             - name: FOUNDRY_LICENSE_KEY
-#               value: ${SECRET_FVTT_LICENSE_KEY}
-#             - name: FOUNDRY_ADMIN_KEY
-#               value: ${SECRET_FVTT_ADMIN_KEY}
-#             - name: FOUNDRY_PASSWORD_SALT
-#               value: ${SECRET_FVTT_PASSWORD_SALT}
-#             - name: FOUNDRY_MINIFY_STATIC_FILES
-#               value: true
-#             - name: CONTAINER_PATCHES
-#               value: /data/container_patches
-#             - name: FOUNDRY_PROTOCOL
-#               value: 4
-#             - name: FOUNDRY_PROXY_PORT
-#               value: 443
-#             - name: FOUNDRY_PROXY_SSL
-#               value: true
-#             - name: FOUNDRY_TELEMETRY
-#               value: false
-#             - name: FOUNDRY_UID
-#               value: 421
-#             - name: FOUNDRY_GID
-#               value: 421
-#     defaultPodOptions:
-#       securityContext:
-#         fsGroup: 421
-#         fsGroupChangePolicy: "Always"
-#     service:
-#       main:
-#         controller: main
-#         ports:
-#           http:
-#             port: 30000
-#     ingress:
-#       main:
-#         enabled: true
-#         className: nginx-external
-#         annotations:
-#           kubernetes.io/tls-acme: "true"
-#           cert-manager.io/cluster-issuer: letsencrypt-prod
-#         hosts:
-#           - host: fvtt.${SECRET_DOMAIN}
-#             paths:
-#               - path: /
-#                 pathType: Prefix
-#                 service:
-#                   identifier: main
-#                   port: http
-#     persistence:
-#       config:
-#         enabled: true
-#         existingClaim: fvtt-pvc
-#         globalMounts:
-#           - path: /data
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: foundry-vtt
+  namespace: default
+spec:
+  releaseName: foundry-vtt
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 4.2.0
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/felddy/foundryvtt
+              pullPolicy: IfNotPresent
+              tag: 13.348.0@sha256:5972fd26c7bb387df9939eb5a6d531e6250ce7855046aa41b82fc8a16f64574a
+            env:
+            - name: TZ
+              value: America/Chicago
+            - name: FOUNDRY_USERNAME
+              value: ${SECRET_FVTT_USERNAME}
+            - name: FOUNDRY_PASSWORD
+              value: ${SECRET_FVTT_PASSWORD}
+            - name: FOUNDRY_HOSTNAME
+              value: fvtt.${SECRET_DOMAIN}
+            - name: FOUNDRY_LICENSE_KEY
+              value: ${SECRET_FVTT_LICENSE_KEY}
+            - name: FOUNDRY_ADMIN_KEY
+              value: ${SECRET_FVTT_ADMIN_KEY}
+            - name: FOUNDRY_PASSWORD_SALT
+              value: ${SECRET_FVTT_PASSWORD_SALT}
+            - name: FOUNDRY_MINIFY_STATIC_FILES
+              value: true
+            - name: CONTAINER_PATCHES
+              value: /data/container_patches
+            - name: FOUNDRY_PROTOCOL
+              value: 4
+            - name: FOUNDRY_PROXY_PORT
+              value: 443
+            - name: FOUNDRY_PROXY_SSL
+              value: true
+            - name: FOUNDRY_TELEMETRY
+              value: false
+            - name: FOUNDRY_UID
+              value: 421
+            - name: FOUNDRY_GID
+              value: 421
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 421
+        fsGroupChangePolicy: "Always"
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 30000
+    route:
+      main:
+        hostnames:
+          - fvtt.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+    persistence:
+      config:
+        enabled: true
+        existingClaim: fvtt-pvc
+        globalMounts:
+          - path: /data
