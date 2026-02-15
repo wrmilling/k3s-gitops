@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: ghcr.io/glitch-soc/mastodon
-      tag: nightly.2026-02-14
+      tag: nightly.2026-02-15
       pullPolicy: IfNotPresent
 
     mastodon:
