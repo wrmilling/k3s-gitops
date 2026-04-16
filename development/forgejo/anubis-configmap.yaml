@@ -11,6 +11,11 @@ data:
       path_regex: ^/api/.*$
       action: ALLOW
 
+    # Simple actions bypass
+    - name: actions-repos
+      path_regex: ^/actions/.*$
+      action: ALLOW
+
     # Simplify the configuration as server is getting hit.
     - name: cloudflare-workers
       headers_regex:
