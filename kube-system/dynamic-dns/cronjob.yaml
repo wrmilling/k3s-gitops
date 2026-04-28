@@ -19,7 +19,7 @@ spec:
             operator: "Exists"
           containers:
           - name: dyndns-updater
-            image: ghcr.io/wrmilling/route53-ddns:v2.0.0@sha256:3bb2d84d543094c60b3d5d3e23bd97d4057692285d82ce2b0884a95aa90f1062
+            image: ghcr.io/wrmilling/route53-ddns:v3.0.0@sha256:2be9ef8a00ec89da2e04a42e5edef3a7eda5845c58878f66d3d323129536af94
             imagePullPolicy: IfNotPresent
             env:
             - name: AWS_ACCESS_KEY_ID
