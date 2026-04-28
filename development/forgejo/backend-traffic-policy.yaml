@@ -13,4 +13,4 @@ spec:
     limit: 1024Mi
   timeout:
     http:
-      requestTimeout: 30s
+      requestTimeout: 0s
