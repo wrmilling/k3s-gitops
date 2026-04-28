@@ -11,5 +11,5 @@ spec:
       name: forgejo-main
   requestBuffer:
     limit: 1024Mi
-  timeout:
+  timeouts:
     request: "30s"
