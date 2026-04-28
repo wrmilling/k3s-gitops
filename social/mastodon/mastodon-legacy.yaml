@@ -68,6 +68,7 @@ spec:
               - ingress,4
               - mailers,2
               - pull
+              - fasp
               - scheduler # Make sure the scheduler queue only exists once and with a worker that has 1 replica.
           - name: pull-ingress
             concurrency: 50
