@@ -8,6 +8,6 @@ spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: nzbget-main
+      name: nzbget
   requestBuffer:
     limit: 64Mi
