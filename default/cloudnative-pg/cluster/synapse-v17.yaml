@@ -32,7 +32,7 @@ spec:
     limits:
       memory: "2Gi"
   backup:
-    retentionPolicy: 30d
+    retentionPolicy: 7d
     barmanObjectStore:
       wal:
         compression: bzip2
