@@ -44,7 +44,7 @@ spec:
             image:
               repository: dock.mau.dev/mautrix/slack
               pullPolicy: IfNotPresent
-              tag: v26.04@sha256:f1eb6066510b07779901948b4e84727bdc1bdd32919a3b4e84f51e87491f9b65
+              tag: v26.05@sha256:43c6f43c3d24f5e6092321e27e5558ff18c47bf9003bb02197d64134b504607c
             command: ["/usr/bin/mautrix-slack", "--no-update"]
             env:
               TZ: America/Chicago
