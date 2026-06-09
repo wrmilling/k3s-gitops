@@ -71,7 +71,7 @@ jobs:
           # Deep (Sonnet, 40 turns): group PRs, major bumps, or high-blast-radius components
           # Full (Sonnet, 25 turns): all other minor/feat bumps and chart upgrades
           # Light (Haiku, 25 turns): routine fix(container) patch bumps not matching deep
-          if echo "$title" | grep -qiE 'group|rook|ceph|volsync|cert-manager|ingress-nginx|authelia|flux'; then
+          if echo "$title" | grep -qiE 'group|rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux'; then
             echo "model=claude-sonnet-4-6" >> "$GITHUB_OUTPUT"
             echo "depth=deep" >> "$GITHUB_OUTPUT"
             echo "max_turns=40" >> "$GITHUB_OUTPUT"
@@ -130,23 +130,26 @@ jobs:
             - Custom dependencies managed via regex in YAML files
 
             Architecture details relevant to impact assessment:
-            - **Flux pattern**: HelmRelease CRDs sourced via HelmRepository or OCIRepository
-            - **Ingress**: ingress-nginx with two classes: `nginx-internal` (private) and
-              `nginx-external` (public). NOT Envoy Gateway / HTTPRoute.
+            - **Flux pattern**: HelmRelease CRDs sourced mostly via HelmRepository (a few
+              OCIRepository); most apps use the `bjw-s` `app-template` chart
+            - **Routing**: Envoy Gateway (Gateway API). Apps expose `HTTPRoute` resources
+              attached to the `internal` or `external` Gateway in `kube-system`.
             - **Storage**: Rook-Ceph block storage (`rook-ceph-block` StorageClass) for PVCs,
               VolSync + Restic for backup/restore
             - **Secrets**: SOPS-encrypted `*.sops.yaml` files + Flux substitutions injected from
               `cluster-secrets` Secret and `cluster-settings` ConfigMap via `postBuild.substituteFrom`
-            - **Auth**: Authelia for apps that lack built-in authentication (nginx annotations)
-            - **TLS**: cert-manager with Let's Encrypt (`letsencrypt-prod` ClusterIssuer)
-            - **Most apps**: use `bjw-s/app-template` chart
+            - **Auth**: Authelia wired via an Envoy Gateway `SecurityPolicy`; routes opt in with
+              the `ext-auth: enabled` label
+            - **TLS**: cert-manager with Let's Encrypt (`letsencrypt-prod` ClusterIssuer),
+              terminated at the Gateway via a shared `acme-crt-secret`
+            - **LoadBalancer**: MetalLB assigns IPs to `type: LoadBalancer` services (e.g. plex)
             - **Namespaces**: cert-manager, default, development, flux-system, flux-system-extra,
               kube-system, media, monitoring, rook-ceph, social, system-upgrade
 
             High-blast-radius components that warrant deeper scrutiny:
-            - **Networking**: ingress-nginx (affects all HTTP/S routes cluster-wide)
+            - **Networking**: envoy-gateway (all HTTP/S routes), metallb (LoadBalancer IPs)
             - **Storage**: rook-ceph, volsync (check for data migrations or CRD changes)
-            - **Auth/TLS**: authelia, cert-manager (CRD compatibility, annotation changes)
+            - **Auth/TLS**: authelia, cert-manager (CRD compatibility, policy/annotation changes)
             - **GitOps runtime**: flux components (affects entire cluster reconciliation)
 
             ## Pre-check: skip redundant re-reviews
@@ -240,9 +243,9 @@ jobs:
             **full** — minor/feat bump or chart upgrade (sonnet tier):
             Follow the complete Workflow below without shortcuts. Target: 12–18 turns.
 
-            **deep** — Renovate group PR, high-blast-radius component (ingress-nginx, rook-ceph,
-            volsync, cert-manager, authelia, flux), or any title containing "group" (sonnet tier,
-            40-turn budget):
+            **deep** — Renovate group PR, high-blast-radius component (envoy-gateway, metallb,
+            rook-ceph, volsync, cert-manager, authelia, flux), or any title containing "group"
+            (sonnet tier, 40-turn budget):
             Follow the complete Workflow. For group PRs bundling multiple components, research each
             component **breadth-first**: check 2–3 sources per component (PR body, GitHub releases,
             CHANGELOG) before moving to the next, rather than deep-diving any one component.
