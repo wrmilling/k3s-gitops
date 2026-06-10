@@ -49,6 +49,16 @@ spec:
       persistence:
         data:
           existingClaim: immich-valkey
+      controllers:
+        main:
+          containers:
+            main:
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 16Mi
+                limits:
+                  memory: 64Mi
     server:
       ingress:
         main:
@@ -71,6 +81,8 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 350Mi
+                limits:
+                  memory: 768Mi
     machine-learning:
       controllers:
         main:
@@ -80,3 +92,5 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 300Mi
+                limits:
+                  memory: 1024Mi

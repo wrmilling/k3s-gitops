@@ -60,7 +60,12 @@ spec:
           - name: all-queues
             concurrency: 25
             replicas: 1
-            resources: {}
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
             affinity: {}
             queues:
               - default,8
@@ -73,7 +78,12 @@ spec:
           - name: pull-ingress
             concurrency: 50
             replicas: 1
-            resources: {}
+            resources:
+              requests:
+                cpu: 25m
+                memory: 512Mi
+              limits:
+                memory: 1024Mi
             affinity: {}
             queues:
               - pull
@@ -90,8 +100,20 @@ spec:
           repository: ghcr.io/glitch-soc/mastodon-streaming
           tag: nightly.2026-06-10
         port: 4000
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            memory: 256Mi
       web:
         port: 3000
+        resources:
+          requests:
+            cpu: 50m
+            memory: 1024Mi
+          limits:
+            memory: 2048Mi
 
     ingress:
       enabled: false

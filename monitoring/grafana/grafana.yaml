@@ -18,6 +18,12 @@ spec:
       interval: 5m
   values:
     adminPassword: ${SECRET_GRAFANA_ADMIN_PASSWORD}
+    resources:
+      requests:
+        cpu: 20m
+        memory: 192Mi
+      limits:
+        memory: 384Mi
     rbac:
       pspEnabled: false
     deploymentStrategy:
@@ -268,6 +274,12 @@ spec:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
     sidecar:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 96Mi
+        limits:
+          memory: 192Mi
       datasources:
         enabled: true
         searchNamespace: ALL

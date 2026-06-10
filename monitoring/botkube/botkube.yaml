@@ -20,6 +20,12 @@ spec:
     image:
       repository: infracloudio/botkube
       tag: latest
+    resources:
+      requests:
+        cpu: 10m
+        memory: 384Mi
+      limits:
+        memory: 768Mi
     # serviceMonitor:
     #   enabled: true
     config:
