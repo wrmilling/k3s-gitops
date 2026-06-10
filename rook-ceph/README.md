@@ -14,6 +14,10 @@
 * [chart/rook-ceph-chart.yaml](chart/rook-ceph-chart.yaml) - HelmRelease for Rook Ceph operator
 * [chart/rook-ceph-system-psp-user.yaml](chart/rook-ceph-system-psp-user.yaml) - PSP user bindings for Rook Ceph
 
+## CSI Drivers
+
+* [csi/ceph-csi-drivers.yaml](csi/ceph-csi-drivers.yaml) - HelmRelease for the ceph-csi-drivers chart (OperatorConfig + RBD Driver CRs). Required as of Rook v1.20; CSI settings were migrated here out of the operator chart values.
+
 ## Cluster
 
 * [cluster/cluster.yaml](cluster/cluster.yaml) - Ceph cluster definition

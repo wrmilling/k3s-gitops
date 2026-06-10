@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.rook.io/release
       chart: rook-ceph
-      version: v1.19.5
+      version: v1.20.0
       sourceRef:
         kind: HelmRepository
         name: rook-ceph-charts
@@ -21,17 +21,11 @@ spec:
       enabled: false
     pspEnable: false
     csi:
-      kubeletDirPath: /var/lib/kubelet
-      enableGrpcMetrics: true
-      enableCSIHostNetwork: true
-      enableCephfsDriver: false
-      enableCephfsSnapshotter: false
-      enableLiveness: true
-      pluginTolerations:
-        - key: "arm"
-          operator: "Exists"
-        - key: "node-role.kubernetes.io/master"
-          operator: "Exists"
+      # Rook v1.20: CSI drivers are managed by the ceph-csi-operator. This flag
+      # installs the operator subchart; all driver/plugin settings (kubeletDirPath,
+      # host networking, plugin tolerations, CephFS enable/disable) now live in the
+      # ceph-csi-drivers HelmRelease (rook-ceph/csi/ceph-csi-drivers.yaml).
+      installCsiOperator: true
     resources:
       limits:
         cpu: 1000m
