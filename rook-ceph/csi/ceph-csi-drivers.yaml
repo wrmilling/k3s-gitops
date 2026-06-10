@@ -1,0 +1,59 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ceph-csi-drivers
+  namespace: rook-ceph
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://ceph.github.io/ceph-csi-operator
+      chart: ceph-csi-drivers
+      version: 1.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: ceph-csi-charts
+        namespace: flux-system
+      interval: 5m
+  # CSI driver configuration migrated out of the rook-ceph operator chart in Rook
+  # v1.20. The ceph-csi-operator (installed by the rook-ceph chart via
+  # csi.installCsiOperator) consumes the OperatorConfig + Driver CRs and the
+  # ServiceAccounts/RBAC this chart creates. Without this release the CSI
+  # controller-plugin Deployments never get their ServiceAccounts and all PVC
+  # attach/detach breaks (rook/rook#17644).
+  values:
+    operatorConfig:
+      name: ceph-csi-operator-config
+      namespace: rook-ceph
+      create: true
+      driverSpecDefaults:
+        nodePlugin:
+          # preserved from former csi.kubeletDirPath
+          kubeletDirPath: /var/lib/kubelet
+          # preserved from former csi.pluginTolerations
+          tolerations:
+            - key: arm
+              operator: Exists
+            - key: node-role.kubernetes.io/master
+              operator: Exists
+        controllerPlugin:
+          # preserved from former csi.enableCSIHostNetwork: true
+          hostNetwork: true
+    drivers:
+      rbd:
+        # MUST be prefixed with the rook operator namespace so it matches the
+        # rook-ceph-block StorageClass provisioner (rook-ceph.rbd.csi.ceph.com).
+        name: rook-ceph.rbd.csi.ceph.com
+        enabled: true
+      cephfs:
+        # preserved from former csi.enableCephfsDriver: false
+        name: rook-ceph.cephfs.csi.ceph.com
+        enabled: false
+      nfs:
+        # not deployed by this cluster previously; keep disabled
+        enabled: false
+      nvmeof:
+        # not deployed by this cluster previously; keep disabled
+        enabled: false
