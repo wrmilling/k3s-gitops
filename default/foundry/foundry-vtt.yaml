@@ -61,6 +61,12 @@ spec:
               value: 421
             - name: FOUNDRY_GID
               value: 421
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         fsGroup: 421

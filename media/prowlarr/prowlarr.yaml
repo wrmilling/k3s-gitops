@@ -35,6 +35,12 @@ spec:
               PROWLARR__INSTANCE_NAME: Prowlarr
               PROWLARR__PORT: 9696
               PROWLARR__LOG_LEVEL: info
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
 
     service:
       main:

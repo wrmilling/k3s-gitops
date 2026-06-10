@@ -35,6 +35,12 @@ spec:
               RADARR__INSTANCE_NAME: Radarr
               RADARR__APPLICATION_URL: 'https://readarr.k.${SECRET_DOMAIN}'
               RADARR__LOG_LEVEL: info
+            resources:
+              requests:
+                cpu: 10m
+                memory: 192Mi
+              limits:
+                memory: 512Mi
 
     service:
       main:

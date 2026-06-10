@@ -33,6 +33,12 @@ spec:
             env:
               TZ: America/Chicago
               PRTY_NO_TLS: 1
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
 
     service:
       main:

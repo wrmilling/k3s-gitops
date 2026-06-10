@@ -33,6 +33,12 @@ spec:
             env:
               TZ: America/Chicago
               LOG_LEVEL: info
+            resources:
+              requests:
+                cpu: 20m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
 
     service:
       main:

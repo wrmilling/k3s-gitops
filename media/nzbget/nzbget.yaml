@@ -34,6 +34,12 @@ spec:
               TZ: America/Chicago
               PUID: 1000
               PGID: 1000
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
 
     service:
       main:

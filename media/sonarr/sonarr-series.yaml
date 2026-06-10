@@ -36,6 +36,12 @@ spec:
               SONARR__PORT: 8989
               SONARR__APPLICATION_URL: "https://sonarr.k.${SECRET_DOMAIN}"
               SONARR__LOG_LEVEL: info
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
 
     service:
       main:

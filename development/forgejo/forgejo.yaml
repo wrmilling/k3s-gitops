@@ -102,7 +102,7 @@ spec:
               FORGEJO__ui__DEFAULT_THEME: "gitea-dark"
             resources:
               requests:
-                cpu: 100m
+                cpu: 150m
                 memory: 2048Mi
               limits:
                 memory: 6144Mi

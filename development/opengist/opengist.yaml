@@ -44,8 +44,8 @@ spec:
               OG_SSH_GIT_ENABLED: "false"
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 25m
+                memory: 64Mi
               limits:
                 memory: 256Mi
     defaultPodOptions:
