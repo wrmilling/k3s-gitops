@@ -34,6 +34,7 @@
   ignorePaths: [
     'setup/**',
     '.taskfiles/**',
+    '.forgejo/workflows/repo-sync.yml',
   ],
   'helm-values': {
     managerFilePatterns: [
