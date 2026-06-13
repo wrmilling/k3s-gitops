@@ -18,23 +18,26 @@ spec:
     spec:
       containers:
         - name: openldap
-          image: docker.io/bitnami/openldap:2.6.10@sha256:966fd39ed25813890e9bd57dac56def163bbcfe64967e0bae59ab018d505bd93
+          image: docker.io/vegardit/openldap:2.6.10@sha256:330358d78303c99a1156c4244e3b2acfd0010a49ee2f198ae2840a6efb74d28a
           imagePullPolicy: "Always"
           env:
-            - name: LDAP_ROOT
+            - name: LDAP_INIT_ORG_DN
               value: ${SECRET_LDAP_BASE_DN}
-            - name: LDAP_ADMIN_USERNAME
-              value: ${SECRET_LDAP_ADMIN_USERNAME}
-            - name: LDAP_ADMIN_PASSWORD
+            - name: LDAP_INIT_ROOT_USER_DN
+              value: cn=${SECRET_LDAP_ADMIN_USERNAME},${SECRET_LDAP_BASE_DN}
+            - name: LDAP_INIT_ROOT_USER_PW
               value: ${SECRET_LDAP_ADMIN_PASSWORD}
-            - name: LDAP_CUSTOM_LDIF_DIR
-              value: "/ldifs"
+            - name: LDAP_TLS_ENABLED
+              value: "false"
+            - name: LDAP_LDAPS_ENABLED
+              value: "false"
           ports:
             - name: tcp-ldap
-              containerPort: 1389
+              containerPort: 389
           volumeMounts:
-            - name: users-ldif
-              mountPath: "/ldifs"
+            - name: org-entries-ldif
+              mountPath: "/opt/ldifs/init_org_entries.ldif"
+              subPath: init_org_entries.ldif
               readOnly: true
           resources:
             requests:
@@ -43,12 +46,12 @@ spec:
             limits:
               memory: 128Mi
       volumes:
-        - name: users-ldif
+        - name: org-entries-ldif
           secret:
             secretName: openldap
             items:
               - key: 01-default-users.ldif
-                path: 01-default-users.ldif
+                path: init_org_entries.ldif
 ---
 apiVersion: v1
 kind: Service
