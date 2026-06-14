@@ -34,7 +34,7 @@ spec:
         dbPrepare:
           enabled: false
         dbMigrate:
-          enabled: false
+          enabled: true
       deploySearch:
         enabled: false
       s3:
