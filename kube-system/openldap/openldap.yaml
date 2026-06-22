@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: openldap
-          image: docker.io/vegardit/openldap:2.6.10@sha256:330358d78303c99a1156c4244e3b2acfd0010a49ee2f198ae2840a6efb74d28a
+          image: docker.io/vegardit/openldap:2.6.10@sha256:5a2fb9a1bab4ce7fa5e99206b79787332f511a049ae0bd40fcb95f11f15c09f8
           imagePullPolicy: "Always"
           env:
             - name: LDAP_INIT_ORG_DN
