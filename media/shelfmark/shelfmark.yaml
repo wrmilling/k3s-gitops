@@ -1,0 +1,143 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.0/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: shelfmark
+  namespace: media
+spec:
+  releaseName: shelfmark
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 5.0.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    global:
+      createDefaultServiceAccount: false
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/calibrain/shelfmark-lite
+              pullPolicy: IfNotPresent
+              tag: v1.3.2
+            command:
+              - gunicorn
+            args:
+              - --access-logfile=-
+              - --error-logfile=-
+              - --worker-class=geventwebsocket.gunicorn.workers.GeventWebSocketWorker
+              - --workers=1
+              - -t
+              - "300"
+              - -b
+              - 0.0.0.0:8084
+              - shelfmark.main:app
+            env:
+              TZ: America/Chicago
+              FLASK_PORT: &port 8084
+              SEARCH_MODE: universal
+              INGEST_DIR: /media/books/import
+              METADATA_PROVIDER: hardcover
+              HARDCOVER_ENABLED: "true"
+              DEFAULT_RELEASE_SOURCE: prowlarr
+              PROWLARR_ENABLED: "true"
+              PROWLARR_URL: http://prowlarr:
+              PROWLARR_API_KEY: ${SECRET_PROWLARR_API_KEY}
+              PROWLARR_TORRENT_CLIENT: qbittorrent
+              QBITTORRENT_URL: http://qbittorrent:8080
+              QBITTORRENT_USERNAME: ${SECRET_QBIT_USERNAME}
+              QBITTORRENT_PASSWORD: ${SECRET_QBIT_PASSWORD}
+              HARDCOVER_API_KEY: ${SECRET_HARDCOVER_API_KEY}
+              FILE_ORGANIZATION: organize
+              AUTH_METHOD: builtin
+              SESSION_COOKIE_SECURE: "true"
+              MAX_CONCURRENT_DOWNLOADS: "3"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+              readOnlyRootFilesystem: true
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: *port
+
+    route:
+      main:
+        hostnames:
+          - shelfmark.k.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: internal
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: main
+                port: http
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: shelfmark-config-pvc
+      media:
+        enabled: true
+        existingClaim: nfs-media-pvc
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+          - path: /var/log
+            subPath: var-log
+          - path: /.gunicorn
+            subPath: gunicorn
