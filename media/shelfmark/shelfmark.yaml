@@ -51,7 +51,7 @@ spec:
               HARDCOVER_ENABLED: "true"
               DEFAULT_RELEASE_SOURCE: prowlarr
               PROWLARR_ENABLED: "true"
-              PROWLARR_URL: http://prowlarr:
+              PROWLARR_URL: http://prowlarr:9696
               PROWLARR_API_KEY: ${SECRET_PROWLARR_API_KEY}
               PROWLARR_TORRENT_CLIENT: qbittorrent
               QBITTORRENT_URL: http://qbittorrent:8080
