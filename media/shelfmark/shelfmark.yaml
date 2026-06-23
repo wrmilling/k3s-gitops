@@ -54,7 +54,7 @@ spec:
               PROWLARR_URL: http://prowlarr:9696
               PROWLARR_API_KEY: ${SECRET_PROWLARR_API_KEY}
               PROWLARR_TORRENT_CLIENT: qbittorrent
-              QBITTORRENT_URL: http://qbittorrent:8080
+              QBITTORRENT_URL: http://qbittorrent-main:8080
               QBITTORRENT_USERNAME: ${SECRET_QBIT_USERNAME}
               QBITTORRENT_PASSWORD: ${SECRET_QBIT_PASSWORD}
               HARDCOVER_API_KEY: ${SECRET_HARDCOVER_API_KEY}
