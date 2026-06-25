@@ -4,8 +4,10 @@
     {
       customType: "regex",
       description: "Process various dependencies in YAML files",
-      fileMatch: ["\\.ya?ml(\\.j2)?$"],
+      fileMatch: ["\\.ya?ml(\\.j2)?$", "(^|/).+\\.env$", "(^|/).+\\.sh$"],
       matchStrings: [
+        // datasource= depName= annotation above an assignment (YAML, env, shell)
+        'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)',
         // Inline
         '\\S+: "?(?<currentValue>[^"\\s]+)"? # ?renovate: depName=(?<depName>\\S+)( datasource=(?<datasource>\\S+))?( versioning=(?<versioning>\\S+))?( extractVersion=(?<extractVersion>\\S+))?',
         // Newline
