@@ -18,6 +18,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": "Cert-Manager Group",
+      "groupName": "Cert-Manager",
+      "matchPackagePatterns": ["cert-manager", "jetstack/cert-manager"],
+      "matchDatasources": ["helm", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": "External Snapshotter Group",
       "groupName": "External Snapshotter",
       "matchPackageNames": ["snapshot-controller", "snapshot-validation-webhook"],
