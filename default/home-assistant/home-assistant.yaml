@@ -43,7 +43,7 @@ spec:
           main:
             image:
               repository: homeassistant/home-assistant
-              tag: 2026.6.4@sha256:adb3341e31e03e0048e60d8c1cf952e118a381ae258bb921d3da12a3b27bf0c2
+              tag: 2026.7.0@sha256:cb76c9922b530f6a5063a15463eb3ad6de287d297c826713abda16795bb98980
               pullPolicy: IfNotPresent
             env:
               TZ: "America/Chicago"
