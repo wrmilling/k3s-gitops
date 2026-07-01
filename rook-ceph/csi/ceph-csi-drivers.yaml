@@ -11,7 +11,7 @@ spec:
     spec:
       # renovate: registryUrl=https://ceph.github.io/ceph-csi-operator
       chart: ceph-csi-drivers
-      version: 1.0.1
+      version: 1.0.3
       sourceRef:
         kind: HelmRepository
         name: ceph-csi-charts
