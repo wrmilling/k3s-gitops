@@ -58,8 +58,6 @@ spec:
                 requests:
                   cpu: 10m
                   memory: 16Mi
-                limits:
-                  memory: 64Mi
     server:
       ingress:
         main:
@@ -84,10 +82,9 @@ spec:
               resources:
                 requests:
                   cpu: 50m
-                  memory: 350Mi
+                  memory: 512Mi
                   gpu.intel.com/i915: 1
                 limits:
-                  memory: 768Mi
                   gpu.intel.com/i915: 1
     machine-learning:
       defaultPodOptions:
@@ -105,5 +102,4 @@ spec:
                   memory: 512Mi
                   gpu.intel.com/i915: 1
                 limits:
-                  memory: 6Gi
                   gpu.intel.com/i915: 1

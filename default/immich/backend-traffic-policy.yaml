@@ -10,4 +10,4 @@ spec:
       kind: HTTPRoute
       name: immich-server
   requestBuffer:
-    limit: 1024Mi
+    limit: 2Gi
