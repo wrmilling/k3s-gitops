@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/common-3.0.1/charts/library/common/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.1/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -74,6 +74,9 @@ spec:
             - name: external
               namespace: kube-system
               sectionName: https
+      defaultPodOptions:
+        nodeSelector:
+          intel.feature.node.kubernetes.io/gpu: "true"
       controllers:
         main:
           containers:
@@ -82,16 +85,25 @@ spec:
                 requests:
                   cpu: 50m
                   memory: 350Mi
+                  gpu.intel.com/i915: 1
                 limits:
                   memory: 768Mi
+                  gpu.intel.com/i915: 1
     machine-learning:
+      defaultPodOptions:
+        nodeSelector:
+          intel.feature.node.kubernetes.io/gpu: "true"
       controllers:
         main:
           containers:
             main:
+              image:
+                tag: v2.2.3-openvino
               resources:
                 requests:
                   cpu: 50m
                   memory: 512Mi
+                  gpu.intel.com/i915: 1
                 limits:
-                  memory: 4Gi
+                  memory: 6Gi
+                  gpu.intel.com/i915: 1
