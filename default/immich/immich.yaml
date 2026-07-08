@@ -48,6 +48,7 @@ spec:
       enabled: true
       persistence:
         data:
+          type: persistentVolumeClaim
           existingClaim: immich-valkey
       controllers:
         main:
