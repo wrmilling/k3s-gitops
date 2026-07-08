@@ -3,3 +3,12 @@ kind: Kustomization
 resources:
 - gotk-components.yaml
 - gotk-sync.yaml
+patches:
+- target:
+    kind: Deployment
+    name: kustomize-controller
+    namespace: flux-system
+  patch: |-
+    - op: add
+      path: /spec/template/spec/containers/0/args/-
+      value: --feature-gates=StrictPostBuildSubstitutions=false
