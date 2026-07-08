@@ -96,6 +96,17 @@ spec:
             main:
               image:
                 tag: v2.2.3-openvino
+              probes:
+                liveness:
+                  spec:
+                    periodSeconds: 10
+                    timeoutSeconds: 5
+                    failureThreshold: 60
+                readiness:
+                  spec:
+                    periodSeconds: 10
+                    timeoutSeconds: 5
+                    failureThreshold: 60
               resources:
                 requests:
                   cpu: 50m
