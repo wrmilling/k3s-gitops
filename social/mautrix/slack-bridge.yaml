@@ -42,9 +42,9 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/wrmilling/mautrix-slack
+              repository: dock.mau.dev/mautrix/slack
               pullPolicy: IfNotPresent
-              tag: sha-4ff6456@sha256:473d72b9738872df57ca812ab6147bf5edf30882a4095a38f08c75f760d53d2f
+              tag: latest
             command: ["/usr/bin/mautrix-slack", "--no-update"]
             env:
               TZ: America/Chicago
