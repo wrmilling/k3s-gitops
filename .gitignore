@@ -11,3 +11,5 @@ auth
 bin/
 
 *.decrypted*.sops.yaml
+
+.codegraph
