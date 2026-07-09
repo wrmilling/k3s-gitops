@@ -44,7 +44,7 @@ spec:
             image:
               repository: ghcr.io/wrmilling/mautrix-slack
               pullPolicy: IfNotPresent
-              tag: sha-e638927@sha256:713cc857a950e49586cb5d6d29b1ac8de49f4d887b6541d6db85070741cd86fc
+              tag: sha-0aa1705@sha256:f48e683bc29c0e2d4a0d5048287c4c774b14219a540c6e8cfc81a2bc0459316e
             command: ["/usr/bin/mautrix-slack", "--no-update"]
             env:
               TZ: America/Chicago
