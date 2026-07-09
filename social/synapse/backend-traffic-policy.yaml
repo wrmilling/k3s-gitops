@@ -11,3 +11,6 @@ spec:
       name: synapse
   requestBuffer:
     limit: 100Mi
+  timeout:
+    http:
+      requestTimeout: 60s
