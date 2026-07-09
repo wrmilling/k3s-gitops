@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: quay.io/superq/smokeping-prober
-              tag: v0.10.0
+              tag: v0.12.0
             env:
               GOMAXPROCS: "1"
             args:
