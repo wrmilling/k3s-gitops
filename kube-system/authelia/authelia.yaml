@@ -19,8 +19,6 @@ spec:
   values:
     ingress:
       enabled: true
-      labels:
-        ext-auth: enabled
       gatewayAPI:
         enabled: true
         hostnamesOverride:
