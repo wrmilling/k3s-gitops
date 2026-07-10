@@ -54,7 +54,7 @@ spec:
               FORGEJO__APP_NAME: "The Homelab Git"
               FORGEJO__APP_SLOGAN: "Personal Code, Mirrors, and More"
               FORGEJO__actions__ENABLED: "true"
-              FORGEJO__actions__DEFAULT_ACTIONS_URL: "https://github.com"
+              FORGEJO__actions__DEFAULT_ACTIONS_URL: "self"
               FORGEJO__admin__DISABLE_REGULAR_ORG_CREATION: "true"
               FORGEJO__admin__DEFAULT_EMAIL_NOTIFICATIONS: "enabled"
               FORGEJO__cache__ENABLED: "true"
