@@ -22,7 +22,7 @@ spec:
       backendRefs:
         - name: authelia
           namespace: kube-system
-          port: 9091
+          port: 80
       path: '/api/authz/ext-authz/'
       headersToBackend:
         - Remote-User
