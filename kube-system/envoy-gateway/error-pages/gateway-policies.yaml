@@ -1,26 +1,22 @@
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
+kind: SecurityPolicy
 metadata:
-  name: mastodon-body-limit
-  namespace: social
+  name: error-pages-external-no-authz
+  namespace: kube-system
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: mastodon
-  requestBuffer:
-    limit: 40Mi
+      name: error-pages-external
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
+kind: SecurityPolicy
 metadata:
-  name: mastodon-minio-body-limit
-  namespace: social
+  name: error-pages-internal-no-authz
+  namespace: kube-system
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: mastodon-minio
-  requestBuffer:
-    limit: 40Mi
+      name: error-pages-internal

@@ -1,13 +1,11 @@
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
+kind: SecurityPolicy
 metadata:
-  name: immich-body-limit
-  namespace: default
+  name: minio-no-authz
+  namespace: kube-system
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: immich-server
-  requestBuffer:
-    limit: 2Gi
+      name: minio
