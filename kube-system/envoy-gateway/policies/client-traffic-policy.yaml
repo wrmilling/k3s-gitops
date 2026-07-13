@@ -1,0 +1,23 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: keep-escaped-slashes
+  namespace: kube-system
+spec:
+  # Envoy Gateway defaults to UnescapeAndRedirect (Envoy's own upstream default
+  # is KeepUnchanged). That 307s any request with a %2F in the path to its
+  # decoded form, which broke Forgejo's commit-statuses API for branch refs
+  # containing a slash (e.g. Renovate's renovate/<name> branches) since its
+  # router only matches the encoded ref segment.
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: external
+      sectionName: https
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal
+      sectionName: https
+  path:
+    escapedSlashesAction: KeepUnchanged
