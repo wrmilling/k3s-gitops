@@ -12,6 +12,17 @@ spec:
   hostnames:
     - synapse.${SECRET_DOMAIN}
   rules:
+    # MAS compatibility layer: https://element-hq.github.io/matrix-authentication-service/setup/reverse-proxy.html#compatibility-layer
+    # Must come before the catch-all rule below since Synapse has native login/logout/refresh disabled (delegated to MAS).
+    - matches:
+        - path:
+            type: RegularExpression
+            value: ^/_matrix/client/[^/]+/(login|logout|refresh)(/.*)?$
+      backendRefs:
+        - name: synapse-matrix-authentication-service
+          port: 8080
+          kind: Service
+          group: ""
     - matches:
         - path:
             type: PathPrefix
