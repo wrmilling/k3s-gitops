@@ -6,7 +6,6 @@ metadata:
   namespace: default
   labels:
     error-pages: enabled
-    ext-auth: enabled
 spec:
   parentRefs:
     - name: internal

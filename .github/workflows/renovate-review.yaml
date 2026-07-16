@@ -138,8 +138,9 @@ jobs:
               VolSync + Restic for backup/restore
             - **Secrets**: SOPS-encrypted `*.sops.yaml` files + Flux substitutions injected from
               `cluster-secrets` Secret and `cluster-settings` ConfigMap via `postBuild.substituteFrom`
-            - **Auth**: Authelia wired via an Envoy Gateway `SecurityPolicy`; routes opt in with
-              the `ext-auth: enabled` label
+            - **Auth**: Authelia enforced by default on both Gateways via an Envoy Gateway
+              `SecurityPolicy`; apps opt out with a per-app `<app>-no-authz` SecurityPolicy
+              (`gateway-policies.yaml`)
             - **TLS**: cert-manager with Let's Encrypt (`letsencrypt-prod` ClusterIssuer),
               terminated at the Gateway via a shared `acme-crt-secret`
             - **LoadBalancer**: MetalLB assigns IPs to `type: LoadBalancer` services (e.g. plex)
