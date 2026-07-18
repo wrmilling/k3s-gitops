@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/felddy/foundryvtt
               pullPolicy: IfNotPresent
-              tag: 14.364.0@sha256:097f876d9c79f074380e219bf93753fa1916f31624637776fcf23c2dd3bb07fa
+              tag: 14.365.0@sha256:bb8402d7098d0dcc136bf47c8932c0a1de5e405e021ca1710691cdd0ebdff730
             env:
             - name: TZ
               value: America/Chicago
