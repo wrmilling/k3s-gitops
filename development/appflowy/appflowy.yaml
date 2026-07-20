@@ -35,7 +35,9 @@ spec:
             env:
               GOTRUE_ADMIN_EMAIL: ${SECRET_APPFLOWY_GOTRUE_ADMIN_EMAIL}
               GOTRUE_ADMIN_PASSWORD: ${SECRET_APPFLOWY_GOTRUE_ADMIN_PASSWORD}
-              GOTRUE_DISABLE_SIGNUP: "true"
+              GOTRUE_DISABLE_SIGNUP: "false"
+              GOTRUE_HOOK_BEFORE_USER_CREATED_ENABLED: "true"
+              GOTRUE_HOOK_BEFORE_USER_CREATED_URI: "pg-functions:///public/check_signup_whitelist"
               GOTRUE_SITE_URL: "appflowy-flutter://"
               GOTRUE_URI_ALLOW_LIST: "**"
               GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
@@ -117,6 +119,7 @@ spec:
               APPFLOWY_SEARCH_REQUEST_TIMEOUT_SECS: "10"
               # AI features disabled for this initial trial rollout.
               AI_ENABLED: "false"
+              SIGNUP_WHITELIST_ENABLED: "true"
             resources:
               requests:
                 cpu: 200m
