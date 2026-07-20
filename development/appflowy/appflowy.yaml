@@ -130,7 +130,11 @@ spec:
               pullPolicy: IfNotPresent
             env:
               APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
-              APPFLOWY_BASE_URL: "http://appflowy-cloud.development.svc.cluster.local:8000"
+              # Must be the public URL, not the internal service address:
+              # admin_frontend derives its Server Action / CORS allowed-origins
+              # list from this value, and rejects login form submissions from
+              # any other origin (the browser's real origin is the public one).
+              APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
             resources:
               requests:
                 cpu: 50m
