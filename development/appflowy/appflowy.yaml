@@ -1,355 +1,355 @@
-# ---
-# # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.0/charts/library/common/values.schema.json
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: appflowy
-#   namespace: development
-# spec:
-#   releaseName: appflowy
-#   interval: 15m
-#   chart:
-#     spec:
-#       # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
-#       chart: app-template
-#       version: 5.0.1
-#       interval: 15m
-#       sourceRef:
-#         kind: HelmRepository
-#         name: bjw-s-helm-charts
-#         namespace: flux-system
-#   values:
-#     global:
-#       createDefaultServiceAccount: false
-#     controllers:
-#       # GoTrue: authentication service (signup/login/JWT issuance)
-#       gotrue:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/gotrue
-#               tag: "0.16.5"
-#               pullPolicy: IfNotPresent
-#             env:
-#               GOTRUE_ADMIN_EMAIL: ${SECRET_APPFLOWY_GOTRUE_ADMIN_EMAIL}
-#               GOTRUE_ADMIN_PASSWORD: ${SECRET_APPFLOWY_GOTRUE_ADMIN_PASSWORD}
-#               GOTRUE_DISABLE_SIGNUP: "true"
-#               GOTRUE_SITE_URL: "appflowy-flutter://"
-#               GOTRUE_URI_ALLOW_LIST: "**"
-#               GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
-#               GOTRUE_JWT_EXP: "604800"
-#               GOTRUE_JWT_ADMIN_GROUP_NAME: supabase_admin
-#               GOTRUE_DB_DRIVER: postgres
-#               API_EXTERNAL_URL: "https://notes.${SECRET_DOMAIN}/gotrue"
-#               DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy?search_path=auth"
-#               PORT: "9999"
-#               GOTRUE_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
-#               GOTRUE_SMTP_PORT: "587"
-#               GOTRUE_SMTP_USER: "${SECRET_SMTP_USERNAME}"
-#               GOTRUE_SMTP_PASS: "${SECRET_SMTP_PASSWORD}"
-#               GOTRUE_SMTP_ADMIN_EMAIL: "noreply@${SECRET_DOMAIN}"
-#               GOTRUE_SMTP_MAX_FREQUENCY: "1m"
-#               GOTRUE_RATE_LIMIT_EMAIL_SENT: "100"
-#               GOTRUE_MAILER_AUTOCONFIRM: "false"
-#               GOTRUE_MAILER_URLPATHS_CONFIRMATION: "/gotrue/verify"
-#               GOTRUE_MAILER_URLPATHS_INVITE: "/gotrue/verify"
-#               GOTRUE_MAILER_URLPATHS_RECOVERY: "/gotrue/verify"
-#               GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "/gotrue/verify"
-#             resources:
-#               requests:
-#                 cpu: 50m
-#                 memory: 128Mi
-#               limits:
-#                 memory: 512Mi
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.0/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: appflowy
+  namespace: development
+spec:
+  releaseName: appflowy
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 5.0.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    global:
+      createDefaultServiceAccount: false
+    controllers:
+      # GoTrue: authentication service (signup/login/JWT issuance)
+      gotrue:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: appflowyinc/gotrue
+              tag: "0.16.5"
+              pullPolicy: IfNotPresent
+            env:
+              GOTRUE_ADMIN_EMAIL: ${SECRET_APPFLOWY_GOTRUE_ADMIN_EMAIL}
+              GOTRUE_ADMIN_PASSWORD: ${SECRET_APPFLOWY_GOTRUE_ADMIN_PASSWORD}
+              GOTRUE_DISABLE_SIGNUP: "true"
+              GOTRUE_SITE_URL: "appflowy-flutter://"
+              GOTRUE_URI_ALLOW_LIST: "**"
+              GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
+              GOTRUE_JWT_EXP: "604800"
+              GOTRUE_JWT_ADMIN_GROUP_NAME: supabase_admin
+              GOTRUE_DB_DRIVER: postgres
+              API_EXTERNAL_URL: "https://notes.${SECRET_DOMAIN}/gotrue"
+              DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy?search_path=auth"
+              PORT: "9999"
+              GOTRUE_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
+              GOTRUE_SMTP_PORT: "587"
+              GOTRUE_SMTP_USER: "${SECRET_SMTP_USERNAME}"
+              GOTRUE_SMTP_PASS: "${SECRET_SMTP_PASSWORD}"
+              GOTRUE_SMTP_ADMIN_EMAIL: "noreply@${SECRET_DOMAIN}"
+              GOTRUE_SMTP_MAX_FREQUENCY: "1m"
+              GOTRUE_RATE_LIMIT_EMAIL_SENT: "100"
+              GOTRUE_MAILER_AUTOCONFIRM: "false"
+              GOTRUE_MAILER_URLPATHS_CONFIRMATION: "/gotrue/verify"
+              GOTRUE_MAILER_URLPATHS_INVITE: "/gotrue/verify"
+              GOTRUE_MAILER_URLPATHS_RECOVERY: "/gotrue/verify"
+              GOTRUE_MAILER_URLPATHS_EMAIL_CHANGE: "/gotrue/verify"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
 
-#       # AppFlowy Cloud: main backend API + realtime collaboration (ws)
-#       cloud:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         initContainers:
-#           init-db:
-#             image:
-#               repository: ghcr.io/home-operations/postgres-init
-#               tag: "18.4"
-#             env:
-#               INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
-#               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
-#               INIT_POSTGRES_DBNAME: appflowy
-#               INIT_POSTGRES_USER: appflowy
-#               INIT_POSTGRES_PASS: ${SECRET_APPFLOWY_DB_PASSWORD}
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/appflowy_cloud
-#               tag: "0.16.5"
-#               pullPolicy: IfNotPresent
-#             env:
-#               RUST_LOG: info
-#               APPFLOWY_ENVIRONMENT: production
-#               APPFLOWY_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
-#               APPFLOWY_DATABASE_MAX_CONNECTIONS: "40"
-#               APPFLOWY_REDIS_URI: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
-#               APPFLOWY_GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
-#               APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
-#               APPFLOWY_S3_CREATE_BUCKET: "true"
-#               APPFLOWY_S3_USE_MINIO: "true"
-#               APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
-#               APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
-#               APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
-#               APPFLOWY_S3_BUCKET: appflowy
-#               APPFLOWY_S3_REGION: us-east-1
-#               APPFLOWY_S3_PRESIGNED_URL_ENDPOINT: "https://minio.k.${SECRET_DOMAIN}"
-#               APPFLOWY_MAILER_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
-#               APPFLOWY_MAILER_SMTP_PORT: "587"
-#               APPFLOWY_MAILER_SMTP_USERNAME: "${SECRET_SMTP_USERNAME}"
-#               APPFLOWY_MAILER_SMTP_EMAIL: "noreply@${SECRET_DOMAIN}"
-#               APPFLOWY_MAILER_SMTP_PASSWORD: "${SECRET_SMTP_PASSWORD}"
-#               APPFLOWY_MAILER_SMTP_TLS_KIND: opportunistic
-#               APPFLOWY_ACCESS_CONTROL: "true"
-#               APPFLOWY_WEBSOCKET_MAILBOX_SIZE: "6000"
-#               APPFLOWY_COLLABORATE_MULTI_THREAD: "false"
-#               APPFLOWY_COLLABORATE_REMOVE_BATCH_SIZE: "100"
-#               APPFLOWY_WEB_URL: "https://notes.${SECRET_DOMAIN}"
-#               APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
-#               APPFLOWY_SEARCH_SERVICE_URL: "http://appflowy-search.development.svc.cluster.local:4002"
-#               APPFLOWY_SEARCH_REQUEST_TIMEOUT_SECS: "10"
-#               # AI features disabled for this initial trial rollout.
-#               AI_ENABLED: "false"
-#             resources:
-#               requests:
-#                 cpu: 200m
-#                 memory: 256Mi
-#               limits:
-#                 memory: 1Gi
+      # AppFlowy Cloud: main backend API + realtime collaboration (ws)
+      cloud:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "18.4"
+            env:
+              INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
+              INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
+              INIT_POSTGRES_DBNAME: appflowy
+              INIT_POSTGRES_USER: appflowy
+              INIT_POSTGRES_PASS: ${SECRET_APPFLOWY_DB_PASSWORD}
+        containers:
+          main:
+            image:
+              repository: appflowyinc/appflowy_cloud
+              tag: "0.16.5"
+              pullPolicy: IfNotPresent
+            env:
+              RUST_LOG: info
+              APPFLOWY_ENVIRONMENT: production
+              APPFLOWY_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
+              APPFLOWY_DATABASE_MAX_CONNECTIONS: "40"
+              APPFLOWY_REDIS_URI: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
+              APPFLOWY_GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
+              APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
+              APPFLOWY_S3_CREATE_BUCKET: "true"
+              APPFLOWY_S3_USE_MINIO: "true"
+              APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
+              APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
+              APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
+              APPFLOWY_S3_BUCKET: appflowy
+              APPFLOWY_S3_REGION: us-east-1
+              APPFLOWY_S3_PRESIGNED_URL_ENDPOINT: "https://minio.k.${SECRET_DOMAIN}"
+              APPFLOWY_MAILER_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
+              APPFLOWY_MAILER_SMTP_PORT: "587"
+              APPFLOWY_MAILER_SMTP_USERNAME: "${SECRET_SMTP_USERNAME}"
+              APPFLOWY_MAILER_SMTP_EMAIL: "noreply@${SECRET_DOMAIN}"
+              APPFLOWY_MAILER_SMTP_PASSWORD: "${SECRET_SMTP_PASSWORD}"
+              APPFLOWY_MAILER_SMTP_TLS_KIND: opportunistic
+              APPFLOWY_ACCESS_CONTROL: "true"
+              APPFLOWY_WEBSOCKET_MAILBOX_SIZE: "6000"
+              APPFLOWY_COLLABORATE_MULTI_THREAD: "false"
+              APPFLOWY_COLLABORATE_REMOVE_BATCH_SIZE: "100"
+              APPFLOWY_WEB_URL: "https://notes.${SECRET_DOMAIN}"
+              APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
+              APPFLOWY_SEARCH_SERVICE_URL: "http://appflowy-search.development.svc.cluster.local:4002"
+              APPFLOWY_SEARCH_REQUEST_TIMEOUT_SECS: "10"
+              # AI features disabled for this initial trial rollout.
+              AI_ENABLED: "false"
+            resources:
+              requests:
+                cpu: 200m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
 
-#       # Admin console (served at /console)
-#       admin:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/admin_frontend
-#               tag: "0.16.5"
-#               pullPolicy: IfNotPresent
-#             env:
-#               APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
-#               # Must be the public URL, not the internal service address:
-#               # admin_frontend derives its Server Action / CORS allowed-origins
-#               # list from this value, and rejects login form submissions from
-#               # any other origin (the browser's real origin is the public one).
-#               APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
-#             resources:
-#               requests:
-#                 cpu: 50m
-#                 memory: 128Mi
-#               limits:
-#                 memory: 256Mi
+      # Admin console (served at /console)
+      admin:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: appflowyinc/admin_frontend
+              tag: "0.16.5"
+              pullPolicy: IfNotPresent
+            env:
+              APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
+              # Must be the public URL, not the internal service address:
+              # admin_frontend derives its Server Action / CORS allowed-origins
+              # list from this value, and rejects login form submissions from
+              # any other origin (the browser's real origin is the public one).
+              APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
 
-#       # Background jobs: imports, exports, scheduled cleanup
-#       worker:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/appflowy_worker
-#               tag: "0.16.5"
-#               pullPolicy: IfNotPresent
-#             env:
-#               RUST_LOG: info
-#               APPFLOWY_ENVIRONMENT: production
-#               APPFLOWY_WORKER_ENVIRONMENT: production
-#               APPFLOWY_WORKER_REDIS_URL: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
-#               APPFLOWY_WORKER_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
-#               APPFLOWY_WORKER_DATABASE_NAME: appflowy
-#               APPFLOWY_WORKER_IMPORT_TICK_INTERVAL: "30"
-#               APPFLOWY_S3_USE_MINIO: "true"
-#               APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
-#               APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
-#               APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
-#               APPFLOWY_S3_BUCKET: appflowy
-#               APPFLOWY_S3_REGION: us-east-1
-#               APPFLOWY_MAILER_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
-#               APPFLOWY_MAILER_SMTP_PORT: "587"
-#               APPFLOWY_MAILER_SMTP_USERNAME: "${SECRET_SMTP_USERNAME}"
-#               APPFLOWY_MAILER_SMTP_EMAIL: "noreply@${SECRET_DOMAIN}"
-#               APPFLOWY_MAILER_SMTP_PASSWORD: "${SECRET_SMTP_PASSWORD}"
-#               APPFLOWY_MAILER_SMTP_TLS_KIND: opportunistic
-#             resources:
-#               requests:
-#                 cpu: 50m
-#                 memory: 128Mi
-#               limits:
-#                 memory: 512Mi
+      # Background jobs: imports, exports, scheduled cleanup
+      worker:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: appflowyinc/appflowy_worker
+              tag: "0.16.5"
+              pullPolicy: IfNotPresent
+            env:
+              RUST_LOG: info
+              APPFLOWY_ENVIRONMENT: production
+              APPFLOWY_WORKER_ENVIRONMENT: production
+              APPFLOWY_WORKER_REDIS_URL: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
+              APPFLOWY_WORKER_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
+              APPFLOWY_WORKER_DATABASE_NAME: appflowy
+              APPFLOWY_WORKER_IMPORT_TICK_INTERVAL: "30"
+              APPFLOWY_S3_USE_MINIO: "true"
+              APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
+              APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
+              APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
+              APPFLOWY_S3_BUCKET: appflowy
+              APPFLOWY_S3_REGION: us-east-1
+              APPFLOWY_MAILER_SMTP_HOST: "${SECRET_SMTP_DOMAIN}"
+              APPFLOWY_MAILER_SMTP_PORT: "587"
+              APPFLOWY_MAILER_SMTP_USERNAME: "${SECRET_SMTP_USERNAME}"
+              APPFLOWY_MAILER_SMTP_EMAIL: "noreply@${SECRET_DOMAIN}"
+              APPFLOWY_MAILER_SMTP_PASSWORD: "${SECRET_SMTP_PASSWORD}"
+              APPFLOWY_MAILER_SMTP_TLS_KIND: opportunistic
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
 
-#       # AppFlowy Web: browser client (served at /)
-#       web:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/appflowy_web
-#               tag: "0.15.5"
-#               pullPolicy: IfNotPresent
-#             env:
-#               APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
-#               APPFLOWY_GOTRUE_BASE_URL: "https://notes.${SECRET_DOMAIN}/gotrue"
-#               APPFLOWY_WS_BASE_URL: "wss://notes.${SECRET_DOMAIN}/ws/v2"
-#             # The bundled nginx in this image has permission issues running
-#             # its own health checks under a non-root UID; upstream's own
-#             # chart disables probes for the same reason.
-#             probes:
-#               liveness:
-#                 enabled: false
-#               readiness:
-#                 enabled: false
-#               startup:
-#                 enabled: false
-#             resources:
-#               requests:
-#                 cpu: 20m
-#                 memory: 32Mi
-#               limits:
-#                 memory: 128Mi
+      # AppFlowy Web: browser client (served at /)
+      web:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: appflowyinc/appflowy_web
+              tag: "0.15.5"
+              pullPolicy: IfNotPresent
+            env:
+              APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
+              APPFLOWY_GOTRUE_BASE_URL: "https://notes.${SECRET_DOMAIN}/gotrue"
+              APPFLOWY_WS_BASE_URL: "wss://notes.${SECRET_DOMAIN}/ws/v2"
+            # The bundled nginx in this image has permission issues running
+            # its own health checks under a non-root UID; upstream's own
+            # chart disables probes for the same reason.
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 20m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
 
-#       # AppFlowy Search: keyword full-text search over workspace content.
-#       # AI_OPENAI_API_KEY is intentionally unset -- semantic/vector search
-#       # and AI chat context retrieval stay disabled until AI features are
-#       # turned on; keyword search (APPFLOWY_KEYWORD_SEARCH_ENABLED) works
-#       # fully without it.
-#       search:
-#         annotations:
-#           reloader.stakater.com/auto: "true"
-#         containers:
-#           main:
-#             image:
-#               repository: appflowyinc/appflowy_search
-#               tag: "0.16.3"
-#               pullPolicy: IfNotPresent
-#             env:
-#               RUST_LOG: info
-#               APPFLOWY_SEARCH_PORT: "4002"
-#               APPFLOWY_SEARCH_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
-#               APPFLOWY_SEARCH_REDIS_URL: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
-#               APPFLOWY_GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
-#               APPFLOWY_S3_USE_MINIO: "true"
-#               APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
-#               APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
-#               APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
-#               APPFLOWY_S3_BUCKET: appflowy
-#               APPFLOWY_S3_REGION: us-east-1
-#               APPFLOWY_BACKGROUND_INDEXER_ENABLED: "true"
-#               APPFLOWY_INDEXER_DATABASE_ENABLED: "false"
-#               APPFLOWY_KEYWORD_SEARCH_ENABLED: "true"
-#               APPFLOWY_KEYWORD_WORKER_ENABLED: "true"
-#               # Trimmed from upstream's 2GiB default to fit a homelab-scale
-#               # single-user workspace; raise alongside the PVC size if the
-#               # index grows.
-#               APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES: "1073741824"
-#               APPFLOWY_KEYWORD_INDEX_DIR: /var/lib/appflowy/keyword_index
-#             resources:
-#               requests:
-#                 cpu: 50m
-#                 memory: 128Mi
-#               limits:
-#                 memory: 512Mi
+      # AppFlowy Search: keyword full-text search over workspace content.
+      # AI_OPENAI_API_KEY is intentionally unset -- semantic/vector search
+      # and AI chat context retrieval stay disabled until AI features are
+      # turned on; keyword search (APPFLOWY_KEYWORD_SEARCH_ENABLED) works
+      # fully without it.
+      search:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: appflowyinc/appflowy_search
+              tag: "0.16.3"
+              pullPolicy: IfNotPresent
+            env:
+              RUST_LOG: info
+              APPFLOWY_SEARCH_PORT: "4002"
+              APPFLOWY_SEARCH_DATABASE_URL: "postgres://appflowy:${SECRET_APPFLOWY_DB_PASSWORD}@shared-psql-v17-rw.default.svc.cluster.local:5432/appflowy"
+              APPFLOWY_SEARCH_REDIS_URL: "redis://:${SECRET_APPFLOWY_REDIS_PASSWORD}@appflowy-valkey-primary.development.svc.cluster.local:6379"
+              APPFLOWY_GOTRUE_JWT_SECRET: ${SECRET_APPFLOWY_JWT_SECRET}
+              APPFLOWY_S3_USE_MINIO: "true"
+              APPFLOWY_S3_MINIO_URL: "http://minio.kube-system.svc.cluster.local:9000"
+              APPFLOWY_S3_ACCESS_KEY: ${SECRET_APPFLOWY_MINIO_ACCESS_KEY}
+              APPFLOWY_S3_SECRET_KEY: ${SECRET_APPFLOWY_MINIO_SECRET_KEY}
+              APPFLOWY_S3_BUCKET: appflowy
+              APPFLOWY_S3_REGION: us-east-1
+              APPFLOWY_BACKGROUND_INDEXER_ENABLED: "true"
+              APPFLOWY_INDEXER_DATABASE_ENABLED: "false"
+              APPFLOWY_KEYWORD_SEARCH_ENABLED: "true"
+              APPFLOWY_KEYWORD_WORKER_ENABLED: "true"
+              # Trimmed from upstream's 2GiB default to fit a homelab-scale
+              # single-user workspace; raise alongside the PVC size if the
+              # index grows.
+              APPFLOWY_KEYWORD_INDEX_MAP_SIZE_BYTES: "1073741824"
+              APPFLOWY_KEYWORD_INDEX_DIR: /var/lib/appflowy/keyword_index
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
 
-#     persistence:
-#       appflowy-db-init:
-#         type: configMap
-#         name: appflowy-db-init
-#         advancedMounts:
-#           cloud:
-#             init-db:
-#               - path: /initdb/appflowy.sql
-#                 subPath: appflowy.sql
-#                 readOnly: true
-#       appflowy-search-index:
-#         type: persistentVolumeClaim
-#         existingClaim: appflowy-search-index
-#         advancedMounts:
-#           search:
-#             main:
-#               - path: /var/lib/appflowy/keyword_index
+    persistence:
+      appflowy-db-init:
+        type: configMap
+        name: appflowy-db-init
+        advancedMounts:
+          cloud:
+            init-db:
+              - path: /initdb/appflowy.sql
+                subPath: appflowy.sql
+                readOnly: true
+      appflowy-search-index:
+        type: persistentVolumeClaim
+        existingClaim: appflowy-search-index
+        advancedMounts:
+          search:
+            main:
+              - path: /var/lib/appflowy/keyword_index
 
-#     service:
-#       gotrue:
-#         controller: gotrue
-#         ports:
-#           http:
-#             port: 9999
-#       cloud:
-#         controller: cloud
-#         ports:
-#           http:
-#             port: 8000
-#       admin:
-#         controller: admin
-#         ports:
-#           http:
-#             port: 3000
-#       web:
-#         controller: web
-#         ports:
-#           http:
-#             port: 80
-#       search:
-#         controller: search
-#         ports:
-#           http:
-#             port: 4002
+    service:
+      gotrue:
+        controller: gotrue
+        ports:
+          http:
+            port: 9999
+      cloud:
+        controller: cloud
+        ports:
+          http:
+            port: 8000
+      admin:
+        controller: admin
+        ports:
+          http:
+            port: 3000
+      web:
+        controller: web
+        ports:
+          http:
+            port: 80
+      search:
+        controller: search
+        ports:
+          http:
+            port: 4002
 
-#     route:
-#       main:
-#         hostnames:
-#           - notes.${SECRET_DOMAIN}
-#         parentRefs:
-#           - namespace: kube-system
-#             name: external
-#             sectionName: https
-#         rules:
-#           - matches:
-#               - path:
-#                   type: PathPrefix
-#                   value: /gotrue
-#             filters:
-#               - type: URLRewrite
-#                 urlRewrite:
-#                   path:
-#                     type: ReplacePrefixMatch
-#                     replacePrefixMatch: /
-#             backendRefs:
-#               - identifier: gotrue
-#                 port: http
-#           - matches:
-#               - path:
-#                   type: PathPrefix
-#                   value: /ws
-#             backendRefs:
-#               - identifier: cloud
-#                 port: http
-#           - matches:
-#               - path:
-#                   type: PathPrefix
-#                   value: /api
-#             backendRefs:
-#               - identifier: cloud
-#                 port: http
-#           - matches:
-#               - path:
-#                   type: PathPrefix
-#                   value: /console
-#             backendRefs:
-#               - identifier: admin
-#                 port: http
-#           - matches:
-#               - path:
-#                   type: PathPrefix
-#                   value: /
-#             backendRefs:
-#               - identifier: web
-#                 port: http
+    route:
+      main:
+        hostnames:
+          - notes.${SECRET_DOMAIN}
+        parentRefs:
+          - namespace: kube-system
+            name: external
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /gotrue
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: gotrue
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /ws
+            backendRefs:
+              - identifier: cloud
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+            backendRefs:
+              - identifier: cloud
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /console
+            backendRefs:
+              - identifier: admin
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: web
+                port: http
