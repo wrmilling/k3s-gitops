@@ -22,6 +22,8 @@ spec:
         enabled: true
         existingClaim: "appflowy-valkey-data"
       resourcesPreset: "nano"
+      podAnnotations:
+        reloader.stakater.com/auto: "true"
     replica:
       replicaCount: 0
     metrics:

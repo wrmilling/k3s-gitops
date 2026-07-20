@@ -24,6 +24,8 @@ spec:
     controllers:
       # GoTrue: authentication service (signup/login/JWT issuance)
       gotrue:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -64,6 +66,8 @@ spec:
 
       # AppFlowy Cloud: main backend API + realtime collaboration (ws)
       cloud:
+        annotations:
+          reloader.stakater.com/auto: "true"
         initContainers:
           init-db:
             image:
@@ -122,6 +126,8 @@ spec:
 
       # Admin console (served at /console)
       admin:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -144,6 +150,8 @@ spec:
 
       # Background jobs: imports, exports, scheduled cleanup
       worker:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -179,6 +187,8 @@ spec:
 
       # AppFlowy Web: browser client (served at /)
       web:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -212,6 +222,8 @@ spec:
       # turned on; keyword search (APPFLOWY_KEYWORD_SEARCH_ENABLED) works
       # fully without it.
       search:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
