@@ -9,8 +9,6 @@ spec:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
       name: appflowy
-  requestBuffer:
-    limit: 512Mi
   timeout:
     http:
       # /ws needs a long-lived connection for realtime collaboration.
