@@ -85,7 +85,7 @@ spec:
           main:
             image:
               repository: appflowyinc/appflowy_cloud
-              tag: "0.16.5"
+              tag: "0.17.0"
               pullPolicy: IfNotPresent
             env:
               RUST_LOG: info
