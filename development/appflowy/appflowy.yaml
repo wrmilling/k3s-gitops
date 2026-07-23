@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: appflowyinc/gotrue
-              tag: "0.16.5"
+              tag: "0.17.0"
               pullPolicy: IfNotPresent
             env:
               GOTRUE_ADMIN_EMAIL: ${SECRET_APPFLOWY_GOTRUE_ADMIN_EMAIL}
