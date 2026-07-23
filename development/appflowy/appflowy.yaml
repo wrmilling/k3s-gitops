@@ -135,7 +135,7 @@ spec:
           main:
             image:
               repository: appflowyinc/admin_frontend
-              tag: "0.16.5"
+              tag: "0.17.0"
               pullPolicy: IfNotPresent
             env:
               APPFLOWY_GOTRUE_BASE_URL: "http://appflowy-gotrue.development.svc.cluster.local:9999"
