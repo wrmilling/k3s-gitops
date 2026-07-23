@@ -231,7 +231,7 @@ spec:
           main:
             image:
               repository: appflowyinc/appflowy_search
-              tag: "0.16.3"
+              tag: "0.17.0"
               pullPolicy: IfNotPresent
             env:
               RUST_LOG: info
