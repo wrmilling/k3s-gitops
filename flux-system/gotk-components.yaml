@@ -3534,7 +3534,7 @@ spec:
             resourceFieldRef:
               containerName: manager
               resource: limits.memory
-        image: ghcr.io/fluxcd/kustomize-controller:v1.9.3
+        image: ghcr.io/fluxcd/kustomize-controller:v1.9.4
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -5130,7 +5130,7 @@ spec:
             resourceFieldRef:
               containerName: manager
               resource: limits.memory
-        image: ghcr.io/fluxcd/helm-controller:v1.6.2
+        image: ghcr.io/fluxcd/helm-controller:v1.6.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
