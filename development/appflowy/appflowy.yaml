@@ -196,7 +196,7 @@ spec:
           main:
             image:
               repository: appflowyinc/appflowy_web
-              tag: "0.15.5"
+              tag: "0.16.0"
               pullPolicy: IfNotPresent
             env:
               APPFLOWY_BASE_URL: "https://notes.${SECRET_DOMAIN}"
