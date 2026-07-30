@@ -1,27 +1,20 @@
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: envoy-gateway
-  namespace: kube-system
-spec:
-  interval: 1h
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: v1.8.2
-  url: oci://mirror.gcr.io/envoyproxy/gateway-helm
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: envoy-gateway
   namespace: kube-system
 spec:
-  chartRef:
-    kind: OCIRepository
-    name: envoy-gateway
+  chart:
+    spec:
+      # renovate: registryUrl=oci://mirror.gcr.io/envoyproxy/gateway-helm
+      chart: gateway-helm
+      version: v1.8.2
+      sourceRef:
+        kind: HelmRepository
+        name: envoy-gateway-charts
+        namespace: flux-system
+      interval: 1h
   interval: 30m
   install:
     createNamespace: true
