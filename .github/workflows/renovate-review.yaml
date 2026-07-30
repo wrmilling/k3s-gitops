@@ -68,10 +68,10 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
           title="$PR_TITLE"
-          # Deep (Sonnet, 40 turns): group PRs, major bumps, or high-blast-radius components
+          # Deep (Sonnet, 40 turns): major bumps or high-blast-radius components
           # Full (Sonnet, 25 turns): all other minor/feat bumps and chart upgrades
           # Light (Haiku, 25 turns): routine fix(container) patch bumps not matching deep
-          if echo "$title" | grep -qiE 'group|rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux'; then
+          if echo "$title" | grep -qiE 'rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux'; then
             echo "model=sonnet" >> "$GITHUB_OUTPUT"
             echo "depth=deep" >> "$GITHUB_OUTPUT"
             echo "max_turns=40" >> "$GITHUB_OUTPUT"
@@ -244,8 +244,8 @@ jobs:
             **full** — minor/feat bump or chart upgrade (sonnet tier):
             Follow the complete Workflow below without shortcuts. Target: 12–18 turns.
 
-            **deep** — Renovate group PR, high-blast-radius component (envoy-gateway, metallb,
-            rook-ceph, volsync, cert-manager, authelia, flux), or any title containing "group"
+            **deep** — high-blast-radius component (envoy-gateway, metallb, rook-ceph, volsync,
+            cert-manager, authelia, flux), whether bundled into a Renovate group PR or not
             (sonnet tier, 40-turn budget):
             Follow the complete Workflow. For group PRs bundling multiple components, research each
             component **breadth-first**: check 2–3 sources per component (PR body, GitHub releases,
