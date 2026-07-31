@@ -7,4 +7,4 @@ metadata:
 spec:
   interval: 1h
   type: oci
-  url: oci://mirror.gcr.io/envoyproxy/gateway-helm
+  url: oci://mirror.gcr.io/envoyproxy

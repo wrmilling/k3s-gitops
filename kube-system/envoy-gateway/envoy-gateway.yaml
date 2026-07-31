@@ -7,7 +7,7 @@ metadata:
 spec:
   chart:
     spec:
-      # renovate: registryUrl=oci://mirror.gcr.io/envoyproxy/gateway-helm
+      # renovate: registryUrl=oci://mirror.gcr.io/envoyproxy
       chart: gateway-helm
       version: v1.8.2
       sourceRef:
