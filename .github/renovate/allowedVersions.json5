@@ -9,5 +9,13 @@
     //     "docker.io/library/postgres"
     //   ]
     // },
+    // Ceph versioning scheme is x.0.y = dev, x.1.y = release candidate, x.2.y = stable
+    // (see https://docs.ceph.com/en/latest/releases/general/). Only surface stable releases;
+    // v21.1.0 (Umbrella RC) was flagged and rejected by Claude review in PR #4072.
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["quay.io/ceph/ceph"],
+      allowedVersions: "/^v\\d+\\.2\\.\\d+$/",
+    },
   ],
 }
