@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: openldap
-          image: ghcr.io/vegardit/openldap:2.6.10@sha256:5da6c80dcc8df7e9972f233e723956f58d6b3082ac72294a43a84af650e5a90c 
+          image: ghcr.io/vegardit/openldap:2.6.10@sha256:eb0f2daa24e4de75213b668dd2c66d682c57b315d2d81e1f03bcbae66d226e96 
           imagePullPolicy: "Always"
           env:
             - name: LDAP_INIT_ORG_DN
