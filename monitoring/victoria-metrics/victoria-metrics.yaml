@@ -33,7 +33,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 60Gi
+              storage: 100Gi
         resources:
           limits:
             memory: 2Gi
