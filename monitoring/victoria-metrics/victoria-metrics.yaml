@@ -23,6 +23,26 @@ spec:
     defaultDashboards:
       enabled: false
 
+    kubeScheduler:
+      enabled: false
+
+    kubeControllerManager:
+      enabled: false
+
+    kubeEtcd:
+      enabled: false
+
+    defaultRules:
+      groups:
+        kubernetes-system-scheduler:
+          enabled: false
+        kubernetes-system-controller-manager:
+          enabled: false
+        etcd:
+          enabled: false
+        kube-scheduler.rules:
+          enabled: false
+
     vmsingle:
       enabled: true
       spec:
