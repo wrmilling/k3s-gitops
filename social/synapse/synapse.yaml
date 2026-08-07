@@ -67,7 +67,7 @@ spec:
               enabled: true
               outbound: false
               allowJsTransformationFunctions: true
-              waitForComplete: true
+              waitForComplete: false
 
     synapse:
       ingress:

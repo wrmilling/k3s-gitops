@@ -23,6 +23,27 @@ spec:
           port: 8080
           kind: Service
           group: ""
+    # Hookshot is not routed by Synapse itself; without these rules,
+    # /_matrix/hookshot/* falls through to the catch-all below and 404s
+    # against Synapse instead of reaching the hookshot bridge.
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /_matrix/hookshot/widgetapi
+      backendRefs:
+        - name: synapse-hookshot
+          port: 7778
+          kind: Service
+          group: ""
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /_matrix/hookshot
+      backendRefs:
+        - name: synapse-hookshot
+          port: 7775
+          kind: Service
+          group: ""
     - matches:
         - path:
             type: PathPrefix
