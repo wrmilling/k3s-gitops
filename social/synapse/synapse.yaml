@@ -66,9 +66,6 @@ spec:
             generic:
               enabled: true
               outbound: false
-              # TODO: confirm the in-cluster Service name/port ess-helm generates for hookshot
-              # after first deploy (kubectl -n social get svc) and correct this urlPrefix.
-              urlPrefix: "http://synapse-hookshot.social.svc.cluster.local:9000/webhook"
               allowJsTransformationFunctions: true
               waitForComplete: false
 
