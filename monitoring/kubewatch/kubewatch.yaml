@@ -24,6 +24,8 @@ spec:
       main:
         type: deployment
         replicas: 1
+        serviceAccount:
+          name: kubewatch
         containers:
           main:
             # renovate: datasource=docker depName=robustadev/kubewatch
@@ -38,8 +40,6 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 128Mi
-    defaultPodOptions:
-      serviceAccountName: kubewatch
     persistence:
       config:
         type: configMap

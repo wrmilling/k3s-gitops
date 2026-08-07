@@ -24,6 +24,8 @@ spec:
       main:
         type: deployment
         replicas: 1
+        serviceAccount:
+          name: k8s-event-exporter
         containers:
           main:
             # TODO: confirm current maintained image/tag before applying -
@@ -39,8 +41,6 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 128Mi
-    defaultPodOptions:
-      serviceAccountName: k8s-event-exporter
     persistence:
       config:
         type: configMap
