@@ -33,7 +33,7 @@ spec:
               repository: docker.io/robustadev/kubewatch
               tag: v2.13.0
             env:
-              HOME: /config
+              KW_CONFIG: /config
             resources:
               requests:
                 cpu: 10m
