@@ -28,11 +28,9 @@ spec:
           name: k8s-event-exporter
         containers:
           main:
-            # TODO: confirm current maintained image/tag before applying -
-            # upstream is opsgenie/kubernetes-event-exporter, GHCR mirror below.
             image:
               repository: ghcr.io/opsgenie/kubernetes-event-exporter
-              tag: latest
+              tag: v0.11
             args:
               - -conf=/data/config.yaml
             resources:
