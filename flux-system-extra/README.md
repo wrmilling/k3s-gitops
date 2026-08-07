@@ -9,15 +9,14 @@ Service configurations and secrets that can be used cluster wide for consistency
 * [cluster/cluster-secrets.sops.yaml](cluster/cluster-secrets.sops.yaml) - Cluster secrets encrypted with Mozilla SOPS
 * [cluster/cluster-settings.yaml](cluster/cluster-settings.yaml) - Cluster settings in a config map
 
-## discord-alerts
+## matrix-alerts
 
-![FluxBot Alert](https://i.imgur.com/XRnEra4.png)
+Basic Flux alerts sent to a private Matrix room via the notification-controller's native
+`matrix` provider (no bridge required).
 
-Basic discord alerts from flux to my private discord channel.
-
-* [discord-alerts/alert.yaml](discord-alerts/alert.yaml) - Defines the alerts that are valid for discord
-* [discord-alerts/provider.yaml](discord-alerts/provider.yaml) - Defines where the alerts go and via what path
-* [discord-alerts/discord-webhook-url.sops.yaml](discord-alerts/discord-webhook-url.sops.yaml) - My encrypted secret for the discord webhook
+* [matrix-alerts/alert.yaml](matrix-alerts/alert.yaml) - Defines the alerts that are valid for Matrix
+* [matrix-alerts/provider.yaml](matrix-alerts/provider.yaml) - Defines where the alerts go and via what path
+* [matrix-alerts/matrix-token.secret.yaml](matrix-alerts/matrix-token.secret.yaml) - References the Matrix bot access token from cluster-secrets
 
 ## github-alerts
 
