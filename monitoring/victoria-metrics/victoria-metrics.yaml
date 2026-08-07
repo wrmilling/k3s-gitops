@@ -21,7 +21,7 @@ spec:
     fullnameOverride: stack
 
     defaultDashboards:
-      enabled: true
+      enabled: false
 
     vmsingle:
       enabled: true
