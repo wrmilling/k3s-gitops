@@ -8,6 +8,8 @@ data:
   config.yaml: |
     logLevel: error
     logFormat: json
+    kubeQPS: 60
+    kubeBurst: 60
     route:
       # Drop the noisiest routine lifecycle reasons; everything else (in
       # particular all Warning-type events: crashloops, OOMKilled, image

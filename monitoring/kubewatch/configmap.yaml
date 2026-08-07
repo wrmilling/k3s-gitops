@@ -21,7 +21,7 @@ data:
       services: true
       pod: true
       job: true
-      node: true
+      node: false
       clusterrole: true
       clusterrolebinding: true
       serviceaccount: false

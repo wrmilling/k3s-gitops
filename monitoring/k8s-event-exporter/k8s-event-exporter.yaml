@@ -31,8 +31,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/opsgenie/kubernetes-event-exporter
-              tag: v0.11
+              repository: ghcr.io/resmoio/kubernetes-event-exporter
+              tag: v1.7
             args:
               - -conf=/data/config.yaml
             resources:
