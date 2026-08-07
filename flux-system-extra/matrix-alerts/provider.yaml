@@ -7,6 +7,6 @@ metadata:
 spec:
   type: matrix
   address: https://synapse.${SECRET_DOMAIN}
-  channel: ${SECRET_FLUX_MATRIX_ROOM_ID}
+  channel: "${SECRET_FLUX_MATRIX_ROOM_ID}"
   secretRef:
     name: matrix-token
