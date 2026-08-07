@@ -194,6 +194,13 @@ spec:
           cluster: k3s
         extraArgs:
           promscrape.maxScrapeSize: "32MB"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 50m
+            memory: 200Mi
       ingress:
         enabled: false
       route:
