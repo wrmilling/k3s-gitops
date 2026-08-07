@@ -22,5 +22,3 @@ data:
       - name: "matrix"
         webhook:
           endpoint: "${SECRET_HOOKSHOT_K8S_EVENTS_URL}"
-          headers:
-            Content-Type: "application/json"
