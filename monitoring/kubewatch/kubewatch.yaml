@@ -26,6 +26,8 @@ spec:
         replicas: 1
         serviceAccount:
           name: kubewatch
+        pod:
+          automountServiceAccountToken: true
         containers:
           main:
             # renovate: datasource=docker depName=robustadev/kubewatch

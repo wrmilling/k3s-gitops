@@ -26,6 +26,8 @@ spec:
         replicas: 1
         serviceAccount:
           name: k8s-event-exporter
+        pod:
+          automountServiceAccountToken: true
         containers:
           main:
             image:
