@@ -7,6 +7,14 @@ metadata:
 spec:
   type: matrix
   address: https://synapse.${SECRET_DOMAIN}
-  channel: "${SECRET_FLUX_MATRIX_ROOM_ID}"
+  # The literal "!" must stay in the template, not the secret value: kustomize's
+  # kyaml build strips quotes from scalars it judges safe as bare plain YAML
+  # (e.g. "${SECRET_FLUX_MATRIX_ROOM_ID}" on its own), and Flux's postBuild
+  # substitution runs after that on the now-unquoted text. A room ID value
+  # starting with "!" then gets misparsed as a YAML tag indicator and silently
+  # resolves to an empty string. Having "!" hardcoded here forces kyaml to
+  # keep the field quoted through the whole build, so the substituted value
+  # round-trips correctly.
+  channel: "!${SECRET_FLUX_MATRIX_ROOM_ID}"
   secretRef:
     name: matrix-token
