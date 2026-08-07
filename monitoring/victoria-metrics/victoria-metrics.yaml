@@ -172,6 +172,8 @@ spec:
         scrapeInterval: 20s
         externalLabels:
           cluster: k3s
+        extraArgs:
+          promscrape.maxScrapeSize: "32MB"
       ingress:
         enabled: false
       route:
