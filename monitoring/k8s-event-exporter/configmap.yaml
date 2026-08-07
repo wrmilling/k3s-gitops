@@ -22,3 +22,10 @@ data:
       - name: "matrix"
         webhook:
           endpoint: "${SECRET_HOOKSHOT_K8S_EVENTS_URL}"
+          # Hookshot's generic webhook renders a top-level "text" key as the
+          # Matrix message body (Markdown -> HTML), so reshape the raw event
+          # into one short line instead of dumping the full JSON payload.
+          layout:
+            text: |
+              {{ if eq .Type "Warning" }}⚠️{{ else }}ℹ️{{ end }} **{{ .Reason }}** `{{ .InvolvedObject.Kind }}/{{ .InvolvedObject.Namespace }}/{{ .InvolvedObject.Name }}`
+              {{ .Message }}{{ if gt .Count 1 }} _(x{{ .Count }})_{{ end }}
