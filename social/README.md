@@ -25,7 +25,7 @@ Provides configuration for all my social media focused applications.
 
 ## Synapse
 
-* [synapse/synapse.yaml](synapse/synapse.yaml) - HelmRelease for Synapse
+* [synapse/synapse.yaml](synapse/synapse.yaml) - HelmRelease for Synapse, including the Hookshot generic-webhook bridge used to deliver Alertmanager and Kubernetes-event notifications to Matrix
 * [synapse/synapse-test.yaml](synapse/synapse-test.yaml) - Test Synapse deployment
-* [synapse/pvc.yaml](synapse/pvc.yaml) - PVC for Synapse
+* [synapse/pvc.yaml](synapse/pvc.yaml) - PVC for Synapse (and Hookshot's `synapse-hookshot-pvc`)
 * [synapse/appservices.secret.yaml](synapse/appservices.secret.yaml) - Appservice secrets

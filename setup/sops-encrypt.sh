@@ -18,7 +18,6 @@ seal 'cert-manager/cert-manager' 'route53-api-key'
 
 # flux-system
 seal 'flux-system-extra/github-alerts' 'github-api-token'
-seal 'flux-system-extra/discord-alerts' 'discord-webhook-url'
 
 # kube-system
 seal 'kube-system/openldap' 'openldap-secrets'
