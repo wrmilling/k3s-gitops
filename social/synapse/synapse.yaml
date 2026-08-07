@@ -56,10 +56,19 @@ spec:
         database: synapse-mas
         sslMode: prefer
 
-    # hookshot:
-    #   enabled: true
-    #   storage:
-    #     existingClaim: synapse-hookshot-pvc
+    hookshot:
+      enabled: true
+      storage:
+        existingClaim: synapse-hookshot-pvc
+      config:
+        generic:
+          enabled: true
+          outbound: false
+          # TODO: confirm the in-cluster Service name/port ess-helm generates for hookshot
+          # after first deploy (kubectl -n social get svc) and correct this urlPrefix.
+          urlPrefix: "http://synapse-hookshot.social.svc.cluster.local:9000/webhook"
+          allowJsTransformationFunctions: true
+          waitForComplete: false
 
     synapse:
       ingress:
