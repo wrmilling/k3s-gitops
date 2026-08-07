@@ -84,38 +84,38 @@ spec:
             - matchers:
                 - severity = "critical"
                 - alertname=~"Host.*|Node.*|Zfs.*|UPS.*|Smartctl.*"
-              receiver: "critical-discord"
+              receiver: "critical-matrix"
               group_by: ["alertname", "instance"]
               group_wait: 10s
               continue: false
             - matchers:
                 - severity = "warning"
                 - alertname=~"Host.*|Node.*|Zfs.*|UPS.*|Smartctl.*"
-              receiver: "warning-discord"
+              receiver: "warning-matrix"
               group_by: ["alertname", "instance"]
               continue: false
             - matchers:
                 - severity = "critical"
                 - alertname=~".*Pod.*|.*Container.*|.*Deployment.*|Cert.*|Flux.*|VolSync.*|Envoy.*|PG.*"
-              receiver: "critical-discord"
+              receiver: "critical-matrix"
               group_by: ["alertname", "namespace"]
               group_wait: 10s
               continue: false
             - matchers:
                 - severity = "warning"
                 - alertname=~".*Pod.*|.*Container.*|.*Deployment.*|Cert.*|Flux.*|VolSync.*|Envoy.*|PG.*"
-              receiver: "warning-discord"
+              receiver: "warning-matrix"
               group_by: ["alertname", "namespace"]
               continue: false
             - matchers:
                 - severity = "critical"
-              receiver: "critical-discord"
+              receiver: "critical-matrix"
               group_by: ["alertname"]
               group_wait: 10s
               continue: false
             - matchers:
                 - severity = "warning"
-              receiver: "warning-discord"
+              receiver: "warning-matrix"
               group_by: ["alertname"]
               continue: false
         inhibit_rules:
@@ -138,36 +138,14 @@ spec:
               - alertname = "InfoInhibitor"
         receivers:
           - name: "blackhole"
-          - name: "critical-discord"
-            discord_configs:
-              - webhook_url: "${SECRET_KPS_SLACK_API_URL}"
+          - name: "critical-matrix"
+            webhook_configs:
+              - url: "${SECRET_HOOKSHOT_CRITICAL_ALERTS_URL}"
                 send_resolved: true
-                title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if eq .Status "firing" }}🔥{{ else }}✅{{ end }} {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }}{{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}'
-                message: |-
-                  {{ range .Alerts -}}
-                  **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-
-                  {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }}{{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }}{{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
-
-                  🏷 **Labels:**
-                  {{ range .Labels.SortedPairs }} • {{ .Name }}: {{ .Value }}
-                  {{ end }}
-                  {{ end }}
-          - name: "warning-discord"
-            discord_configs:
-              - webhook_url: "${SECRET_KPS_SLACK_API_URL}"
+          - name: "warning-matrix"
+            webhook_configs:
+              - url: "${SECRET_HOOKSHOT_WARNING_ALERTS_URL}"
                 send_resolved: true
-                title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ if eq .Status "firing" }}⚠️{{ else }}✅{{ end }} {{ if ne .CommonAnnotations.summary ""}}{{ .CommonAnnotations.summary }}{{ else if ne .CommonAnnotations.message ""}}{{ .CommonAnnotations.message }}{{ else if ne .CommonAnnotations.description ""}}{{ .CommonAnnotations.description }}{{ else }}{{ .CommonLabels.alertname }}{{ end }}'
-                message: |-
-                  {{ range .Alerts -}}
-                  **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-
-                  {{ if ne .Annotations.summary ""}}**Summary:** {{ .Annotations.summary }}{{ else if ne .Annotations.message ""}}**Message:** {{ .Annotations.message }}{{ else if ne .Annotations.description ""}}**Description:** {{ .Annotations.description }}{{ end }}
-
-                  🏷 **Labels:**
-                  {{ range .Labels.SortedPairs }} • {{ .Name }}: {{ .Value }}
-                  {{ end }}
-                  {{ end }}
 
     vmalert:
       enabled: true
