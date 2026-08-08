@@ -21,7 +21,7 @@ spec:
       persistence:
         enabled: true
         existingClaim: "mastodon-valkey-data"
-      resourcesPreset: "nano"
+      resourcesPreset: "micro"
     replica:
       replicaCount: 0
     metrics:

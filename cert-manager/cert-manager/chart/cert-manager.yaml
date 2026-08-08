@@ -22,10 +22,22 @@ spec:
     crds: CreateReplace
   values:
     installCRDs: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 96Mi
+      limits:
+        memory: 256Mi
     webhook:
       tolerations:
       - key: "arm"
         operator: "Exists"
+      resources:
+        requests:
+          cpu: 10m
+          memory: 48Mi
+        limits:
+          memory: 128Mi
     extraArgs:
     - --dns01-recursive-nameservers=1.1.1.1:53
     - --dns01-recursive-nameservers-only
@@ -39,6 +51,12 @@ spec:
       tolerations:
       - key: "arm"
         operator: "Exists"
+      resources:
+        requests:
+          cpu: 10m
+          memory: 192Mi
+        limits:
+          memory: 384Mi
     prometheus:
       enabled: true
       servicemonitor:
