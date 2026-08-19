@@ -34,8 +34,7 @@
   platformAutomerge: true,
   commitBodyTable: true,
   platformCommit: 'disabled',
-  gitAuthor: 'Winston R. Milling <wrmilling@users.noreply.github.com>',
-  commitBody: 'Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>',
+  commitBody: 'Signed-off-by: Winston R. Milling <winston@milli.ng>',
   ignorePaths: [
     'setup/**',
     '.taskfiles/**',
