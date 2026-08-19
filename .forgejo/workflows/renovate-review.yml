@@ -114,6 +114,10 @@ jobs:
         if: steps.gate.outputs.gated == 'true'
         env:
           BASE_SHA: ${{ steps.pr.outputs.base_sha }}
+          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
+          API: ${{ github.api_url }}
+          REPO: ${{ github.repository }}
+          PR: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
           {
@@ -133,12 +137,19 @@ jobs:
           } > pr-context.md
           git diff "$BASE_SHA...HEAD" >> pr-context.md
 
+          # Prefetched so Claude can Read this instead of spending a curl turn on it.
+          curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$API/repos/$REPO/pulls/$PR/reviews" \
+            > pr-reviews.json || echo '[]' > pr-reviews.json
+
       - name: Run Claude review
         id: claude
         if: steps.gate.outputs.gated == 'true'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
+          FORGEJO_API: ${{ github.api_url }}
+          REPO: ${{ github.repository }}
+          PR: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
 
@@ -187,45 +198,34 @@ jobs:
 
           ## Tool notes
 
-          - `Bash(curl:*)` is your only way to talk to the Forgejo API — there is no `gh` CLI
-            available in this environment; it does not work against this Forgejo instance's API.
-            Authenticate Forgejo API calls with `-H "Authorization: token $CLAUDE_REVIEWER_TOKEN"`.
-          - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search —
-            not `curl`. Unauthenticated calls to github.com's API are heavily rate-limited; prefer
-            WebFetch on a raw file URL (`https://raw.githubusercontent.com/<org>/<repo>/<ref>/<path>`)
-            or a GitHub web page over trying to script the GitHub REST API with `curl`.
-          - Build JSON payloads for Forgejo API writes with `jq -n --arg`, not a hand-written
-            heredoc — a heredoc containing multi-line markdown text produces invalid JSON (raw
-            newlines aren't valid inside a JSON string).
+          - There is no `gh` CLI or direct Forgejo API access in this environment — all Forgejo
+            interaction is pre-fetched into files for you, or wrapped in a script (see below).
+            You should not need `curl` at all.
+          - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search.
 
           ## Pre-check: skip redundant re-reviews
 
-          Before doing any research, check whether you have already reviewed this PR:
-          ```
-          curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" \
-            "$FORGEJO_API/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.number }}/reviews"
-          ```
-          Filter for entries where `.user.login` equals your reviewer identity above and `.state`
-          is `APPROVED` or `CHANGES_REQUESTED`. If a prior review exists, compare the package
-          version(s) in the current diff against the versions mentioned in that review. If they are
-          identical (i.e. Renovate just rebased without changing versions), stop immediately
-          without posting a new review. Only proceed with a full review if the versions changed or
-          new packages were added since the last review.
+          Before doing any research, `Read` `pr-reviews.json` in the repo root (already fetched —
+          do not re-fetch it). Filter for entries where `.user.login` equals your reviewer identity
+          above and `.state` is `APPROVED` or `CHANGES_REQUESTED`. If a prior review exists, compare
+          the package version(s) in the current diff against the versions mentioned in that review.
+          If they are identical (i.e. Renovate just rebased without changing versions), stop
+          immediately without posting a new review. Only proceed with a full review if the versions
+          changed or new packages were added since the last review.
 
           ## Tool Use Efficiency
 
-          When you need multiple independent read-only lookups — Grep/Glob/Read on repo files,
-          git log, or independent curl calls to the Forgejo API — issue them as parallel tool
-          calls in a single turn rather than one at a time.
+          When you need multiple independent read-only lookups — Grep/Glob/Read on repo files or
+          git log — issue them as parallel tool calls in a single turn rather than one at a time.
 
           **Prefer `Grep`/`Glob`/`Read`** over shell commands for repo files — one
           `Grep "pattern" "**/*.yaml"` call beats ten sequential `grep -r`/`find`
           invocations and uses far fewer turns.
 
-          **Anti-thrash rule:** If a search (`Grep`, `Glob`, `curl`, or `WebSearch`) returns
-          empty, that means the thing is absent — stop searching. Do **not** re-run the same
-          query with permuted patterns, synonyms, or similar terms. One empty result is a
-          conclusive answer; re-running wastes turns without new information.
+          **Anti-thrash rule:** If a search (`Grep`, `Glob`, or `WebSearch`) returns empty, that
+          means the thing is absent — stop searching. Do **not** re-run the same query with
+          permuted patterns, synonyms, or similar terms. One empty result is a conclusive answer;
+          re-running wastes turns without new information.
 
           ## Repo File Discovery
 
@@ -238,8 +238,8 @@ jobs:
              `Read` the file. If it is present, there is no need for any upstream fetch.
           2. **If the file is only upstream** (e.g. on GitHub), use `WebFetch` on the raw file
              URL (`https://raw.githubusercontent.com/<org>/<repo>/<ref>/<path>`) rather than
-             trying to script GitHub's tree/contents API with `curl` — there is no GitHub token
-             available here, and unauthenticated API calls are heavily rate-limited.
+             trying to script GitHub's tree/contents API — there is no GitHub token available
+             here, and unauthenticated API calls are heavily rate-limited.
 
           ## Review Depth
 
@@ -340,40 +340,20 @@ jobs:
 
           ## Submitting the Review
 
-          Submit your findings as **exactly one** PR review via curl, then stop — do not call the
-          reviews endpoint again even if you keep researching afterward.
+          Submit your findings as **exactly one** PR review, then stop. This is two tool calls:
 
-          **Before posting, dismiss any stale reviews of your own** (keeps only the current
-          verdict visible and prevents stacking on rebases). Fetch your prior reviews and filter
-          to your own identity and an active state:
-          ```
-          curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" \
-            "$FORGEJO_API/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.number }}/reviews" \
-            | jq -r --arg me "${{ env.REVIEWER_LOGIN }}" \
-              '.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "CHANGES_REQUESTED")) | .id'
-          ```
-          For each returned `<review_id>`:
-          ```
-          curl -sf -X POST -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" \
-            "$FORGEJO_API/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.number }}/reviews/<review_id>/dismissals" \
-            -H "Content-Type: application/json" \
-            -d '{"message":"Superseded by updated review"}'
-          ```
-          If there are no prior reviews from you (empty list), skip the dismissal loop and proceed
-          directly to posting. Do not dismiss reviews from human users.
+          1. `Write` your review body (the markdown template below) to `/tmp/review-body.md`.
+          2. Run this single Bash command:
+             ```
+             bash .forgejo/scripts/post-review.sh <EVENT> /tmp/review-body.md
+             ```
+             where `<EVENT>` is `APPROVED` if the upgrade is safe (no actionable findings), or
+             `REQUEST_CHANGES` if there are breaking changes or deprecations that affect this repo.
 
-          Use `"event": "APPROVED"` if the upgrade is safe (no actionable findings). Use
-          `"event": "REQUEST_CHANGES"` if there are breaking changes or deprecations that affect
-          this repo. Build the payload with `jq --arg`, not a heredoc:
-          ```
-          payload=$(jq -n --arg event "APPROVED" --arg body "$REVIEW_BODY" '{event: $event, body: $body}')
-          curl -sf -X POST \
-            -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" \
-            -H "Content-Type: application/json" \
-            "$FORGEJO_API/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.number }}/reviews" \
-            -d "$payload"
-          ```
-          Once this call succeeds, your work is done — do not make any further tool calls.
+          That script fetches your prior reviews, dismisses any stale ones of your own (so only
+          the current verdict is visible), and posts the new review — you do not need to call the
+          Forgejo API yourself for any of that. Once it succeeds, your work is done — do not make
+          any further tool calls, and do not run it a second time.
 
           Structure the review body as follows (omit empty sections):
 
@@ -431,7 +411,7 @@ jobs:
             --output-format stream-json \
             --verbose \
             --permission-mode auto \
-            --allowedTools "Read,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(curl:*),WebFetch,WebSearch" \
+            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(bash .forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
             --disallowedTools "Task,Agent" \
             | tee /tmp/claude-transcript.jsonl \
             | tail -1 > /tmp/claude-result.json
