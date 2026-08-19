@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: helm-release-annotations
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  helm-releases:
+    runs-on: alpine-tokyo
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Install yq
+        run: |
+          set -euo pipefail
+          wget -O /tmp/yq https://github.com/mikefarah/yq/releases/download/v4.53.3/yq_linux_amd64
+          chmod +x /tmp/yq
+          echo "/tmp" >> "$GITHUB_PATH"
+
+      - name: Commit, push, and open/update PR for HelmRelease annotations
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          branch="helm-release-annotations"
+          base="${{ github.ref_name }}"
+          title="[renovate] create helmrelease annotations [ci-skip]"
+          body="Signed-off-by: Winston R. Milling <wrmilling@users.noreply.github.com>"
+
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No changes to commit; skipping."
+            exit 0
+          fi
+
+          git checkout -B "$branch"
+          git commit -sam "Create renovatebot helmrelease annotations"
+          git -c http.extraheader="Authorization: token $GH_TOKEN" push -f origin "$branch"
+
+          api="${{ github.api_url }}/repos/${{ github.repository }}"
+          existing=$(curl -sf -H "Authorization: token $GH_TOKEN" \
+            "$api/pulls?state=open&type=all" \
+            | jq --arg h "$branch" '[.[] | select(.head.ref == $h)]')
+          pr_id=$(printf '%s' "$existing" | jq -r 'first(.[].number) // empty')
+
+          # Forgejo's PR API takes label IDs, not names; resolve the id best-effort.
+          label_id=$(curl -sf -H "Authorization: token $GH_TOKEN" "$api/labels" 2>/dev/null \
+            | jq -r '[.[] | select(.name=="renovate/helm-release-annotations")][0].id // empty' || true)
+
+          payload=$(jq -n --arg t "$title" --arg b "$body" '{title: $t, body: $b}')
+
+          if [[ -n "$pr_id" ]]; then
+            curl -sf -X PATCH -H "Authorization: token $GH_TOKEN" -H "Content-Type: application/json" \
+              "$api/pulls/$pr_id" -d "$payload"
+          elif [[ -n "$label_id" ]]; then
+            create_payload=$(jq -n --arg t "$title" --arg b "$body" --arg h "$branch" --arg base "$base" --argjson lbl "$label_id" \
+              '{title: $t, body: $b, head: $h, base: $base, labels: [$lbl]}')
+            curl -sf -X POST -H "Authorization: token $GH_TOKEN" -H "Content-Type: application/json" \
+              "$api/pulls" -d "$create_payload"
+          else
+            create_payload=$(jq -n --arg t "$title" --arg b "$body" --arg h "$branch" --arg base "$base" \
+              '{title: $t, body: $b, head: $h, base: $base}')
+            curl -sf -X POST -H "Authorization: token $GH_TOKEN" -H "Content-Type: application/json" \
+              "$api/pulls" -d "$create_payload"
+          fi
