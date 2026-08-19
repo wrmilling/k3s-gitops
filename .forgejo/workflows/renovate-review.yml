@@ -20,6 +20,10 @@ jobs:
     name: Breaking Change Analysis
     runs-on: alpine-tokyo
     timeout-minutes: 25
+    env:
+      # CLAUDE_REVIEWER_TOKEN's Forgejo login. Hardcoded because resolving it via
+      # `curl .../user` needs a token scope this token doesn't have.
+      REVIEWER_LOGIN: claude
     steps:
       - name: Resolve PR
         id: pr
@@ -105,17 +109,6 @@ jobs:
             echo "max_turns=25" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Resolve reviewer identity
-        id: whoami
-        if: steps.gate.outputs.gated == 'true'
-        env:
-          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
-          API: ${{ github.api_url }}
-        run: |
-          set -euo pipefail
-          login=$(curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$API/user" | jq -r '.login')
-          echo "login=$login" >> "$GITHUB_OUTPUT"
-
       - name: Gather PR evidence
         id: evidence
         if: steps.gate.outputs.gated == 'true'
@@ -158,7 +151,7 @@ jobs:
           PR: #${{ steps.pr.outputs.number }}
           FORGEJO_API: ${{ github.api_url }}
           REVIEW DEPTH: ${{ steps.model_tier.outputs.depth }}
-          YOUR REVIEWER IDENTITY (Forgejo login): ${{ steps.whoami.outputs.login }}
+          YOUR REVIEWER IDENTITY (Forgejo login): ${{ env.REVIEWER_LOGIN }}
 
           ## Repo Context
 
@@ -356,7 +349,7 @@ jobs:
           ```
           curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" \
             "$FORGEJO_API/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.number }}/reviews" \
-            | jq -r --arg me "${{ steps.whoami.outputs.login }}" \
+            | jq -r --arg me "${{ env.REVIEWER_LOGIN }}" \
               '.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "CHANGES_REQUESTED")) | .id'
           ```
           For each returned `<review_id>`:
@@ -454,7 +447,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           IS_RENOVATE: ${{ steps.gate.outputs.is_renovate }}
           GATED: ${{ steps.gate.outputs.gated }}
-          REVIEWER_LOGIN: ${{ steps.whoami.outputs.login }}
+          REVIEWER_LOGIN: ${{ env.REVIEWER_LOGIN }}
         run: |
           set -euo pipefail
           context="claude/renovate-review"
