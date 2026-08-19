@@ -46,7 +46,14 @@ spec:
 - **Never create or commit real secret values.** Stub what's needed and tell the user how to create it.
 
 ## Dependencies
-Renovate manages image/chart bumps (`.github/renovate.json5` + `.github/renovate/`); images are digest-pinned. A Claude workflow (`.github/workflows/renovate-review.yaml`) reviews Renovate PRs.
+Renovate manages image/chart bumps (`.github/renovate.json5` + `.github/renovate/`); images are digest-pinned. A Claude workflow (`.forgejo/workflows/renovate-review.yml`) reviews Renovate PRs.
+
+## CI (Forgejo)
+`origin` is the self-hosted Forgejo instance; `github` is a secondary remote that Flux still watches for reconciliation. `.forgejo/workflows/repo-sync.yml` mirrors `main` from Forgejo to GitHub (and Codeberg/GitLab/SourceHut) on every push, so pushing to Forgejo is sufficient to keep Flux in sync — there is no reverse GitHub→Forgejo sync workflow.
+
+Workflows run on external Forgejo Actions runners (NixOS hosts registered against this Forgejo instance from the `nixos-configuration` repo, label `alpine-tokyo`), not an in-cluster runner. The Renovate engine itself also runs externally as a continuous self-hosted service (`services.renovate` on the `bart` host, `platform: forgejo`, `autodiscover: true`) — this repo's `.github/renovate.json5` supplies only the repo-level config, not the engine.
+
+Claude PR review (`.forgejo/workflows/renovate-review.yml`) invokes `nix run github:sadjow/claude-code-nix` directly and talks to the Forgejo API via `curl`/`jq` (there is no `anthropics/claude-code-action` for Forgejo, and no `gh` CLI on the runner). It gates on PRs whose branch starts with `renovate/`.
 
 ## Working notes
 - Flux and Kubernetes MCP tools are available for live cluster state (logs, events, resources, Flux reconciliation status) — use them to investigate and verify.
