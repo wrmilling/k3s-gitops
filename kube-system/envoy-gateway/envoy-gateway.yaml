@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=oci://mirror.gcr.io/envoyproxy
       chart: gateway-helm
-      version: v1.8.3
+      version: v1.9.0
       sourceRef:
         kind: HelmRepository
         name: envoy-gateway-charts
@@ -19,6 +19,14 @@ spec:
   install:
     createNamespace: true
   values:
+    # v1.9.0 moved this ValidatingAdmissionPolicy from the chart's crds/ bundle into
+    # templates/; unused in this repo, so skip rendering it rather than depend on Helm
+    # ownership annotations continuing to line up across the crds/->templates/ move.
+    # See https://gateway.envoyproxy.io/news/releases/notes/v1.9.0/
+    crds:
+      gatewayAPI:
+        safeUpgradePolicy:
+          enabled: false
     config:
       envoyGateway:
         gateway:
