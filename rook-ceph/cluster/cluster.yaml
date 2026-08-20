@@ -37,6 +37,21 @@ spec:
   skipUpgradeChecks: false
   # Whether or not continue if PGs are not clean during an upgrade
   continueUpgradeAfterChecksEvenIfNotHealthy: false
+  # One-time cephx key rotation to the AES256K key type (requires Ceph v20.2.4+ / Rook
+  # v1.20.5+, both already in use here, and kernel 7.0+ on every node -- confirmed all
+  # nodes are on 7.1.3). Clears the AUTH_INSECURE_* health warnings/errors that appeared
+  # after the v20.2.4/v1.20.5 upgrade. allowedCiphers is deliberately not set yet -- that
+  # should only be added once rotation has actually completed cluster-wide, otherwise it
+  # would lock out any client that hasn't rotated yet.
+  # See https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanced/cephx-key-rotation/
+  security:
+    cephx:
+      daemon:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
+      csi:
+        keyRotationPolicy: KeyGeneration
+        keyGeneration: 2
   mon:
     # Set the number of mons to be started. Must be an odd number, and is generally recommended to be 3.
     count: 3
