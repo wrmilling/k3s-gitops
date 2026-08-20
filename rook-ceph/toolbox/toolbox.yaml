@@ -27,17 +27,18 @@ spec:
             runAsNonRoot: true
             runAsUser: 2016
             runAsGroup: 2016
+          # ROOK_CEPH_SECRET is deliberately not set: toolbox.sh's write_keyring()
+          # prefers the env var over the ceph-admin-secret mount below when both are
+          # present, but the env var is a snapshot taken at pod creation and never
+          # updates -- it went stale the moment cephx keys were rotated. Leaving it
+          # unset makes the fallback path (reading the live-synced mounted file) the
+          # one that's actually used, so future rotations don't need a pod restart.
           env:
             - name: ROOK_CEPH_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: rook-ceph-mon
                   key: ceph-username
-            - name: ROOK_CEPH_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: rook-ceph-mon
-                  key: ceph-secret
           volumeMounts:
             - mountPath: /etc/ceph
               name: ceph-config
