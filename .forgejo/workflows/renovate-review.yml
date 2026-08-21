@@ -326,6 +326,13 @@ jobs:
           Map each finding from the research step against what this repository actually uses. A
           breaking change that affects a feature we don't use is not actionable.
 
+          If this PR bumps the `rook-ceph` Helm chart version, also check whether
+          `csi.cephcsi.tag: v3.17.1` in `rook-ceph/chart/rook-ceph-chart.yaml` can be dropped:
+          it pins past the chart's own default because that default lagged Ceph's aes256k
+          cephx key type (this cluster's csi cephx keys are rotated to aes256k). If the new
+          chart version's own default `csi.cephcsi.tag` is v3.17.1 or later, note it under
+          **New features worth adopting** in the review body: the override can be deleted.
+
           ### 4. Categorize
 
           Sort actionable findings into four buckets:
