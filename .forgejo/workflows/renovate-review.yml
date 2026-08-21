@@ -326,6 +326,24 @@ jobs:
           Map each finding from the research step against what this repository actually uses. A
           breaking change that affects a feature we don't use is not actionable.
 
+          ### 3b. Workaround-reversibility check (rook-ceph PRs only)
+
+          If this PR bumps the `rook-ceph` Helm chart version, check whether our temporary
+          cephcsi workaround can now be dropped: `rook-ceph/chart/rook-ceph-chart.yaml` pins
+          `csi.cephcsi.repository`/`tag` to a self-built image
+          (`rook-ceph/csi/cephcsi-patched/Dockerfile`) because ceph-csi v3.17.0 -- the version
+          Rook v1.20.5/v1.20.6 default to -- bundles a Ceph 20.2.1 client that can't
+          authenticate with this cluster's aes256k-rotated CSI cephx keys.
+
+          Find the new chart version's default `csi.cephcsi.tag`
+          (`https://raw.githubusercontent.com/rook/rook/release-<X.Y>/deploy/charts/rook-ceph/values.yaml`)
+          and check what Ceph client version that ceph-csi release bundles (its release notes
+          or Dockerfile base image). If it's Ceph 20.2.4 or newer, add a
+          **Workaround reversibility** section to the review body (regardless of verdict)
+          telling the maintainer the workaround can now be reverted, per
+          `rook-ceph/csi/cephcsi-patched/Dockerfile`'s own header comment. Skip this check
+          entirely for PRs that don't touch the rook-ceph chart version.
+
           ### 4. Categorize
 
           Sort actionable findings into four buckets:
@@ -373,6 +391,10 @@ jobs:
 
           **Known issues**:
           - [Issue title/link] — [brief description of impact]
+
+          **Workaround reversibility** (rook-ceph chart bumps only, see step 3b):
+          - [Whether the cephcsi image workaround in rook-ceph/chart/rook-ceph-chart.yaml can
+            now be reverted, and why]
 
           **Not applicable to this repo**:
           - [Finding] — [why it doesn't apply]

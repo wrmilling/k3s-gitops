@@ -3,3 +3,6 @@
 .builds
 .sops.yaml
 .pre-commit-config.yaml
+.markdownlint.yaml
+.yamllint.yaml
+renovate.json5

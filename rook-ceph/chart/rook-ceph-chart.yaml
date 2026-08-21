@@ -26,6 +26,12 @@ spec:
       # host networking, plugin tolerations, CephFS enable/disable) now live in the
       # ceph-csi-drivers HelmRelease (rook-ceph/csi/ceph-csi-drivers.yaml).
       installCsiOperator: true
+      # Temporary: pin to our own patched image (rook-ceph/csi/cephcsi-patched/)
+      # until upstream ceph-csi ships a release bundling a Ceph 20.2.4+ client --
+      # see that Dockerfile's header comment for the full reason and revert steps.
+      cephcsi:
+        repository: git.${SECRET_DOMAIN}/wrmilling/cephcsi-patched
+        tag: v3.17.0-ceph20.2.4
     resources:
       limits:
         cpu: 1000m
