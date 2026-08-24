@@ -22,12 +22,6 @@
 * [nzbget/pvc.yaml](nzbget/pvc.yaml) - PVC for NZBGet
 * [nzbget/volsync.yaml](nzbget/volsync.yaml) - Volsync backup for NZBGet PVC
 
-## overseearr
-
-* [overseearr/overseearr.yaml](overseearr/overseearr.yaml) - HelmRelease for Overseerr
-* [overseearr/pvc.yaml](overseearr/pvc.yaml) - PVC for Overseerr
-* [overseearr/volsync.yaml](overseearr/volsync.yaml) - Volsync backup for Overseerr PVC
-
 ## plex
 
 * [plex/plex.yaml](plex/plex.yaml) - HelmRelease for Plex
@@ -64,6 +58,12 @@
 * [recyclarr/recyclarr.yaml](recyclarr/recyclarr.yaml) - HelmRelease for Recyclarr
 * [recyclarr/pvc.yaml](recyclarr/pvc.yaml) - PVC for Recyclarr
 * [recyclarr/volsync.yaml](recyclarr/volsync.yaml) - Volsync backup for Recyclarr PVC
+
+## seerr
+
+* [seerr/seerr.yaml](seerr/seerr.yaml) - HelmRelease for Seerr (Overseerr's successor)
+* [seerr/pvc.yaml](seerr/pvc.yaml) - PVC for Seerr
+* [seerr/volsync.yaml](seerr/volsync.yaml) - Volsync backup for Seerr PVC
 
 ## sonarr
 

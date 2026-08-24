@@ -3,10 +3,10 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: overseearr
+  name: seerr
   namespace: media
 spec:
-  releaseName: overseearr
+  releaseName: seerr
   interval: 15m
   chart:
     spec:
@@ -27,9 +27,9 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/sct/overseerr
+              repository: ghcr.io/seerr-team/seerr
               pullPolicy: IfNotPresent
-              tag: 1.35.0
+              tag: v3.4.1@sha256:f4768de5f616248d723e05891f3345a1402123775d03bf0890dbfedc0831bda1
             env:
               TZ: America/Chicago
               LOG_LEVEL: info
@@ -59,9 +59,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1001
-        runAsGroup: 1001
-        fsGroup: 1001
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: "Always"
 
     persistence:

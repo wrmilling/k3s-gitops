@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: overseearr-restic-config
+  name: seerr-restic-config
   namespace: media
 type: Opaque
 stringData:
@@ -14,7 +14,7 @@ stringData:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: overseearr
+  name: seerr
   namespace: media
 spec:
   sourcePVC: overseearr-config-pvc
@@ -23,14 +23,14 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: overseearr-restic-config
+    repository: seerr-restic-config
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-rbdplugin-snapclass
     storageClassName: rook-ceph-block
     moverSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
     retain:
       daily: 10
       within: 3d
