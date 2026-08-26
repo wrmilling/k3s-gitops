@@ -97,3 +97,58 @@ spec:
     #   password:
     #     name: cloudnative-pg
     #     key: password
+---
+# Publishes the immich, home_assistant, forgejo, and authelia databases for
+# logical-replication migration to shared-psql-v18.
+# See shared-v18.yaml for the destination Cluster/Subscriptions.
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: immich-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v17
+  name: immich_to_v18
+  dbname: immich
+  target:
+    allTables: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: home-assistant-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v17
+  name: home_assistant_to_v18
+  dbname: home_assistant
+  target:
+    allTables: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: forgejo-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v17
+  name: forgejo_to_v18
+  dbname: forgejo
+  target:
+    allTables: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: authelia-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v17
+  name: authelia_to_v18
+  dbname: authelia
+  target:
+    allTables: true

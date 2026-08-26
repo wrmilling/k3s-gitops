@@ -91,3 +91,45 @@ spec:
     #   password:
     #     name: cloudnative-pg
     #     key: password
+---
+# Publishes the synapse, synapse-mas, and mautrix-slack databases for
+# logical-replication migration to synapse-psql-v18.
+# See synapse-v18.yaml for the destination Cluster/Subscriptions.
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: synapse-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: synapse-psql-v17
+  name: synapse_to_v18
+  dbname: synapse
+  target:
+    allTables: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: synapse-mas-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: synapse-psql-v17
+  name: synapse_mas_to_v18
+  dbname: synapse-mas
+  target:
+    allTables: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: mautrix-slack-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: synapse-psql-v17
+  name: mautrix_slack_to_v18
+  dbname: mautrix-slack
+  target:
+    allTables: true

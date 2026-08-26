@@ -91,3 +91,18 @@ spec:
     #   password:
     #     name: cloudnative-pg
     #     key: password
+---
+# Publishes the mastodon database for logical-replication migration to mastodon-psql-v18.
+# See mastodon-v18.yaml for the destination Cluster/Subscription.
+apiVersion: postgresql.cnpg.io/v1
+kind: Publication
+metadata:
+  name: mastodon-to-v18
+  namespace: default
+spec:
+  cluster:
+    name: mastodon-psql-v17
+  name: mastodon_to_v18
+  dbname: mastodon
+  target:
+    allTables: true

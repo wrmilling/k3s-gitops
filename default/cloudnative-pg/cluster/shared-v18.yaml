@@ -1,0 +1,130 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: shared-psql-v18
+  namespace: default
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+  # using only 1 replica: very difficult to drain the node where postgres is running
+  # using more than 1 replica: write amplification issues when leveraging replicated storage (e.g. ceph)
+  instances: 2
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.4-1.1.1
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 40Gi
+    storageClass: rook-ceph-block
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cloudnative-pg
+  postgresql:
+    parameters:
+      max_connections: "300"
+      shared_buffers: 512MB
+    shared_preload_libraries:
+      - "vchord.so"
+  monitoring:
+    enablePodMonitor: true
+  # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
+  enablePDB: false
+  resources:
+    requests:
+      memory: "512Mi"
+    limits:
+      memory: "2Gi"
+  backup:
+    retentionPolicy: 7d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 4
+      destinationPath: s3://postgresql/
+      endpointURL: http://minio.kube-system.svc:9000
+      serverName: shared-v18
+      s3Credentials:
+        accessKeyId:
+          name: cloudnative-pg
+          key: MINIO_ACCESS_KEY
+        secretAccessKey:
+          name: cloudnative-pg
+          key: MINIO_SECRET_KEY
+  bootstrap:
+    initdb:
+      # Schema/roles only - the Subscriptions below perform the initial data
+      # copy and then keep streaming changes so shared-psql-v17 stays
+      # authoritative (and fully writable) until cutover. The vchord/earthdistance
+      # extensions are recreated by the schema-only pg_dump/restore itself, since
+      # both are present in the source schema already.
+      import:
+        type: monolith
+        schemaOnly: true
+        databases:
+          - "*"
+        roles:
+          - "*"
+        source:
+          externalCluster: shared-psql-v17
+
+  externalClusters:
+    - name: shared-psql-v17
+      connectionParameters:
+        host: shared-psql-v17-rw.default.svc
+        user: postgres
+        dbname: postgres
+        sslmode: require
+      password:
+        name: cloudnative-pg
+        key: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Subscription
+metadata:
+  name: immich-from-v17
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v18
+  name: immich_from_v17
+  dbname: immich
+  externalClusterName: shared-psql-v17
+  publicationName: immich_to_v18
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Subscription
+metadata:
+  name: home-assistant-from-v17
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v18
+  name: home_assistant_from_v17
+  dbname: home_assistant
+  externalClusterName: shared-psql-v17
+  publicationName: home_assistant_to_v18
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Subscription
+metadata:
+  name: forgejo-from-v17
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v18
+  name: forgejo_from_v17
+  dbname: forgejo
+  externalClusterName: shared-psql-v17
+  publicationName: forgejo_to_v18
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Subscription
+metadata:
+  name: authelia-from-v17
+  namespace: default
+spec:
+  cluster:
+    name: shared-psql-v18
+  name: authelia_from_v17
+  dbname: authelia
+  externalClusterName: shared-psql-v17
+  publicationName: authelia_to_v18

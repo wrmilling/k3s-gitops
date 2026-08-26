@@ -41,12 +41,38 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: synapse-st-psql-v17
+  name: mastodon-psql-v18
   namespace: default
 spec:
-  # daily, 3am UCT
-  schedule: "0 0 5 * * *"
+  # daily, 2:30am UCT
+  schedule: "0 30 2 * * *"
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: synapse-st-psql-v17
+    name: mastodon-psql-v18
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: synapse-psql-v18
+  namespace: default
+spec:
+  # daily, 3:30am UCT
+  schedule: "0 30 3 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: synapse-psql-v18
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: shared-psql-v18
+  namespace: default
+spec:
+  # daily, 4:30am UCT
+  schedule: "0 30 4 * * *"
+  immediate: true
+  backupOwnerReference: self
+  cluster:
+    name: shared-psql-v18
