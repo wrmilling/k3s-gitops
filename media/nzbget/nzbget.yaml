@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/linuxserver/nzbget
               pullPolicy: IfNotPresent
-              tag: 24.5.20250221@sha256:9c4e5b1ce0aaab9fcb5573c7f5db7bbcdae9399e4615e233d4a345c5dbcc17f6
+              tag: 26.2.20260821@sha256:1dca6a4407e08313919d2780bf2a6bc17e21b947a6e8e34624b9e115795fcf8c
             env:
               TZ: America/Chicago
               PUID: 1000
