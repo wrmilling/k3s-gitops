@@ -88,6 +88,10 @@ spec:
   name: immich_from_v17
   dbname: immich
   externalClusterName: shared-psql-v17
+  # Without this, the replication connection defaults to the externalCluster's
+  # dbname (postgres), where the publication doesn't exist - the subscription
+  # would silently never sync any data. See the 2026-08-27 incident notes.
+  publicationDBName: immich
   publicationName: immich_to_v18
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -101,6 +105,7 @@ spec:
   name: home_assistant_from_v17
   dbname: home_assistant
   externalClusterName: shared-psql-v17
+  publicationDBName: home_assistant
   publicationName: home_assistant_to_v18
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -114,6 +119,7 @@ spec:
   name: forgejo_from_v17
   dbname: forgejo
   externalClusterName: shared-psql-v17
+  publicationDBName: forgejo
   publicationName: forgejo_to_v18
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -127,4 +133,5 @@ spec:
   name: authelia_from_v17
   dbname: authelia
   externalClusterName: shared-psql-v17
+  publicationDBName: authelia
   publicationName: authelia_to_v18

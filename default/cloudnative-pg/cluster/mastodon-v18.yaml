@@ -84,4 +84,8 @@ spec:
   name: mastodon_from_v17
   dbname: mastodon
   externalClusterName: mastodon-psql-v17
+  # Without this, the replication connection defaults to the externalCluster's
+  # dbname (postgres), where the publication doesn't exist - the subscription
+  # would silently never sync any data. See the 2026-08-27 incident notes.
+  publicationDBName: mastodon
   publicationName: mastodon_to_v18

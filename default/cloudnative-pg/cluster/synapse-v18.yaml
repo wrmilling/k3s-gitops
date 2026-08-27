@@ -84,6 +84,10 @@ spec:
   name: synapse_from_v17
   dbname: synapse
   externalClusterName: synapse-psql-v17
+  # Without this, the replication connection defaults to the externalCluster's
+  # dbname (postgres), where the publication doesn't exist - the subscription
+  # would silently never sync any data. See the 2026-08-27 incident notes.
+  publicationDBName: synapse
   publicationName: synapse_to_v18
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -97,6 +101,7 @@ spec:
   name: synapse_mas_from_v17
   dbname: synapse-mas
   externalClusterName: synapse-psql-v17
+  publicationDBName: synapse-mas
   publicationName: synapse_mas_to_v18
 ---
 apiVersion: postgresql.cnpg.io/v1
@@ -110,4 +115,5 @@ spec:
   name: mautrix_slack_from_v17
   dbname: mautrix-slack
   externalClusterName: synapse-psql-v17
+  publicationDBName: mautrix-slack
   publicationName: mautrix_slack_to_v18
