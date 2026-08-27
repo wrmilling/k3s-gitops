@@ -72,16 +72,7 @@ spec:
       password:
         name: cloudnative-pg
         key: password
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: mastodon-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: mastodon-psql-v18
-  name: mastodon_from_v17
-  dbname: mastodon
-  externalClusterName: mastodon-psql-v17
-  publicationName: mastodon_to_v18
+
+# NOTE: Subscription to mastodon-psql-v17's Publication was removed here -
+# see the NOTE in mastodon-v17.yaml for why. Re-add once the source tables
+# have REPLICA IDENTITY set and the Publication is recreated.

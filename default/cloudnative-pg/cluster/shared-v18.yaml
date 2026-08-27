@@ -76,55 +76,7 @@ spec:
       password:
         name: cloudnative-pg
         key: password
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: immich-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: shared-psql-v18
-  name: immich_from_v17
-  dbname: immich
-  externalClusterName: shared-psql-v17
-  publicationName: immich_to_v18
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: home-assistant-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: shared-psql-v18
-  name: home_assistant_from_v17
-  dbname: home_assistant
-  externalClusterName: shared-psql-v17
-  publicationName: home_assistant_to_v18
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: forgejo-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: shared-psql-v18
-  name: forgejo_from_v17
-  dbname: forgejo
-  externalClusterName: shared-psql-v17
-  publicationName: forgejo_to_v18
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: authelia-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: shared-psql-v18
-  name: authelia_from_v17
-  dbname: authelia
-  externalClusterName: shared-psql-v17
-  publicationName: authelia_to_v18
+
+# NOTE: Subscriptions to shared-psql-v17's Publications were removed here -
+# see the NOTE in shared-v17.yaml for why. Re-add once the source tables
+# have REPLICA IDENTITY set and the Publications are recreated.

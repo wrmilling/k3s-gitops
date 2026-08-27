@@ -72,42 +72,7 @@ spec:
       password:
         name: cloudnative-pg
         key: password
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: synapse-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: synapse-psql-v18
-  name: synapse_from_v17
-  dbname: synapse
-  externalClusterName: synapse-psql-v17
-  publicationName: synapse_to_v18
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: synapse-mas-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: synapse-psql-v18
-  name: synapse_mas_from_v17
-  dbname: synapse-mas
-  externalClusterName: synapse-psql-v17
-  publicationName: synapse_mas_to_v18
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Subscription
-metadata:
-  name: mautrix-slack-from-v17
-  namespace: default
-spec:
-  cluster:
-    name: synapse-psql-v18
-  name: mautrix_slack_from_v17
-  dbname: mautrix-slack
-  externalClusterName: synapse-psql-v17
-  publicationName: mautrix_slack_to_v18
+
+# NOTE: Subscriptions to synapse-psql-v17's Publications were removed here -
+# see the NOTE in synapse-v17.yaml for why. Re-add once the source tables
+# have REPLICA IDENTITY set and the Publications are recreated.
