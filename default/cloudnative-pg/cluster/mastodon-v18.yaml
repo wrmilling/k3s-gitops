@@ -22,6 +22,13 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+      # Default (4) is too small once several Publication/Subscription pairs
+      # run concurrently during the v17->v18 migration - each subscription
+      # needs 1 apply worker plus up to max_sync_workers_per_subscription (2)
+      # tablesync workers, so 4 was fully saturated by apply workers alone
+      # on shared-psql-v18 (4 subscriptions), stalling all initial table
+      # copies. max_worker_processes is 32, leaving plenty of headroom.
+      max_logical_replication_workers: "16"
   monitoring:
     enablePodMonitor: true
   # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570

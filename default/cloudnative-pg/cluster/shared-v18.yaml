@@ -22,6 +22,13 @@ spec:
     parameters:
       max_connections: "300"
       shared_buffers: 512MB
+      # Default (4) is too small once several Publication/Subscription pairs
+      # run concurrently during the v17->v18 migration - each subscription
+      # needs 1 apply worker plus up to max_sync_workers_per_subscription (2)
+      # tablesync workers. shared-psql-v18 has 4 subscriptions, so its 4
+      # apply workers alone fully saturated the default, stalling all
+      # initial table copies. max_worker_processes is 32, leaving headroom.
+      max_logical_replication_workers: "16"
     shared_preload_libraries:
       - "vchord.so"
   monitoring:
