@@ -2,19 +2,6 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: synapse-psql-v17
-  namespace: default
-spec:
-  # daily, 3am UCT
-  schedule: "0 0 3 * * *"
-  immediate: true
-  backupOwnerReference: self
-  cluster:
-    name: synapse-psql-v17
----
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
   name: shared-psql-v18
   namespace: default
 spec:
