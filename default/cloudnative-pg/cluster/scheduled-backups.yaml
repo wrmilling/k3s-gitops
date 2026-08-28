@@ -2,19 +2,6 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: mastodon-psql-v17
-  namespace: default
-spec:
-  # daily, 2am UCT
-  schedule: "0 0 2 * * *"
-  immediate: true
-  backupOwnerReference: self
-  cluster:
-    name: mastodon-psql-v17
----
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
   name: synapse-psql-v17
   namespace: default
 spec:
