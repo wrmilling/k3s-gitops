@@ -48,7 +48,7 @@ spec:
       ingress:
         host: mas.${SECRET_DOMAIN}
       postgres:
-        host: synapse-psql-v17-rw.default.svc
+        host: synapse-psql-v18-rw.default.svc
         port: 5432
         user: synapse-mas
         password:
@@ -76,7 +76,7 @@ spec:
         storage:
           existingClaim: synapse-media-pvc
       postgres:
-        host: synapse-psql-v17-rw.default.svc
+        host: synapse-psql-v18-rw.default.svc
         port: 5432
         user: synapse
         password:

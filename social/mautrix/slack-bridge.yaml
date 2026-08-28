@@ -34,7 +34,7 @@ spec:
               repository: ghcr.io/home-operations/postgres-init
               tag: 18.6
             env:
-              INIT_POSTGRES_HOST: synapse-psql-v17-rw.default.svc.cluster.local
+              INIT_POSTGRES_HOST: synapse-psql-v18-rw.default.svc.cluster.local
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
               INIT_POSTGRES_DBNAME: mautrix-slack
               INIT_POSTGRES_USER: mautrix-slack
