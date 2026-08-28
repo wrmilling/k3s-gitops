@@ -26,7 +26,7 @@ spec:
               repository: ghcr.io/home-operations/postgres-init
               tag: 18.6
             env:
-              INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
+              INIT_POSTGRES_HOST: shared-psql-v18-rw.default.svc.cluster.local
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
               INIT_POSTGRES_DBNAME: immich
               INIT_POSTGRES_USER: immich
@@ -36,7 +36,7 @@ spec:
             image:
               tag: v2.2.3
             env:
-              DB_HOSTNAME: shared-psql-v17-rw.default.svc.cluster.local
+              DB_HOSTNAME: shared-psql-v18-rw.default.svc.cluster.local
               DB_USERNAME: immich
               DB_DATABASE_NAME: immich
               DB_PASSWORD: ${SECRET_IMMICH_DB_PASSWORD}

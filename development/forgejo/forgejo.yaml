@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/home-operations/postgres-init
               tag: 18.6
             env:
-              INIT_POSTGRES_HOST: shared-psql-v17-rw.default.svc.cluster.local
+              INIT_POSTGRES_HOST: shared-psql-v18-rw.default.svc.cluster.local
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
               INIT_POSTGRES_DBNAME: forgejo
               INIT_POSTGRES_USER: forgejo
@@ -61,7 +61,7 @@ spec:
               FORGEJO__cache__ADAPTER: "redis"
               FORGEJO__cache__HOST: "redis://:${SECRET_FORGEJO_REDIS_PASSWORD}@forgejo-valkey-primary.development.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s"
               FORGEJO__database__DB_TYPE: "postgres"
-              FORGEJO__database__HOST: "shared-psql-v17-rw.default.svc.cluster.local:5432"
+              FORGEJO__database__HOST: "shared-psql-v18-rw.default.svc.cluster.local:5432"
               FORGEJO__database__NAME: "forgejo"
               FORGEJO__database__USER: "forgejo"
               FORGEJO__database__PASSWD: ${SECRET_FORGEJO_DB_PASSWORD}
