@@ -133,7 +133,7 @@ spec:
 
     postgresql:
       enabled: false
-      postgresqlHostname: mastodon-psql-v17-rw.default.svc
+      postgresqlHostname: mastodon-psql-v18-rw.default.svc
       postgresqlPort: 5432
       auth:
         database: mastodon
