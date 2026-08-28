@@ -12,6 +12,7 @@ Default namespace for applications.
 * [cloudnative-pg/cluster/prometheus-rules.yaml](cloudnative-pg/cluster/prometheus-rules.yaml) - Monitoring rules for CloudNativePG to Prometheus.
 * [cloudnative-pg/cluster/scheduled-backups.yaml](cloudnative-pg/cluster/scheduled-backups.yaml) - Backup Schedule for Postgres using native backup method.
 * [cloudnative-pg/cluster/shared-v17.yaml](cloudnative-pg/cluster/shared-v17.yaml) - Postgres v17 Cluster for all other use cases.
+* [cloudnative-pg/cluster/shared-v18.yaml](cloudnative-pg/cluster/shared-v18.yaml) - Postgres v18 Cluster for all other use cases, populated via dump/restore from shared-psql-v17.
 * [cloudnative-pg/cluster/synapse-v17.yaml](cloudnative-pg/cluster/synapse-v17.yaml) - Postgres v17 Cluster for Synapse/Matrix deployment.
 
 ## emqx
