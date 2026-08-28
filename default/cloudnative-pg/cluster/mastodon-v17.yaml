@@ -91,22 +91,3 @@ spec:
     #   password:
     #     name: cloudnative-pg
     #     key: password
----
-# Publishes the mastodon database for logical-replication migration to mastodon-psql-v18.
-# See mastodon-v18.yaml for the destination Cluster/Subscription.
-#
-# Prerequisite (verified 2026-08-27): mastodon has zero tables without a
-# primary key, so no REPLICA IDENTITY changes were needed here - see the
-# 2026-08-27 survey notes in synapse-v17.yaml for why that matters.
-apiVersion: postgresql.cnpg.io/v1
-kind: Publication
-metadata:
-  name: mastodon-to-v18
-  namespace: default
-spec:
-  cluster:
-    name: mastodon-psql-v17
-  name: mastodon_to_v18
-  dbname: mastodon
-  target:
-    allTables: true

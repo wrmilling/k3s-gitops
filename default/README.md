@@ -8,14 +8,11 @@ Default namespace for applications.
 
 * [cloudnative-pg/cloudnative-pg.secret.yaml](cloudnative-pg/cloudnative-pg.secret.yaml) - Secrets for the CloudNative-PG Helm Release.
 * [cloudnative-pg/cloudnative-pg.yaml](cloudnative-pg/cloudnative-pg.yaml) - CloudNativePG Helm Release.
-* [cloudnative-pg/cluster/mastodon-v17.yaml](cloudnative-pg/cluster/mastodon-v17.yaml) - Postgres v17 Cluster for Mastodon deployment, plus a Publication replicating to mastodon-psql-v18 during the v18 migration.
-* [cloudnative-pg/cluster/mastodon-v18.yaml](cloudnative-pg/cluster/mastodon-v18.yaml) - Postgres v18 Cluster for Mastodon, populated via logical replication from mastodon-psql-v17.
+* [cloudnative-pg/cluster/mastodon-v17.yaml](cloudnative-pg/cluster/mastodon-v17.yaml) - Postgres v17 Cluster for Mastodon deployment.
 * [cloudnative-pg/cluster/prometheus-rules.yaml](cloudnative-pg/cluster/prometheus-rules.yaml) - Monitoring rules for CloudNativePG to Prometheus.
 * [cloudnative-pg/cluster/scheduled-backups.yaml](cloudnative-pg/cluster/scheduled-backups.yaml) - Backup Schedule for Postgres using native backup method.
-* [cloudnative-pg/cluster/shared-v17.yaml](cloudnative-pg/cluster/shared-v17.yaml) - Postgres v17 Cluster for all other use cases, plus Publications replicating each database to shared-psql-v18 during the v18 migration.
-* [cloudnative-pg/cluster/shared-v18.yaml](cloudnative-pg/cluster/shared-v18.yaml) - Postgres v18 Cluster for all other use cases, populated via logical replication from shared-psql-v17.
-* [cloudnative-pg/cluster/synapse-v17.yaml](cloudnative-pg/cluster/synapse-v17.yaml) - Postgres v17 Cluster for Synapse/Matrix deployment, plus Publications replicating each database to synapse-psql-v18 during the v18 migration.
-* [cloudnative-pg/cluster/synapse-v18.yaml](cloudnative-pg/cluster/synapse-v18.yaml) - Postgres v18 Cluster for Synapse/Matrix, populated via logical replication from synapse-psql-v17.
+* [cloudnative-pg/cluster/shared-v17.yaml](cloudnative-pg/cluster/shared-v17.yaml) - Postgres v17 Cluster for all other use cases.
+* [cloudnative-pg/cluster/synapse-v17.yaml](cloudnative-pg/cluster/synapse-v17.yaml) - Postgres v17 Cluster for Synapse/Matrix deployment.
 
 ## emqx
 
