@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v2.5.6
+              tag: v3.1.0
             env:
               DB_HOSTNAME: shared-psql-v18-rw.default.svc.cluster.local
               DB_USERNAME: immich
@@ -100,7 +100,7 @@ spec:
             main:
               image:
                 repository: ghcr.io/immich-app/immich-machine-learning
-                tag: v2.5.6-openvino
+                tag: v3.1.0-openvino
               probes:
                 liveness:
                   spec:
