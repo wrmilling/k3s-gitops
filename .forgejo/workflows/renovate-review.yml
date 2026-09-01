@@ -11,7 +11,7 @@ on:
         required: true
         type: string
       log_transcript:
-        description: Push a redacted Claude transcript to the private log repo
+        description: Save transcript # Saves to private repo
         required: false
         type: boolean
         default: false
