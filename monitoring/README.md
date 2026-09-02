@@ -46,6 +46,7 @@ Remove this section and directory once both are confirmed delivering to Matrix.*
 [VictoriaLogs](https://docs.victoriametrics.com/victorialogs/) provides log storage and querying.
 
 * [victoria-logs/victoria-logs.yaml](victoria-logs/victoria-logs.yaml) - HelmRelease for VictoriaLogs
+* [victoria-logs/collector.yaml](victoria-logs/collector.yaml) - HelmRelease for `victoria-logs-collector` (`vlagent`), a DaemonSet that ships container logs from every node to VictoriaLogs
 
 ## smokeping-prober
 
