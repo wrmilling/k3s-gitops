@@ -15,10 +15,12 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 
 * [dynamic-dns/cronjob.yaml](dynamic-dns/cronjob.yaml) - Cron Job which schedules the DNS update
 
-## intel-devices-plugins
+## intel-gpu-resource-driver
 
-* [intel-device-plugins/gpu-plugin.yaml](intel-device-plugins/gpu-plugin.yaml)
-* [intel-device-plugins/operator.yaml](intel-device-plugins/operator.yaml)
+[Intel GPU Resource Driver](https://github.com/intel/intel-resource-drivers-for-kubernetes) exposes the Intel iGPUs (`nk3s-amd64-a/b/c/d`) via Kubernetes Dynamic Resource Allocation (DRA), replacing the legacy `intel-device-plugins-operator`/`intel-device-plugins-gpu` device-plugin charts. Consumers (Plex, Immich) request the GPU via a `ResourceClaimTemplate` referencing the `gpu.intel.com` `DeviceClass` the driver's chart creates, rather than the old `gpu.intel.com/i915` extended resource.
+
+* [intel-gpu-resource-driver/ocirepository.yaml](intel-gpu-resource-driver/ocirepository.yaml) - OCIRepository source for the driver's Helm chart
+* [intel-gpu-resource-driver/intel-gpu-resource-driver.yaml](intel-gpu-resource-driver/intel-gpu-resource-driver.yaml) - HelmRelease for the kubelet-plugin DaemonSet
 
 ## kured
 
