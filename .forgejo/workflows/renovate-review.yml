@@ -92,9 +92,50 @@ jobs:
           echo "gated=$gated"             >> "$GITHUB_OUTPUT"
           echo "head_ref=$HEAD_REF labels=$labels is_fork=$IS_FORK -> is_renovate=$is_renovate gated=$gated"
 
+      - name: Check for redundant review
+        id: redundant
+        if: steps.gate.outputs.gated == 'true'
+        env:
+          BASE_SHA: ${{ steps.pr.outputs.base_sha }}
+          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
+          API: ${{ github.api_url }}
+          REPO: ${{ github.repository }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          set -euo pipefail
+          # Renovate rebases the PR branch (new commit SHA, identical net diff)
+          # every time main advances, to stay merge-eligible -- which otherwise
+          # re-triggers a full paid Claude review on every push even though the
+          # actual dependency bump hasn't changed. `git patch-id` hashes a diff's
+          # content (ignoring line-number/context shifts from the rebase itself),
+          # so comparing it against the hash embedded in our own last review is a
+          # reliable, zero-token way to detect "just a rebase" and skip re-running
+          # Claude entirely.
+          new_id=$(git diff "$BASE_SHA...HEAD" | git patch-id --stable | awk '{print $1}')
+
+          if [[ -z "$new_id" ]]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Empty patch-id (no diff against base?) - not skipping, let Claude investigate"
+            exit 0
+          fi
+
+          reviews=$(curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$API/repos/$REPO/pulls/$PR/reviews" || echo '[]')
+          prior_id=$(printf '%s' "$reviews" | jq -r --arg me "$REVIEWER_LOGIN" \
+            '[.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "CHANGES_REQUESTED"))] | last | .body // ""' \
+            | grep -oE '<!-- diff-patch-id: [a-f0-9]+ -->' | grep -oE '[a-f0-9]{40}' || echo "")
+
+          echo "new_patch_id=$new_id prior_patch_id=${prior_id:-<none>}"
+          if [[ -n "$prior_id" && "$prior_id" == "$new_id" ]]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Diff unchanged since last review (pure rebase) - skipping Claude review"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "patch_id=$new_id" >> "$GITHUB_OUTPUT"
+
       - name: Select model tier
         id: model_tier
-        if: steps.gate.outputs.gated == 'true'
+        if: steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
         env:
           PR_TITLE: ${{ steps.pr.outputs.title }}
         run: |
@@ -118,13 +159,9 @@ jobs:
 
       - name: Gather PR evidence
         id: evidence
-        if: steps.gate.outputs.gated == 'true'
+        if: steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
         env:
           BASE_SHA: ${{ steps.pr.outputs.base_sha }}
-          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
-          API: ${{ github.api_url }}
-          REPO: ${{ github.repository }}
-          PR: ${{ steps.pr.outputs.number }}
         run: |
           set -euo pipefail
           {
@@ -144,19 +181,19 @@ jobs:
           } > pr-context.md
           git diff "$BASE_SHA...HEAD" >> pr-context.md
 
-          # Prefetched so Claude can Read this instead of spending a curl turn on it.
-          curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$API/repos/$REPO/pulls/$PR/reviews" \
-            > pr-reviews.json || echo '[]' > pr-reviews.json
-
       - name: Run Claude review
         id: claude
-        if: steps.gate.outputs.gated == 'true'
+        if: steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
           FORGEJO_API: ${{ github.api_url }}
           REPO: ${{ github.repository }}
           PR: ${{ steps.pr.outputs.number }}
+          # Consumed by post-review.sh, not by Claude directly -- it appends this as a
+          # hidden marker to the posted review body so the next run's "Check for
+          # redundant review" step can detect a pure rebase without invoking Claude.
+          DIFF_PATCH_ID: ${{ steps.redundant.outputs.patch_id }}
         run: |
           set -euo pipefail
 
@@ -209,16 +246,9 @@ jobs:
             interaction is pre-fetched into files for you, or wrapped in a script (see below).
             You should not need `curl` at all.
           - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search.
-
-          ## Pre-check: skip redundant re-reviews
-
-          Before doing any research, `Read` `pr-reviews.json` in the repo root (already fetched —
-          do not re-fetch it). Filter for entries where `.user.login` equals your reviewer identity
-          above and `.state` is `APPROVED` or `CHANGES_REQUESTED`. If a prior review exists, compare
-          the package version(s) in the current diff against the versions mentioned in that review.
-          If they are identical (i.e. Renovate just rebased without changing versions), stop
-          immediately without posting a new review. Only proceed with a full review if the versions
-          changed or new packages were added since the last review.
+          - A prior CI step already checked whether this exact diff (by content, not commit SHA)
+            was reviewed before and skipped this entire job if so — a pure Renovate rebase never
+            reaches you. Every invocation you see is a genuinely new or changed dependency bump.
 
           ## Tool Use Efficiency
 
@@ -538,7 +568,7 @@ jobs:
             "$API/repos/$REPO/statuses/$SHA" -d "$payload"
 
       - name: Log usage
-        if: always() && steps.gate.outputs.gated == 'true'
+        if: always() && steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
         continue-on-error: true
         env:
           RESULT_FILE: /tmp/claude-result.json

@@ -8,6 +8,10 @@
 # Usage: post-review.sh <APPROVED|REQUEST_CHANGES> <body-file>
 #
 # Required env: FORGEJO_API, REPO, PR, CLAUDE_REVIEWER_TOKEN, REVIEWER_LOGIN
+# Optional env: DIFF_PATCH_ID -- if set, appended to the posted body as a hidden
+#   HTML-comment marker so the next run's "Check for redundant review" workflow
+#   step can detect an unchanged diff (a pure Renovate rebase) and skip re-running
+#   Claude entirely. Not consumed by Claude itself -- purely CI bookkeeping.
 
 set -euo pipefail
 
@@ -37,6 +41,8 @@ for id in $stale_ids; do
     "$base/$id/dismissals" -d '{"message":"Superseded by updated review"}' || true
 done
 
-payload=$(jq -n --arg event "$event" --rawfile body "$body_file" '{event: $event, body: $body}')
+payload=$(jq -n --arg event "$event" --rawfile body "$body_file" --arg patch_id "${DIFF_PATCH_ID:-}" '
+  {event: $event, body: (if $patch_id != "" then ($body + "\n\n<!-- diff-patch-id: " + $patch_id + " -->") else $body end)}
+')
 curl -sf -X POST -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" -H "Content-Type: application/json" \
   "$base" -d "$payload"
