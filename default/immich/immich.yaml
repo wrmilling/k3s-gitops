@@ -78,22 +78,54 @@ spec:
       defaultPodOptions:
         nodeSelector:
           intel.feature.node.kubernetes.io/gpu: "true"
+        resourceClaims:
+          - name: gpu
+            resourceClaimTemplateName: immich-server-gpu
+      rawResources:
+        gpu:
+          forceRename: immich-server-gpu
+          manifest:
+            apiVersion: resource.k8s.io/v1
+            kind: ResourceClaimTemplate
+            spec:
+              spec:
+                devices:
+                  requests:
+                    - name: gpu
+                      exactly:
+                        deviceClassName: gpu.intel.com
       controllers:
         main:
           containers:
             main:
               resources:
+                claims:
+                  - name: gpu
                 requests:
                   cpu: 50m
                   memory: 768Mi
-                  gpu.intel.com/i915: 1
                 limits:
                   memory: 2Gi
-                  gpu.intel.com/i915: 1
     machine-learning:
       defaultPodOptions:
         nodeSelector:
           intel.feature.node.kubernetes.io/gpu: "true"
+        resourceClaims:
+          - name: gpu
+            resourceClaimTemplateName: immich-ml-gpu
+      rawResources:
+        gpu:
+          forceRename: immich-ml-gpu
+          manifest:
+            apiVersion: resource.k8s.io/v1
+            kind: ResourceClaimTemplate
+            spec:
+              spec:
+                devices:
+                  requests:
+                    - name: gpu
+                      exactly:
+                        deviceClassName: gpu.intel.com
       controllers:
         main:
           containers:
@@ -113,10 +145,10 @@ spec:
                     timeoutSeconds: 5
                     failureThreshold: 60
               resources:
+                claims:
+                  - name: gpu
                 requests:
                   cpu: 50m
                   memory: 2Gi
-                  gpu.intel.com/i915: 1
                 limits:
                   memory: 6Gi
-                  gpu.intel.com/i915: 1
