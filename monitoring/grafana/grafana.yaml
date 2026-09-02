@@ -145,6 +145,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/networking
+          - name: observability
+            orgId: 1
+            folder: Observability
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/observability
     dashboards:
       default:
         # Ref: https://grafana.com/grafana/dashboards/11074-node-exporter-for-prometheus-dashboard-en-v20201010/
@@ -170,6 +178,15 @@ spec:
           datasource: Prometheus
         prometheus-exporter-summary:
           url: https://raw.githubusercontent.com/billimek/k8s-gitops/master/monitoring/grafana/dashboards/prometheus_exporter_summary.json
+          datasource: Prometheus
+        redis:
+          # renovate: dashboardName="Redis Dashboard for Prometheus Redis Exporter 1.x"
+          gnetId: 763
+          revision: 6
+          datasource:
+            - { name: DS_PROM, value: Prometheus }
+        synapse:
+          url: https://raw.githubusercontent.com/matrix-org/synapse/develop/contrib/grafana/synapse.json
           datasource: Prometheus
         zfs:
           gnetId: 3170
@@ -216,6 +233,12 @@ spec:
           datasource: Prometheus
 
       kubernetes:
+        coredns:
+          # renovate: dashboardName="Kubernetes / System / CoreDNS"
+          gnetId: 15762
+          revision: 22
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         k8s-system-api-server:
           # renovate: dashboardName="Kubernetes / System / API Server"
           gnetId: 15761
@@ -248,6 +271,12 @@ spec:
           datasource: Prometheus
 
       networking:
+        metallb:
+          # renovate: dashboardName="Metallb"
+          gnetId: 20162
+          revision: 6
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         smokeping:
           # renovate: dashboardName="SmokePing"
           gnetId: 22471
@@ -275,6 +304,48 @@ spec:
           revision: 3
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+
+      observability:
+        vmsingle:
+          # renovate: dashboardName="VictoriaMetrics - single"
+          gnetId: 10229
+          revision: 58
+          datasource: Prometheus
+        vmagent:
+          # renovate: dashboardName="VictoriaMetrics - vmagent"
+          gnetId: 12683
+          revision: 42
+          datasource: Prometheus
+        vmalert:
+          # renovate: dashboardName="VictoriaMetrics - vmalert"
+          gnetId: 14950
+          revision: 22
+          datasource: Prometheus
+        vm-operator:
+          # renovate: dashboardName="VictoriaMetrics - operator"
+          gnetId: 17869
+          revision: 10
+          datasource: Prometheus
+        alertmanager:
+          # renovate: dashboardName="Alertmanager"
+          gnetId: 9578
+          revision: 4
+          datasource: Prometheus
+        victorialogs-server:
+          # renovate: dashboardName="VictoriaLogs - single"
+          gnetId: 22084
+          revision: 11
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        vlagent:
+          # renovate: dashboardName="VictoriaLogs - vlagent"
+          gnetId: 24513
+          revision: 2
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        grafana-overview:
+          url: https://raw.githubusercontent.com/grafana/grafana/main/grafana-mixin/dashboards/grafana-overview.json
+          datasource: Prometheus
     sidecar:
       resources:
         requests:
