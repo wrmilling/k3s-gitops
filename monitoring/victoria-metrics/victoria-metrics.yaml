@@ -102,6 +102,12 @@ spec:
                 - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit|CephNodeNetworkPacketErrors"
               receiver: "blackhole"
             - matchers:
+                - alertname = "LongRunningTransaction"
+                - datname = "immich"
+              receiver: "warning-matrix"
+              mute_time_intervals: ["immich-nightly-job"]
+              continue: false
+            - matchers:
                 - severity = "critical"
                 - alertname=~"Host.*|Node.*|Zfs.*|UPS.*|Smartctl.*"
               receiver: "critical-matrix"
@@ -156,6 +162,12 @@ spec:
             equal: ["namespace"]
           - target_matchers:
               - alertname = "InfoInhibitor"
+        time_intervals:
+          - name: immich-nightly-job
+            time_intervals:
+              - times:
+                  - start_time: "02:55"
+                    end_time: "03:15"
         receivers:
           - name: "blackhole"
           - name: "critical-matrix"
