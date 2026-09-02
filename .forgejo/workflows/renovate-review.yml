@@ -29,6 +29,8 @@ jobs:
       # CLAUDE_REVIEWER_TOKEN's Forgejo login. Hardcoded because resolving it via
       # `curl .../user` needs a token scope this token doesn't have.
       REVIEWER_LOGIN: claude
+      # Force transcript logging regardless of log_transcript.
+      FORCE_TRANSCRIPT_LOGGING: "true"
     steps:
       - name: Resolve PR
         id: pr
@@ -429,7 +431,7 @@ jobs:
             | tail -1 > /tmp/claude-result.json
 
       - name: Redact transcript
-        if: always() && steps.gate.outputs.gated == 'true' && inputs.log_transcript == true
+        if: always() && steps.gate.outputs.gated == 'true' && (env.FORCE_TRANSCRIPT_LOGGING == 'true' || inputs.log_transcript == true)
         env:
           CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -452,11 +454,12 @@ jobs:
           redact "$CLAUDE_CODE_OAUTH_TOKEN"
 
       - name: Push transcript to private log repo
-        if: always() && steps.gate.outputs.gated == 'true' && inputs.log_transcript == true
+        if: always() && steps.gate.outputs.gated == 'true' && (env.FORCE_TRANSCRIPT_LOGGING == 'true' || inputs.log_transcript == true)
         env:
           LOG_REPO_TOKEN: ${{ secrets.LOG_REPO_TOKEN }}
           API: ${{ github.api_url }}
           LOG_REPO: wrmilling/ci-transcripts
+          REPO: ${{ github.repository }}
           PR: ${{ steps.pr.outputs.number }}
           RUN_ID: ${{ github.run_id }}
         run: |
@@ -467,7 +470,7 @@ jobs:
             exit 0
           fi
 
-          path="renovate-review/pr-${PR}/${RUN_ID}.jsonl"
+          path="${REPO##*/}/renovate-review/pr-${PR}/run-${RUN_ID}.jsonl"
           base64 < /tmp/claude-transcript.jsonl | tr -d '\n' > /tmp/transcript.b64
           jq -n \
             --rawfile content /tmp/transcript.b64 \
