@@ -16,6 +16,7 @@ Provides configuration for all my social media focused applications.
 * [mastodon/minio.yaml](mastodon/minio.yaml) - S3-compatible storage via Minio
 * [mastodon/valkey.yaml](mastodon/valkey.yaml) - Valkey deployment for caching
 * [mastodon/valkey-pvc.yaml](mastodon/valkey-pvc.yaml) - PVC for Valkey data
+* [mastodon/vmservicescrape-valkey.yaml](mastodon/vmservicescrape-valkey.yaml) - VMServiceScrape for the Valkey cache's redis_exporter metrics
 
 ## Mautrix Slack
 

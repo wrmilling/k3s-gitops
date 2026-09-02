@@ -9,6 +9,7 @@
 * [forgejo/forgejo.yaml](forgejo/forgejo.yaml) - HelmRelease for Forgejo
 * [forgejo/pvc.yaml](forgejo/pvc.yaml) - PVCs for Forgejo config and data storage
 * [forgejo/valkey.yaml](forgejo/valkey.yaml) - Valkey cache for Forgejo
+* [forgejo/vmservicescrape-valkey.yaml](forgejo/vmservicescrape-valkey.yaml) - VMServiceScrape for the Valkey cache's redis_exporter metrics
 * [forgejo/volsync.yaml](forgejo/volsync.yaml) - Backup schedule for the Forgejo PVCs
 
 ## OpenGist
