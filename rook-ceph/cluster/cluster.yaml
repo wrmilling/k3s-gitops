@@ -40,10 +40,15 @@ spec:
   # One-time cephx key rotation to the AES256K key type (requires Ceph v20.2.4+ / Rook
   # v1.20.5+, both already in use here, and kernel 7.0+ on every node -- confirmed all
   # nodes are on 7.1.3). Clears the AUTH_INSECURE_* health warnings/errors that appeared
-  # after the v20.2.4/v1.20.5 upgrade. allowedCiphers is deliberately not set yet -- that
-  # should only be added once rotation has actually completed cluster-wide, otherwise it
-  # would lock out any client that hasn't rotated yet.
+  # after the v20.2.4/v1.20.5 upgrade.
   # See https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanced/cephx-key-rotation/
+  #
+  # Rotation is now complete cluster-wide -- every entity in `ceph auth ls` (including
+  # the previously-orphaned client.rbd-mirror-peer, rotated manually via `ceph auth
+  # rotate --key-type=aes256k`) reports aes256k, confirmed via `ceph health detail`
+  # showing no more AUTH_INSECURE_CLIENT_KEY_TYPE entries. allowedCiphers now locks the
+  # mons down to aes256k only, closing the remaining AUTH_INSECURE_KEYS_ALLOWED/CREATABLE
+  # warnings caused by mons still permitting the legacy cipher.
   security:
     cephx:
       daemon:
@@ -52,6 +57,8 @@ spec:
       csi:
         keyRotationPolicy: KeyGeneration
         keyGeneration: 2
+      allowedCiphers:
+        - aes256k
   mon:
     # Set the number of mons to be started. Must be an odd number, and is generally recommended to be 3.
     count: 3
