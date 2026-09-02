@@ -23,10 +23,8 @@ spec:
     server:
       resources:
         requests:
-          cpu: 10m
-          memory: 32Mi
-        limits:
-          memory: 64Mi
+          cpu: 50m
+          memory: 128Mi
       retentionPeriod: 14d
       persistentVolume:
         enabled: true
