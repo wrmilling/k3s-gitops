@@ -145,14 +145,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/networking
-          - name: nginx
-            orgId: 1
-            folder: Nginx
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/nginx
     dashboards:
       default:
         # Ref: https://grafana.com/grafana/dashboards/11074-node-exporter-for-prometheus-dashboard-en-v20201010/
@@ -265,14 +257,24 @@ spec:
               value: Prometheus
             - name: VAR_JOB
               value: smokeping-prober
-
-      nginx:
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
+        envoy-overview:
+          # renovate: dashboardName="Envoy / Overview"
+          gnetId: 24459
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        envoy-upstream:
+          # renovate: dashboardName="Envoy / Upstream"
+          gnetId: 24457
+          revision: 4
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        envoy-downstream:
+          # renovate: dashboardName="Envoy / Downstream"
+          gnetId: 24458
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
     sidecar:
       resources:
         requests:

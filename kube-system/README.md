@@ -58,6 +58,7 @@ Envoy Gateway provides Gateway API ingress for the cluster, replacing the nginx 
 * [envoy-gateway/error-pages/](envoy-gateway/error-pages/) - Error pages service
 * [envoy-gateway/routes/](envoy-gateway/routes/) - Shared routes (HTTP→HTTPS redirect)
 * [envoy-gateway/policies/](envoy-gateway/policies/) - Auth and request size policies
+* [envoy-gateway/monitoring/](envoy-gateway/monitoring/) - VMPodScrape/VMServiceScrape for Envoy proxy (data plane) and controller (control plane) metrics
 
 ## node-feature-discovery
 
