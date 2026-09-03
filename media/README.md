@@ -65,6 +65,13 @@
 * [seerr/pvc.yaml](seerr/pvc.yaml) - PVC for Seerr
 * [seerr/volsync.yaml](seerr/volsync.yaml) - Volsync backup for Seerr PVC
 
+## seerr-kids
+
+* [seerr-kids/seerr.yaml](seerr-kids/seerr.yaml) - HelmRelease for Seerr, kids-only request instance
+* [seerr-kids/pvc.yaml](seerr-kids/pvc.yaml) - PVC for Seerr (kids)
+* [seerr-kids/volsync.yaml](seerr-kids/volsync.yaml) - Volsync backup for Seerr (kids) PVC
+* [seerr-kids/gateway-policies.yaml](seerr-kids/gateway-policies.yaml) - SecurityPolicy bypassing Authelia (Seerr has its own auth)
+
 ## sonarr
 
 * [sonarr/sonarr-anime.yaml](sonarr/sonarr-anime.yaml) - HelmRelease for Sonarr (anime)
