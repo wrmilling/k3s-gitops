@@ -205,6 +205,8 @@ jobs:
           REPO: ${{ github.repository }}
           PR: #${{ steps.pr.outputs.number }}
           FORGEJO_API: ${{ github.api_url }}
+          BASE_SHA: ${{ steps.pr.outputs.base_sha }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
           REVIEW DEPTH: ${{ steps.model_tier.outputs.depth }}
           YOUR REVIEWER IDENTITY (Forgejo login): ${{ env.REVIEWER_LOGIN }}
 
@@ -246,6 +248,8 @@ jobs:
             interaction is pre-fetched into files for you, or wrapped in a script (see below).
             You should not need `curl` at all.
           - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search.
+            Before your first call to either, run `ToolSearch` to load their schemas (they are
+            deferred tools) — avoids a wasted turn on `InputValidationError`.
           - A prior CI step already checked whether this exact diff (by content, not commit SHA)
             was reviewed before and skipped this entire job if so — a pure Renovate rebase never
             reaches you. Every invocation you see is a genuinely new or changed dependency bump.
@@ -320,7 +324,9 @@ jobs:
 
           PR metadata (title, labels, Renovate-embedded release notes) and the full diff have
           been pre-fetched into `pr-context.md` in the repo root. **`Read` that file first**
-          instead of hitting the Forgejo API again — this saves a turn on every tier. Identify:
+          instead of hitting the Forgejo API again — this saves a turn on every tier. If the
+          `## Diff` section is empty or missing, run `git diff ${{ steps.pr.outputs.base_sha }}...${{ steps.pr.outputs.head_sha }}`
+          yourself before proceeding. Identify:
           - What is being upgraded (container image, Helm chart, tool, etc.)
           - The old and new version
           - Whether this is a wrapper that bundles another component (a Docker image wrapping
@@ -392,14 +398,21 @@ jobs:
              bash .forgejo/scripts/post-review.sh <EVENT> /tmp/review-body.md
              ```
              where `<EVENT>` is `APPROVED` if the upgrade is safe (no actionable findings), or
-             `REQUEST_CHANGES` if there are breaking changes or deprecations that affect this repo.
+             `REQUEST_CHANGES` if there are breaking changes or deprecations that affect this repo,
+             or an unresolved known issue/regression directly affects the component being bumped
+             and you could not positively confirm the new version excludes it. Approve only on
+             confirmed safety, not merely absence of evidence — a hedged "probably fine" known
+             issue against the exact component being bumped is grounds for REQUEST_CHANGES.
 
           That script fetches your prior reviews, dismisses any stale ones of your own (so only
           the current verdict is visible), and posts the new review — you do not need to call the
           Forgejo API yourself for any of that. Once it succeeds, your work is done — do not make
           any further tool calls, and do not run it a second time.
 
-          Structure the review body as follows (omit empty sections):
+          Structure the review body as follows (omit empty sections). Use the section headings
+          exactly as shown — do not rename or annotate them (e.g. always `**Known issues**:`,
+          never `**Known issues to monitor**:`). For `[package]`, use the full identifier as it
+          appears in the diff/PR title (e.g. full image path or chart name), not a shortened form:
 
           ```
           ### [package]: vOLD → vNEW
@@ -455,7 +468,7 @@ jobs:
             --output-format stream-json \
             --verbose \
             --permission-mode auto \
-            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(bash .forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
+            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(git diff:*),Bash(git status:*),Bash(bash .forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
             --disallowedTools "Task,Agent" \
             | tee /tmp/claude-transcript.jsonl \
             | tail -1 > /tmp/claude-result.json
