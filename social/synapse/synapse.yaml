@@ -102,3 +102,13 @@ spec:
         secretKey: mautrix-slack.yaml
       - secret: appservices-secrets
         secretKey: doublepuppet.yaml
+      # matrix-stack 26.9.0 removed the default /tmp emptyDir from Synapse pods
+      extraVolumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 10Gi
+          mountContext: runtime
+      extraVolumeMounts:
+        - name: tmp
+          mountPath: /tmp
+          mountContext: runtime
