@@ -25,9 +25,9 @@ spec:
             summary: High network latency detected to {{ $labels.host }}.
           expr: |
             (
-              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host!="github.com"}[5m])
+              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host!="github.com", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
               /
-              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host!="github.com"}[5m])
+              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host!="github.com", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
             ) * 1000 > 50
           for: 5m
           labels:
@@ -44,6 +44,34 @@ spec:
               rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host="github.com"}[15m])
             ) * 1000 > 150
           for: 15m
+          labels:
+            severity: warning
+
+        - alert: SmokepingHighLatency
+          annotations:
+            description: 'Network latency to {{ $labels.host }} is averaging {{ printf "%.2f" $value | humanize }}ms over the last 5 minutes.'
+            summary: High network latency detected to {{ $labels.host }}.
+          expr: |
+            (
+              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host="cnn.com"}[5m])
+              /
+              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host="cnn.com"}[5m])
+            ) * 1000 > 80
+          for: 5m
+          labels:
+            severity: warning
+
+        - alert: SmokepingHighLatency
+          annotations:
+            description: 'Network latency to {{ $labels.host }} is averaging {{ printf "%.2f" $value | humanize }}ms over the last 5 minutes.'
+            summary: High network latency detected to {{ $labels.host }}.
+          expr: |
+            (
+              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host=~"1\\.1\\.1\\.1|1\\.0\\.0\\.1"}[5m])
+              /
+              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host=~"1\\.1\\.1\\.1|1\\.0\\.0\\.1"}[5m])
+            ) * 1000 > 70
+          for: 5m
           labels:
             severity: warning
 
