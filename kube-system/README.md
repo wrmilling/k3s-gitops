@@ -9,6 +9,12 @@ This is probably overly-complicated for what I actually need and I will probably
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
 * [authelia/vmservicescrape-valkey.yaml](authelia/vmservicescrape-valkey.yaml) - VMServiceScrape for the Valkey cache's redis_exporter metrics
 
+## agent-readonly
+
+Cluster-wide read-only credential (bound to the built-in `view` ClusterRole, which excludes Secrets and RBAC objects) for coding agents.
+
+* [agent-readonly/rbac.yaml](agent-readonly/rbac.yaml) - ServiceAccount, ClusterRoleBinding to `view`, and a non-expiring service-account-token Secret.
+
 ## dynamic-dns
 
 A custom docker image and cron job that uses the AWS cli to udpate a dns reocord pointing to the cluster's external IP address.
