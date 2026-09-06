@@ -13,6 +13,14 @@ data:
       path_regex: ^/actions/.*$
       action: ALLOW
 
+    # Matches Gatus by its self-reported UA, not IP/hostname.
+    - name: gatus-healthcheck
+      expression:
+        all:
+          - userAgent.startsWith("Gatus/")
+          - path == "/"
+      action: ALLOW
+
     - import: (data)/clients/git.yaml
     - import: (data)/common/keep-internet-working.yaml
 
