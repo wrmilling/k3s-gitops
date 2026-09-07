@@ -26,3 +26,33 @@ metadata:
   annotations:
     kubernetes.io/service-account.name: agent-readonly
 type: kubernetes.io/service-account-token
+---
+# Narrow, read-only escape hatch for querying VictoriaMetrics/VictoriaLogs from
+# outside the cluster (kubectl get --raw .../proxy) without granting pods/exec
+# or pods/portforward. resourceNames pins this to two named Services; verb
+# "get" only permits GET-mapped proxy calls, so writes (e.g. VM remote-write)
+# stay blocked even though they share the same Service.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: agent-readonly-monitoring-proxy
+  namespace: monitoring
+rules:
+  - apiGroups: [""]
+    resources: ["services/proxy"]
+    verbs: ["get"]
+    resourceNames: ["vmsingle-stack", "victoria-logs-server"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: agent-readonly-monitoring-proxy
+  namespace: monitoring
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: agent-readonly-monitoring-proxy
+subjects:
+  - kind: ServiceAccount
+    name: agent-readonly
+    namespace: kube-system
