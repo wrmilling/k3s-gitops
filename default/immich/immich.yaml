@@ -76,8 +76,6 @@ spec:
               namespace: kube-system
               sectionName: https
       defaultPodOptions:
-        nodeSelector:
-          intel.feature.node.kubernetes.io/gpu: "true"
         resourceClaims:
           - name: gpu
             resourceClaimTemplateName: immich-server-gpu
@@ -108,8 +106,6 @@ spec:
                   memory: 2Gi
     machine-learning:
       defaultPodOptions:
-        nodeSelector:
-          intel.feature.node.kubernetes.io/gpu: "true"
         resourceClaims:
           - name: gpu
             resourceClaimTemplateName: immich-ml-gpu

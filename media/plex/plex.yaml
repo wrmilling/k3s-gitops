@@ -76,8 +76,6 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: "OnRootMismatch"
         supplementalGroups: [44, 109, 303, 10000]
-      nodeSelector:
-        intel.feature.node.kubernetes.io/gpu: "true"
       resourceClaims:
         - name: gpu
           resourceClaimTemplateName: plex-gpu
