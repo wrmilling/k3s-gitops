@@ -11,6 +11,10 @@ spec:
   secretRef:
     name: flux-system
   url: ssh://git@github.com/wrmilling/k3s-gitops
+  verify:
+    mode: HEAD
+    secretRef:
+      name: pgp-public-keys
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
