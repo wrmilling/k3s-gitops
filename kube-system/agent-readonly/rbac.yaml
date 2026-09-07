@@ -41,7 +41,15 @@ rules:
   - apiGroups: [""]
     resources: ["services/proxy"]
     verbs: ["get"]
-    resourceNames: ["vmsingle-stack", "victoria-logs-server"]
+    # RBAC checks the port-qualified name (e.g. "vmsingle-stack:8428") when a
+    # port is given in the proxy URL, not the bare Service name.
+    resourceNames:
+      - vmsingle-stack
+      - vmsingle-stack:8428
+      - vmsingle-stack:http
+      - victoria-logs-server
+      - victoria-logs-server:9428
+      - victoria-logs-server:http
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
