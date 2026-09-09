@@ -12,5 +12,5 @@ spec:
     operation: copy
   ref:
     # renovate: registryUrl=oci://ghcr.io/intel/intel-resource-drivers-for-kubernetes
-    tag: 0.11.0
+    tag: 0.12.0
   url: oci://ghcr.io/intel/intel-resource-drivers-for-kubernetes/intel-gpu-resource-driver-chart
