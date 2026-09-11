@@ -143,7 +143,7 @@ jobs:
           # Deep (Sonnet, 40 turns): major bumps or high-blast-radius components
           # Full (Sonnet, 25 turns): all other minor/feat bumps and chart upgrades
           # Light (Haiku, 25 turns): routine fix(container) patch bumps not matching deep
-          if echo "$title" | grep -qiE 'rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux'; then
+          if echo "$title" | grep -qiE 'rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux|forgejo'; then
             echo "model=sonnet" >> "$GITHUB_OUTPUT"
             echo "depth=deep" >> "$GITHUB_OUTPUT"
             echo "max_turns=40" >> "$GITHUB_OUTPUT"
@@ -241,6 +241,8 @@ jobs:
           - **Storage**: rook-ceph, volsync (check for data migrations or CRD changes)
           - **Auth/TLS**: authelia, cert-manager (CRD compatibility, policy/annotation changes)
           - **GitOps runtime**: flux components (affects entire cluster reconciliation)
+          - **CI/source hosting**: forgejo (hosts this repo and its own review/CI pipeline;
+            patch releases can carry security fixes, not just bug fixes)
 
           ## Tool notes
 
@@ -310,7 +312,7 @@ jobs:
           Follow the complete Workflow below without shortcuts. Target: 12–18 turns.
 
           **deep** — high-blast-radius component (envoy-gateway, metallb, rook-ceph, volsync,
-          cert-manager, authelia, flux), whether bundled into a Renovate group PR or not
+          cert-manager, authelia, flux, forgejo), whether bundled into a Renovate group PR or not
           (sonnet tier, 40-turn budget):
           Follow the complete Workflow. For group PRs bundling multiple components, research each
           component **breadth-first**: check 2–3 sources per component (PR body, GitHub releases,
@@ -360,6 +362,16 @@ jobs:
 
           Do not stop at the first source. Cross-reference multiple sources.
 
+          **Fetch-failure rule:** If a source fails to load (rate-limited, unreachable) or returns
+          unusable content (garbled, truncated, clearly not the real page), retry via a different
+          source or method (e.g. `WebSearch` instead of `WebFetch`, the wrapper's changelog instead
+          of the upstream one) before giving up on that lead. If, after retrying, you still cannot
+          retrieve or verify the release notes for a version bump, do not fall back to assuming the
+          change is routine or low-risk because prior versions in the series were — say explicitly
+          in the review that release notes could not be verified for the new version, and let that
+          drive the verdict per the "Submitting the Review" rule below (unverified release notes are
+          absence of evidence, not confirmed safety).
+
           ### 3. Assess Impact
 
           Read the files in this repository that reference or consume the upgraded component:
@@ -400,9 +412,11 @@ jobs:
              where `<EVENT>` is `APPROVED` if the upgrade is safe (no actionable findings), or
              `REQUEST_CHANGES` if there are breaking changes or deprecations that affect this repo,
              or an unresolved known issue/regression directly affects the component being bumped
-             and you could not positively confirm the new version excludes it. Approve only on
-             confirmed safety, not merely absence of evidence — a hedged "probably fine" known
-             issue against the exact component being bumped is grounds for REQUEST_CHANGES.
+             and you could not positively confirm the new version excludes it, or you could not
+             retrieve/verify the release notes for the new version after retrying per the
+             Fetch-failure rule above. Approve only on confirmed safety, not merely absence of
+             evidence — a hedged "probably fine" known issue against the exact component being
+             bumped, or an unverified release-notes gap, is grounds for REQUEST_CHANGES.
 
           That script fetches your prior reviews, dismisses any stale ones of your own (so only
           the current verdict is visible), and posts the new review — you do not need to call the
