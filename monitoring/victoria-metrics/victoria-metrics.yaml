@@ -99,7 +99,11 @@ spec:
           repeat_interval: 12h
           routes:
             - matchers:
-                - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit|CephNodeNetworkPacketErrors"
+                - alertname=~"WatchDog|InfoInhibitor|KubeMemoryOvercommit|CephNodeNetworkPacketErrors|AlertingRulesError|RecordingRulesError|AlertmanagerErrors|TooManyLogs|TooManyErrorLogs"
+              receiver: "blackhole"
+            - matchers:
+                - alertname=~"ServiceDown|TargetDown"
+                - job=~"vmalert-stack.*|vmalertmanager-stack.*"
               receiver: "blackhole"
             - matchers:
                 - alertname = "LongRunningTransaction"
@@ -160,6 +164,10 @@ spec:
             target_matchers:
               - severity = "info"
             equal: ["namespace"]
+          - source_matchers:
+              - alertname = "SmokepingWidespreadPacketLoss"
+            target_matchers:
+              - alertname = "SmokepingPacketLoss"
           - target_matchers:
               - alertname = "InfoInhibitor"
         time_intervals:
