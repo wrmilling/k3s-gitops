@@ -64,3 +64,66 @@ subjects:
   - kind: ServiceAccount
     name: agent-readonly
     namespace: kube-system
+---
+# Nodes are cluster-scoped, so the built-in "view" ClusterRole (which only
+# aggregates namespaced-resource rules) doesn't cover them. Grants read-only
+# node status/capacity for health checks, plus the metrics.k8s.io "nodes"
+# resource for `kubectl top nodes`. Deliberately excludes nodes/proxy
+# (kubelet API) — not needed to read status and a much bigger blast radius.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: agent-readonly-nodes
+rules:
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: agent-readonly-nodes
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: agent-readonly-nodes
+subjects:
+  - kind: ServiceAccount
+    name: agent-readonly
+    namespace: kube-system
+---
+# Rook-Ceph's CRDs (ceph.rook.io group) aren't aggregated into the built-in
+# "view" role either. Grants read on the CRs that carry cluster/pool/fs/
+# object-store health for a healthcheck, scoped to the rook-ceph namespace
+# where they live.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: agent-readonly-rook-ceph
+  namespace: rook-ceph
+rules:
+  - apiGroups: ["ceph.rook.io"]
+    resources:
+      - cephclusters
+      - cephblockpools
+      - cephfilesystems
+      - cephobjectstores
+      - cephclients
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: agent-readonly-rook-ceph
+  namespace: rook-ceph
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: agent-readonly-rook-ceph
+subjects:
+  - kind: ServiceAccount
+    name: agent-readonly
+    namespace: kube-system
