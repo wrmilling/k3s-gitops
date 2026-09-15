@@ -51,7 +51,7 @@ spec:
         controller: main
         externalTrafficPolicy: Local
         annotations:
-          metallb.universe.tf/allow-shared-ip: plex
+          metallb.io/allow-shared-ip: plex
         ports:
           http:
             enabled: true

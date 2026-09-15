@@ -56,7 +56,7 @@
 #         externalTrafficPolicy: Cluster
 #         loadBalancerIP: ${SVC_VALHEIM_IP}
 #         annotations:
-#           metallb.universe.tf/allow-shared-ip: valheim
+#           metallb.io/allow-shared-ip: valheim
 #       supervisor:
 #         enabled: true
 #         type: LoadBalancer
@@ -68,7 +68,7 @@
 #             protocol: TCP
 #             targetPort: 9001
 #         annotations:
-#           metallb.universe.tf/allow-shared-ip: valheim
+#           metallb.io/allow-shared-ip: valheim
 #       status:
 #         enabled: true
 #         ports:
