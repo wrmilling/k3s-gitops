@@ -482,7 +482,7 @@ jobs:
             --output-format stream-json \
             --verbose \
             --permission-mode auto \
-            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(git diff:*),Bash(git status:*),Bash(bash .forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
+            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(git diff:*),Bash(git status:*),Bash(*.forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
             --disallowedTools "Task,Agent" \
             | tee /tmp/claude-transcript.jsonl \
             | tail -1 > /tmp/claude-result.json
