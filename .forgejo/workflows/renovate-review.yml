@@ -119,9 +119,10 @@ jobs:
             exit 0
           fi
 
+          # Forgejo spells this state REQUEST_CHANGES, not GitHub's CHANGES_REQUESTED.
           reviews=$(curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$API/repos/$REPO/pulls/$PR/reviews" || echo '[]')
           prior_id=$(printf '%s' "$reviews" | jq -r --arg me "$REVIEWER_LOGIN" \
-            '[.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "CHANGES_REQUESTED"))] | last | .body // ""' \
+            '[.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "REQUEST_CHANGES"))] | last | .body // ""' \
             | grep -oE '<!-- diff-patch-id: [a-f0-9]+ -->' | grep -oE '[a-f0-9]{40}' || echo "")
 
           echo "new_patch_id=$new_id prior_patch_id=${prior_id:-<none>}"
@@ -185,19 +186,16 @@ jobs:
         id: claude
         if: steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
         env:
+          # Deliberately no CLAUDE_REVIEWER_TOKEN: Claude only writes files, CI posts them.
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
-          FORGEJO_API: ${{ github.api_url }}
-          REPO: ${{ github.repository }}
-          PR: ${{ steps.pr.outputs.number }}
-          # Consumed by post-review.sh, not by Claude directly -- it appends this as a
-          # hidden marker to the posted review body so the next run's "Check for
-          # redundant review" step can detect a pure rebase without invoking Claude.
-          DIFF_PATCH_ID: ${{ steps.redundant.outputs.patch_id }}
         run: |
           set -euo pipefail
 
-          cat > /tmp/prompt.md <<'PROMPT_EOF'
+          # Per-run scratch, not /tmp: these runners are long-lived, and a stale verdict left
+          # in /tmp would be posted by a run that died before writing its own.
+          : "${RUNNER_TEMP:?RUNNER_TEMP is not set by this runner}"
+
+          cat > "$RUNNER_TEMP/prompt.md" <<'PROMPT_EOF'
           You research dependency upgrades in Renovate pull requests and submit exactly one PR
           review with your findings. You do not make changes to files, do not merge PRs, and do
           not run any kubectl, flux, or cluster commands. You investigate and report only.
@@ -246,9 +244,9 @@ jobs:
 
           ## Tool notes
 
-          - There is no `gh` CLI or direct Forgejo API access in this environment — all Forgejo
-            interaction is pre-fetched into files for you, or wrapped in a script (see below).
-            You should not need `curl` at all.
+          - There is no `gh` CLI or direct Forgejo API access in this environment — everything
+            you need from Forgejo is pre-fetched into files for you, and posting the review is
+            done by CI from files you write. You should not need `curl` at all.
           - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search.
             Before your first call to either, run `ToolSearch` to load their schemas (they are
             deferred tools) — avoids a wasted turn on `InputValidationError`.
@@ -289,12 +287,12 @@ jobs:
           Your depth for this PR is **${{ steps.model_tier.outputs.depth }}** and your turn
           budget is **${{ steps.model_tier.outputs.max_turns }}** turns.
 
-          **Turn-budget rule (applies at all depths):** Reserve your last turn for posting the
-          review. If research is still incomplete when the budget runs low, submit a review with
-          what you have found, noting explicitly what you could not verify (e.g., "could not
-          confirm rook-ceph CRD schema changes"). A hedged verdict is far better than a hard
-          failure that blocks the merge with no explanation. Never exhaust the budget without
-          submitting a review.
+          **Turn-budget rule (applies at all depths):** Reserve your last turn for writing the
+          two review files (see "Submitting the Review"). If research is still incomplete when the
+          budget runs low, write them with what you have found, noting explicitly what you could
+          not verify (e.g., "could not confirm rook-ceph CRD schema changes"). A hedged verdict is
+          far better than a hard failure that blocks the merge with no explanation. Never exhaust
+          the budget without writing the review files.
 
           **light** — routine patch container bump (haiku tier):
           1. Analyze (step 1 below) — `pr-context.md` is already available; `Read` it first.
@@ -302,7 +300,7 @@ jobs:
              cover the full old→new range, use them. Otherwise WebFetch the upstream releases
              page for that range.
           3. Grep/Read the repo files that reference this component (step 3 below).
-          4. Submit verdict.
+          4. Write the two review files (see "Submitting the Review").
           Skip the multi-source breadcrumb chase (CHANGELOG files, docs sites, commit history,
           registry metadata, web search) and the upstream-issues search UNLESS the release notes
           show breaking changes, deprecations, or security fixes — then escalate to full depth.
@@ -402,26 +400,25 @@ jobs:
 
           ## Submitting the Review
 
-          Submit your findings as **exactly one** PR review, then stop. This is two tool calls:
+          You do not post the review yourself — a later CI step does, reading two files you
+          write. Emit both with the `Write` tool, then stop:
 
-          1. `Write` your review body (the markdown template below) to `/tmp/review-body.md`.
-          2. Run this single Bash command:
-             ```
-             bash .forgejo/scripts/post-review.sh <EVENT> /tmp/review-body.md
-             ```
-             where `<EVENT>` is `APPROVED` if the upgrade is safe (no actionable findings), or
-             `REQUEST_CHANGES` if there are breaking changes or deprecations that affect this repo,
-             or an unresolved known issue/regression directly affects the component being bumped
-             and you could not positively confirm the new version excludes it, or you could not
-             retrieve/verify the release notes for the new version after retrying per the
-             Fetch-failure rule above. Approve only on confirmed safety, not merely absence of
-             evidence — a hedged "probably fine" known issue against the exact component being
-             bumped, or an unverified release-notes gap, is grounds for REQUEST_CHANGES.
+          1. `@SCRATCH@/review-body.md` — your review body (the markdown template below).
+          2. `@SCRATCH@/review-verdict.txt` — a single word, nothing else: `APPROVED` if the upgrade
+             is safe (no actionable findings), or `REQUEST_CHANGES` if there are breaking changes
+             or deprecations that affect this repo, or an unresolved known issue/regression
+             directly affects the component being bumped and you could not positively confirm the
+             new version excludes it, or you could not retrieve/verify the release notes for the
+             new version after retrying per the Fetch-failure rule above. Approve only on
+             confirmed safety, not merely absence of evidence — a hedged "probably fine" known
+             issue against the exact component being bumped, or an unverified release-notes gap,
+             is grounds for REQUEST_CHANGES.
 
-          That script fetches your prior reviews, dismisses any stale ones of your own (so only
-          the current verdict is visible), and posts the new review — you do not need to call the
-          Forgejo API yourself for any of that. Once it succeeds, your work is done — do not make
-          any further tool calls, and do not run it a second time.
+          Once both files exist your work is done: do not make any further tool calls, do not
+          rewrite them, and do not try to reach the Forgejo API yourself — you have no credentials
+          and no `curl`. CI dismisses your stale reviews and posts the new one. A run that ends
+          without both files blocks the PR with a failed check and no explanation, so writing them
+          is the one thing you must not skip.
 
           Structure the review body as follows (omit empty sections). Use the section headings
           exactly as shown — do not rename or annotate them (e.g. always `**Known issues**:`,
@@ -460,8 +457,8 @@ jobs:
           - If unclear, research more rather than guess
           - When stuck (private repo, ambiguous package, no changelog anywhere), report what you
             found and what you could not find rather than fabricating information
-          - Submit exactly one review at the end of your analysis; if it succeeds, stop — never
-            submit a second review
+          - Write the two review files exactly once, at the end of your analysis, then stop —
+            never rewrite them and never attempt to post the review yourself
           - When citing github.com URLs in the review body (PRs, issues, commits, releases, file
             or blob links), rewrite the host to `redirect.github.com` while keeping the full
             `https://` scheme (e.g. `https://redirect.github.com/rook/rook/releases/tag/v1.20.0`).
@@ -475,17 +472,44 @@ jobs:
             reference appears.
           PROMPT_EOF
 
+          # The heredoc is quoted, so shell variables reach the prompt only via this sed.
+          sed -i "s|@SCRATCH@|$RUNNER_TEMP|g" "$RUNNER_TEMP/prompt.md"
+
           nix run github:sadjow/claude-code-nix -- \
-            -p "$(cat /tmp/prompt.md)" \
+            -p "$(cat "$RUNNER_TEMP/prompt.md")" \
             --model ${{ steps.model_tier.outputs.model }} \
             --max-turns ${{ steps.model_tier.outputs.max_turns }} \
             --output-format stream-json \
             --verbose \
             --permission-mode auto \
-            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(git diff:*),Bash(git status:*),Bash(*.forgejo/scripts/post-review.sh:*),WebFetch,WebSearch" \
+            --allowedTools "Read,Write,Glob,Grep,Bash(git log:*),Bash(git show:*),Bash(git tag:*),Bash(git diff:*),Bash(git status:*),WebFetch,WebSearch" \
             --disallowedTools "Task,Agent" \
             | tee /tmp/claude-transcript.jsonl \
             | tail -1 > /tmp/claude-result.json
+
+      # Posting from CI rather than from Claude: an agent-issued Bash call has to match an
+      # --allowedTools prefix rule exactly, and anything else falls through to the
+      # permission classifier, which decides differently per model.
+      - name: Post review
+        if: steps.gate.outputs.gated == 'true' && steps.redundant.outputs.skip != 'true'
+        env:
+          CLAUDE_REVIEWER_TOKEN: ${{ secrets.CLAUDE_REVIEWER_TOKEN }}
+          FORGEJO_API: ${{ github.api_url }}
+          REPO: ${{ github.repository }}
+          PR: ${{ steps.pr.outputs.number }}
+          # post-review.sh embeds this in the body for "Check for redundant review" to read back.
+          DIFF_PATCH_ID: ${{ steps.redundant.outputs.patch_id }}
+        run: |
+          set -euo pipefail
+          : "${RUNNER_TEMP:?RUNNER_TEMP is not set by this runner}"
+
+          if [[ ! -s "$RUNNER_TEMP/review-verdict.txt" || ! -s "$RUNNER_TEMP/review-body.md" ]]; then
+            echo "Claude finished without writing both review-verdict.txt and review-body.md" >&2
+            exit 1
+          fi
+
+          event=$(tr -d '[:space:]' < "$RUNNER_TEMP/review-verdict.txt")
+          bash .forgejo/scripts/post-review.sh "$event" "$RUNNER_TEMP/review-body.md"
 
       - name: Redact transcript
         if: always() && steps.gate.outputs.gated == 'true' && (env.FORCE_TRANSCRIPT_LOGGING == 'true' || inputs.log_transcript == true)
@@ -577,7 +601,7 @@ jobs:
                 state="success"
                 desc="Claude approved - safe to merge"
                 break
-              elif [[ "$review_state" == "CHANGES_REQUESTED" ]]; then
+              elif [[ "$review_state" == "REQUEST_CHANGES" ]]; then
                 state="failure"
                 desc="Claude requested changes - manual review required"
                 break

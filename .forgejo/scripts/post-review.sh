@@ -31,9 +31,10 @@ fi
 base="$FORGEJO_API/repos/$REPO/pulls/$PR/reviews"
 
 # Dismiss this bot's own prior active reviews so only the current verdict is visible.
+# Forgejo spells this state REQUEST_CHANGES, not GitHub's CHANGES_REQUESTED.
 stale_ids=$(curl -sf -H "Authorization: token $CLAUDE_REVIEWER_TOKEN" "$base" \
   | jq -r --arg me "$REVIEWER_LOGIN" \
-    '.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "CHANGES_REQUESTED")) | .id')
+    '.[] | select(.user.login == $me and (.state == "APPROVED" or .state == "REQUEST_CHANGES")) | .id')
 
 for id in $stale_ids; do
   echo "Dismissing stale review $id"
