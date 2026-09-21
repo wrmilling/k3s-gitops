@@ -10,7 +10,7 @@ spec:
       kind: HTTPRoute
       name: synapse
   requestBuffer:
-    limit: 100Mi
+    limit: 300Mi
   timeout:
     http:
       requestTimeout: 60s

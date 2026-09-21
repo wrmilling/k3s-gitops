@@ -75,6 +75,10 @@ spec:
       media:
         storage:
           existingClaim: synapse-media-pvc
+        maxUploadSize: "256M"
+        ephemeralStorages:
+          tmp:
+            sizeLimit: 512Mi
       postgres:
         host: synapse-psql-v18-rw.default.svc
         port: 5432

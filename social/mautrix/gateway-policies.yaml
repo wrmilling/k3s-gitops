@@ -10,7 +10,7 @@ spec:
       kind: HTTPRoute
       name: slack-bridge
   requestBuffer:
-    limit: 100Mi
+    limit: 300Mi
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
