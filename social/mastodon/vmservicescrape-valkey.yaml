@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: valkey
+      app.kubernetes.io/name: mastodon-valkey
       app.kubernetes.io/instance: mastodon-valkey
       app.kubernetes.io/component: metrics
   namespaceSelector:

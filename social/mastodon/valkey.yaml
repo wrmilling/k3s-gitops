@@ -1,30 +1,136 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.0/charts/library/common/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: mastodon-valkey
   namespace: social
 spec:
-  interval: 5m
+  releaseName: mastodon-valkey
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
-      chart: valkey
-      version: 6.2.19
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 5.1.0
+      interval: 15m
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
-      interval: 5m
   values:
-    primary:
-      persistence:
-        enabled: true
-        existingClaim: "mastodon-valkey-data"
-      resourcesPreset: "micro"
-    replica:
-      replicaCount: 0
-    metrics:
-      enabled: true
-    auth:
-      password: ${SECRET_MASTODON_REDIS_PASSWORD}
+    global:
+      createDefaultServiceAccount: false
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: docker.io/valkey/valkey
+              tag: 9.1.2-alpine@sha256:a0dbf4c1d5708782907c10e2c72deff317518518b5288a58416981d9db95d30b
+            # requirepass cannot be read from a file the way the rest of the config is,
+            # so it comes in on argv via the env var rather than sitting in the ConfigMap.
+            args:
+              - /config/valkey.conf
+              - --requirepass
+              - $(VALKEY_PASSWORD)
+            env:
+              VALKEY_PASSWORD: ${SECRET_MASTODON_REDIS_PASSWORD}
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 6379
+                  periodSeconds: 10
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 6379
+                  periodSeconds: 10
+                  failureThreshold: 3
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+          metrics:
+            image:
+              repository: ghcr.io/oliver006/redis_exporter
+              tag: v1.90.0@sha256:a129504e65b87c54f79bc92f1afc403475e8ff646a3d7512de469904ceddf986
+            env:
+              REDIS_ADDR: redis://localhost:6379
+              REDIS_PASSWORD: ${SECRET_MASTODON_REDIS_PASSWORD}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 64Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        # The PVC was written by the Bitnami image as uid 1001; this re-chowns it.
+        fsGroupChangePolicy: OnRootMismatch
+    # Both services are declared because consumers address `mastodon-valkey-primary`;
+    # with a single service the chart would name it bare `mastodon-valkey`.
+    service:
+      primary:
+        controller: main
+        ports:
+          tcp-redis:
+            port: 6379
+      metrics:
+        controller: main
+        labels:
+          app.kubernetes.io/component: metrics
+        ports:
+          http-metrics:
+            port: 9121
+    configMaps:
+      config:
+        data:
+          # Mirrors what the Bitnami chart generated: AOF on, RDB snapshots off.
+          valkey.conf: |
+            dir /data
+            appendonly yes
+            save ""
+            rename-command FLUSHDB ""
+            rename-command FLUSHALL ""
+    persistence:
+      data:
+        existingClaim: mastodon-valkey-data
+        advancedMounts:
+          main:
+            main:
+              - path: /data
+      config:
+        type: configMap
+        identifier: config
+        advancedMounts:
+          main:
+            main:
+              - path: /config
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
