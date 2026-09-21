@@ -7,7 +7,10 @@
 This is probably overly-complicated for what I actually need and I will probably simplify it in the future. Authelia provides SSO capabilities for the cluster and is integrated with nginx-ingress.
 
 * [authelia/authelia.yaml](authelia/authelia.yaml) - Authelia SSO Server Helm Chart deployment
+* [authelia/pvc.yaml](authelia/pvc.yaml) - PVC for Authelia config storage
+* [authelia/valkey.yaml](authelia/valkey.yaml) - Valkey cache for Authelia sessions
 * [authelia/vmservicescrape-valkey.yaml](authelia/vmservicescrape-valkey.yaml) - VMServiceScrape for the Valkey cache's redis_exporter metrics
+* [authelia/gateway-policies.yaml](authelia/gateway-policies.yaml) - SecurityPolicy bypassing Authelia on its own login route
 
 ## agent-readonly
 
@@ -46,6 +49,8 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 [Minio](https://min.io/) is a high-performance, S3 compatible object store.
 
 * [minio/minio.yaml](minio/minio.yaml) - HelmRelease using the official minio charts, backed by NFS.
+* [minio/minio-httproutes.yaml](minio/minio-httproutes.yaml) - HTTPRoutes for the Minio API and console.
+* [minio/gateway-policies.yaml](minio/gateway-policies.yaml) - SecurityPolicy bypassing Authelia.
 
 ## nfs-pv
 

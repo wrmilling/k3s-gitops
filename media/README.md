@@ -4,11 +4,13 @@
 
 * [calibre/calibre.yaml](calibre/calibre.yaml) - HelmRelease for Calibre
 * [calibre/pvc.yaml](calibre/pvc.yaml) - PVC for Calibre library data
+* [calibre/gateway-policies.yaml](calibre/gateway-policies.yaml) - BackendTrafficPolicy raising the upload body-size limit
 
 ## copyparty
 
 * [copyparty/copyparty.yaml](copyparty/copyparty.yaml) - HelmRelease for Copyparty
 * [copyparty/pvc.yaml](copyparty/pvc.yaml) - PVC for Copyparty storage
+* [copyparty/gateway-policies.yaml](copyparty/gateway-policies.yaml) - SecurityPolicy bypassing Authelia
 
 ## lidarr
 
@@ -21,12 +23,14 @@
 * [nzbget/nzbget.yaml](nzbget/nzbget.yaml) - HelmRelease for NZBGet
 * [nzbget/pvc.yaml](nzbget/pvc.yaml) - PVC for NZBGet
 * [nzbget/volsync.yaml](nzbget/volsync.yaml) - Volsync backup for NZBGet PVC
+* [nzbget/gateway-policies.yaml](nzbget/gateway-policies.yaml) - BackendTrafficPolicy raising the upload body-size limit
 
 ## plex
 
 * [plex/plex.yaml](plex/plex.yaml) - HelmRelease for Plex
 * [plex/pvc.yaml](plex/pvc.yaml) - PVC for Plex
 * [plex/volsync.yaml](plex/volsync.yaml) - Volsync backup for Plex PVC
+* [plex/gateway-policies.yaml](plex/gateway-policies.yaml) - SecurityPolicy bypassing Authelia
 
 ## prowlarr
 
@@ -46,12 +50,6 @@
 * [radarr/pvc.yaml](radarr/pvc.yaml) - PVC for Radarr
 * [radarr/volsync.yaml](radarr/volsync.yaml) - Volsync backup for Radarr PVC
 
-## readarr
-
-* [readarr/radarr.yaml](readarr/radarr.yaml) - HelmRelease for Readarr
-* [readarr/pvc.yaml](readarr/pvc.yaml) - PVC for Readarr
-* [readarr/volsync.yaml](readarr/volsync.yaml) - Volsync backup for Readarr PVC
-
 ## recyclarr
 
 * [recyclarr/configmap.yaml](recyclarr/configmap.yaml) - ConfigMap for Recyclarr settings
@@ -64,13 +62,20 @@
 * [seerr/seerr.yaml](seerr/seerr.yaml) - HelmRelease for Seerr (Overseerr's successor)
 * [seerr/pvc.yaml](seerr/pvc.yaml) - PVC for Seerr
 * [seerr/volsync.yaml](seerr/volsync.yaml) - Volsync backup for Seerr PVC
+* [seerr/gateway-policies.yaml](seerr/gateway-policies.yaml) - SecurityPolicy bypassing Authelia
 
 ## seerr-kids
 
 * [seerr-kids/seerr.yaml](seerr-kids/seerr.yaml) - HelmRelease for Seerr, kids-only request instance
 * [seerr-kids/pvc.yaml](seerr-kids/pvc.yaml) - PVC for Seerr (kids)
 * [seerr-kids/volsync.yaml](seerr-kids/volsync.yaml) - Volsync backup for Seerr (kids) PVC
-* [seerr-kids/gateway-policies.yaml](seerr-kids/gateway-policies.yaml) - SecurityPolicy bypassing Authelia (Seerr has its own auth)
+* [seerr-kids/gateway-policies.yaml](seerr-kids/gateway-policies.yaml) - SecurityPolicy bypassing Authelia
+
+## shelfmark
+
+* [shelfmark/shelfmark.yaml](shelfmark/shelfmark.yaml) - HelmRelease for Shelfmark
+* [shelfmark/pvc.yaml](shelfmark/pvc.yaml) - PVC for Shelfmark
+* [shelfmark/volsync.yaml](shelfmark/volsync.yaml) - Volsync backup for Shelfmark PVC
 
 ## sonarr
 

@@ -40,6 +40,7 @@ Remove this section and directory once both are confirmed delivering to Matrix.*
 [Grafana](https://grafana.com/) provides dashboards and visualization for cluster metrics.
 
 * [grafana/grafana.yaml](grafana/grafana.yaml) - HelmRelease for Grafana
+* [grafana/gateway-policies.yaml](grafana/gateway-policies.yaml) - SecurityPolicy bypassing Authelia
 
 ## victoria-logs
 
@@ -47,6 +48,7 @@ Remove this section and directory once both are confirmed delivering to Matrix.*
 
 * [victoria-logs/victoria-logs.yaml](victoria-logs/victoria-logs.yaml) - HelmRelease for VictoriaLogs
 * [victoria-logs/collector.yaml](victoria-logs/collector.yaml) - HelmRelease for `victoria-logs-collector` (`vlagent`), a DaemonSet that ships container logs from every node to VictoriaLogs
+* [victoria-logs/gateway-policies.yaml](victoria-logs/gateway-policies.yaml) - SecurityPolicy bypassing Authelia on the VictoriaLogs server route
 
 ## smokeping-prober
 

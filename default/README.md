@@ -14,11 +14,19 @@ Default namespace for applications.
 * [cloudnative-pg/cluster/shared-v18.yaml](cloudnative-pg/cluster/shared-v18.yaml) - Postgres v18 Cluster for all other use cases.
 * [cloudnative-pg/cluster/synapse-v18.yaml](cloudnative-pg/cluster/synapse-v18.yaml) - Postgres v18 Cluster for Synapse/Matrix.
 
+## Elasticsearch
+
+[Elastic Cloud on Kubernetes (ECK)](https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html) operator, running a cluster for Mastodon's full-text search (currently disabled in the Mastodon chart values).
+
+* [elasticsearch/eck-operator.yaml](elasticsearch/eck-operator.yaml) - HelmRelease for the ECK operator.
+* [elasticsearch/cluster/mastodon.yaml](elasticsearch/cluster/mastodon.yaml) - Elasticsearch cluster for Mastodon search.
+
 ## emqx
 
 [emqx](https://www.emqx.io/) is a scalable MQTT broker used in conjunction with Home Assistant to enable communication with specific wifi smart devices.
 
 * [emqx/emqx.yaml](emqx/emqx.yaml) - HelmRelease for emqx using their official chart.
+* [emqx/emqx-httproute.yaml](emqx/emqx-httproute.yaml) - HTTPRoute exposing the emqx dashboard.
 
 ## Foundry VTT
 
@@ -28,6 +36,7 @@ Default namespace for applications.
 * [foundry/foundry-vtt.yaml](foundry/foundry-vtt.yaml) - Proper deployment of Foundry VTT for use in active games.
 * [foundry/pvc.yaml](foundry/pvc.yaml) - Rook-ceph persistent volumes for the FoundryVTT instances.
 * [foundry/volsync.yaml](foundry/volsync.yaml) - Restic backup definition for use with Volsync.
+* [foundry/gateway-policies.yaml](foundry/gateway-policies.yaml) - SecurityPolicy bypassing Authelia.
 
 ## Home Assistant
 
@@ -35,6 +44,15 @@ Default namespace for applications.
 
 * [home-assistant/home-assistant.yaml](home-assistant/home-assistant.yaml) - Deployment of Home Assistant using the app-template helm chart.
 * [home-assistant/pvc.yaml](home-assistant/pvc.yaml) - Rook-ceph persistent volume claims for the Home Assistant and PostgreSQL deployments.
+* [home-assistant/gateway-policies.yaml](home-assistant/gateway-policies.yaml) - SecurityPolicy bypassing Authelia.
+
+## Immich
+
+[Immich](https://immich.app/) is a self-hosted photo and video backup solution.
+
+* [immich/immich.yaml](immich/immich.yaml) - HelmRelease for Immich, using the Intel GPU resource driver for hardware transcoding.
+* [immich/pvc.yaml](immich/pvc.yaml) - Rook-ceph persistent volume claims for Immich.
+* [immich/gateway-policies.yaml](immich/gateway-policies.yaml) - BackendTrafficPolicy raising the upload body-size limit and SecurityPolicy bypassing Authelia.
 
 ## Invidious
 
