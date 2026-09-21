@@ -13,6 +13,10 @@ data:
       path_regex: ^/actions/.*$
       action: ALLOW
 
+    - name: container-registry
+      path_regex: ^/v2/.*$
+      action: ALLOW
+
     # Matches Gatus by its self-reported UA, not IP/hostname.
     - name: gatus-healthcheck
       expression:
