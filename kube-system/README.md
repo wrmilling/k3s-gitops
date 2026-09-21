@@ -79,7 +79,7 @@ Operator that facilitates the auto tagging of nodes based on feature avalable (e
 
 Trying out creating an LDAP provider for the cluster to do authentication at the ingress level.
 
-* [openldap/openldap.yaml](openldap/openldap.yaml) - Deployment and Service to expose an OpenLDAP instance based on bitnami containers.
+* [openldap/openldap.yaml](openldap/openldap.yaml) - Deployment and Service to expose an OpenLDAP instance.
 * [openldap/openldap-secrets.sops.yaml](openldap/openldap-secrets.sops.yaml) - My encrypted open ldap secrets.
 
 ## registry-creds
