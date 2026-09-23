@@ -68,7 +68,7 @@ spec:
           metrics:
             image:
               repository: ghcr.io/oliver006/redis_exporter
-              tag: v1.90.0@sha256:a129504e65b87c54f79bc92f1afc403475e8ff646a3d7512de469904ceddf986
+              tag: v1.92.0@sha256:ca3abd5f19da6c87e96038ba08aaa3dfaab34dc649834584c4d6880b05952fef
             env:
               REDIS_ADDR: redis://localhost:6379
               REDIS_PASSWORD: ${SECRET_AUTH_REDIS_PASSWORD}
