@@ -5,5 +5,11 @@
       "Bash(kubectl top *)",
       "Bash(kubectl describe *)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "flux",
+    "kubernetes",
+    "codegraph",
+    "mcp-nixos"
+  ]
 }
