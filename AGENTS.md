@@ -1,6 +1,16 @@
-# CLAUDE.md
+# AGENTS.md
 
 Flux2 GitOps repo for a single homelab k3s cluster. Flux reconciles the whole repo from `main` via one Kustomization (`flux-system/gotk-sync.yaml`) with SOPS decryption and `postBuild.substituteFrom` injecting the `cluster-settings` ConfigMap and `cluster-secrets` Secret (`flux-system-extra/cluster/`). Changes take effect only after commit + push.
+
+## Agent harnesses
+
+This file is the shared instructions file for Claude Code, OpenCode, and Codex CLI — Claude Code loads it automatically when no `CLAUDE.md` is present; OpenCode and Codex read it natively. Project-level MCP config mirrors the same four servers (flux, kubernetes, codegraph, mcp-nixos) per harness:
+
+- `.mcp.json` — Claude Code
+- `opencode.json` — OpenCode
+- `.codex/config.toml` — Codex CLI (repo must be marked a trusted project)
+
+All four assume their binaries (`flux-operator-mcp`, `kubernetes-mcp-server`, `codegraph`, `uvx`) resolve on `PATH`.
 
 ## Layout
 - Top-level dirs are namespaces (`default/`, `media/`, `social/`, `kube-system/`, …), each with a `README.md` index — keep it updated when adding/removing apps.
@@ -56,7 +66,7 @@ Workflows run on external Forgejo Actions runners (NixOS hosts registered agains
 Claude PR review (`.forgejo/workflows/renovate-review.yml`) invokes `nix run github:sadjow/claude-code-nix` directly and talks to the Forgejo API via `curl`/`jq` (there is no `anthropics/claude-code-action` for Forgejo, and no `gh` CLI on the runner). It gates on PRs whose branch starts with `renovate/`.
 
 ## Working notes
-- Flux and Kubernetes MCP tools are available for live cluster state (logs, events, resources, Flux reconciliation status) — use them to investigate and verify.
+- Flux, Kubernetes, CodeGraph, and mcp-nixos MCP servers are configured for this repo — use them for live cluster state (logs, events, resources, Flux reconciliation status), code-graph lookups, and Nix package/option queries when your harness has them loaded.
 - Stage changes with `git add`; do **not** commit — GPG signing needs interactive pinentry, the user commits.
 - Interactive shell is fish: `(…)` not `$(…)`, `and`/`or` not `&&`/`||`, `set -gx` not `export`. Script files may be bash/POSIX sh.
 - Missing utilities: run via `nix-shell -p <pkg> --run '…'`; never install globally.
@@ -65,7 +75,7 @@ Claude PR review (`.forgejo/workflows/renovate-review.yml`) invokes `nix run git
 
 If `.codegraph/` exists at the repo root, prefer CodeGraph over grep/find/Read for understanding or locating code:
 
-- **MCP** (if loaded): `codegraph_explore("<names or question>")` — one call returns verbatim source, call paths, and dynamic-dispatch hops grep misses. If deferred, load it via tool search first.
-- **Shell** (fallback): `codegraph explore "<names or question>"`.
+- **MCP** (if your harness has it loaded): `codegraph_explore("<names or question>")` — one call returns verbatim source, call paths, and dynamic-dispatch hops grep misses.
+- **Shell** (fallback, always available): `codegraph explore "<names or question>"`.
 
 No `.codegraph/` directory → skip CodeGraph.

@@ -1,0 +1,20 @@
+# Project-level MCP server config for Codex CLI.
+# Requires this repo to be marked a trusted project for Codex to load it
+# (project-level .codex/config.toml is only read for trusted projects).
+
+[mcp_servers.flux]
+command = "flux-operator-mcp"
+args = ["serve", "--read-only"]
+
+[mcp_servers.kubernetes]
+command = "kubernetes-mcp-server"
+args = []
+
+[mcp_servers.codegraph]
+command = "codegraph"
+args = ["serve", "--mcp"]
+env = { CODEGRAPH_TELEMETRY = "0" }
+
+[mcp_servers.mcp-nixos]
+command = "uvx"
+args = ["mcp-nixos"]

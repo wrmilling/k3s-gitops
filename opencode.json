@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "flux": {
+      "type": "local",
+      "command": ["flux-operator-mcp", "serve", "--read-only"]
+    },
+    "kubernetes": {
+      "type": "local",
+      "command": ["kubernetes-mcp-server"]
+    },
+    "codegraph": {
+      "type": "local",
+      "command": ["codegraph", "serve", "--mcp"],
+      "environment": { "CODEGRAPH_TELEMETRY": "0" }
+    },
+    "mcp-nixos": {
+      "type": "local",
+      "command": ["uvx", "mcp-nixos"]
+    }
+  }
+}

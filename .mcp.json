@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "flux": {
+      "type": "stdio",
+      "command": "flux-operator-mcp",
+      "args": ["serve", "--read-only"]
+    },
+    "kubernetes": {
+      "type": "stdio",
+      "command": "kubernetes-mcp-server",
+      "args": []
+    },
+    "codegraph": {
+      "type": "stdio",
+      "command": "codegraph",
+      "args": ["serve", "--mcp"],
+      "env": { "CODEGRAPH_TELEMETRY": "0" }
+    },
+    "mcp-nixos": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-nixos"]
+    }
+  }
+}
