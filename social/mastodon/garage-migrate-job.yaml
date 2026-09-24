@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/job-batch-v1.json
+# Temporary: one-way `rclone sync` of the media bucket from Minio into Garage, then a size check.
+# Re-run (delta sync) by deleting the Job; Flux recreates it on the next reconcile.
+# Remove before cutover - `sync` deletes Garage objects that aren't in Minio.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mastodon-garage-migrate
+  namespace: social
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      tolerations:
+        - key: "arm"
+          operator: "Exists"
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+      containers:
+        - name: rclone
+          image: docker.io/rclone/rclone:1.75.1@sha256:45401ad7410db1d67ffdb58e19059ad20b0d8e0285a60e38bbec55cc1019c7a5
+          command: ["/bin/sh", "-c"]
+          # Garage imported the Minio key as-is, so the same key is used on both sides; the
+          # shared RCLONE_S3_* env applies to both on-the-fly remotes.
+          args:
+            - |
+              set -eu
+              sync_bucket() {
+                echo "=== $1: sync"
+                export RCLONE_S3_ACCESS_KEY_ID="$2" RCLONE_S3_SECRET_ACCESS_KEY="$3"
+                src=":s3,endpoint='http://mastodon-minio.social.svc:9000':$1"
+                dst=":s3,endpoint='http://mastodon-garage.social.svc:3900':$1"
+                rclone sync "$src" "$dst" --metadata --fast-list
+                echo "=== $1: check"
+                # Multipart ETags differ between Minio and Garage, so compare sizes only.
+                rclone check "$src" "$dst" --one-way --size-only --fast-list
+              }
+              sync_bucket mastodon "$MASTODON_KEY_ID" "$MASTODON_KEY_SECRET"
+              echo "=== migration complete"
+          env:
+            - { name: HOME, value: /tmp }
+            - { name: RCLONE_CONFIG, value: /dev/null }
+            - { name: RCLONE_S3_PROVIDER, value: Other }
+            - { name: RCLONE_S3_REGION, value: us-east-1 }
+            - { name: RCLONE_S3_NO_CHECK_BUCKET, value: "true" }
+            - { name: RCLONE_TRANSFERS, value: "8" }
+            - { name: RCLONE_CHECKERS, value: "16" }
+            - { name: RCLONE_STATS, value: 1m }
+            - { name: RCLONE_STATS_ONE_LINE, value: "true" }
+            - { name: RCLONE_STATS_LOG_LEVEL, value: NOTICE }
+            - { name: MASTODON_KEY_ID, value: "${SECRET_MASTODON_S3_ACCESS_KEY}" }
+            - { name: MASTODON_KEY_SECRET, value: "${SECRET_MASTODON_S3_SECRET_KEY}" }
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - { name: tmp, emptyDir: {} }

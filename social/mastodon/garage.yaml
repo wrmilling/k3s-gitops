@@ -76,7 +76,8 @@ spec:
               LAYOUT_CAPACITY: "1099511627776"
               MASTODON_KEY_ID: ${SECRET_MASTODON_S3_ACCESS_KEY}
               MASTODON_KEY_SECRET: ${SECRET_MASTODON_S3_SECRET_KEY}
-              MEDIA_HOST: mcdn.${SECRET_DOMAIN}
+              # BunnyCDN (mcdn.) pulls from mfile.; the web endpoint resolves that Host to this alias.
+              WEB_HOST: mfile.${SECRET_DOMAIN}
             resources:
               requests:
                 cpu: 5m
@@ -126,7 +127,7 @@ spec:
 
             # Anonymous public reads go through the web endpoint (S3 API has no anonymous access).
             # A request whose Host isn't under root_domain is looked up as a bucket alias, so
-            # the bucket carries the full media hostname as a second global alias.
+            # the bucket carries the CDN origin hostname as a second global alias.
             [s3_web]
             bind_addr = "0.0.0.0:3902"
             root_domain = ".web.garage.internal"
@@ -176,9 +177,9 @@ spec:
             ensure_bucket mastodon "$MASTODON_KEY_ID"
 
             id=$(bucket_id mastodon)
-            if ! get "GetBucketInfo?globalAlias=$MEDIA_HOST" >/dev/null 2>&1; then
-              echo "aliasing bucket mastodon as $MEDIA_HOST"
-              post AddBucketAlias "{\"bucketId\":\"$id\",\"globalAlias\":\"$MEDIA_HOST\"}" >/dev/null
+            if ! get "GetBucketInfo?globalAlias=$WEB_HOST" >/dev/null 2>&1; then
+              echo "aliasing bucket mastodon as $WEB_HOST"
+              post AddBucketAlias "{\"bucketId\":\"$id\",\"globalAlias\":\"$WEB_HOST\"}" >/dev/null
             fi
             post "UpdateBucket?id=$id" '{"websiteAccess":{"enabled":true,"indexDocument":"index.html"}}' >/dev/null
 

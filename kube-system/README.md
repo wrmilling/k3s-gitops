@@ -31,6 +31,7 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [garage/garage.yaml](garage/garage.yaml) - HelmRelease for Garage, with a sidecar that idempotently applies the layout, imports access keys, and creates buckets via the admin API.
 * [garage/pvc.yaml](garage/pvc.yaml) - PVC for Garage metadata (LMDB is unsafe on NFS).
 * [garage/vmservicescrape.yaml](garage/vmservicescrape.yaml) - VMServiceScrape for Garage metrics.
+* [garage/migrate-job.yaml](garage/migrate-job.yaml) - Temporary Job syncing all buckets from Minio into Garage; remove before cutover.
 
 ## intel-gpu-resource-driver
 
