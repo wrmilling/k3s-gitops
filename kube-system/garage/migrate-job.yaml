@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/job-batch-v1.json
-# Temporary: one-way `rclone sync` of every bucket from Minio into Garage, then a size check.
+# Temporary: one-way `rclone sync` of restic and forgejo from Minio into Garage, then a size check.
 # Re-run (delta sync) by deleting the Job; Flux recreates it on the next reconcile.
 # Remove before cutover - `sync` deletes Garage objects that aren't in Minio.
 apiVersion: batch/v1
@@ -42,8 +42,12 @@ spec:
                 rclone check "$src" "$dst" --one-way --size-only --fast-list
               }
               sync_bucket restic "$VOLSYNC_KEY_ID" "$VOLSYNC_KEY_SECRET"
-              sync_bucket postgresql "$CNPG_KEY_ID" "$CNPG_KEY_SECRET"
               sync_bucket forgejo "$FORGEJO_KEY_ID" "$FORGEJO_KEY_SECRET"
+              # postgresql is not migrated: CNPG takes fresh base backups after cutover. Clear the
+              # partial copy from an earlier run so barman starts from an empty archive.
+              echo "=== postgresql: clear Garage copy"
+              RCLONE_S3_ACCESS_KEY_ID="$CNPG_KEY_ID" RCLONE_S3_SECRET_ACCESS_KEY="$CNPG_KEY_SECRET" \
+                rclone delete ":s3,endpoint='http://garage.kube-system.svc:3900':postgresql" --fast-list
               echo "=== migration complete"
           env:
             - { name: HOME, value: /tmp }
