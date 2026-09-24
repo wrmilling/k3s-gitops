@@ -1,6 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/job-batch-v1.json
 # Temporary: one-way `rclone sync` of the media bucket from Minio into Garage, then a size check.
+# Skips cache/ (remote servers' media, ~all of the 625 GiB); local media is only ~16 MB.
 # Re-run (delta sync) by deleting the Job; Flux recreates it on the next reconcile.
 # Remove before cutover - `sync` deletes Garage objects that aren't in Minio.
 apiVersion: batch/v1
@@ -36,10 +37,12 @@ spec:
                 export RCLONE_S3_ACCESS_KEY_ID="$2" RCLONE_S3_SECRET_ACCESS_KEY="$3"
                 src=":s3,endpoint='http://mastodon-minio.social.svc:9000':$1"
                 dst=":s3,endpoint='http://mastodon-garage.social.svc:3900':$1"
-                rclone sync "$src" "$dst" --metadata --fast-list
+                # No --fast-list: a single recursive listing of the ~625 GiB bucket stalls Minio on
+                # NFS; per-prefix listing streams, and the exclude keeps rclone out of cache/ entirely.
+                rclone sync "$src" "$dst" --metadata --exclude "/cache/**"
                 echo "=== $1: check"
                 # Multipart ETags differ between Minio and Garage, so compare sizes only.
-                rclone check "$src" "$dst" --one-way --size-only --fast-list
+                rclone check "$src" "$dst" --one-way --size-only --exclude "/cache/**"
               }
               sync_bucket mastodon "$MASTODON_KEY_ID" "$MASTODON_KEY_SECRET"
               echo "=== migration complete"

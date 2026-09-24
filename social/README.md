@@ -16,7 +16,7 @@ Provides configuration for all my social media focused applications.
 * [mastodon/garage.yaml](mastodon/garage.yaml) - S3-compatible media storage via Garage, with the web endpoint serving public media as the BunnyCDN (`mcdn.`) origin on `mfile.`
 * [mastodon/garage-pvc.yaml](mastodon/garage-pvc.yaml) - PVC for Garage metadata
 * [mastodon/vmservicescrape-garage.yaml](mastodon/vmservicescrape-garage.yaml) - VMServiceScrape for Garage metrics
-* [mastodon/garage-migrate-job.yaml](mastodon/garage-migrate-job.yaml) - Temporary Job syncing the media bucket from Minio into Garage; remove before cutover
+* [mastodon/garage-migrate-job.yaml](mastodon/garage-migrate-job.yaml) - Temporary Job syncing local media (excluding the remote-media `cache/`) from Minio into Garage; remove before cutover
 * [mastodon/minio-httproutes.yaml](mastodon/minio-httproutes.yaml) - HTTPRoutes for the Minio API and console
 * [mastodon/valkey.yaml](mastodon/valkey.yaml) - Valkey deployment for caching
 * [mastodon/valkey-pvc.yaml](mastodon/valkey-pvc.yaml) - PVC for Valkey data
