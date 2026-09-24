@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/httproute_v1.json
+# Public origin for BunnyCDN (mcdn.), which pulls https://mfile.${SECRET_DOMAIN}/mastodon/<key>.
+# Served by Garage's read-only web endpoint, which resolves the bucket from the Host header
+# (a global alias on the mastodon bucket) and expects bare keys, hence the prefix rewrite.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: mastodon-media
+  namespace: social
+  labels:
+    error-pages: enabled
+spec:
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - mfile.${SECRET_DOMAIN}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /mastodon
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /
+      backendRefs:
+        - name: mastodon-garage
+          port: 3902

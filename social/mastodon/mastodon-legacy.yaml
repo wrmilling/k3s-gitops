@@ -42,7 +42,8 @@ spec:
         access_key: "${SECRET_MASTODON_S3_ACCESS_KEY}"
         access_secret: "${SECRET_MASTODON_S3_SECRET_KEY}"
         bucket: "mastodon"
-        endpoint: "https://mfile.${SECRET_DOMAIN}"
+        # Uploads go straight to Garage in-cluster; mfile. is only the public (read-only) CDN origin.
+        endpoint: "http://mastodon-garage.social.svc:3900"
         hostname: "mfile.${SECRET_DOMAIN}"
         alias_host: "mcdn.${SECRET_DOMAIN}"
       secrets:

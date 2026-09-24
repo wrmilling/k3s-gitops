@@ -12,16 +12,14 @@ Provides configuration for all my social media focused applications.
 * [mastodon/mastodon-postgresql.sops.yaml](mastodon/mastodon-postgresql.sops.yaml) - PostgreSQL credentials
 * [mastodon/mastodon-s3.sops.yaml](mastodon/mastodon-s3.sops.yaml) - S3 credentials
 * [mastodon/mastodon-smtp.sops.yaml](mastodon/mastodon-smtp.sops.yaml) - SMTP credentials
-* [mastodon/minio.yaml](mastodon/minio.yaml) - S3-compatible storage via Minio (being replaced by Garage)
 * [mastodon/garage.yaml](mastodon/garage.yaml) - S3-compatible media storage via Garage, with the web endpoint serving public media as the BunnyCDN (`mcdn.`) origin on `mfile.`
+* [mastodon/media-httproute.yaml](mastodon/media-httproute.yaml) - HTTPRoute exposing Garage's read-only web endpoint on `mfile.` as the BunnyCDN origin
 * [mastodon/garage-pvc.yaml](mastodon/garage-pvc.yaml) - PVC for Garage metadata
 * [mastodon/vmservicescrape-garage.yaml](mastodon/vmservicescrape-garage.yaml) - VMServiceScrape for Garage metrics
-* [mastodon/garage-migrate-job.yaml](mastodon/garage-migrate-job.yaml) - Temporary Job syncing local media (excluding the remote-media `cache/`) from Minio into Garage; remove before cutover
-* [mastodon/minio-httproutes.yaml](mastodon/minio-httproutes.yaml) - HTTPRoutes for the Minio API and console
 * [mastodon/valkey.yaml](mastodon/valkey.yaml) - Valkey deployment for caching
 * [mastodon/valkey-pvc.yaml](mastodon/valkey-pvc.yaml) - PVC for Valkey data
 * [mastodon/vmservicescrape-valkey.yaml](mastodon/vmservicescrape-valkey.yaml) - VMServiceScrape for the Valkey cache's redis_exporter metrics
-* [mastodon/gateway-policies.yaml](mastodon/gateway-policies.yaml) - BackendTrafficPolicies raising upload body-size limits and SecurityPolicies bypassing Authelia for Mastodon and Minio
+* [mastodon/gateway-policies.yaml](mastodon/gateway-policies.yaml) - BackendTrafficPolicy raising the upload body-size limit and SecurityPolicies bypassing Authelia for Mastodon and its public media origin
 
 ## Mautrix Slack
 

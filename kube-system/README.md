@@ -67,7 +67,7 @@ Persistent Volume configuration for shared NFS storage.
 
 * [nfs-pv/garage-pv.yaml](nfs-pv/garage-pv.yaml) - Object data storage for Garage backed by TrueNAS NFS share.
 * [nfs-pv/mastodon-garage-pv.yaml](nfs-pv/mastodon-garage-pv.yaml) - Object data storage for Mastodon's Garage instance backed by TrueNAS NFS share.
-* [nfs-pv/mastodon-pv.yaml](nfs-pv/mastodon-pv.yaml) - Bulk storage backed by a TrueNAS NFS share for Mastodon's Minio instance.
+* [nfs-pv/mastodon-pv.yaml](nfs-pv/mastodon-pv.yaml) - Bulk storage backed by a TrueNAS NFS share for Mastodon's retired Minio instance; kept until the Garage migration is verified.
 * [nfs-pv/media-pv.yaml](nfs-pv/media-pv.yaml) - Storage for Bulk Media backed by TrueNAS NFS share.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
