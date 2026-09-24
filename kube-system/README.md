@@ -24,6 +24,14 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 
 * [dynamic-dns/cronjob.yaml](dynamic-dns/cronjob.yaml) - Cron Job which schedules the DNS update
 
+## garage
+
+[Garage](https://garagehq.deuxfleurs.fr/) is a lightweight S3-compatible object store, replacing Minio (whose images are no longer published). Single node: metadata on Ceph block storage, object data on NFS. Serves VolSync restic repos, CloudNativePG backups, and Forgejo storage.
+
+* [garage/garage.yaml](garage/garage.yaml) - HelmRelease for Garage, with a sidecar that idempotently applies the layout, imports access keys, and creates buckets via the admin API.
+* [garage/pvc.yaml](garage/pvc.yaml) - PVC for Garage metadata (LMDB is unsafe on NFS).
+* [garage/vmservicescrape.yaml](garage/vmservicescrape.yaml) - VMServiceScrape for Garage metrics.
+
 ## intel-gpu-resource-driver
 
 [Intel GPU Resource Driver](https://github.com/intel/intel-resource-drivers-for-kubernetes) exposes the Intel iGPUs (`nk3s-amd64-a/b/c/d`) via Kubernetes Dynamic Resource Allocation (DRA), replacing the legacy `intel-device-plugins-operator`/`intel-device-plugins-gpu` device-plugin charts. Consumers (Plex, Immich) request the GPU via a `ResourceClaimTemplate` referencing the `gpu.intel.com` `DeviceClass` the driver's chart creates, rather than the old `gpu.intel.com/i915` extended resource.
@@ -56,6 +64,8 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 
 Persistent Volume configuration for shared NFS storage.
 
+* [nfs-pv/garage-pv.yaml](nfs-pv/garage-pv.yaml) - Object data storage for Garage backed by TrueNAS NFS share.
+* [nfs-pv/mastodon-garage-pv.yaml](nfs-pv/mastodon-garage-pv.yaml) - Object data storage for Mastodon's Garage instance backed by TrueNAS NFS share.
 * [nfs-pv/mastodon-pv.yaml](nfs-pv/mastodon-pv.yaml) - Bulk storage backed by a TrueNAS NFS share for Mastodon's Minio instance.
 * [nfs-pv/media-pv.yaml](nfs-pv/media-pv.yaml) - Storage for Bulk Media backed by TrueNAS NFS share.
 * [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.

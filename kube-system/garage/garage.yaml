@@ -1,0 +1,207 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/common-5.0.0/charts/library/common/values.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: garage
+  namespace: kube-system
+spec:
+  releaseName: garage
+  interval: 15m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
+      chart: app-template
+      version: 5.2.1
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-helm-charts
+        namespace: flux-system
+  values:
+    global:
+      createDefaultServiceAccount: false
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: docker.io/dxflrs/garage
+              tag: v2.4.1@sha256:9c96caa2612d3411acc5b0e6701fb238dbfba33e533a6d7d3d811a4b12d0d020
+            env:
+              GARAGE_RPC_SECRET: ${SECRET_GARAGE_RPC_SECRET}
+              GARAGE_ADMIN_TOKEN: ${SECRET_GARAGE_ADMIN_TOKEN}
+            probes:
+              # /health reports unhealthy until the layout is applied, so it only gates readiness;
+              # liveness on it would crashloop the pod before the bootstrap container can run.
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: 3903
+                  periodSeconds: 10
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 3903
+                  periodSeconds: 10
+                  failureThreshold: 3
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+          # Idempotently converges layout, keys, and buckets through the admin API on every pod
+          # start, then idles. The garage image is scratch-based, so this can't be an exec hook.
+          bootstrap:
+            image:
+              repository: docker.io/library/alpine
+              tag: 3.24.2@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
+            command: ["/bin/sh", "/scripts/bootstrap.sh"]
+            env:
+              GARAGE_ADMIN_TOKEN: ${SECRET_GARAGE_ADMIN_TOKEN}
+              # Layout weight only; with a single node it does not limit usable space.
+              LAYOUT_CAPACITY: "1099511627776"
+              VOLSYNC_KEY_ID: ${SECRET_VOLSYNC_MINIO_ACCESS_KEY}
+              VOLSYNC_KEY_SECRET: ${SECRET_VOLSYNC_MINIO_SECRET_KEY}
+              CNPG_KEY_ID: ${SECRET_CNPG_MINIO_ACCESS_KEY}
+              CNPG_KEY_SECRET: ${SECRET_CNPG_MINIO_SECRET_KEY}
+              FORGEJO_KEY_ID: ${SECRET_FORGEJO_MINIO_ACCESS_KEY}
+              FORGEJO_KEY_SECRET: ${SECRET_FORGEJO_MINIO_SECRET_KEY}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 8Mi
+              limits:
+                memory: 32Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsUser: 65534
+              runAsGroup: 65534
+              runAsNonRoot: true
+              capabilities:
+                drop: ["ALL"]
+    defaultPodOptions:
+      tolerations:
+        - key: "arm"
+          operator: "Exists"
+    service:
+      main:
+        controller: main
+        ports:
+          s3:
+            port: 3900
+          admin:
+            port: 3903
+    configMaps:
+      config:
+        data:
+          garage.toml: |
+            metadata_dir = "/meta"
+            data_dir = "/data"
+            db_engine = "lmdb"
+            metadata_auto_snapshot_interval = "6h"
+
+            replication_factor = 1
+            rpc_bind_addr = "0.0.0.0:3901"
+            rpc_public_addr = "127.0.0.1:3901"
+
+            [s3_api]
+            # Clients (restic, barman-cloud, Forgejo) sign for us-east-1 by default, and
+            # Garage rejects signatures for any region other than this one.
+            s3_region = "us-east-1"
+            api_bind_addr = "0.0.0.0:3900"
+
+            [admin]
+            api_bind_addr = "0.0.0.0:3903"
+      scripts:
+        data:
+          bootstrap.sh: |
+            set -euo pipefail
+            api=http://127.0.0.1:3903/v2
+            # Responses are pretty-printed; strip whitespace so they can be matched with grep.
+            get() { wget -q -O - --header "Authorization: Bearer $GARAGE_ADMIN_TOKEN" "$api/$1" | tr -d ' \n'; }
+            post() { wget -q -O - --header "Authorization: Bearer $GARAGE_ADMIN_TOKEN" --header "Content-Type: application/json" --post-data "$2" "$api/$1"; }
+
+            until get GetClusterStatus >/dev/null 2>&1; do echo "waiting for admin API"; sleep 2; done
+
+            if get GetClusterLayout | grep -q '"roles":\[\]'; then
+              node=$(get GetClusterStatus | grep -o '"id":"[0-9a-f]*"' | head -1 | cut -d'"' -f4)
+              version=$(get GetClusterLayout | grep -o '"version":[0-9]*' | head -1 | cut -d: -f2)
+              echo "assigning node $node and applying layout v$((version + 1))"
+              post UpdateClusterLayout "{\"roles\":[{\"id\":\"$node\",\"zone\":\"dc1\",\"capacity\":$LAYOUT_CAPACITY,\"tags\":[]}]}" >/dev/null
+              post ApplyClusterLayout "{\"version\":$((version + 1))}" >/dev/null
+            fi
+
+            # usage: ensure_key <name> <id> <secret>
+            ensure_key() {
+              if ! get "GetKeyInfo?id=$2" >/dev/null 2>&1; then
+                echo "importing key $1"
+                post ImportKey "{\"accessKeyId\":\"$2\",\"secretAccessKey\":\"$3\",\"name\":\"$1\"}" >/dev/null
+              fi
+            }
+
+            bucket_id() { get "GetBucketInfo?globalAlias=$1" | grep -o '"id":"[0-9a-f]\{64\}"' | head -1 | cut -d'"' -f4; }
+
+            # usage: ensure_bucket <bucket> <key id>
+            ensure_bucket() {
+              if ! get "GetBucketInfo?globalAlias=$1" >/dev/null 2>&1; then
+                echo "creating bucket $1"
+                post CreateBucket "{\"globalAlias\":\"$1\"}" >/dev/null
+              fi
+              post AllowBucketKey "{\"bucketId\":\"$(bucket_id "$1")\",\"accessKeyId\":\"$2\",\"permissions\":{\"read\":true,\"write\":true,\"owner\":true}}" >/dev/null
+            }
+
+            ensure_key volsync "$VOLSYNC_KEY_ID" "$VOLSYNC_KEY_SECRET"
+            ensure_key cnpg "$CNPG_KEY_ID" "$CNPG_KEY_SECRET"
+            ensure_key forgejo "$FORGEJO_KEY_ID" "$FORGEJO_KEY_SECRET"
+            ensure_bucket restic "$VOLSYNC_KEY_ID"
+            ensure_bucket postgresql "$CNPG_KEY_ID"
+            ensure_bucket forgejo "$FORGEJO_KEY_ID"
+
+            echo "bootstrap complete"
+            trap 'exit 0' TERM
+            while :; do sleep 3600 & wait $!; done
+    persistence:
+      meta:
+        existingClaim: garage-meta
+        advancedMounts:
+          main:
+            main:
+              - path: /meta
+      data:
+        existingClaim: nfs-garage-pvc
+        advancedMounts:
+          main:
+            main:
+              - path: /data
+      config:
+        type: configMap
+        identifier: config
+        advancedMounts:
+          main:
+            main:
+              - path: /etc/garage.toml
+                subPath: garage.toml
+                readOnly: true
+      scripts:
+        type: configMap
+        identifier: scripts
+        advancedMounts:
+          main:
+            bootstrap:
+              - path: /scripts
+                readOnly: true

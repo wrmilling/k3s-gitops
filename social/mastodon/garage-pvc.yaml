@@ -1,0 +1,14 @@
+---
+# Garage metadata (LMDB + snapshots). Kept on block storage: LMDB's mmap/locking is unsafe on NFS.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mastodon-garage-meta
+  namespace: social
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: rook-ceph-block
