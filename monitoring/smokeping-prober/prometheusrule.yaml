@@ -25,9 +25,9 @@ spec:
             summary: High network latency detected to {{ $labels.host }}.
           expr: |
             (
-              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host!="github.com", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
+              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host!~"github.com|ghcr.io", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
               /
-              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host!="github.com", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
+              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host!~"github.com|ghcr.io", host!="cnn.com", host!="1.1.1.1", host!="1.0.0.1"}[5m])
             ) * 1000 > 50
           for: 5m
           labels:
@@ -39,9 +39,9 @@ spec:
             summary: High network latency detected to {{ $labels.host }}.
           expr: |
             (
-              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host="github.com"}[15m])
+              rate(smokeping_response_duration_seconds_sum{job=~".*smokeping-prober.*", host=~"github.com|ghcr.io"}[15m])
               /
-              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host="github.com"}[15m])
+              rate(smokeping_response_duration_seconds_count{job=~".*smokeping-prober.*", host=~"github.com|ghcr.io"}[15m])
             ) * 1000 > 150
           for: 15m
           labels:
