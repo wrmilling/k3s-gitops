@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./ks.yaml
   - ./volsync.yaml
+  - ./prometheusrule.yaml

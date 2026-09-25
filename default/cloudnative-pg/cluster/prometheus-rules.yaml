@@ -47,6 +47,33 @@ spec:
           for: 1m
           labels:
             severity: warning
+        # The timestamp is only reported by the instance that took the backup (others
+        # report 0), so take the max per cluster.
+        - alert: PGBackupStale
+          annotations:
+            summary: No base backup for {{ $labels.cnpg_cluster }} in 36h.
+            description: >-
+              The last available base backup for {{ $labels.cnpg_cluster }} is
+              {{ $value | humanizeDuration }} old (ScheduledBackups run daily). Check the
+              ScheduledBackup, recent Backup objects and the Garage postgresql bucket.
+          expr: |
+            time() - max by (namespace, cnpg_cluster) (
+              label_replace(cnpg_collector_last_available_backup_timestamp, "cnpg_cluster", "$1", "pod", "(.+)-[0-9]+")
+            ) > 36 * 3600
+          for: 1h
+          labels:
+            severity: critical
+        - alert: PGWalArchivingStalled
+          annotations:
+            summary: WAL archiving stalled on {{ $labels.pod }}.
+            description: >-
+              {{ $labels.pod }} has not archived a WAL file for {{ $value | humanizeDuration }}
+              (archive_timeout is 5m), so point-in-time recovery is falling behind.
+          expr: |
+            max by (namespace, pod) (cnpg_pg_stat_archiver_seconds_since_last_archival) > 1800
+          for: 15m
+          labels:
+            severity: critical
         - alert: LastFailedArchiveTime
           annotations:
             description: Archiving failed for {{ $labels.pod }}

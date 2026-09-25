@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+# Alert when VolSync backups stop happening. Added after VolSync hung silently for
+# months on RBD snapshots that never became ready (no csi-snapshotter): nothing
+# errored, the syncs just never finished. Names match the Alertmanager VolSync.*
+# route to Matrix. The dendrite-*-manual sources are manual-only and excluded.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: volsync-rules
+  namespace: kube-system
+spec:
+  groups:
+    - name: volsync.rules
+      rules:
+        - alert: VolSyncVolumeOutOfSync
+          annotations:
+            summary: VolSync backup {{ $labels.obj_namespace }}/{{ $labels.obj_name }} is out of sync.
+            description: >-
+              {{ $labels.obj_namespace }}/{{ $labels.obj_name }} missed its scheduled sync: the previous
+              one had not finished by the next scheduled time. Check the ReplicationSource status, its
+              VolumeSnapshot (readyToUse) and the volsync-src-{{ $labels.obj_name }} mover Job.
+          expr: |
+            max by (obj_namespace, obj_name) (volsync_volume_out_of_sync{role="source", obj_name!~".*-manual"}) == 1
+          for: 1h
+          labels:
+            severity: critical
+
+        # Independent of the controller's own out-of-sync bookkeeping: also catches a
+        # schedule left disabled (e.g. a spec.trigger.manual never removed).
+        - alert: VolSyncNoRecentBackup
+          annotations:
+            summary: No completed VolSync backup for {{ $labels.obj_namespace }}/{{ $labels.obj_name }} in 36h.
+            description: >-
+              {{ $labels.obj_namespace }}/{{ $labels.obj_name }} has not completed a sync in 36 hours
+              (schedules are daily). Check that spec.trigger still has a schedule and that recent mover
+              Jobs are succeeding.
+          expr: |
+            sum by (obj_namespace, obj_name) (increase(volsync_sync_duration_seconds_count{role="source", obj_name!~".*-manual"}[36h])) == 0
+          for: 1h
+          labels:
+            severity: critical
+
+        - alert: VolSyncMetricsAbsent
+          annotations:
+            summary: VolSync metrics are missing.
+            description: >-
+              No volsync_volume_out_of_sync series for 1h, so the other VolSync alerts cannot fire.
+              Check the volsync controller in kube-system and its VMServiceScrape.
+          expr: |
+            absent(volsync_volume_out_of_sync)
+          for: 1h
+          labels:
+            severity: critical

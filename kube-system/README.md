@@ -118,3 +118,4 @@ Provide authentication using [alexellis' registry-creds](https://github.com/alex
 * [volsync/ks.yaml](volsync/ks.yaml) - Healthchecks for Volsync.
 * [volsync/kustomization.yaml](volsync/kustomization.yaml) - Install ordering for ks and Volsync.
 * [volsync/volsync.yaml](volsync/volsync.yaml) - HelmRelease for Volsync.
+* [volsync/prometheusrule.yaml](volsync/prometheusrule.yaml) - Alerts when backups go out of sync, stop completing, or VolSync metrics disappear.
