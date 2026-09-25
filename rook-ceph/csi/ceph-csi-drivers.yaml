@@ -47,6 +47,9 @@ spec:
         # rook-ceph-block StorageClass provisioner (rook-ceph.rbd.csi.ceph.com).
         name: rook-ceph.rbd.csi.ceph.com
         enabled: true
+        # Chart default is "none", which omits the csi-snapshotter sidecar; VolSync
+        # (copyMethod: Snapshot via csi-rbdplugin-snapclass) hangs without it.
+        snapshotPolicy: volumeSnapshot
       cephfs:
         # preserved from former csi.enableCephfsDriver: false
         name: rook-ceph.cephfs.csi.ceph.com
