@@ -31,7 +31,6 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [garage/garage.yaml](garage/garage.yaml) - HelmRelease for Garage, with a sidecar that idempotently applies the layout, imports access keys, and creates buckets via the admin API.
 * [garage/pvc.yaml](garage/pvc.yaml) - PVC for Garage metadata (LMDB is unsafe on NFS).
 * [garage/vmservicescrape.yaml](garage/vmservicescrape.yaml) - VMServiceScrape for Garage metrics.
-* [garage/migrate-job.yaml](garage/migrate-job.yaml) - Temporary Job syncing all buckets from Minio into Garage; remove before cutover.
 
 ## intel-gpu-resource-driver
 
@@ -53,13 +52,6 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [metallb/metallb.yaml](metallb/metallb.yaml) - HelmRelease for metallb, including values configuration.
 * [metallb/vmpodscrape.yaml](metallb/vmpodscrape.yaml) - VMPodScrape for speaker/controller metrics; replaces the chart's bundled PodMonitor, which is broken (targets a nonexistent port) as of chart 0.16.1.
 
-## minio
-
-[Minio](https://min.io/) is a high-performance, S3 compatible object store.
-
-* [minio/minio.yaml](minio/minio.yaml) - HelmRelease using the official minio charts, backed by NFS.
-* [minio/minio-httproutes.yaml](minio/minio-httproutes.yaml) - HTTPRoutes for the Minio API and console.
-* [minio/gateway-policies.yaml](minio/gateway-policies.yaml) - SecurityPolicy bypassing Authelia.
 
 ## nfs-pv
 
@@ -69,7 +61,7 @@ Persistent Volume configuration for shared NFS storage.
 * [nfs-pv/mastodon-garage-pv.yaml](nfs-pv/mastodon-garage-pv.yaml) - Object data storage for Mastodon's Garage instance backed by TrueNAS NFS share.
 * [nfs-pv/mastodon-pv.yaml](nfs-pv/mastodon-pv.yaml) - Bulk storage backed by a TrueNAS NFS share for Mastodon's retired Minio instance; kept until the Garage migration is verified.
 * [nfs-pv/media-pv.yaml](nfs-pv/media-pv.yaml) - Storage for Bulk Media backed by TrueNAS NFS share.
-* [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for Minio S3 Compatible storage backed by TrueNAS NFS share.
+* [nfs-pv/minio-pv.yaml](nfs-pv/minio-pv.yaml) - Storage for the retired Minio instance backed by TrueNAS NFS share; kept until the Garage migration is verified.
 * [nfs-pv/onedrive-pv.yaml](nfs-pv/onedrive-pv.yaml) - Storage for OneDrive image backed by TrueNAS NFS share.
 
 ## envoy-gateway

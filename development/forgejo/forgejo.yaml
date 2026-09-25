@@ -96,7 +96,7 @@ spec:
               FORGEJO__service__ENABLE_NOTIFY_MAIL: "true"
               FORGEJO__service__REQUIRE_SIGNIN_VIEW: "false"
               FORGEJO__storage__STORAGE_TYPE: "minio"
-              FORGEJO__storage__MINIO_ENDPOINT: "minio.kube-system.svc:9000"
+              FORGEJO__storage__MINIO_ENDPOINT: "garage.kube-system.svc:3900"
               FORGEJO__storage__MINIO_ACCESS_KEY_ID: "${SECRET_FORGEJO_MINIO_ACCESS_KEY}"
               FORGEJO__storage__MINIO_SECRET_ACCESS_KEY: "${SECRET_FORGEJO_MINIO_SECRET_KEY}"
               FORGEJO__storage__MINIO_BUCKET: "forgejo"

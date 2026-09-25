@@ -15,13 +15,13 @@ All four assume their binaries (`flux-operator-mcp`, `kubernetes-mcp-server`, `c
 ## Layout
 - Top-level dirs are namespaces (`default/`, `media/`, `social/`, `kube-system/`, …), each with a `README.md` index — keep it updated when adding/removing apps.
 - HelmRepository sources: `flux-system-extra/helm-chart-repositories/`.
-- Core stack: Envoy Gateway (Gateway API), Rook-Ceph (`rook-ceph-block`), MetalLB, Authelia, cert-manager, SOPS, VolSync.
+- Core stack: Envoy Gateway (Gateway API), Rook-Ceph (`rook-ceph-block`), MetalLB, Authelia, cert-manager, SOPS, VolSync, Garage (S3, `kube-system/garage/`).
 
 ## Adding an app
 Create `<namespace>/<app>/` with:
 - `<app>.yaml` — HelmRelease; prefer the bjw-s `app-template` chart (HelmRepository `bjw-s-helm-charts`).
 - `pvc.yaml` if persistent storage (storageClass `rook-ceph-block`).
-- `volsync.yaml` if backups: per-app restic config Secret (MinIO S3 repo, `${SECRET_VOLSYNC_*}` creds) + `ReplicationSource`.
+- `volsync.yaml` if backups: per-app restic config Secret (Garage S3 repo `s3:http://garage.kube-system.svc:3900/restic/<app>`, `${SECRET_VOLSYNC_*}` creds) + `ReplicationSource`.
 - `gateway-policies.yaml` only if the app must bypass Authelia (see Auth).
 - Use `${SECRET_*}` / `${SVC_*}` Flux substitutions for secrets and service IPs.
 - Add the app to the namespace README.
