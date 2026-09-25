@@ -51,7 +51,7 @@ Default namespace for applications.
 [Immich](https://immich.app/) is a self-hosted photo and video backup solution.
 
 * [immich/immich.yaml](immich/immich.yaml) - HelmRelease for Immich, using the Intel GPU resource driver for hardware transcoding.
-* [immich/pvc.yaml](immich/pvc.yaml) - Rook-ceph persistent volume claims for Immich.
+* [immich/pvc.yaml](immich/pvc.yaml) - Rook-ceph persistent volume claim for Immich's Valkey (the library lives on NFS, `nfs-immich-pvc`).
 * [immich/gateway-policies.yaml](immich/gateway-policies.yaml) - BackendTrafficPolicy raising the upload body-size limit and SecurityPolicy bypassing Authelia.
 
 ## Invidious
@@ -74,4 +74,4 @@ A battle-slain warrior, the Valkyries have ferried your soul to [Valheim](https:
 
 * [valheim/valheim-pvc.yaml](valheim/valheim-pvc.yaml) - PVC for valheim game data and configuration.
 * [valheim/valheim.yaml](valheim/valheim.yaml) - HelmRelease for Valheim dedicated game server.
-* [valheim/volsync.yaml](valheim/volsync.yaml) - Restic backup definition for Valheim via Volsync.
+* [valheim/volsync.yaml](valheim/volsync.yaml) - Restic backup definition for Valheim via Volsync; disabled (commented out) along with the server. The restic repo in Garage is kept.

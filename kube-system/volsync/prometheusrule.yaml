@@ -3,7 +3,7 @@
 # Alert when VolSync backups stop happening. Added after VolSync hung silently for
 # months on RBD snapshots that never became ready (no csi-snapshotter): nothing
 # errored, the syncs just never finished. Names match the Alertmanager VolSync.*
-# route to Matrix. The dendrite-*-manual sources are manual-only and excluded.
+# route to Matrix. Sources named *-manual are manual-only (no schedule) and excluded.
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:

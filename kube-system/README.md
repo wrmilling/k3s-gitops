@@ -39,15 +39,10 @@ A custom docker image and cron job that uses the AWS cli to udpate a dns reocord
 * [intel-gpu-resource-driver/ocirepository.yaml](intel-gpu-resource-driver/ocirepository.yaml) - OCIRepository source for the driver's Helm chart
 * [intel-gpu-resource-driver/intel-gpu-resource-driver.yaml](intel-gpu-resource-driver/intel-gpu-resource-driver.yaml) - HelmRelease for the kubelet-plugin DaemonSet
 
-## kured
-
-[Kured](https://github.com/weaveworks/kured) is a Kubernetes daemonset that performs safe automatic node reboots when the need to do so is indicated by the package management system of the underlying OS.
-
-* [kured/kured.yaml](kured/kured.yaml) - HelmRelease for kured
 
 ## metallb
 
-[MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with nginx below. There is a bit of chicken and egg with this chart right now as I have not solved the CRDs needing to be installed before you can have an IPAddressPool object. Either remove the IPAddressPool definition before chart install or manually install the CRDs before install.
+[MetalLB](https://metallb.universe.tf/) is an on-cluster LoadBalancer in the Layer 2 configuration to allow for "external" IPs to be assigned. Primarily used with Envoy Gateway below. There is a bit of chicken and egg with this chart right now as I have not solved the CRDs needing to be installed before you can have an IPAddressPool object. Either remove the IPAddressPool definition before chart install or manually install the CRDs before install.
 
 * [metallb/metallb.yaml](metallb/metallb.yaml) - HelmRelease for metallb, including values configuration.
 * [metallb/vmpodscrape.yaml](metallb/vmpodscrape.yaml) - VMPodScrape for speaker/controller metrics; replaces the chart's bundled PodMonitor, which is broken (targets a nonexistent port) as of chart 0.16.1.
