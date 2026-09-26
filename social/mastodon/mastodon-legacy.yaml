@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -17,7 +18,12 @@ spec:
   values:
     image:
       repository: ghcr.io/glitch-soc/mastodon
-      tag: nightly.2026-09-24@sha256:4f24b0006227f4131d4a8b9096704a747036e2ef939ca98e9a6f626b57fb64fa
+      # Digest-pinned tags break the chart: mastodon.labels renders
+      # app.kubernetes.io/version from this tag and the upstream sanitizer
+      # leaves "@sha256:..." in it, which is an invalid k8s label value
+      # (pre-upgrade job creation fails). Keep tag-only; streaming image below
+      # stays digest-pinned. Renovate: pinDigests disabled for this repo.
+      tag: nightly.2026-09-24
       pullPolicy: IfNotPresent
 
     mastodon:

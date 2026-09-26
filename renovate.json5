@@ -40,6 +40,14 @@
     '.taskfiles/**',
     '.forgejo/workflows/repo-sync.yml',
   ],
+  packageRules: [
+    {
+      description: 'mastodon chart renders app.kubernetes.io/version from image.tag and its sanitizer leaves "@sha256:..." in the label, which is an invalid k8s label value (pre-upgrade job creation fails). Keep the web image tag-only; the -streaming image still gets digest pins.',
+      matchDatasources: ['docker'],
+      matchPackageNames: ['ghcr.io/glitch-soc/mastodon'],
+      pinDigests: false,
+    },
+  ],
   'helm-values': {
     managerFilePatterns: [
       '/./.+\\.yaml$/',

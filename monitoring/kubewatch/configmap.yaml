@@ -11,9 +11,9 @@ data:
         enabled: true
         url: "${SECRET_HOOKSHOT_K8S_EVENTS_URL}"
     resource:
-      # statefulset isn't a confirmed key in kubewatch's resource schema (unlike
-      # Botkube, which watched it explicitly) - verify support and add/remove
-      # once the deployed version's docs are checked.
+      # statefulset isn't a confirmed key in kubewatch's resource schema -
+      # verify support and add/remove once the deployed version's docs are
+      # checked.
       deployment: true
       replicationcontroller: false
       replicaset: false

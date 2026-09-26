@@ -2,17 +2,6 @@
 
 Provides configuration for all the monitoring applications used on the cluster.
 
-## botkube
-
-![BotKube Discord Message](https://i.imgur.com/UhuC0k9.png)
-
-**Being replaced by `k8s-event-exporter` + `kubewatch` below (Discord -> Matrix migration).
-Remove this section and directory once both are confirmed delivering to Matrix.**
-
-[botkube](https://www.botkube.io/) provides richer integration with multiple chat clients for alerts and cluster management if desired. This configuration is using discord for the alerting.
-
-* [botkube/botkube.yaml](botkube/botkube.yaml) - HelmRelease and configuration for notification events
-
 ## k8s-event-exporter
 
 [kubernetes-event-exporter](https://github.com/resmoio/kubernetes-event-exporter) forwards the cluster's Kubernetes Event objects (scheduling, image pull, crashloop, OOMKilled, probe failures, evictions, etc.) to a Matrix room via a Hookshot generic webhook.
@@ -23,7 +12,7 @@ Remove this section and directory once both are confirmed delivering to Matrix.*
 
 ## kubewatch
 
-[kubewatch](https://github.com/robusta-dev/kubewatch) watches direct resource create/update/delete (pods, deployments, secrets, configmaps, RBAC objects, etc. - things the Kubernetes Events API doesn't cover) and forwards them to a Matrix room via a Hookshot generic webhook. Paired with `k8s-event-exporter` above to preserve Botkube's full coverage.
+[kubewatch](https://github.com/robusta-dev/kubewatch) watches direct resource create/update/delete (pods, deployments, secrets, configmaps, RBAC objects, etc. - things the Kubernetes Events API doesn't cover) and forwards them to a Matrix room via a Hookshot generic webhook. Paired with `k8s-event-exporter` above for full cluster notification coverage.
 
 * [kubewatch/kubewatch.yaml](kubewatch/kubewatch.yaml) - HelmRelease
 * [kubewatch/configmap.yaml](kubewatch/configmap.yaml) - Watched resource types and webhook target
