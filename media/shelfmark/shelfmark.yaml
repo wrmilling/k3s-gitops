@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/calibrain/shelfmark-lite
               pullPolicy: IfNotPresent
-              tag: v1.4.0
+              tag: v1.4.0@sha256:edc889c12c4e54076432e5377b674fed4a1aaa934890f8a678bc5b38e5088a75
             command:
               - gunicorn
             args:

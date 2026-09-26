@@ -24,7 +24,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/home-operations/postgres-init
-              tag: 18.6
+              tag: 18.6@sha256:b6d3af974df781c673d37e49bdddfa14a6f5be28b18d2cb7713f0449bea4057b
             env:
               INIT_POSTGRES_HOST: shared-psql-v18-rw.default.svc.cluster.local
               INIT_POSTGRES_SUPER_PASS: ${SECRET_CNPG_SUPER_PASS}
@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v3.2.2
+              tag: v3.2.2@sha256:79cc1623323d5894922686d8743b4780181428f98eecbfb58ce12c41ef02d1ea
             env:
               DB_HOSTNAME: shared-psql-v18-rw.default.svc.cluster.local
               DB_USERNAME: immich
@@ -128,7 +128,7 @@ spec:
             main:
               image:
                 repository: ghcr.io/immich-app/immich-machine-learning
-                tag: v3.2.2-openvino
+                tag: v3.2.2-openvino@sha256:4013ec28ccf6344d7ae24554743a116d7f61124b98858f5646a401d5c5df12e2
               probes:
                 liveness:
                   spec:

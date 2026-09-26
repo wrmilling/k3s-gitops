@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/resmoio/kubernetes-event-exporter
-              tag: v1.7
+              tag: v1.7@sha256:8abb52b66557d3333f9e473e0eff2951309abfd018bd8d7fcfd86c4ecce6b9cf
             args:
               - -conf=/data/config.yaml
             resources:

@@ -44,6 +44,7 @@
     managerFilePatterns: [
       '/./.+\\.yaml$/',
     ],
+    pinDigests: true,
   },
   flux: {
     managerFilePatterns: [
@@ -65,5 +66,6 @@
       '.yamllint.yaml',
       '.forgejo',
     ],
+    pinDigests: true,
   },
 }

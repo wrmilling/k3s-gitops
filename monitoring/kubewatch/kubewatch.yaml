@@ -33,7 +33,7 @@ spec:
             # renovate: datasource=docker depName=robustadev/kubewatch
             image:
               repository: docker.io/robustadev/kubewatch
-              tag: v2.16.1
+              tag: v2.16.1@sha256:0ca52cebc9dc6f79046bce42dd6c294f872e6c6d723d5ecaabdcf2f05c2b49f4
             env:
               KW_CONFIG: /config
             resources:
