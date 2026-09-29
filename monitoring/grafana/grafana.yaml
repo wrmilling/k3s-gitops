@@ -309,7 +309,7 @@ spec:
         vmsingle:
           # renovate: dashboardName="VictoriaMetrics - single"
           gnetId: 10229
-          revision: 58
+          revision: 59
           datasource: Prometheus
         vmagent:
           # renovate: dashboardName="VictoriaMetrics - vmagent"
