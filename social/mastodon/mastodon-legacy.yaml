@@ -23,7 +23,7 @@ spec:
       # leaves "@sha256:..." in it, which is an invalid k8s label value
       # (pre-upgrade job creation fails). Keep tag-only; streaming image below
       # stays digest-pinned. Renovate: pinDigests disabled for this repo.
-      tag: nightly.2026-09-24
+      tag: nightly.2026-09-29
       pullPolicy: IfNotPresent
 
     mastodon:
@@ -105,7 +105,7 @@ spec:
       streaming:
         image:
           repository: ghcr.io/glitch-soc/mastodon-streaming
-          tag: nightly.2026-09-24@sha256:8b1b4c2fb9803ee63aa22263a2a8d7513fb5a5bab082839b72337668cec629f2
+          tag: nightly.2026-09-29@sha256:b0c365e521dba1f62f173641e4168460e839737abcdbee75f58a39b7a204caf9
         port: 4000
         resources:
           requests:
