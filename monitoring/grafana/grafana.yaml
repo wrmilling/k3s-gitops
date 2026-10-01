@@ -334,7 +334,7 @@ spec:
         victorialogs-server:
           # renovate: dashboardName="VictoriaLogs - single"
           gnetId: 22084
-          revision: 11
+          revision: 12
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         vlagent:
