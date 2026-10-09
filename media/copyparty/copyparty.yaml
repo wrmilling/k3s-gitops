@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/9001/copyparty-ac
               pullPolicy: IfNotPresent
-              tag: 1.20.24@sha256:72bf0d1112c865ab33f9f7a0ef25e89d34535d47e76ed78f7056b14aae349ebd
+              tag: 1.20.25@sha256:7c91adaa6179e4055244cf390a976d4a1f40275ad38f28146854aabb6febc996
             env:
               TZ: America/Chicago
               PRTY_NO_TLS: 1
