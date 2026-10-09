@@ -29,7 +29,7 @@ spec:
             image:
               repository: crocodilestick/calibre-web-automated
               pullPolicy: IfNotPresent
-              tag: v4.0.6@sha256:c31a738b6d5ec6982c050063dd3f063b6943eb1051fc81144789f840d9093a8d
+              tag: v4.0.8@sha256:5e00373854247750cc3e4479b492ae09293ff5e06ed10177f226634d97888679
             env:
               TZ: America/Chicago
               PUID: 1000
