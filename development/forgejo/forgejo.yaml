@@ -112,7 +112,7 @@ spec:
             image:
               repository: ghcr.io/techarohq/anubis
               pullPolicy: IfNotPresent
-              tag: v1.27.0@sha256:8828275668b7bc675679f100970f9714f731388fbbf66ae94de8aca952e3fc4a
+              tag: v1.28.1@sha256:1744c03a918160a28b0d2e8c1656de6585f4071b30b4c3b0d51d02282c9b7c25
             env:
               BIND: ":8080"
               COOKIE_DOMAIN: "${SECRET_DOMAIN}"
