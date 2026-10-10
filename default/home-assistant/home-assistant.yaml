@@ -13,7 +13,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s-labs.github.io/helm-charts/
       chart: app-template
-      version: 5.2.1
+      version: 5.3.0
       interval: 15m
       sourceRef:
         kind: HelmRepository
