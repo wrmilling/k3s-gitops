@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/home-operations/plex
               pullPolicy: IfNotPresent
-              tag: 1.43.4.10903@sha256:fdc6fe82bc7d8acd08fc0aa581fcb76722803ba5905e2537135a697347dd6149
+              tag: 1.43.5.11029@sha256:996656c7b98462bc726e5c63ae7778fc084cff4560677b4a4e45edf0f3fa67dc
             env:
               TZ: America/Chicago
               PLEX_CLAIM: ${SECRET_PLEX_CLAIM}
