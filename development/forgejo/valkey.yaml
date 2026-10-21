@@ -68,7 +68,7 @@ spec:
           metrics:
             image:
               repository: ghcr.io/oliver006/redis_exporter
-              tag: v1.94.0@sha256:0842ef7110e62b40bbde2d5c11f38c6fbd99f7100c75e3866637c1b335a1eff7
+              tag: v1.95.0@sha256:afb21407aba3df1b4010899f155fc6b1ba2026c97b725d72aca4019d772e7b6b
             env:
               REDIS_ADDR: redis://localhost:6379
               REDIS_PASSWORD: ${SECRET_FORGEJO_REDIS_PASSWORD}
