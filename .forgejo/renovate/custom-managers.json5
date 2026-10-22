@@ -31,5 +31,17 @@
       versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
       // extractVersionTemplate: "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.*)${{/if}}",
     },
+    {
+      customType: "regex",
+      description: "Pinned GitHub repo revisions in Forgejo workflows (e.g. nix run flake refs)",
+      fileMatch: ["(^|/)\\.forgejo/workflows/.+\\.ya?ml$"],
+      matchStrings: [
+        // # renovate: git-refs depName=sadjow/claude-code-nix branch=main
+        // CLAUDE_CODE_NIX_REV: 75964e6dac38d737da37c96ba87bca751f935f7d
+        '# ?renovate: git-refs depName=(?<depName>\\S+) branch=(?<currentValue>\\S+)\\n[ \\t]*\\S+: "?(?<currentDigest>[0-9a-f]{40})"?',
+      ],
+      datasourceTemplate: "git-refs",
+      packageNameTemplate: "https://github.com/{{{depName}}}",
+    },
   ],
 }
