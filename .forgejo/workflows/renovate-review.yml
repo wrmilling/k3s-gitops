@@ -141,19 +141,26 @@ jobs:
           PR_TITLE: ${{ steps.pr.outputs.title }}
         run: |
           title="$PR_TITLE"
-          # Deep (Sonnet, 40 turns): major bumps or high-blast-radius components
-          # Full (Sonnet, 25 turns): all other minor/feat bumps and chart upgrades
-          # Light (Haiku, 25 turns): routine fix(container) patch bumps not matching deep
+          # Deep (Sonnet 5.5, high effort, 40 turns): major bumps or high-blast-radius components
+          # Full (Sonnet 5.5, medium effort, 25 turns): all other minor/feat bumps and chart upgrades
+          # Light (Haiku 5.5, medium effort, 25 turns): routine fix(container) patch bumps not matching deep
+          # Model IDs are pinned (not the sonnet/haiku aliases) so a new release can't silently
+          # swap the model under a prompt tuned for this one. Effort is set explicitly because
+          # the 5.5 defaults differ (Sonnet high, Haiku medium); Haiku at low skips searches
+          # and stops early on long agent prompts, so medium is its floor here.
           if echo "$title" | grep -qiE 'rook|ceph|volsync|cert-manager|envoy|gateway|metallb|authelia|flux|forgejo'; then
-            echo "model=sonnet" >> "$GITHUB_OUTPUT"
+            echo "model=claude-sonnet-5-5" >> "$GITHUB_OUTPUT"
+            echo "effort=high" >> "$GITHUB_OUTPUT"
             echo "depth=deep" >> "$GITHUB_OUTPUT"
             echo "max_turns=40" >> "$GITHUB_OUTPUT"
           elif [[ "$title" == fix\(container\):* ]]; then
-            echo "model=haiku" >> "$GITHUB_OUTPUT"
+            echo "model=claude-haiku-5-5" >> "$GITHUB_OUTPUT"
+            echo "effort=medium" >> "$GITHUB_OUTPUT"
             echo "depth=light" >> "$GITHUB_OUTPUT"
             echo "max_turns=25" >> "$GITHUB_OUTPUT"
           else
-            echo "model=sonnet" >> "$GITHUB_OUTPUT"
+            echo "model=claude-sonnet-5-5" >> "$GITHUB_OUTPUT"
+            echo "effort=medium" >> "$GITHUB_OUTPUT"
             echo "depth=full" >> "$GITHUB_OUTPUT"
             echo "max_turns=25" >> "$GITHUB_OUTPUT"
           fi
@@ -250,6 +257,9 @@ jobs:
           - Use `WebFetch`/`WebSearch` for upstream changelogs, releases, docs, and issue search.
             Before your first call to either, run `ToolSearch` to load their schemas (they are
             deferred tools) — avoids a wasted turn on `InputValidationError`.
+          - The versions in this PR were likely released after your training data ends. Base
+            changelog, breaking-change, and known-issue findings on sources you fetch in this
+            run, not on what you remember about the project, even when you feel confident.
           - A prior CI step already checked whether this exact diff (by content, not commit SHA)
             was reviewed before and skipped this entire job if so — a pure Renovate rebase never
             reaches you. Every invocation you see is a genuinely new or changed dependency bump.
@@ -263,10 +273,11 @@ jobs:
           `Grep "pattern" "**/*.yaml"` call beats ten sequential `grep -r`/`find`
           invocations and uses far fewer turns.
 
-          **Anti-thrash rule:** If a search (`Grep`, `Glob`, or `WebSearch`) returns empty, that
-          means the thing is absent — stop searching. Do **not** re-run the same query with
-          permuted patterns, synonyms, or similar terms. One empty result is a conclusive answer;
-          re-running wastes turns without new information.
+          **Anti-thrash rule:** An empty `Grep` or `Glob` over the checked-out repo is conclusive —
+          the thing is absent from the repo; don't re-run it with permuted patterns or synonyms.
+          An empty `WebSearch` is not proof a changelog or issue doesn't exist: move to a
+          different source from the Research list (releases page, CHANGELOG, registry) rather
+          than rephrasing the same search.
 
           ## Repo File Discovery
 
@@ -354,6 +365,9 @@ jobs:
           - **Registry metadata**: When a repo has no releases or changelog, check the README or
             container registry (Docker Hub, GHCR, quay.io) for links to the upstream project.
           - **Web search**: Last resort for hard-to-find changelogs or community migration reports.
+          - **Long CHANGELOG files**: Prefer the per-version GitHub release page. CHANGELOGs are
+            newest-first, so a truncated `WebFetch` read that covers the target versions is
+            complete for this review — no need to page further or caveat it.
           - **Upstream issues**: After reviewing release notes, WebSearch the upstream repo's
             GitHub issues for open bugs or regressions reported against the new version. This
             catches regressions that ship before being documented in a changelog.
@@ -422,8 +436,12 @@ jobs:
 
           Structure the review body as follows (omit empty sections). Use the section headings
           exactly as shown — do not rename or annotate them (e.g. always `**Known issues**:`,
-          never `**Known issues to monitor**:`). For `[package]`, use the full identifier as it
-          appears in the diff/PR title (e.g. full image path or chart name), not a shortened form:
+          never `**Known issues to monitor**:`) and do not add sections of your own. Put each
+          finding in exactly one section; if you conclude it doesn't affect this repo, it goes
+          under **Not applicable to this repo** only. Security fixes in the bump don't block the
+          merge on their own — they usually argue for merging promptly. For `[package]`, use the
+          full identifier as it appears in the diff/PR title (e.g. full image path or chart
+          name), not a shortened form:
 
           ```
           ### [package]: vOLD → vNEW
@@ -435,6 +453,9 @@ jobs:
 
           **Deprecations**:
           - [Same detail as above]
+
+          **Security fixes**:
+          - [CVE/advisory or upstream note] — [what it fixes; whether it raises merge urgency]
 
           **New features worth adopting**:
           - [Feature] — [benefit]. Would change `path/to/file`.
@@ -457,19 +478,16 @@ jobs:
           - If unclear, research more rather than guess
           - When stuck (private repo, ambiguous package, no changelog anywhere), report what you
             found and what you could not find rather than fabricating information
+          - Every claim about upstream behavior must trace to a source you fetched in this run.
+            List only URLs you actually fetched under **Sources consulted**.
           - Write the two review files exactly once, at the end of your analysis, then stop —
             never rewrite them and never attempt to post the review yourself
-          - When citing github.com URLs in the review body (PRs, issues, commits, releases, file
-            or blob links), rewrite the host to `redirect.github.com` while keeping the full
-            `https://` scheme (e.g. `https://redirect.github.com/rook/rook/releases/tag/v1.20.0`).
-            This suppresses the cross-reference backlinks that would otherwise spam every linked
-            issue/PR with a "mentioned in" notification. Non-github.com URLs are unaffected.
           - NEVER write bare `#NNN` or `org/repo#NNN` references for upstream issues or PRs.
             This repo autolinks a bare `#552` to itself, not the upstream project, producing wrong
-            cross-links. Every upstream issue or PR reference must be a full markdown link using
-            `redirect.github.com`, e.g. `[#552](https://redirect.github.com/rhoopr/kei/issues/552)`.
-            This rule applies to prose, bullet points, and the Sources section — wherever a
-            reference appears.
+            cross-links. Every upstream issue or PR reference must be a full markdown link, e.g.
+            `[#552](https://github.com/rhoopr/kei/issues/552)`. This applies to prose, bullet
+            points, and the Sources section — wherever a reference appears. (CI rewrites
+            github.com links to redirect.github.com before posting, so write them normally.)
           PROMPT_EOF
 
           # The heredoc is quoted, so shell variables reach the prompt only via this sed.
@@ -478,6 +496,7 @@ jobs:
           nix run github:sadjow/claude-code-nix -- \
             -p "$(cat "$RUNNER_TEMP/prompt.md")" \
             --model ${{ steps.model_tier.outputs.model }} \
+            --effort ${{ steps.model_tier.outputs.effort }} \
             --max-turns ${{ steps.model_tier.outputs.max_turns }} \
             --output-format stream-json \
             --verbose \

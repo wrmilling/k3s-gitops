@@ -28,6 +28,11 @@ if [[ ! -f "$body_file" ]]; then
   exit 1
 fi
 
+# Point github.com links at redirect.github.com so the review doesn't post "mentioned in"
+# backlinks on every upstream issue/PR it cites. Done here rather than in the prompt
+# because the model doesn't apply the rule reliably.
+sed -i -E 's#https?://(www\.)?github\.com/#https://redirect.github.com/#g' "$body_file"
+
 base="$FORGEJO_API/repos/$REPO/pulls/$PR/reviews"
 
 # Dismiss this bot's own prior active reviews so only the current verdict is visible.
