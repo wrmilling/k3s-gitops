@@ -16,7 +16,6 @@
     'local>wrmilling/k3s-gitops//.forgejo/renovate/semantic-commits.json',
     'local>wrmilling/k3s-gitops//.forgejo/renovate/custom-managers.json5',
     'local>wrmilling/k3s-gitops//.forgejo/renovate/allowedVersions.json5',
-    'local>wrmilling/k3s-gitops//.forgejo/renovate/versioning.json5',
     'local>wrmilling/k3s-gitops//.forgejo/renovate/groups.json5',
     'local>wrmilling/k3s-gitops//.forgejo/renovate/grafanaDashboards.json5',
     'local>wrmilling/k3s-gitops//.forgejo/renovate/autoMerge.json5',
