@@ -71,7 +71,7 @@ spec:
           - name: all-queues
             image:
               repository: ghcr.io/glitch-soc/mastodon
-              tag: nightly@sha256:cf215b29bdfeeaf51a5ec57288e2aa2a2dce8d499ce728925a7d6b066574a279
+              tag: nightly@sha256:9d7c9fdee46e84ef677fc4ae0adac05f1bec2f4af9decb4a8fab4f92cd9e1ddd
             concurrency: 25
             replicas: 1
             resources:
@@ -92,7 +92,7 @@ spec:
           - name: pull-ingress
             image:
               repository: ghcr.io/glitch-soc/mastodon
-              tag: nightly@sha256:cf215b29bdfeeaf51a5ec57288e2aa2a2dce8d499ce728925a7d6b066574a279
+              tag: nightly@sha256:9d7c9fdee46e84ef677fc4ae0adac05f1bec2f4af9decb4a8fab4f92cd9e1ddd
             concurrency: 50
             replicas: 1
             resources:
@@ -115,7 +115,7 @@ spec:
       streaming:
         image:
           repository: ghcr.io/glitch-soc/mastodon-streaming
-          tag: nightly@sha256:610fa5c5da2353370a7b378b5fc69e925c83c85bd113b3dcb51eecd43df7696d
+          tag: nightly@sha256:116c0007ef099bd2a70f84be78023a6aeca8c231f21bbd0d4fc13a3a4b33684a
         port: 4000
         resources:
           requests:
@@ -126,7 +126,7 @@ spec:
       web:
         image:
           repository: ghcr.io/glitch-soc/mastodon
-          tag: nightly@sha256:cf215b29bdfeeaf51a5ec57288e2aa2a2dce8d499ce728925a7d6b066574a279
+          tag: nightly@sha256:9d7c9fdee46e84ef677fc4ae0adac05f1bec2f4af9decb4a8fab4f92cd9e1ddd
         port: 3000
         resources:
           requests:
