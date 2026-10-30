@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: localhost-cert
+  namespace: cert-manager
+spec:
+  secretName: localhost-cert-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - "localhost.${SECRET_DOMAIN}"
