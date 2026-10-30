@@ -197,7 +197,7 @@ jobs:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # sadjow/claude-code-nix rev, pinned so each run doesn't pull whatever main is today.
           # renovate: git-refs depName=sadjow/claude-code-nix branch=main
-          CLAUDE_CODE_NIX_REV: 1ce054c09e8a10c4480c281178ff7e2a737aec17
+          CLAUDE_CODE_NIX_REV: 4ce701aac994817823a05576fa3eb0ab06406e2f
         run: |
           set -euo pipefail
           : "${RUNNER_TEMP:?RUNNER_TEMP is not set by this runner}"
