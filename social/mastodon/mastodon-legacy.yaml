@@ -115,7 +115,7 @@ spec:
       streaming:
         image:
           repository: ghcr.io/glitch-soc/mastodon-streaming
-          tag: nightly@sha256:1e04d176c86d17728e8f0656d42b750eb31cdb27ff777f2d1137afa337bb5bac
+          tag: nightly@sha256:2411fbd186297bea54a6f8f79b5f4e467a4fbc077d1a772c6aaf393bd0210c9b
         port: 4000
         resources:
           requests:
