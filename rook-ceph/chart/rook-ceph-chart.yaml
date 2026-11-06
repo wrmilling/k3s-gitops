@@ -26,14 +26,6 @@ spec:
       # host networking, plugin tolerations, CephFS enable/disable) now live in the
       # ceph-csi-drivers HelmRelease (rook-ceph/csi/ceph-csi-drivers.yaml).
       installCsiOperator: true
-      # Chart default (v3.17.0) bundles a Ceph 20.2.1 client, which predates the
-      # aes256k cephx key type introduced in Ceph 20.2.4 (CVE-2025-30156 fix) --
-      # this cluster's csi cephx keys are rotated to aes256k
-      # (rook-ceph/cluster/cluster.yaml, security.cephx.csi.keyGeneration), so the
-      # chart default can't authenticate at all. v3.17.1 bundles Ceph 20.2.4 and
-      # fixes it. Drop this override once the chart's own default catches up.
-      cephcsi:
-        tag: v3.17.1
     resources:
       limits:
         cpu: 1000m
