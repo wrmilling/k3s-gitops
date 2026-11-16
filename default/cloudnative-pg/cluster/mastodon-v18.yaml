@@ -28,7 +28,8 @@ spec:
   enablePDB: false
   resources:
     requests:
-      memory: "512Mi"
+      cpu: 100m
+      memory: "1Gi"
     limits:
       memory: "2Gi"
   backup:

@@ -76,10 +76,10 @@ spec:
             replicas: 1
             resources:
               requests:
-                cpu: 50m
-                memory: 512Mi
+                cpu: 100m
+                memory: 640Mi
               limits:
-                memory: 1024Mi
+                memory: 1536Mi
             affinity: {}
             queues:
               - default,8
@@ -97,10 +97,10 @@ spec:
             replicas: 1
             resources:
               requests:
-                cpu: 25m
-                memory: 512Mi
+                cpu: 100m
+                memory: 640Mi
               limits:
-                memory: 1024Mi
+                memory: 1536Mi
             affinity: {}
             queues:
               - pull

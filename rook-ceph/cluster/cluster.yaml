@@ -186,15 +186,21 @@ spec:
 #    prepareosd:
 #    crashcollector:
 #    cleanup:
+    mgr:
+      requests:
+        cpu: 50m
+        memory: 1792Mi
+      limits:
+        memory: 2560Mi
     mon:
       requests:
-        cpu: 35m
-        memory: 800Mi
+        cpu: 50m
+        memory: 1Gi
       limits:
-        memory: 1024Mi
+        memory: 2Gi
     osd:
       requests:
-        cpu: "35m"
+        cpu: "250m"
         memory: "2048Mi"
       limits:
         memory: "4096Mi"

@@ -58,6 +58,12 @@ spec:
 
     hookshot:
       enabled: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 192Mi
+        limits:
+          memory: 1000Mi
       storage:
         existingClaim: synapse-hookshot-pvc
       additional:
@@ -87,14 +93,39 @@ spec:
           value: ${SECRET_SYNAPSE_PSQL_PASS}
         database: synapse
         sslMode: prefer
+      # Main process; workers below override with their own (smaller) values.
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 1536Mi
       workers:
         initial-synchrotron:
           enabled: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
         synchrotron:
           enabled: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
         federation-sender:
           enabled: true
           replicas: 2
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
       additional:
         1-experimental-features:
           config: |

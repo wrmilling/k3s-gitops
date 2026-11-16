@@ -24,7 +24,9 @@ spec:
       resources:
         requests:
           cpu: 50m
-          memory: 128Mi
+          memory: 320Mi
+        limits:
+          memory: 1Gi
       retentionPeriod: 14d
       persistentVolume:
         enabled: true
