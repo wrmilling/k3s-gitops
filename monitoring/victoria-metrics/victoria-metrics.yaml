@@ -112,6 +112,13 @@ spec:
               mute_time_intervals: ["immich-nightly-job"]
               continue: false
             - matchers:
+                - severity = "warning"
+                - alertname=~"NodeDiskIOSaturation|NodeSystemSaturation"
+              receiver: "warning-matrix"
+              group_by: ["alertname", "instance"]
+              mute_time_intervals: ["immich-nightly-job"]
+              continue: false
+            - matchers:
                 - severity = "critical"
                 - alertname=~"Host.*|Node.*|Zfs.*|UPS.*|Smartctl.*"
               receiver: "critical-matrix"
@@ -175,7 +182,7 @@ spec:
             time_intervals:
               - times:
                   - start_time: "02:55"
-                    end_time: "03:15"
+                    end_time: "03:40"
         receivers:
           - name: "blackhole"
           - name: "critical-matrix"
