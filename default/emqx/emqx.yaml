@@ -30,8 +30,7 @@ spec:
     replicaCount: 3
     recreatePods: true
     service:
-      type: LoadBalancer
-      loadBalancerIP: ${SVC_EMQX_IP}
+      type: ClusterIP
     tolerations:
       - key: "arm"
         operator: "Exists"

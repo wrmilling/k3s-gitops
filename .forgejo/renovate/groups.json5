@@ -45,7 +45,6 @@
       matchUpdateTypes: ["minor", "patch"],
       group: { commitMessageTopic: "{{{groupName}}} group" },
       separateMinorPatch: false,
-      stabilityDays: 2,
     },
     {
       description: "Mastodon + Mastodon Streaming",

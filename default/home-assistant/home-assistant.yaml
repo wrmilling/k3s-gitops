@@ -28,6 +28,16 @@ spec:
         pod:
           hostNetwork: true
           dnsPolicy: ClusterFirstWithHostNet
+          affinity:
+            podAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    topologyKey: kubernetes.io/hostname
+                    labelSelector:
+                      matchLabels:
+                        app.kubernetes.io/instance: home-assistant
+                        app.kubernetes.io/controller: codeserver
         initContainers:
           init-db:
             image:
@@ -62,14 +72,27 @@ spec:
               requests:
                 cpu: 100m
                 memory: 1000Mi
-          codeserver:
+      codeserver:
+        strategy: Recreate
+        pod:
+          automountServiceAccountToken: false
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/instance: home-assistant
+                      app.kubernetes.io/controller: main
+        containers:
+          app:
             image:
               repository: ghcr.io/coder/code-server
               tag: 4.145.2@sha256:09565f9e07f5624554e295e8bab0e2fec4a7c533eb3cff459ed6596a4d3d7c1c
               pullPolicy: IfNotPresent
             env:
               TZ: "America/Chicago"
-              HASS_SERVER: http://localhost:8123
+              HASS_SERVER: http://home-assistant-main.default.svc.cluster.local:8123
               HASS_TOKEN: ${SECRET_HASS_TOKEN}
               PASSWORD: ${SECRET_HASS_PASSWORD}
             args:
@@ -117,7 +140,7 @@ spec:
             targetPort: 5353
       codeserver:
         type: ClusterIP
-        controller: main
+        controller: codeserver
         ports:
           http:
             enabled: true
@@ -144,10 +167,10 @@ spec:
                 port: http
       codeserver:
         hostnames:
-          - hass-vscode.${SECRET_DOMAIN}
+          - hass-vscode.k.${SECRET_DOMAIN}
         parentRefs:
           - namespace: kube-system
-            name: external
+            name: internal
             sectionName: https
         rules:
           - matches:
@@ -165,5 +188,6 @@ spec:
           main:
             main:
               - path: /config
-            codeserver:
+          codeserver:
+            app:
               - path: /config

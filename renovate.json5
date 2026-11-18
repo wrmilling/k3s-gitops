@@ -30,6 +30,7 @@
     'prEditedNotification',
   ],
   rebaseWhen: 'auto',
+  minimumReleaseAge: '3 days',
   platformAutomerge: true,
   commitBodyTable: true,
   platformCommit: 'disabled',

@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict/service-v1.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: emqx-mqtt
+  namespace: default
+spec:
+  type: LoadBalancer
+  loadBalancerIP: ${SVC_EMQX_IP}
+  allocateLoadBalancerNodePorts: false
+  externalTrafficPolicy: Cluster
+  selector:
+    app.kubernetes.io/name: emqx
+    app.kubernetes.io/instance: emqx
+  ports:
+    - name: mqtt
+      port: 1883
+      protocol: TCP
+      targetPort: mqtt
+    - name: mqttssl
+      port: 8883
+      protocol: TCP
+      targetPort: mqttssl
+    - name: ws
+      port: 8083
+      protocol: TCP
+      targetPort: ws
+    - name: wss
+      port: 8084
+      protocol: TCP
+      targetPort: wss
